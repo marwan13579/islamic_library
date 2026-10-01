@@ -13,7 +13,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v32";
+const CACHE_VERSION = "islamic-library-v33";
 const CACHE = CACHE_VERSION;
 
 const SHELL = [

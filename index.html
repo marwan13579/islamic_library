@@ -253,6 +253,10 @@ header{
 
 <footer class="wrap" id="siteFooter">اللهم اجعل هذا العمل خالصًا لوجهك، وانفع به كل من يقرأه وينشره — آمين</footer>
 
+<p class="wrap" style="text-align:center;font-size:.85rem;color:var(--ink-soft);margin-top:10px">
+  <a id="catalogLink" href="catalog.pdf" download>📄 <span id="catalogLabel">الكتالوج التعريفي (PDF)</span></a>
+</p>
+
 <script>
 /* ================= i18n ================= */
 const LANGS = [
@@ -274,6 +278,7 @@ const I18N = {
     listTitleAll:"كل الأدوات",
     emptyMsg:"لا توجد أدوات مطابقة لبحثك.",
     footer:"اللهم اجعل هذا العمل خالصًا لوجهك، وانفع به كل من يقرأه وينشره — آمين",
+    catalogLink:"الكتالوج التعريفي (PDF)",
     favTitle:"★ المفضلة",
     openAll:"فتح الكل",
     booksNote:"هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
@@ -295,6 +300,7 @@ const I18N = {
     listTitleAll:"All tools",
     emptyMsg:"No tools match your search.",
     footer:"O Allah, make this work sincerely for Your sake, and benefit everyone who reads and shares it — Ameen",
+    catalogLink:"The introductory catalog (PDF)",
     favTitle:"★ Favourites",
     openAll:"Open all",
     booksNote:"These are links to your own files on Google Drive — \"Open all\" opens multiple tabs, and your browser may ask permission to allow pop-ups.",
@@ -381,6 +387,7 @@ function applyLanguage(){
   document.getElementById("sincText").textContent = dict.sincText;
   document.getElementById("empty").textContent = dict.emptyMsg;
   document.getElementById("siteFooter").textContent = dict.footer;
+  document.getElementById("catalogLabel").textContent = dict.catalogLink;
   document.getElementById("langBtnLabel").textContent = dict.langLabel;
   try{ localStorage.setItem("hub-lang", currentLang); }catch(e){}
   if(typeof renderCatsNav === "function") renderCatsNav();

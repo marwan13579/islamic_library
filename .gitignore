@@ -8,3 +8,9 @@ dist/
 .env*
 !.env.example
 .vercel
+
+# Local Netlify folder
+.netlify
+
+# Python bytecode
+__pycache__/
