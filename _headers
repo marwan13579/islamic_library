@@ -1,0 +1,15 @@
+/*
+  ترويسات أمان للمضيفات الثابتة (Netlify / Cloudflare Pages).
+  على Vercel انقلها إلى vercel.json بنفس القيم.
+*/
+
+X-Content-Type-Options: nosniff
+X-Frame-Options: SAMEORIGIN
+Referrer-Policy: strict-origin-when-cross-origin
+Permissions-Policy: geolocation=(self), notifications=(self), camera=(), microphone=(self)
+
+/sw.js
+  Cache-Control: no-cache
+
+/manifest.webmanifest
+  Content-Type: application/manifest+json; charset=UTF-8

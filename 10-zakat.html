@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<script src="calculations.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حاسبة الزكاة</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:40ch;margin:.4rem auto 0}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+  .card h2{font-family:"Amiri",serif;font-size:1.1rem;margin:0 0 12px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:5px}
+  .field input{
+    width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.95rem;
+  }
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+
+  .resultbox{
+    background:var(--green-soft);border:1px solid var(--green);border-radius:14px;
+    padding:20px;text-align:center;margin:20px 0;
+  }
+  .resultbox .amt{font-family:"Amiri",serif;font-size:2.2rem;color:var(--green);margin:0}
+  .resultbox .lbl{font-size:.85rem;color:var(--ink-soft);margin-top:4px}
+  .resultbox.no{background:var(--paper-2);border-color:var(--line)}
+  .resultbox.no .amt{color:var(--ink-soft);font-size:1.3rem}
+
+  .note{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:14px 0}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>حاسبة الزكاة</h1>
+  <p>احسب زكاة مالك بسهولة — أدخل أرقامك وسعر جرام الذهب اليوم، والباقي عليها.</p>
+</header>
+
+<div class="card">
+  <h2>سعر الذهب اليوم</h2>
+  <div class="field">
+    <label for="goldPrice">سعر جرام الذهب عيار ٢١ (بعملتك)</label>
+    <input id="goldPrice" type="number" min="0" placeholder="مثال: 3500" inputmode="decimal">
+  </div>
+  <p class="note" style="margin:0">النصاب = ٨٥ جرام ذهب × سعر الجرام. أدخل السعر الحالي من أي موقع أسعار ذهب موثوق في بلدك ليكون الحساب دقيقًا.</p>
+</div>
+
+<div class="card">
+  <h2>أموالك الزكوية</h2>
+  <div class="field">
+    <label for="cash">النقود والأرصدة البنكية</label>
+    <input id="cash" type="number" min="0" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="field">
+    <label for="goldValue">قيمة الذهب والفضة المدَّخرة (غير المستخدمة للُبس المعتاد)</label>
+    <input id="goldValue" type="number" min="0" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="field">
+    <label for="trade">عروض التجارة (بضاعة معدّة للبيع بسعر السوق)</label>
+    <input id="trade" type="number" min="0" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="field">
+    <label for="debtsOwed">ديون لك على آخرين تتوقع تحصيلها</label>
+    <input id="debtsOwed" type="number" min="0" placeholder="0" inputmode="decimal">
+  </div>
+  <div class="field">
+    <label for="debtsOwe">ديون عليك حالّة (مستحقة الآن)</label>
+    <input id="debtsOwe" type="number" min="0" placeholder="0" inputmode="decimal">
+  </div>
+</div>
+
+<div id="result"></div>
+
+<div class="card">
+  <h2>🥇 حاسب الذهب بالجرامات (أعيرة ٢٤/٢١/١٨)</h2>
+  <div class="row2">
+    <div class="field"><label for="karat">العيار</label>
+      <select id="karat"><option value="24">٢٤</option><option value="21" selected>٢١</option><option value="18">١٨</option></select></div>
+    <div class="field"><label for="grams">الوزن (جرام)</label>
+      <input id="grams" type="number" min="0" placeholder="0" inputmode="decimal"></div>
+  </div>
+  <p class="msg" id="goldCalcMsg" style="font-size:.82rem;color:var(--ink-soft);margin:0 0 8px"></p>
+  <button class="addbtn" id="goldApply" type="button" style="font-family:Cairo;font-weight:700;background:var(--ink);color:var(--paper);border:0;padding:9px 20px;border-radius:999px;cursor:pointer">أضف قيمته للحساب أعلاه</button>
+</div>
+
+<div class="card">
+  <h2>🌾 زكاة الفطر</h2>
+  <div class="row2">
+    <div class="field"><label for="fitrPersons">عدد الأشخاص (أنت ومن تعول)</label>
+      <input id="fitrPersons" type="number" min="1" value="1" inputmode="numeric"></div>
+    <div class="field"><label for="fitrAmount">قيمة الفرد (بعملتك)</label>
+      <input id="fitrAmount" type="number" min="0" placeholder="0" inputmode="decimal"></div>
+  </div>
+  <p id="fitrResult" style="font-family:'Amiri',serif;font-size:1.2rem;color:var(--green);text-align:center;margin:8px 0"></p>
+  <p style="font-size:.8rem;color:var(--ink-soft);margin:0">زكاة الفطر صاع من طعام أهل البلد (نحو ٢.٥–٣ كجم تقريبًا) عن كل فرد، وتُخرج قبل صلاة العيد. قيمة الفرد تعلنها عادةً دار الإفتاء أو الجهة الدينية في بلدك، فأدخل المبلغ المعلن محليًا.</p>
+</div>
+
+<div class="note">
+هذه الحاسبة للأموال (النقود والذهب والتجارة) فقط بالنسبة الشائعة ٢.٥٪، ولا تشمل زكاة الزروع والثمار والأنعام والمعادن التي لها أحكام مختلفة. الزكاة تجب إذا بلغ صافي مالك النصاب وحال عليه حول هجري كامل (نحو ٣٥٤ يومًا) وهو في ملكك. لا تُحتسب أدوات الاستخدام الشخصي (كالمسكن والسيارة والأثاث) ولا الذهب المعتاد لبسه عند جمهور العلماء. للحالات الخاصة أو المعقدة استشر عالمًا موثوقًا.
+</div>
+
+<footer>وَآتُوا الزَّكَاةَ ۚ وَمَا تُقَدِّمُوا لِأَنفُسِكُم مِّنْ خَيْرٍ تَجِدُوهُ عِندَ اللَّهِ</footer>
+</div>
+
+<script>
+const {calculateZakat,calculateGoldValue,calculateFitr}=IslamicCalculations;
+const ids=["goldPrice","cash","goldValue","trade","debtsOwed","debtsOwe"];
+function num(id){ const v=parseFloat(document.getElementById(id).value); return isNaN(v)?0:v; }
+
+function calc(){
+  const goldPrice = num("goldPrice");
+  const result=calculateZakat({goldPrice,cash:num("cash"),goldValue:num("goldValue"),trade:num("trade"),debtsOwed:num("debtsOwed"),debtsOwe:num("debtsOwe")});
+  const box = document.getElementById("result");
+
+  if(result.status==="missing-gold-price"){
+    box.innerHTML = '<div class="resultbox no"><p class="amt">أدخل سعر الذهب</p><p class="lbl">لحساب النصاب بدقة</p></div>';
+    return;
+  }
+  if(result.status==="below-nisab"){
+    box.innerHTML = '<div class="resultbox no"><p class="amt">لا تجب عليك زكاة الآن</p>'+
+      '<p class="lbl">صافي مالك '+result.netWealth.toLocaleString()+' أقل من النصاب ('+Math.round(result.nisab).toLocaleString()+')</p></div>';
+    return;
+  }
+  box.innerHTML = '<div class="resultbox"><p class="amt">'+result.amount.toLocaleString(undefined,{maximumFractionDigits:2})+'</p>'+
+    '<p class="lbl">مقدار الزكاة الواجبة (٢.٥٪ من '+result.netWealth.toLocaleString()+')، بشرط مرور حول هجري كامل على هذا المال</p></div>';
+}
+
+ids.forEach(id=>document.getElementById(id).addEventListener("input",calc));
+calc();
+
+/* gold by grams: converts any karat to its value using the 21k gram price entered above */
+document.getElementById("goldApply").addEventListener("click",()=>{
+  const price21=num("goldPrice");
+  const karat=parseInt(document.getElementById("karat").value);
+  const grams=parseFloat(document.getElementById("grams").value)||0;
+  const msg=document.getElementById("goldCalcMsg");
+  if(price21<=0){ msg.textContent="أدخل سعر جرام الذهب عيار ٢١ في الأعلى أولًا."; return; }
+  if(grams<=0){ msg.textContent="أدخل الوزن بالجرام."; return; }
+  const value = calculateGoldValue(grams,karat,price21);
+  if(value===null){ msg.textContent="تحقق من الوزن والعيار والسعر."; return; }
+  const cur=num("goldValue");
+  document.getElementById("goldValue").value = Math.round((cur+value)*100)/100;
+  msg.textContent="أُضيف "+value.toLocaleString(undefined,{maximumFractionDigits:2})+" إلى قيمة الذهب والفضة.";
+  calc();
+});
+
+/* Zakat al-Fitr */
+function calcFitr(){
+  const p=parseInt(document.getElementById("fitrPersons").value)||0;
+  const a=parseFloat(document.getElementById("fitrAmount").value)||0;
+  const box=document.getElementById("fitrResult");
+  const total=calculateFitr(p,a);
+  box.textContent = (p>0&&a>0) ? "إجمالي زكاة الفطر: "+total.toLocaleString(undefined,{maximumFractionDigits:2}) : "";
+}
+["fitrPersons","fitrAmount"].forEach(id=>document.getElementById(id).addEventListener("input",calcFitr));
+</script>
+</body>
+</html>

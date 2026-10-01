@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>لا يوجد اتصال — المكتبة الإسلامية</title>
+<meta name="theme-color" content="#0b3d2c">
+<link rel="icon" href="./icons/favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png">
+<link rel="stylesheet" href="./src/site/site.css">
+<style>
+  body{display:grid;place-items:center;min-height:100dvh;margin:0;padding:24px;text-align:center}
+  .box{max-width:44ch;display:grid;gap:14px;justify-items:center}
+  .box .emoji{font-size:3.4rem}
+  .links{display:grid;gap:8px;width:100%;margin-block-start:8px}
+  a.btn{text-decoration:none;display:block}
+</style>
+</head>
+<body>
+  <main class="box">
+    <span class="emoji" aria-hidden="true">📴</span>
+    <h1>أنت غير متصل بالإنترنت</h1>
+    <p>هذه الصفحة تحتاج اتصالًا. لكن هذه المزايا تعمل بدون إنترنت:</p>
+    <div class="cards-grid">
+      <a class="btn primary" href="./src/app/app.html#tab/quran">📖 المصحف (السور المخزّنة)</a>
+      <a class="btn primary" href="./src/app/app.html#tab/athkar">🕌 الأذكار والسبحة</a>
+      <a class="btn primary" href="./src/app/app.html#tab/zakat">🧮 حاسبة الزكاة</a>
+      <a class="btn primary" href="src/site/noor.html">📚 موقع نور الهدى</a>
+      <a class="btn primary" href="./index.html">📖 فهرس المكتبة</a>
+    </div>
+    <p class="note-line">القبلة ومواقيت الصلاة والبحث في المصحف تحتاج اتصالًا.</p>
+    <button class="btn ghost" onclick="location.reload()">🔄 إعادة المحاولة</button>
+  </main>
+</body>
+</html>

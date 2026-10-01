@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>ورد القراءة اليومي</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:38ch;margin:.4rem auto 0}
+
+  .goalcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:20px 0}
+  .goalcard h2{font-family:"Amiri",serif;font-size:1.1rem;margin:0 0 10px}
+  .goalrow{display:flex;gap:8px;flex-wrap:wrap}
+  .gbtn{font-family:"Cairo";font-weight:600;font-size:.82rem;padding:7px 14px;border-radius:999px;
+    background:var(--paper-2);border:1px solid var(--line);color:var(--ink);cursor:pointer}
+  .gbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .customgoal{display:flex;align-items:center;gap:8px;margin-top:10px}
+  .customgoal input{width:70px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";text-align:center}
+
+  .todaybox{background:var(--green-soft);border:1px solid var(--green);border-radius:16px;padding:22px;text-align:center;margin:20px 0}
+  .todaybox .big{font-family:"Amiri",serif;font-size:2.4rem;color:var(--green);margin:6px 0}
+  .todaybox .sub{font-size:.85rem;color:var(--ink-soft)}
+  .plusrow{display:flex;gap:8px;justify-content:center;margin-top:14px;flex-wrap:wrap}
+  .plusbtn{font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);border:0;
+    padding:10px 18px;border-radius:999px;cursor:pointer;font-size:.9rem}
+  .plusbtn.secondary{background:var(--card);color:var(--ink);border:1px solid var(--line)}
+
+  .stats{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:18px 0}
+  .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 18px;text-align:center;min-width:90px}
+  .stat b{display:block;font-size:1.3rem;font-family:"Amiri",serif;color:var(--gold)}
+  .stat span{font-size:.72rem;color:var(--ink-soft)}
+
+  h2.h{font-family:"Amiri",serif;font-size:1.2rem;margin:24px 0 10px}
+  .week{display:flex;gap:6px;justify-content:space-between}
+  .wday{flex:1;text-align:center;background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 4px}
+  .wday.done{background:var(--green-soft);border-color:var(--green)}
+  .wday .lbl{font-size:.7rem;color:var(--ink-soft)}
+  .wday .val{font-family:"Amiri",serif;font-size:1rem;margin-top:2px}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>ورد القراءة اليومي</h1>
+  <p>حدّد وِردك اليومي من القرآن وتابع قراءتك — منفصل عن متابعة الحفظ.</p>
+</header>
+
+<div class="goalcard">
+  <h2>هدفك اليومي (بالصفحات)</h2>
+  <div class="goalrow" id="goalRow"></div>
+  <div class="customgoal">
+    <label for="customInput">أو حدد رقمًا مخصصًا:</label>
+    <input id="customInput" type="number" min="1">
+  </div>
+</div>
+
+<div class="todaybox">
+  <p class="sub">قراءة اليوم</p>
+  <p class="big" id="todayCount">0 / 0</p>
+  <div class="plusrow" id="plusRow"></div>
+</div>
+
+<div class="stats">
+  <b id="statStreak"></b>
+  <div class="stat"><b id="stStreak">0</b><span>يوم متتالي</span></div>
+  <div class="stat"><b id="stTotal">0</b><span>إجمالي الصفحات</span></div>
+  <div class="stat"><b id="stAvg">0</b><span>متوسط يومي (٧ أيام)</span></div>
+</div>
+
+<h2 class="h">آخر ٧ أيام</h2>
+<div class="week" id="week"></div>
+
+<footer>وَرَتِّلِ الْقُرْآنَ تَرْتِيلًا</footer>
+</div>
+
+<script>
+let goal = Number(localStorage.getItem("wird-goal")||5);
+let log = {};
+try{ log = JSON.parse(localStorage.getItem("wird-log")||"{}"); }catch(e){ log={}; }
+
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+function save(){
+  try{
+    localStorage.setItem("wird-goal", String(goal));
+    localStorage.setItem("wird-log", JSON.stringify(log));
+  }catch(e){}
+}
+
+const GOALS=[1,3,5,10,20];
+function renderGoals(){
+  const row=document.getElementById("goalRow");
+  row.innerHTML="";
+  GOALS.forEach(g=>{
+    const b=document.createElement("button");
+    b.className="gbtn"; b.type="button"; b.textContent=g+" صفحات";
+    b.setAttribute("aria-pressed", g===goal?"true":"false");
+    b.addEventListener("click",()=>{ goal=g; save(); renderAll(); });
+    row.appendChild(b);
+  });
+  document.getElementById("customInput").value = GOALS.includes(goal) ? "" : goal;
+}
+document.getElementById("customInput").addEventListener("input",e=>{
+  const v=parseInt(e.target.value);
+  if(v>0){ goal=v; save(); renderGoals(); renderToday(); renderStats(); renderWeek(); }
+});
+
+function renderToday(){
+  const k=todayKey();
+  const val = log[k]||0;
+  document.getElementById("todayCount").textContent = val+" / "+goal;
+  const box = document.querySelector(".todaybox");
+  box.style.background = val>=goal ? "var(--green-soft)" : "";
+}
+
+function renderPlus(){
+  const row=document.getElementById("plusRow");
+  row.innerHTML="";
+  [1,5,("+ كل الهدف")].forEach((v,i)=>{
+    const b=document.createElement("button");
+    b.className="plusbtn"+(i>0?" secondary":"");
+    b.type="button";
+    b.textContent = i<2 ? "+"+v+" صفحة"+(v>1?"":"") : v;
+    b.addEventListener("click",()=>{
+      const k=todayKey();
+      if(i===2){ log[k]=goal; } else { log[k]=(log[k]||0)+v; }
+      save(); renderAll();
+    });
+    row.appendChild(b);
+  });
+  const rst=document.createElement("button");
+  rst.className="plusbtn secondary"; rst.type="button"; rst.textContent="تصفير اليوم";
+  rst.addEventListener("click",()=>{ log[todayKey()]=0; save(); renderAll(); });
+  row.appendChild(rst);
+}
+
+function computeStreak(){
+  let streak=0;
+  let d=new Date();
+  while(true){
+    const k=d.toISOString().slice(0,10);
+    if((log[k]||0) >= goal){ streak++; d.setDate(d.getDate()-1); }
+    else break;
+  }
+  return streak;
+}
+
+function renderStats(){
+  document.getElementById("stStreak").textContent = computeStreak();
+  const total = Object.values(log).reduce((s,v)=>s+v,0);
+  document.getElementById("stTotal").textContent = total;
+  let last7=0;
+  const d=new Date();
+  for(let i=0;i<7;i++){
+    const k=new Date(d.getFullYear(),d.getMonth(),d.getDate()-i).toISOString().slice(0,10);
+    last7 += log[k]||0;
+  }
+  document.getElementById("stAvg").textContent = (last7/7).toFixed(1);
+}
+
+function renderWeek(){
+  const box=document.getElementById("week");
+  box.innerHTML="";
+  const days=["أحد","إثن","ثلا","أرب","خمي","جمع","سبت"];
+  const d=new Date();
+  const arr=[];
+  for(let i=6;i>=0;i--){
+    const dd=new Date(d.getFullYear(),d.getMonth(),d.getDate()-i);
+    arr.push(dd);
+  }
+  arr.forEach(dd=>{
+    const k=dd.toISOString().slice(0,10);
+    const val=log[k]||0;
+    const el=document.createElement("div");
+    el.className="wday"+(val>=goal?" done":"");
+    el.innerHTML='<div class="lbl">'+days[dd.getDay()]+'</div><div class="val">'+val+'</div>';
+    box.appendChild(el);
+  });
+}
+
+function renderAll(){ renderGoals(); renderToday(); renderPlus(); renderStats(); renderWeek(); }
+renderAll();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+<div id="backupWidget" style="max-width:640px;margin:24px auto 0;padding:0 16px">
+  <details style="background:var(--card,#FFFAF0);border:1px solid var(--line,rgba(19,50,44,.14));border-radius:14px;padding:14px 16px">
+    <summary style="cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:var(--ink,#13322C)">💾 نسخة احتياطية لبياناتك</summary>
+    <p style="font-size:.82rem;color:var(--ink-soft,#3D5B53);margin:10px 0">صدّر تقدّمك في هذه الصفحة كملف، أو استورد نسخة سابقة.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button id="backupExport" type="button" style="font-family:'Cairo';font-weight:600;font-size:.8rem;background:var(--ink,#13322C);color:var(--paper,#F6EFDF);border:0;padding:8px 16px;border-radius:999px;cursor:pointer">تصدير نسخة احتياطية</button>
+      <label style="font-family:'Cairo';font-weight:600;font-size:.8rem;background:var(--paper-2,#EFE5CF);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));padding:8px 16px;border-radius:999px;cursor:pointer">
+        استيراد نسخة
+        <input id="backupImport" type="file" accept="application/json" style="display:none">
+      </label>
+    </div>
+    <p id="backupMsg" style="font-size:.78rem;color:var(--ink-soft,#3D5B53);margin:8px 0 0"></p>
+  </details>
+</div>
+<script>
+(function(){
+  function pageKey(){
+    return (location.pathname.split("/").pop()||"page").replace(/\.html?$/,"");
+  }
+  var expBtn=document.getElementById("backupExport");
+  var impInput=document.getElementById("backupImport");
+  var msg=document.getElementById("backupMsg");
+  if(expBtn){
+    expBtn.addEventListener("click", function(){
+      var data={};
+      try{
+        for(var i=0;i<localStorage.length;i++){
+          var k=localStorage.key(i);
+          data[k]=localStorage.getItem(k);
+        }
+      }catch(e){}
+      var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download=pageKey()+"-backup.json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      if(msg) msg.textContent="تم تصدير النسخة الاحتياطية.";
+    });
+  }
+  if(impInput){
+    impInput.addEventListener("change", function(e){
+      var file=e.target.files[0];
+      if(!file) return;
+      var reader=new FileReader();
+      reader.onload=function(ev){
+        try{
+          var data=JSON.parse(ev.target.result);
+          Object.keys(data).forEach(function(k){ localStorage.setItem(k, data[k]); });
+          if(msg) msg.textContent="تم الاستيراد بنجاح — أعد تحميل الصفحة لرؤية بياناتك.";
+        }catch(err){
+          if(msg) msg.textContent="ملف غير صالح.";
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+})();
+</script>
+</body>
+</html>

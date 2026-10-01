@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<script src="khatma-core.js"></script>
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#13322c">
+<title>الختمة الجماعية | المكتبة الإسلامية</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+:root{--paper:#f6efdf;--paper-2:#efe5cf;--ink:#13322c;--ink-soft:#3d5b53;--gold:#9c7420;--gold-soft:#c9a24b;--line:rgba(19,50,44,.14);--card:#fffaF0;--green:#2f6b4f;--green-soft:#dceae0;box-sizing:border-box;color-scheme:light}
+:root[data-theme="dark"]{--paper:#0c201c;--paper-2:#102a25;--ink:#efe3c9;--ink-soft:#a9bdb4;--gold:#d3ae62;--gold-soft:#8c6f2e;--line:rgba(239,227,201,.16);--card:#122e28;--green:#5fa787;--green-soft:#173a30;color-scheme:dark}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;min-height:100vh;background:var(--paper);color:var(--ink);font-family:"Cairo",sans-serif;line-height:1.7}
+.wrap{width:min(100% - 28px,980px);margin-inline:auto;padding:30px 0 64px}
+header{text-align:center;padding:12px 0 24px;border-bottom:1px solid var(--line)}
+h1,h2,.juz-number{font-family:"Amiri",serif}
+h1{margin:0;color:var(--gold);font-size:2rem}
+header p{margin:6px auto 0;max-width:58ch;color:var(--ink-soft);font-size:.9rem}
+.panel{margin-top:18px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:14px;box-shadow:0 4px 18px rgba(19,50,44,.06)}
+.summary{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:14px}
+.progress-copy{display:flex;justify-content:space-between;gap:8px;font-weight:700;font-size:.88rem}
+.progress-track{height:9px;margin-top:8px;overflow:hidden;border-radius:99px;background:var(--paper-2)}
+.progress-track span{display:block;height:100%;width:0;background:var(--green);transition:width .2s}
+.progress-percent{font-family:"Amiri",serif;font-size:1.3rem;color:var(--gold);white-space:nowrap}
+.form-row{display:flex;gap:10px;align-items:end;flex-wrap:wrap}
+.field{display:grid;gap:5px;flex:1 1 180px}
+label{font-size:.8rem;font-weight:700;color:var(--ink-soft)}
+input,select,button{font:inherit}
+input,select{min-width:0;padding:9px 11px;border:1px solid var(--line);border-radius:8px;background:var(--paper);color:var(--ink)}
+button{min-height:40px;padding:8px 13px;border:1px solid var(--line);border-radius:8px;background:var(--paper-2);color:var(--ink);font-weight:700;cursor:pointer}
+button:hover{border-color:var(--gold)}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
+.primary{background:var(--green);border-color:var(--green);color:#fff}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}
+.people{display:flex;gap:7px;flex-wrap:wrap;margin-top:12px}
+.person{display:flex;align-items:center;gap:5px;padding:3px 6px 3px 10px;border:1px solid var(--line);border-radius:99px;background:var(--paper-2);font-size:.78rem}
+.person button{min-height:27px;padding:2px 7px;border:0;background:transparent;color:var(--ink-soft)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:10px;margin-top:16px}
+.juz{display:grid;gap:8px;align-content:start;padding:12px;background:var(--card);border:1px solid var(--line);border-radius:10px}
+.juz.done{border-color:var(--green);background:var(--green-soft)}
+.juz-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px}
+.juz-number{font-size:1.35rem;font-weight:700}
+.status{font-size:.72rem;color:var(--ink-soft)}
+.juz select{width:100%;font-size:.82rem}
+.juz button{width:100%;min-height:36px;font-size:.8rem}
+.message{min-height:1.5em;margin:8px 0 0;color:var(--ink-soft);font-size:.8rem}
+.empty{grid-column:1/-1;text-align:center;padding:20px;color:var(--ink-soft)}
+@media(max-width:520px){.wrap{width:min(100% - 20px,980px);padding-top:22px}.panel{padding:14px}.grid{grid-template-columns:repeat(2,minmax(0,1fr))}.summary{grid-template-columns:1fr auto}}
+</style>
+</head>
+<body class="has-back-link">
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+<div class="wrap">
+<header>
+  <h1>الختمة الجماعية</h1>
+  <p>قسّم أجزاء القرآن بين المشاركين، وتابع الإنجاز والإهداء من مكان واحد.</p>
+</header>
+<section class="panel" aria-labelledby="progressTitle">
+  <div class="summary">
+    <div>
+      <div class="progress-copy"><span id="progressTitle">تقدم الختمة</span><span id="progressText">٠ من ٣٠ جزءًا</span></div>
+      <div class="progress-track" role="progressbar" aria-label="نسبة إنجاز الختمة" aria-valuemin="0" aria-valuemax="30" aria-valuenow="0"><span id="progressBar"></span></div>
+    </div>
+    <div class="progress-percent" id="progressPercent">٠٪</div>
+  </div>
+</section>
+<section class="panel" aria-labelledby="participantsTitle">
+  <h2 id="participantsTitle">المشاركون والتوزيع</h2>
+  <form class="form-row" id="participantForm">
+    <div class="field"><label for="participantName">اسم مشارك</label><input id="participantName" maxlength="30" autocomplete="name" placeholder="أضف اسمًا"></div>
+    <button class="primary" type="submit">إضافة</button>
+  </form>
+  <div class="people" id="participants"></div>
+  <div class="grid" id="juzGrid"></div>
+  <p class="message" id="message" role="status" aria-live="polite"></p>
+</section>
+<section class="panel">
+  <div class="field"><label for="dedication">الإهداء</label><input id="dedication" maxlength="100" placeholder="إهداء الختمة"></div>
+  <div class="actions">
+    <button type="button" id="shareButton">مشاركة التقدم</button>
+    <button type="button" id="resetButton">تصفير الختمة</button>
+  </div>
+</section>
+</div>
+<script>
+const STORAGE_KEY="khatma_state";
+const ASSIGNEES_KEY="khatma_assignees";
+let state=IslamicKhatma.createState(
+  localStorage.getItem(STORAGE_KEY),
+  localStorage.getItem(ASSIGNEES_KEY),
+  localStorage.getItem("khatma_dedication")
+);
+const grid=document.getElementById("juzGrid");
+const participants=document.getElementById("participants");
+const message=document.getElementById("message");
+const digits="٠١٢٣٤٥٦٧٨٩";
+const toArabic=value=>String(value).replace(/\d/g,digit=>digits[digit]);
+
+function save(){
+  const legacy=IslamicKhatma.toLegacy(state);
+  try{
+    localStorage.setItem(STORAGE_KEY,JSON.stringify(legacy.completed));
+    localStorage.setItem(ASSIGNEES_KEY,JSON.stringify(legacy.assignees));
+    localStorage.setItem("khatma_dedication",legacy.dedication);
+  }catch(error){}
+}
+function renderSummary(){
+  const progress=IslamicKhatma.progress(state);
+  document.getElementById("progressText").textContent=toArabic(progress.completed)+" من "+toArabic(progress.total)+" جزءًا";
+  document.getElementById("progressPercent").textContent=toArabic(progress.percent)+"٪";
+  document.getElementById("progressBar").style.width=progress.percent+"%";
+  document.querySelector('[role="progressbar"]').setAttribute("aria-valuenow",String(progress.completed));
+}
+function renderParticipants(){
+  participants.replaceChildren();
+  if(!state.participants.length){
+    const note=document.createElement("span");note.className="status";note.textContent="أضف أسماء المشاركين لتوزيع الأجزاء.";participants.append(note);return;
+  }
+  state.participants.forEach(name=>{
+    const chip=document.createElement("span");chip.className="person";
+    const label=document.createElement("span");label.textContent=name;
+    const remove=document.createElement("button");remove.type="button";remove.textContent="×";remove.setAttribute("aria-label","حذف المشارك "+name);
+    remove.addEventListener("click",()=>{
+      state.participants=state.participants.filter(person=>person!==name);
+      state.juz.forEach(part=>{if(part.assignee===name)part.assignee="";});
+      save();render();
+    });
+    chip.append(label,remove);participants.append(chip);
+  });
+}
+function renderGrid(){
+  grid.replaceChildren();
+  state.juz.forEach((part,index)=>{
+    const card=document.createElement("article");card.className="juz"+(part.completed?" done":"");
+    const head=document.createElement("div");head.className="juz-head";
+    const title=document.createElement("span");title.className="juz-number";title.textContent="الجزء "+toArabic(index+1);
+    const status=document.createElement("span");status.className="status";status.textContent=part.completed?"مكتمل":"قيد القراءة";
+    head.append(title,status);
+    const select=document.createElement("select");select.setAttribute("aria-label","المشارك في الجزء "+toArabic(index+1));
+    const empty=document.createElement("option");empty.value="";empty.textContent="دون تعيين";select.append(empty);
+    state.participants.forEach(name=>{const option=document.createElement("option");option.value=name;option.textContent=name;select.append(option);});
+    select.value=part.assignee;
+    select.addEventListener("change",()=>{IslamicKhatma.assign(state,index,select.value);save();renderParticipants();renderGrid();});
+    const toggle=document.createElement("button");toggle.type="button";toggle.setAttribute("aria-pressed",String(part.completed));toggle.textContent=part.completed?"تمت القراءة ✓":"تحديد كمكتمل";
+    toggle.addEventListener("click",()=>{IslamicKhatma.toggle(state,index);save();render();});
+    card.append(head,select,toggle);grid.append(card);
+  });
+}
+function render(){renderSummary();renderParticipants();renderGrid();}
+
+document.getElementById("participantForm").addEventListener("submit",event=>{
+  event.preventDefault();
+  const input=document.getElementById("participantName");
+  const name=input.value.trim().slice(0,30);
+  if(!name){message.textContent="اكتب اسم المشارك أولًا.";return;}
+  if(state.participants.includes(name)){message.textContent="هذا المشارك موجود بالفعل.";return;}
+  state.participants.push(name);input.value="";message.textContent="تمت إضافة المشارك.";save();render();
+});
+document.getElementById("dedication").value=state.dedication;
+document.getElementById("dedication").addEventListener("input",event=>{state.dedication=event.target.value.slice(0,100);save();});
+document.getElementById("resetButton").addEventListener("click",()=>{
+  if(!confirm("تصفير تقدم الختمة والتوزيع؟"))return;
+  state=IslamicKhatma.createState(null,null,document.getElementById("dedication").value);save();message.textContent="تم تصفير تقدم الختمة.";render();
+});
+function encodeText(text){const bytes=new TextEncoder().encode(text);let binary="";bytes.forEach(byte=>binary+=String.fromCharCode(byte));return btoa(binary);}
+function decodeText(text){const binary=atob(text);const bytes=Uint8Array.from(binary,char=>char.charCodeAt(0));return new TextDecoder().decode(bytes);}
+function shareUrl(){const legacy=IslamicKhatma.toLegacy(state);return new URLSearchParams({khatma:encodeText(JSON.stringify({s:legacy.completed,a:legacy.assignees,d:legacy.dedication}))});}
+document.getElementById("shareButton").addEventListener("click",async()=>{
+  const url=new URL(location.href);url.search=shareUrl().toString();
+  try{
+    if(navigator.share) await navigator.share({title:"الختمة الجماعية",url:url.href});
+    else{await navigator.clipboard.writeText(url.href);message.textContent="تم نسخ رابط الختمة.";}
+  }catch(error){if(error.name!=="AbortError")message.textContent="تعذر مشاركة الرابط؛ تحقق من صلاحية الحافظة.";}
+});
+(function importSharedState(){
+  const encoded=new URLSearchParams(location.search).get("khatma");
+  if(!encoded)return;
+  try{
+    const shared=JSON.parse(decodeText(encoded));
+    if(!Array.isArray(shared.s)||shared.s.length!==30)throw new Error("Invalid shared khatma");
+    state=IslamicKhatma.createState(shared.s,shared.a,shared.d);
+    document.getElementById("dedication").value=state.dedication;save();message.textContent="تم تحميل الختمة المشتركة.";
+    history.replaceState(null,"",location.pathname);
+  }catch(error){message.textContent="رابط الختمة غير صالح.";}
+})();
+render();
+</script>
+<script src="hub-return.js"></script>
+</body>
+</html>

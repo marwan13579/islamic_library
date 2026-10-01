@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دفتر التدبر</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:40ch;margin:.4rem auto 0}
+
+  .newbtn{display:block;margin:20px auto;font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);
+    border:0;padding:11px 24px;border-radius:999px;cursor:pointer;font-size:.92rem}
+
+  .form{background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;padding:18px;margin-bottom:20px}
+  .form h2{font-family:"Amiri",serif;font-size:1.15rem;margin:0 0 12px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:10px}
+  .form input,.form textarea{
+    width:100%;padding:10px 14px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.92rem;
+  }
+  .form textarea{min-height:110px;resize:vertical;font-family:"Cairo"}
+  .form label{display:block;font-size:.8rem;color:var(--ink-soft);margin-bottom:4px}
+  .formbtns{display:flex;gap:8px;margin-top:10px}
+  .savebtn{font-family:"Cairo";font-weight:700;background:var(--green);color:#fff;border:0;
+    padding:9px 20px;border-radius:999px;cursor:pointer}
+  .cancelbtn{font-family:"Cairo";font-weight:600;background:none;border:1px solid var(--line);color:var(--ink-soft);
+    padding:9px 20px;border-radius:999px;cursor:pointer}
+
+  .search{display:block;width:100%;padding:10px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-family:"Cairo";font-size:.9rem;margin-bottom:16px}
+
+  .entries{display:flex;flex-direction:column;gap:12px}
+  .entry{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .entry .ref{font-family:"Amiri",serif;font-size:1.1rem;color:var(--gold);margin:0 0 6px}
+  .entry .date{font-size:.75rem;color:var(--ink-soft);float:left}
+  .entry .note{margin:8px 0 0;font-size:.92rem;white-space:pre-wrap}
+  .entry .actions{display:flex;gap:10px;margin-top:10px}
+  .entry .actions button{background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:.8rem;font-family:"Cairo"}
+  .empty{text-align:center;color:var(--ink-soft);font-size:.9rem;padding:30px 0}
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>دفتر التدبر</h1>
+  <p>اكتب خواطرك وتأملاتك وأنت تقرأ القرآن، مربوطة بالسورة والآية.</p>
+</header>
+
+<input class="search" id="search" type="search" placeholder="ابحث في ملاحظاتك..." aria-label="ابحث في ملاحظات التدبر">
+<button class="newbtn" id="newBtn" type="button">+ إضافة تدبر جديد</button>
+
+<div class="form" id="form" hidden>
+  <h2 id="formTitle">تدبر جديد</h2>
+  <div class="row2">
+    <div><label for="fSurah">السورة</label><input id="fSurah" type="text" placeholder="مثال: البقرة"></div>
+    <div><label for="fAyah">رقم الآية (أو المدى)</label><input id="fAyah" type="text" placeholder="مثال: 255 أو 1-5"></div>
+  </div>
+  <label for="fNote">خاطرتك</label>
+  <textarea id="fNote" placeholder="ماذا لمس قلبك في هذه الآية؟"></textarea>
+  <div class="formbtns">
+    <button class="savebtn" id="saveBtn" type="button">حفظ</button>
+    <button class="cancelbtn" id="cancelBtn" type="button">إلغاء</button>
+  </div>
+</div>
+
+<div class="entries" id="entries"></div>
+<p class="empty" id="empty" hidden>لا توجد ملاحظات بعد — ابدأ بإضافة أول تدبر لك.</p>
+
+<footer>أَفَلَا يَتَدَبَّرُونَ الْقُرْآنَ أَمْ عَلَىٰ قُلُوبٍ أَقْفَالُهَا</footer>
+</div>
+
+<script>
+let entries=[];
+try{ entries = JSON.parse(localStorage.getItem("tadabbur-entries")||"[]"); }catch(e){ entries=[]; }
+let editingId=null;
+
+function save(){ try{ localStorage.setItem("tadabbur-entries", JSON.stringify(entries)); }catch(e){} }
+function escapeHtml(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+function fmtDate(ts){ const d=new Date(ts); return d.toLocaleDateString("ar-EG",{year:"numeric",month:"long",day:"numeric"}); }
+
+function showForm(entry){
+  document.getElementById("form").hidden=false;
+  document.getElementById("formTitle").textContent = entry ? "تعديل التدبر" : "تدبر جديد";
+  document.getElementById("fSurah").value = entry ? entry.surah : "";
+  document.getElementById("fAyah").value = entry ? entry.ayah : "";
+  document.getElementById("fNote").value = entry ? entry.note : "";
+  editingId = entry ? entry.id : null;
+  document.getElementById("form").scrollIntoView({behavior:"smooth"});
+}
+function hideForm(){ document.getElementById("form").hidden=true; editingId=null; }
+
+document.getElementById("newBtn").addEventListener("click",()=>showForm(null));
+document.getElementById("cancelBtn").addEventListener("click",hideForm);
+
+document.getElementById("saveBtn").addEventListener("click",()=>{
+  const surah=document.getElementById("fSurah").value.trim();
+  const ayah=document.getElementById("fAyah").value.trim();
+  const note=document.getElementById("fNote").value.trim();
+  if(!surah || !note) return;
+  if(editingId){
+    const e=entries.find(x=>x.id===editingId);
+    e.surah=surah; e.ayah=ayah; e.note=note; e.ts=Date.now();
+  } else {
+    entries.unshift({id:Date.now()+Math.random(), surah, ayah, note, ts:Date.now()});
+  }
+  save(); hideForm(); render();
+});
+
+function render(filter){
+  const f=(filter||"").trim();
+  const list = entries.filter(e=> !f || (e.surah+e.ayah+e.note).includes(f));
+  const box=document.getElementById("entries");
+  const empty=document.getElementById("empty");
+  box.innerHTML="";
+  if(list.length===0){ empty.hidden=false; return; }
+  empty.hidden=true;
+  list.forEach(e=>{
+    const el=document.createElement("div");
+    el.className="entry";
+    el.innerHTML =
+      '<span class="date">'+fmtDate(e.ts)+'</span>'+
+      '<p class="ref">سورة '+escapeHtml(e.surah)+(e.ayah?' — آية '+escapeHtml(e.ayah):'')+'</p>'+
+      '<p class="note">'+escapeHtml(e.note)+'</p>'+
+      '<div class="actions"><button data-edit="'+escapeHtml(e.id)+'">تعديل</button><button data-del="'+escapeHtml(e.id)+'">حذف</button></div>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll("[data-edit]").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const id=b.dataset.edit;
+      const e=entries.find(x=>String(x.id)===id);
+      showForm(e);
+    });
+  });
+  box.querySelectorAll("[data-del]").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const id=b.dataset.del;
+      entries=entries.filter(x=>String(x.id)!==id);
+      save(); render(document.getElementById("search").value);
+    });
+  });
+}
+
+document.getElementById("search").addEventListener("input",e=>render(e.target.value));
+render("");
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+<div id="backupWidget" style="max-width:640px;margin:24px auto 0;padding:0 16px">
+  <details style="background:var(--card,#FFFAF0);border:1px solid var(--line,rgba(19,50,44,.14));border-radius:14px;padding:14px 16px">
+    <summary style="cursor:pointer;font-family:'Cairo',sans-serif;font-weight:700;font-size:.9rem;color:var(--ink,#13322C)">💾 نسخة احتياطية لبياناتك</summary>
+    <p style="font-size:.82rem;color:var(--ink-soft,#3D5B53);margin:10px 0">صدّر تقدّمك في هذه الصفحة كملف، أو استورد نسخة سابقة.</p>
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button id="backupExport" type="button" style="font-family:'Cairo';font-weight:600;font-size:.8rem;background:var(--ink,#13322C);color:var(--paper,#F6EFDF);border:0;padding:8px 16px;border-radius:999px;cursor:pointer">تصدير نسخة احتياطية</button>
+      <label style="font-family:'Cairo';font-weight:600;font-size:.8rem;background:var(--paper-2,#EFE5CF);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));padding:8px 16px;border-radius:999px;cursor:pointer">
+        استيراد نسخة
+        <input id="backupImport" type="file" accept="application/json" style="display:none">
+      </label>
+    </div>
+    <p id="backupMsg" style="font-size:.78rem;color:var(--ink-soft,#3D5B53);margin:8px 0 0"></p>
+  </details>
+</div>
+<script>
+(function(){
+  function pageKey(){
+    return (location.pathname.split("/").pop()||"page").replace(/\.html?$/,"");
+  }
+  var expBtn=document.getElementById("backupExport");
+  var impInput=document.getElementById("backupImport");
+  var msg=document.getElementById("backupMsg");
+  if(expBtn){
+    expBtn.addEventListener("click", function(){
+      var data={};
+      try{
+        for(var i=0;i<localStorage.length;i++){
+          var k=localStorage.key(i);
+          data[k]=localStorage.getItem(k);
+        }
+      }catch(e){}
+      var blob=new Blob([JSON.stringify(data,null,2)],{type:"application/json"});
+      var url=URL.createObjectURL(blob);
+      var a=document.createElement("a");
+      a.href=url; a.download=pageKey()+"-backup.json";
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+      if(msg) msg.textContent="تم تصدير النسخة الاحتياطية.";
+    });
+  }
+  if(impInput){
+    impInput.addEventListener("change", function(e){
+      var file=e.target.files[0];
+      if(!file) return;
+      var reader=new FileReader();
+      reader.onload=function(ev){
+        try{
+          var data=JSON.parse(ev.target.result);
+          Object.keys(data).forEach(function(k){ localStorage.setItem(k, data[k]); });
+          if(msg) msg.textContent="تم الاستيراد بنجاح — أعد تحميل الصفحة لرؤية بياناتك.";
+        }catch(err){
+          if(msg) msg.textContent="ملف غير صالح.";
+        }
+      };
+      reader.readAsText(file);
+    });
+  }
+})();
+</script>
+</body>
+</html>

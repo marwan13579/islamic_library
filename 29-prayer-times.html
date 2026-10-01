@@ -1,0 +1,481 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<script src="service-messages.js"></script>
+<script src="calculations.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مواقيت الصلاة</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.88rem;max-width:44ch;margin:.4rem auto 0}
+
+  .nextbox{background:linear-gradient(135deg,var(--ink),#0d2620);color:var(--paper);border-radius:20px;
+    padding:24px;text-align:center;margin:20px 0;box-shadow:0 8px 24px rgba(0,0,0,.15)}
+  :root:not([data-theme="light"]) .nextbox, :root[data-theme="dark"] .nextbox{background:linear-gradient(135deg,#0a1a15,#173a2f)}
+  .nextbox .lbl{font-size:.82rem;opacity:.85;margin:0}
+  .nextbox .name{font-family:"Amiri",serif;font-size:1.8rem;margin:4px 0}
+  .nextbox .countdown{font-family:"Amiri",serif;font-size:2rem;margin:8px 0 0;letter-spacing:1px}
+
+  .timesgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:20px 0}
+  @media (min-width:560px){ .timesgrid{grid-template-columns:repeat(6,1fr)} }
+  .timecard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 8px;text-align:center}
+  .timecard.active{border-color:var(--gold);border-width:2px;background:var(--green-soft)}
+  .timecard .n{font-size:.8rem;color:var(--ink-soft)}
+  .timecard .v{font-family:"Amiri",serif;font-size:1.15rem;margin-top:4px}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+  .card h2{font-family:"Amiri",serif;font-size:1.05rem;margin:0 0 12px}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:.83rem;color:var(--ink-soft);margin-bottom:5px}
+  .field select,.field input{
+    width:100%;padding:9px 12px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.88rem;
+  }
+  .btnrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px}
+  .btn{font-family:"Cairo";font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:999px;
+    background:var(--paper-2);border:1px solid var(--line);color:var(--ink);cursor:pointer}
+  .btn.primary{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .msg{font-size:.78rem;color:var(--ink-soft);margin-top:8px}
+
+  .offsetrow{display:flex;align-items:center;justify-content:space-between;padding:9px 0;border-top:1px dashed var(--line)}
+  .offsetrow:first-of-type{border-top:0}
+  .offsetrow .name{font-size:.88rem}
+  .offsetctl{display:flex;align-items:center;gap:8px}
+  .offsetctl button{width:28px;height:28px;border-radius:50%;border:1px solid var(--line);background:var(--paper);
+    color:var(--ink);cursor:pointer;font-size:1rem}
+  .offsetctl .val{font-family:"Amiri",serif;font-size:.95rem;min-width:44px;text-align:center}
+
+  .note{font-size:.78rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:14px 0}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>مواقيت الصلاة</h1>
+  <p>محسوبة فلكيًا محليًا في متصفحك، بدون إرسال بياناتك لأي خادم — تدعم عدة طرق حساب ومذاهب.</p>
+</header>
+
+<div class="nextbox" id="nextBox"></div>
+<div class="timesgrid" id="timesGrid"></div>
+
+<div class="card">
+  <h2>📍 الموقع</h2>
+  <div class="field">
+    <label for="citySelect">اختر مدينة</label>
+    <select id="citySelect"></select>
+  </div>
+  <div class="btnrow">
+    <button class="btn primary" id="locBtn" type="button">استخدم موقعي الحالي</button>
+  </div>
+  <p class="msg" id="locMsg"></p>
+  <div class="field" style="margin-top:12px">
+    <label>التوقيت المستخدم مع المدينة المختارة</label>
+    <div class="btnrow">
+      <button class="btn" id="dstOffBtn" type="button">❄️ التوقيت العادي (الشتوي)</button>
+      <button class="btn" id="dstOnBtn" type="button">☀️ التوقيت الصيفي (+ساعة)</button>
+    </div>
+    <p class="msg" id="dstMsg" style="margin-top:8px">عند استخدام "موقعي الحالي" يُحسب التوقيت الصيفي تلقائيًا من جهازك. هذا التبديل يخص التوقيت المحسوب من اختيار مدينة من القائمة، حيث تختلف الدول في تطبيق التوقيت الصيفي ومواعيده من سنة لأخرى.</p>
+  </div>
+</div>
+
+<div class="card">
+  <h2>⚙️ طريقة الحساب والمذهب</h2>
+  <div class="field">
+    <label for="methodSelect">طريقة الحساب</label>
+    <select id="methodSelect"></select>
+  </div>
+  <div class="field">
+    <label for="asrSelect">مذهب العصر</label>
+    <select id="asrSelect">
+      <option value="1">الجمهور (شافعي، مالكي، حنبلي) — الظل مثل الشاخص</option>
+      <option value="2">الحنفي — الظل مثلا الشاخص</option>
+    </select>
+  </div>
+  <p class="msg">تختلف مواقيت الفجر والعشاء خاصة باختلاف الطريقة المختارة، لأنها تعتمد زاوية الشفق التي لا يوجد اتفاق فلكي كامل عليها بين الهيئات.</p>
+</div>
+
+<div class="card">
+  <h2>🔔 تنبيه الصلاة</h2>
+  <div class="btnrow">
+    <button class="btn primary" id="notifyBtn" type="button">تفعيل تنبيه الصلاة القادمة</button>
+  </div>
+  <p class="msg" id="notifyMsg">التنبيه يعمل فقط أثناء فتح هذه الصفحة في المتصفح (لا يعمل في الخلفية بعد إغلاقها).</p>
+</div>
+
+<div class="card">
+  <h2>✏️ تعديل يدوي للدقائق</h2>
+  <p class="msg" style="margin-top:0">لمطابقة توقيت مسجد حيك أو هيئة محلية معينة.</p>
+  <div id="offsetsList"></div>
+</div>
+
+<div class="note" id="offlineNote">📱 بعد فتح هذه الصفحة مرة، تعمل الحسابات بلا إنترنت — كل شيء يُحسب رياضيًا في متصفحك.</div>
+
+<footer>إِنَّ الصَّلَاةَ كَانَتْ عَلَى الْمُؤْمِنِينَ كِتَابًا مَّوْقُوتًا</footer>
+</div>
+
+<script>
+const {computePrayerTimes:computeTimes,formatPrayerClock:fmtClock}=IslamicCalculations;
+
+const AR_NUM = n => n.toString().replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+
+const METHODS = [
+  {id:"mwl",name:"رابطة العالم الإسلامي",fajr:18,isha:17},
+  {id:"isna",name:"الجمعية الإسلامية لأمريكا الشمالية (ISNA)",fajr:15,isha:15},
+  {id:"egypt",name:"الهيئة المصرية العامة للمساحة",fajr:19.5,isha:17.5},
+  {id:"karachi",name:"جامعة كراتشي",fajr:18,isha:18},
+  {id:"makkah",name:"أم القرى، مكة المكرمة",fajr:18.5,isha:"90"},
+  {id:"kuwait",name:"الكويت",fajr:18,isha:17.5},
+  {id:"qatar",name:"قطر",fajr:18,isha:"90"},
+  {id:"gulf",name:"الخليج (طريقة تقريبية)",fajr:19.5,isha:"90"}
+];
+
+const CITIES = [
+  ["القاهرة، مصر",30.0444,31.2357,2],
+  ["الإسكندرية، مصر",31.2001,29.9187,2],
+  ["مكة المكرمة",21.4225,39.8262,3],
+  ["المدينة المنورة",24.4672,39.6024,3],
+  ["الرياض، السعودية",24.7136,46.6753,3],
+  ["جدة، السعودية",21.4858,39.1925,3],
+  ["دبي، الإمارات",25.2048,55.2708,4],
+  ["أبوظبي، الإمارات",24.4539,54.3773,4],
+  ["الدوحة، قطر",25.2854,51.5310,3],
+  ["الكويت",29.3759,47.9774,3],
+  ["المنامة، البحرين",26.2285,50.5860,3],
+  ["مسقط، عُمان",23.5880,58.3829,4],
+  ["عمّان، الأردن",31.9454,35.9284,3],
+  ["بيروت، لبنان",33.8938,35.5018,2],
+  ["دمشق، سوريا",33.5138,36.2765,2],
+  ["بغداد، العراق",33.3152,44.3661,3],
+  ["القدس/فلسطين",31.7683,35.2137,2],
+  ["الخرطوم، السودان",15.5007,32.5599,2],
+  ["تونس",36.8065,10.1815,1],
+  ["الجزائر",36.7538,3.0588,1],
+  ["الرباط، المغرب",34.0209,-6.8416,1],
+  ["طرابلس، ليبيا",32.8872,13.1913,2],
+  ["اسطنبول، تركيا",41.0082,28.9784,3],
+  ["كوالالمبور، ماليزيا",3.1390,101.6869,8],
+  ["جاكرتا، إندونيسيا",-6.2088,106.8456,7],
+  ["إسلام آباد، باكستان",33.6844,73.0479,5],
+  ["لندن، بريطانيا",51.5074,-0.1278,0],
+  ["نيويورك، أمريكا",40.7128,-74.0060,-5],
+  ["باريس، فرنسا",48.8566,2.3522,1],
+  ["برلين، ألمانيا",52.5200,13.4050,1]
+];
+
+let state={};
+try{ state = JSON.parse(localStorage.getItem("prayertimes-state")||"{}"); }catch(e){ state={}; }
+state.lat = state.lat ?? 30.0444;
+state.lon = state.lon ?? 31.2357;
+state.tz = state.tz ?? 2;
+state.method = state.method ?? "egypt";
+state.asr = state.asr ?? 1;
+state.offsets = state.offsets ?? {fajr:0,sunrise:0,dhuhr:0,asr:0,maghrib:0,isha:0};
+state.dstOffset = state.dstOffset ?? 0;
+state.cityIndex = state.cityIndex ?? 0;
+
+function save(){ try{ localStorage.setItem("prayertimes-state", JSON.stringify(state)); }catch(e){} }
+
+const PRAYER_LABELS = [["fajr","الفجر"],["sunrise","الشروق"],["dhuhr","الظهر"],["asr","العصر"],["maghrib","المغرب"],["isha","العشاء"]];
+
+function getMethod(){ return METHODS.find(m=>m.id===state.method) || METHODS[0]; }
+
+function computeToday(){
+  const method=getMethod();
+  const tzWithDst = state.tz + (state.dstOffset||0);
+  const times=computeTimes(state.lat,state.lon,new Date(),tzWithDst,method,state.asr);
+  Object.keys(times).forEach(k=>{
+    if(times[k]!==null) times[k] += (state.offsets[k]||0)/60;
+  });
+  return times;
+}
+
+function timeToDate(hDecimal, baseDate){
+  const d=new Date(baseDate);
+  const h=Math.floor(hDecimal), m=Math.round((hDecimal-h)*60);
+  d.setHours(h,m,0,0);
+  return d;
+}
+
+let countdownInterval=null;
+function renderNextAndGrid(){
+  const times=computeToday();
+  const now=new Date();
+  const todayEntries = PRAYER_LABELS.map(([k,label])=>({k,label,t:times[k], d:times[k]!==null?timeToDate(times[k],now):null}));
+
+  let next = todayEntries.find(e=>e.d && e.d>now && e.k!=="sunrise");
+  let nextIsFajrTomorrow=false;
+  if(!next){
+    // roll to tomorrow's Fajr
+    const tomorrow=new Date(now); tomorrow.setDate(tomorrow.getDate()+1);
+    const methodT=getMethod();
+    const timesT=computeTimes(state.lat,state.lon,tomorrow,state.tz+(state.dstOffset||0),methodT,state.asr);
+    let fajrT = timesT.fajr + (state.offsets.fajr||0)/60;
+    next = {k:"fajr", label:"الفجر", d:timeToDate(fajrT,tomorrow)};
+    nextIsFajrTomorrow=true;
+  }
+
+  const grid=document.getElementById("timesGrid");
+  grid.innerHTML="";
+  todayEntries.forEach(e=>{
+    const isActive = !nextIsFajrTomorrow && next && e.k===next.k;
+    const card=document.createElement("div");
+    card.className="timecard"+(isActive?" active":"");
+    card.innerHTML='<div class="n">'+e.label+'</div><div class="v">'+fmtClock(e.t)+'</div>';
+    grid.appendChild(card);
+  });
+
+  function updateCountdown(){
+    const nowT=new Date();
+    let diff = Math.max(0, next.d - nowT);
+    const h=Math.floor(diff/3600000), m=Math.floor((diff%3600000)/60000), s=Math.floor((diff%60000)/1000);
+    document.getElementById("nextBox").innerHTML =
+      '<p class="lbl">الصلاة القادمة</p>'+
+      '<p class="name">'+next.label+'</p>'+
+      '<p class="countdown">'+(diff<=0?"حان وقت الصلاة الآن":"بعد "+AR_NUM(String(h).padStart(2,"0"))+":"+AR_NUM(String(m).padStart(2,"0"))+":"+AR_NUM(String(s).padStart(2,"0")))+'</p>';
+    if(diff<=0){
+      clearInterval(countdownInterval);
+      maybeNotify(next.label);
+      setTimeout(renderNextAndGrid, 2000);
+    }
+  }
+  clearInterval(countdownInterval);
+  updateCountdown();
+  countdownInterval = setInterval(updateCountdown, 1000);
+}
+
+/* ---------- notifications ---------- */
+let notifyEnabled = localStorage.getItem("prayertimes-notify")==="1";
+function updateNotifyBtn(){
+  const btn=document.getElementById("notifyBtn");
+  btn.textContent = notifyEnabled ? "إيقاف التنبيه" : "تفعيل تنبيه الصلاة القادمة";
+}
+function maybeNotify(prayerName){
+  if(!notifyEnabled) return;
+  if("Notification" in window && Notification.permission==="granted"){
+    try{ new Notification("حان وقت صلاة "+prayerName, {body:"🕌 حي على الصلاة، حي على الفلاح"}); }catch(e){}
+  }
+}
+document.getElementById("notifyBtn").addEventListener("click",async()=>{
+  if(!notifyEnabled){
+    if("Notification" in window){
+      const perm = await Notification.requestPermission();
+      if(perm==="granted"){
+        notifyEnabled=true;
+        localStorage.setItem("prayertimes-notify","1");
+        document.getElementById("notifyMsg").textContent="التنبيه مفعّل — تأكد من إبقاء هذه الصفحة مفتوحة في المتصفح.";
+      } else {
+        document.getElementById("notifyMsg").textContent="لم يُسمح بالإشعارات من إعدادات المتصفح.";
+      }
+    } else {
+      document.getElementById("notifyMsg").textContent="متصفحك لا يدعم الإشعارات.";
+    }
+  } else {
+    notifyEnabled=false;
+    localStorage.setItem("prayertimes-notify","0");
+    document.getElementById("notifyMsg").textContent="تم إيقاف التنبيه.";
+  }
+  updateNotifyBtn();
+});
+updateNotifyBtn();
+
+/* ---------- city select ---------- */
+const citySelect=document.getElementById("citySelect");
+CITIES.forEach((c,i)=>{
+  const opt=document.createElement("option");
+  opt.value=i; opt.textContent=c[0];
+  citySelect.appendChild(opt);
+});
+citySelect.value=state.cityIndex;
+citySelect.addEventListener("change",()=>{
+  const i=parseInt(citySelect.value);
+  const c=CITIES[i];
+  state.cityIndex=i; state.lat=c[1]; state.lon=c[2]; state.tz=c[3];
+  save();
+  document.getElementById("locMsg").textContent="تم اختيار "+c[0];
+  renderNextAndGrid();
+});
+
+document.getElementById("locBtn").addEventListener("click",()=>{
+  if(!navigator.geolocation){ document.getElementById("locMsg").textContent="متصفحك لا يدعم تحديد الموقع."; return; }
+  document.getElementById("locMsg").textContent="جارٍ تحديد موقعك...";
+  navigator.geolocation.getCurrentPosition(pos=>{
+    state.lat=pos.coords.latitude; state.lon=pos.coords.longitude;
+    state.tz=-new Date().getTimezoneOffset()/60;
+    state.dstOffset=0;
+    save();
+    document.getElementById("locMsg").textContent="تم استخدام موقعك الحالي ("+state.lat.toFixed(2)+", "+state.lon.toFixed(2)+") — لم يُرسل لأي خادم. التوقيت الصيفي محسوب تلقائيًا من جهازك.";
+    updateDstButtons();
+    renderNextAndGrid();
+  },error=>{
+    document.getElementById("locMsg").textContent=IslamicServiceMessages.locationError(error);
+  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+});
+
+function updateDstButtons(){
+  document.getElementById("dstOffBtn").setAttribute("aria-pressed", state.dstOffset===0 ? "true":"false");
+  document.getElementById("dstOnBtn").setAttribute("aria-pressed", state.dstOffset===1 ? "true":"false");
+}
+document.getElementById("dstOffBtn").addEventListener("click",()=>{
+  state.dstOffset=0; save(); updateDstButtons(); renderNextAndGrid();
+  document.getElementById("dstMsg").textContent="تم ضبط التوقيت العادي (الشتوي) — ساعة واحدة أقل من الصيفي.";
+});
+document.getElementById("dstOnBtn").addEventListener("click",()=>{
+  state.dstOffset=1; save(); updateDstButtons(); renderNextAndGrid();
+  document.getElementById("dstMsg").textContent="تم ضبط التوقيت الصيفي — تُضاف ساعة على التوقيت الأساسي للمدينة.";
+});
+
+/* ---------- method & asr select ---------- */
+const methodSelect=document.getElementById("methodSelect");
+METHODS.forEach(m=>{
+  const opt=document.createElement("option");
+  opt.value=m.id; opt.textContent=m.name;
+  methodSelect.appendChild(opt);
+});
+methodSelect.value=state.method;
+methodSelect.addEventListener("change",()=>{ state.method=methodSelect.value; save(); renderNextAndGrid(); });
+
+const asrSelect=document.getElementById("asrSelect");
+asrSelect.value=state.asr;
+asrSelect.addEventListener("change",()=>{ state.asr=parseInt(asrSelect.value); save(); renderNextAndGrid(); });
+
+/* ---------- manual offsets ---------- */
+function renderOffsets(){
+  const box=document.getElementById("offsetsList");
+  box.innerHTML="";
+  PRAYER_LABELS.forEach(([k,label])=>{
+    const row=document.createElement("div");
+    row.className="offsetrow";
+    const val = state.offsets[k]||0;
+    row.innerHTML =
+      '<span class="name">'+label+'</span>'+
+      '<div class="offsetctl">'+
+      '<button data-k="'+k+'" data-d="-1" type="button">−</button>'+
+      '<span class="val">'+(val>0?"+":"")+AR_NUM(val)+' د</span>'+
+      '<button data-k="'+k+'" data-d="1" type="button">+</button>'+
+      '</div>';
+    box.appendChild(row);
+  });
+  box.querySelectorAll("button").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const k=b.dataset.k, d=parseInt(b.dataset.d);
+      state.offsets[k] = (state.offsets[k]||0) + d;
+      save(); renderOffsets(); renderNextAndGrid();
+    });
+  });
+}
+
+/* ---------- init ---------- */
+document.getElementById("locMsg").textContent = "الموقع الحالي: "+CITIES[state.cityIndex][0];
+renderOffsets();
+updateDstButtons();
+renderNextAndGrid();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

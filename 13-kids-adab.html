@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>قصص الآداب للأطفال</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#FBF3E2; --paper-2:#F3E4C4; --ink:#1F3A34; --ink-soft:#4A6359;
+    --gold:#B5811F; --gold-soft:#D8AE55; --line:rgba(31,58,52,.14); --card:#FFFCF3;
+    --blue:#2E6E8E; --pink:#B35F72; --green:#3E7A54;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#101E1B; --paper-2:#16332C; --ink:#F1E6C9; --ink-soft:#B3C6BB;
+    --gold:#E3B85E; --gold-soft:#9A752B; --line:rgba(241,230,201,.16); --card:#173129;
+    --blue:#7FC1E4; --pink:#E39CAE; --green:#8FCBA2;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#101E1B; --paper-2:#16332C; --ink:#F1E6C9; --ink-soft:#B3C6BB;
+    --gold:#E3B85E; --gold-soft:#9A752B; --line:rgba(241,230,201,.16); --card:#173129;
+    --blue:#7FC1E4; --pink:#E39CAE; --green:#8FCBA2;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.85}
+  .wrap{max-width:680px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.7rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.95rem;max-width:36ch;margin:.5rem auto 0}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px;margin-top:20px}
+  .card{
+    background:var(--card);border:2px solid var(--line);border-radius:18px;padding:16px;
+    text-align:center;cursor:pointer;
+  }
+  .card .emoji{font-size:2.2rem;display:block;margin-bottom:6px}
+  .card .t{font-weight:700;font-size:.95rem}
+
+  dialog{border:none;border-radius:20px;padding:0;max-width:520px;width:92vw;background:var(--card);color:var(--ink)}
+  dialog::backdrop{background:rgba(0,0,0,.5)}
+  .dcontent{padding:24px;max-height:82vh;overflow-y:auto}
+  .demoji{font-size:2.6rem;text-align:center;display:block}
+  .dtitle{font-family:"Amiri",serif;font-size:1.6rem;text-align:center;margin:6px 0 14px;color:var(--gold)}
+  .dstory{font-size:1rem}
+  .dstory p{margin:0 0 10px}
+  .dmoral{
+    background:var(--paper-2);border-radius:12px;padding:12px 14px;margin-top:12px;
+    font-size:.92rem;text-align:center;font-weight:700;
+  }
+  .dclose{display:block;margin:16px auto 0;padding:9px 26px;border-radius:999px;border:0;
+    background:var(--ink);color:var(--paper);font-family:"Cairo";font-weight:700;cursor:pointer}
+  footer{margin-top:30px;text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>قصص الآداب 🌙</h1>
+  <p>قصص قصيرة عن الأخلاق الجميلة، اضغط أي قصة واقرأها لطفلك.</p>
+</header>
+<div class="grid" id="grid"></div>
+<footer>خيركم من تعلّم القرآن وعلّمه، وخيركم أحسنكم خلقًا</footer>
+</div>
+
+<dialog id="dlg">
+  <div class="dcontent">
+    <span class="demoji" id="dEmoji"></span>
+    <p class="dtitle" id="dTitle"></p>
+    <div class="dstory" id="dStory"></div>
+    <div class="dmoral" id="dMoral"></div>
+    <button class="dclose" id="dClose">تمام، فهمت 👍</button>
+  </div>
+</dialog>
+
+<script>
+const STORIES = [
+["🕌","خالد والصلاة",
+["كان خالد يلعب بالكرة مع أصدقائه في الحديقة، وفجأة سمع صوت الأذان يرتفع من المسجد القريب.",
+"توقف خالد فورًا عن اللعب رغم أن فريقه كان على وشك الفوز، وقال لأصدقائه: تعالوا نصلي أولًا ثم نكمل اللعب.",
+"استغرب بعض أصدقائه، لكن خالد قال بابتسامة: الصلاة أهم من أي لعبة في الدنيا، والله يحب من يبادر لطاعته.",
+"صلّوا جميعًا في المسجد، ثم رجعوا يلعبون وقلوبهم مطمئنة وسعيدة."],
+"الصلاة أول واجب، ولا تُؤخَّر لأي شيء آخر مهما كان ممتعًا."],
+["🤥","سارة وحكاية الكذبة الصغيرة",
+["كسرت سارة كوب الشاي المفضل عند أمها وهي تلعب في المطبخ.",
+"خافت سارة أن تخبر أمها، ففكرت أن تقول إن القطة هي من كسرته.",
+"لكنها تذكّرت أن النبي ﷺ قال: «إِيَّاكُمْ وَالْكَذِبَ، فَإِنَّ الْكَذِبَ يَهْدِي إِلَى الْفُجُورِ»، فشعرت بالخجل من نفسها.",
+"ذهبت لأمها وقالت بصوت مرتجف: أنا كسرت الكوب يا ماما، أنا آسفة. فابتسمت أمها وقالت: صدقك أغلى عندي من ألف كوب، وعانقتها."],
+"الاعتراف بالخطأ بصدق أحب إلى الله وإلى الناس من الكذب للهروب منه."],
+["🧓","يوسف يساعد جدّه",
+["كان جد يوسف كبير السن ويصعب عليه صعود السلالم وحمل الأشياء الثقيلة.",
+"كل يوم بعد المدرسة، كان يوسف يسارع لمساعدة جده في حمل أكياس البقالة وصعود الدرج معه بهدوء.",
+"سأله صديقه: ألا تتعب من هذا كل يوم؟ فقال يوسف: النبي ﷺ قال: «مَنْ لَا يَرْحَمْ لَا يُرْحَمْ»، وجدّي يستحق كل رعايتي.",
+"كان جده يدعو له دائمًا: بارك الله فيك يا قرة عيني، ويشعر يوسف بسعادة تملأ قلبه."],
+"بر الكبار ومساعدتهم من أجمل الأخلاق التي يحبها الله ورسوله."],
+["🤝","أحمد يشارك أصدقاءه",
+["أحضر أحمد صندوق حلوى كبير إلى المدرسة، وجلس يأكل منه وحده في الفسحة.",
+"لاحظ أن صديقه عمر ينظر إليه بشوق لكنه لا يطلب منه شيئًا خجلًا.",
+"تذكر أحمد قول النبي ﷺ: «لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ»، فمد يده لعمر وقال: تفضل يا صديقي، كلها لك ولي.",
+"جلسا يأكلان معًا ويضحكان، وشعر أحمد بفرحة أكبر من طعم الحلوى نفسه."],
+"مشاركة الآخرين بما نحب تجلب سعادة أكبر من الاستئثار بالأشياء لأنفسنا."],
+["🕋","مريم وأدب الاستئذان",
+["أرادت مريم أن تدخل غرفة والديها لتسألهما عن شيء، فوجدت الباب مغلقًا.",
+"بدلًا من أن تفتح الباب فجأة، طرقت بلطف وقالت: السلام عليكم، هل يمكنني الدخول؟",
+"سُرّت أمها كثيرًا وقالت: هذا أدب علّمنا إياه الإسلام، فحتى بيت أهلك له حرمة واستئذان.",
+"تعلمت مريم أن الاستئذان يحفظ خصوصية الناس ويظهر احترامهم."],
+"الاستئذان قبل الدخول أدب إسلامي حتى مع أقرب الناس إلينا."],
+["🌳","عمر يهتم بالنبات والحيوان",
+["وجد عمر عصفورًا صغيرًا سقط من عشه في حديقة المدرسة.",
+"حمله بلطف ووضعه في مكان آمن، وأحضر له قطرات ماء وفتات خبز.",
+"قال له معلمه: أحسنت يا عمر، فالنبي ﷺ أخبرنا أن امرأة دخلت النار في هرة حبستها، وأن رجلًا غُفر له بسبب سقاية كلب عطشان.",
+"شعر عمر بسعادة كبيرة عندما رأى العصفور يطير عائدًا لعشه بعد أيام."],
+"الرحمة بالحيوان والنبات من الأخلاق التي يحبها الله ويثيب عليها."],
+["🙏","لين تشكر الله دائمًا",
+["كانت لين تحصل كل يوم على وجبة شهية وملابس جميلة وبيت دافئ.",
+"في يوم من الأيام سألتها أمها: هل تشكرين الله على كل هذه النعم يا لين؟",
+"فكّرت لين قليلًا ثم قالت: نعم، سأقول الحمد لله بعد كل أكلة، وسأتصدق بملابسي القديمة لمن يحتاجها.",
+"شعرت لين أن قلبها امتلأ فرحًا حين بدأت تشكر الله بلسانها وبأفعالها معًا."],
+"شكر النعمة يكون بالقول والفعل معًا، وأفضل شكر هو مشاركة الخير مع الآخرين."]
+];
+
+const grid=document.getElementById("grid");
+STORIES.forEach((s,i)=>{
+  const c=document.createElement("div");
+  c.className="card"; c.tabIndex=0; c.setAttribute("role","button");
+  c.innerHTML='<span class="emoji">'+s[0]+'</span><span class="t">'+s[1]+'</span>';
+  const open=()=>{
+    document.getElementById("dEmoji").textContent=s[0];
+    document.getElementById("dTitle").textContent=s[1];
+    document.getElementById("dStory").innerHTML = s[2].map(p=>'<p>'+p+'</p>').join('');
+    document.getElementById("dMoral").textContent = "✨ العبرة: "+s[3];
+    document.getElementById("dlg").showModal();
+  };
+  c.addEventListener("click",open);
+  c.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();open();}});
+  grid.appendChild(c);
+});
+document.getElementById("dClose").addEventListener("click",()=>document.getElementById("dlg").close());
+document.getElementById("dlg").addEventListener("click",e=>{ if(e.target.id==="dlg") e.target.close(); });
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

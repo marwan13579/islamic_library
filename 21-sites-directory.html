@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>دليل المواقع الإسلامية المرجعية</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:760px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(1.9rem,7vw,2.7rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:44ch;margin:.4rem auto 0}
+
+  .note{font-size:.8rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:18px 0}
+
+  .search{display:block;width:100%;padding:10px 16px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-family:"Cairo";font-size:.9rem;margin-bottom:18px}
+
+  .sites{display:flex;flex-direction:column;gap:10px}
+  details.site{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden}
+  details.site > summary{
+    display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;list-style:none;
+  }
+  details.site > summary::-webkit-details-marker{display:none}
+  .icon{font-size:1.5rem;flex-shrink:0}
+  .titlebox{flex:1;min-width:0}
+  .titlebox .name{font-weight:700;font-size:1rem}
+  .titlebox .tagline{font-size:.78rem;color:var(--ink-soft)}
+  .chev{color:var(--ink-soft);transition:transform .15s ease;flex-shrink:0}
+  details.site[open] .chev{transform:rotate(90deg)}
+  .body{padding:0 16px 16px}
+  .sections{display:flex;flex-direction:column;gap:6px;margin:8px 0 12px}
+  .sec{font-size:.87rem;padding-inline-start:10px;border-inline-start:2px solid var(--gold-soft)}
+  .sec b{color:var(--ink)}
+  .visit{display:inline-block;background:var(--ink);color:var(--paper);text-decoration:none;
+    font-size:.8rem;font-weight:600;padding:7px 16px;border-radius:999px}
+
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>دليل المواقع الإسلامية</h1>
+  <p>مراجع موثوقة للقرآن، الفتوى، الحديث، والمكتبات الإسلامية — بشرح مختصر لأقسام كل موقع.</p>
+</header>
+
+<div class="note">
+ℹ️ هذا دليل روابط فقط — كل موقع مملوك ومُدار من جهته الخاصة، ولا أستطيع عرض صور أو شعارات هذه المواقع هنا لأنها محمية بحقوق الملكية الفكرية لأصحابها، فاكتفيت برمز تعبيري لكل موقع ووصف مختصر لأقسامه.
+</div>
+
+<input class="search" id="search" type="search" placeholder="ابحث باسم الموقع أو وصفه..." aria-label="ابحث في دليل المواقع">
+
+<div class="sites" id="sites"></div>
+
+<footer>وَتَعَاوَنُوا عَلَى الْبِرِّ وَالتَّقْوَىٰ</footer>
+</div>
+
+<script>
+const SITES = [
+  {icon:"🎙️", name:"إذاعة القرآن الكريم من القاهرة", url:"https://misrquran.gov.eg/home",
+   tagline:"الإذاعة الرسمية المصرية المتخصصة في القرآن، تأسست 1964",
+   sections:[
+     ["البث المباشر","استماع مباشر ٢٤/٧ لتلاوات القرآن الكريم بجودة عالية"],
+     ["أرشيف القراء","تسجيلات كبار قراء مصر عبر أكثر من ٦٠ عامًا (الحصري، المنشاوي، عبد الباسط، الطبلاوي وغيرهم)"],
+     ["برامج تراثية ودينية","فتاوى، وبرامج أسرة ومجتمع"]
+   ]},
+  {icon:"🗂️", name:"دليل سلطان للمواقع الإسلامية", url:"https://sultan.org/a/",
+   tagline:"دليل ضخم يجمع مئات الروابط الإسلامية الموثوقة مبوّبة",
+   sections:[
+     ["القرآن والصوتيات","روابط لمواقع تلاوة وحفظ وتفسير القرآن"],
+     ["مشايخ وعلماء","روابط للمواقع الرسمية لعشرات العلماء والدعاة"],
+     ["مواقع علمية","فتوى، حديث، فقه، سيرة، وموسوعات شرعية"],
+     ["الإعلام الإسلامي، الأسرة والطفل، أديان وفرق، أخبار المسلمين","أقسام إضافية متنوعة"]
+   ]},
+  {icon:"📚", name:"الموقع الرسمي للشيخ ابن باز", url:"https://binbaz.org.sa/",
+   tagline:"فتاوى وكتب سماحة الشيخ عبد العزيز بن باز رحمه الله",
+   sections:[
+     ["الفتاوى","آلاف الفتاوى مصنفة حسب الأبواب الفقهية"],
+     ["الكتب والرسائل","مؤلفاته كاملة للقراءة والتحميل"],
+     ["المسموعات","محاضرات وخطب صوتية"],
+     ["السيرة الذاتية","نبذة عن حياة الشيخ ومسيرته العلمية"]
+   ]},
+  {icon:"📚", name:"الموقع الرسمي للشيخ صالح الفوزان", url:"https://alfawzan.live/",
+   tagline:"فتاوى ودروس فضيلة الشيخ صالح بن فوزان الفوزان",
+   sections:[
+     ["الفتاوى","أجوبة على أسئلة معاصرة في العقيدة والفقه"],
+     ["الشروح العلمية","شروحه على المتون والكتب"],
+     ["المسموعات والمرئيات","محاضرات ودروس مسجّلة"]
+   ]},
+  {icon:"📜", name:"مكتبة فتاوى ابن تيمية", url:"https://ibntaymiyyah.org/",
+   tagline:"مكتبة متخصصة في تراث شيخ الإسلام ابن تيمية",
+   sections:[
+     ["الفتاوى والمصنفات","أعماله كاملة للتصفح والتحميل"],
+     ["تصنيف موضوعي","تبويب حسب الموضوع: عقيدة، فقه، تفسير، وغيرها"]
+   ]},
+  {icon:"🌐", name:"الشبكة الإسلامية (islamweb)", url:"https://www.islamweb.net/ar/",
+   tagline:"من أقدم وأكبر البوابات الإسلامية الشاملة، متعددة اللغات",
+   sections:[
+     ["مركز الفتوى","آلاف الفتاوى المجابة من لجنة علمية"],
+     ["القرآن والحديث","تلاوات، تفاسير، وشروح حديثية"],
+     ["المقالات والاستشارات","مقالات شرعية واستشارات اجتماعية ونفسية"],
+     ["المكتبة والصوتيات","كتب ومحاضرات ودروس صوتية"]
+   ]},
+  {icon:"❓", name:"الإسلام سؤال وجواب (عربي)", url:"https://islamqa.info/ar",
+   tagline:"فتاوى الشيخ محمد صالح المنجد، بالأدلة والتفصيل",
+   sections:[
+     ["الفتاوى","آلاف الأسئلة المجابة مصنفة حسب الموضوع"],
+     ["المقالات","مقالات عقدية وفقهية ودعوية"],
+     ["البحث المتقدم","بحث دقيق داخل قاعدة الفتاوى"]
+   ]},
+  {icon:"❓", name:"Islam Q&A (English)", url:"https://islamqa.info/en",
+   tagline:"نفس محتوى إسلام سؤال وجواب موجّه للناطقين بالإنجليزية",
+   sections:[
+     ["Fatwas","English translations of the same fatwa database"],
+     ["Articles","Articles on creed, jurisprudence and new-Muslim guidance"]
+   ]},
+  {icon:"📖", name:"الدرر السنية", url:"https://dorar.net/",
+   tagline:"من أوسع الموسوعات الشرعية المجانية على الإنترنت",
+   sections:[
+     ["الموسوعة الحديثية","تخريج الأحاديث ودرجتها من مصادر متعددة"],
+     ["موسوعة الفقه الإسلامي","أبواب الفقه على المذاهب"],
+     ["الموسوعة العقدية والتاريخية","مسائل الاعتقاد وأحداث التاريخ الإسلامي"],
+     ["الفتاوى والمكتبة","فتاوى مصنفة وكتب للتحميل"]
+   ]},
+  {icon:"📚", name:"نداء الإيمان (al-eman)", url:"https://www.al-eman.com/index.htm",
+   tagline:"مكتبة إلكترونية بآلاف الكتب الإسلامية المصنفة",
+   sections:[
+     ["أقسام الكتب","تفسير، حديث، فقه، سيرة، عقيدة، أدب، وغيرها"],
+     ["القراءة والتحميل","تصفح الكتب مباشرة أو تحميلها"]
+   ]},
+  {icon:"🕌", name:"شبكة الألوكة", url:"https://www.alukah.net/",
+   tagline:"شبكة إسلامية وفكرية وثقافية شاملة تحت إشراف نخبة من العلماء",
+   sections:[
+     ["آفاق الشريعة","العلوم الشرعية من فقه وتفسير وحديث"],
+     ["ثقافة ومعرفة، حضارة الكلمة","مقالات ثقافية وأدبية ولغوية"],
+     ["مجتمع وإصلاح، الاستشارات","قضايا اجتماعية واستشارات"],
+     ["مكتبة الألوكة والمكتبة الناطقة","كتب نصية وصوتية للتحميل"]
+   ]},
+  {icon:"📝", name:"مركز تفسير للدراسات القرآنية", url:"https://www.tafsir.net/",
+   tagline:"أبحاث ومقالات متخصصة في علوم التفسير ومناهجه",
+   sections:[
+     ["المقالات والأبحاث","دراسات أكاديمية في مناهج المفسرين"],
+     ["الإصدارات","كتب وأبحاث محكّمة"]
+   ]},
+  {icon:"🧩", name:"تطبيقات مركز تفسير", url:"https://www.tafsir.net/applications",
+   tagline:"أدوات وتطبيقات إلكترونية مرتبطة بالدراسات القرآنية",
+   sections:[
+     ["أدوات بحثية","تطبيقات مساعدة على دراسة التفسير وعلوم القرآن"]
+   ]},
+  {icon:"🔍", name:"آيات (جامعة الملك سعود)", url:"https://quran.ksu.edu.sa/ayat/",
+   tagline:"أداة بحثية أكاديمية لمقارنة التفاسير آية بآية",
+   sections:[
+     ["البحث بالآية","اختر أي آية واعرض تفاسير متعددة جنبًا إلى جنب"],
+     ["مقارنة التفاسير","تسهّل مقارنة أقوال المفسرين على نفس الآية"]
+   ]},
+  {icon:"📚", name:"المكتبة الشاملة", url:"https://shamela.ws/",
+   tagline:"أضخم مكتبة إلكترونية لكتب التراث الإسلامي",
+   sections:[
+     ["آلاف الكتب","في كل الفنون الشرعية بصيغة قابلة للبحث النصي"],
+     ["نسخة الويب وسطح المكتب","تصفح أونلاين أو تحميل برنامج مستقل"]
+   ]},
+  {icon:"📖", name:"Quran.com", url:"https://quran.com/",
+   tagline:"من أشهر مواقع قراءة القرآن وتصفحه عالميًا",
+   sections:[
+     ["النص والترجمات","القرآن الكريم مع ترجمات لعشرات اللغات"],
+     ["الاستماع","تلاوات صوتية لعدد كبير من القراء"],
+     ["التفسير والبحث","تفاسير مختارة وبحث بالكلمة أو رقم الآية"]
+   ]},
+  {icon:"📚", name:"مكتبة صيد الفوائد", url:"https://saaid.org/book/index.php",
+   tagline:"قسم الكتب في موقع صيد الفوائد الدعوي",
+   sections:[
+     ["تصنيف الكتب","عقيدة، فقه، دعوة، رقائق، وغيرها"],
+     ["تحميل مباشر","معظم الكتب بصيغة PDF أو Word"]
+   ]},
+  {icon:"📜", name:"مشروع تنزيل (Tanzil)", url:"https://tanzil.net/",
+   tagline:"مشروع نص قرآني رقمي موثّق يستخدمه مطوّرو التطبيقات عالميًا",
+   sections:[
+     ["نص القرآن الموثق","برسومات مختلفة: عثماني، إملائي"],
+     ["الترجمات والتنزيل","ترجمات بعدة لغات، وتنزيل النص للمطورين"]
+   ]}
+];
+
+function render(filter){
+  const box=document.getElementById("sites");
+  box.innerHTML="";
+  const f=(filter||"").trim();
+  SITES.forEach(s=>{
+    const hay = s.name+s.tagline+s.sections.map(x=>x.join(" ")).join(" ");
+    if(f && !hay.includes(f)) return;
+    const det=document.createElement("details");
+    det.className="site";
+    det.innerHTML =
+      '<summary><span class="icon">'+s.icon+'</span>'+
+      '<span class="titlebox"><span class="name">'+s.name+'</span><br><span class="tagline">'+s.tagline+'</span></span>'+
+      '<span class="chev">◀</span></summary>'+
+      '<div class="body"><div class="sections">'+
+      s.sections.map(([t,d])=>'<div class="sec"><b>'+t+':</b> '+d+'</div>').join("")+
+      '</div><a class="visit" href="'+s.url+'" target="_blank" rel="noopener">زيارة الموقع ↗</a></div>';
+    box.appendChild(det);
+  });
+}
+render("");
+document.getElementById("search").addEventListener("input",e=>render(e.target.value));
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

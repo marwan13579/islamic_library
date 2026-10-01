@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تسبيح جماعي</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:38ch;margin:.4rem auto 0}
+
+  .phraserow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center;margin:18px 0}
+  .pbtn{font-family:"Cairo";font-weight:600;font-size:.82rem;padding:8px 16px;border-radius:999px;
+    background:var(--card);border:1px solid var(--line);color:var(--ink);cursor:pointer}
+  .pbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .goalrow{display:flex;align-items:center;justify-content:center;gap:8px;margin-bottom:20px}
+  .goalrow label{font-size:.85rem;color:var(--ink-soft)}
+  .goalrow input{width:80px;padding:7px 10px;border-radius:8px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-family:"Cairo";text-align:center}
+
+  .people{display:flex;flex-direction:column;gap:12px}
+  .person{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;
+    display:flex;align-items:center;gap:14px}
+  .person.complete{border-color:var(--green);background:var(--green-soft)}
+  .pname{flex:1;font-weight:700;font-size:1.05rem;background:none;border:0;color:var(--ink);
+    font-family:"Cairo";width:100%;padding:4px 0}
+  .pcount{font-family:"Amiri",serif;font-size:1.6rem;color:var(--gold);min-width:60px;text-align:center}
+  .person.complete .pcount{color:var(--green)}
+  .pplus{width:44px;height:44px;border-radius:50%;background:var(--ink);color:var(--paper);
+    border:0;font-size:1.3rem;cursor:pointer;flex-shrink:0}
+  .prm{background:none;border:0;color:var(--ink-soft);font-size:1.1rem;cursor:pointer;flex-shrink:0}
+  .pbar{height:5px;background:var(--paper-2);border-radius:99px;overflow:hidden;margin-top:8px}
+  .pbar i{display:block;height:100%;background:var(--gold);border-radius:inherit}
+  .person.complete .pbar i{background:var(--green)}
+
+  .addrow{display:flex;gap:8px;margin-top:16px}
+  .addrow input{flex:1;min-width:0;padding:10px 14px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-family:"Cairo";font-size:.9rem}
+  .addbtn{font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);border:0;
+    padding:10px 20px;border-radius:999px;cursor:pointer}
+
+  .totals{text-align:center;margin:18px 0;font-size:.9rem;color:var(--ink-soft)}
+  .resetall{display:block;margin:20px auto 0;background:none;border:1px solid var(--line);color:var(--ink-soft);
+    padding:8px 18px;border-radius:999px;cursor:pointer;font-family:"Cairo";font-size:.82rem}
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>تسبيح جماعي</h1>
+  <p>كل فرد من الأسرة أو المجموعة بعدّاده الخاص على نفس الجهاز — مفيدة في المجالس والجلسات المشتركة.</p>
+</header>
+
+<div class="phraserow" id="phrases"></div>
+<div class="goalrow">
+  <label for="goal">الهدف لكل شخص:</label>
+  <input id="goal" type="number" min="1" value="33">
+</div>
+
+<div class="people" id="people"></div>
+
+<div class="addrow">
+  <input id="nameInput" type="text" placeholder="اسم مشارك جديد..." aria-label="اسم المشارك الجديد">
+  <button class="addbtn" id="addBtn" type="button">إضافة</button>
+</div>
+
+<p class="totals" id="totals"></p>
+<button class="resetall" id="resetAll" type="button">تصفير الجميع</button>
+
+<footer>وَالذَّاكِرِينَ اللَّهَ كَثِيرًا وَالذَّاكِرَاتِ أَعَدَّ اللَّهُ لَهُم مَّغْفِرَةً وَأَجْرًا عَظِيمًا</footer>
+</div>
+
+<script>
+const PHRASES = ["سبحان الله","الحمد لله","الله أكبر","لا إله إلا الله","أستغفر الله","اللهم صل على محمد ﷺ"];
+let customPhrase = localStorage.getItem("gtasbeeh-custom") || "";
+let activePhrase = localStorage.getItem("gtasbeeh-phrase") || PHRASES[0];
+let goal = Number(localStorage.getItem("gtasbeeh-goal")||33);
+let people=[];
+try{ people = JSON.parse(localStorage.getItem("gtasbeeh-people")||"null") || [
+  {name:"أنا", count:0}
+]; }catch(e){ people=[{name:"أنا",count:0}]; }
+
+function save(){
+  try{
+    localStorage.setItem("gtasbeeh-phrase", activePhrase);
+    localStorage.setItem("gtasbeeh-custom", customPhrase);
+    localStorage.setItem("gtasbeeh-goal", String(goal));
+    localStorage.setItem("gtasbeeh-people", JSON.stringify(people));
+  }catch(e){}
+}
+
+function escapeHtml(value){
+  return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
+}
+
+function renderPhrases(){
+  const box=document.getElementById("phrases");
+  box.innerHTML="";
+  PHRASES.forEach(p=>{
+    const b=document.createElement("button");
+    b.className="pbtn"; b.type="button"; b.textContent=p;
+    b.setAttribute("aria-pressed", p===activePhrase?"true":"false");
+    b.addEventListener("click",()=>{ activePhrase=p; save(); renderPhrases(); renderCustomBox(); });
+    box.appendChild(b);
+  });
+  const customBtn=document.createElement("button");
+  customBtn.className="pbtn"; customBtn.type="button";
+  customBtn.textContent="ذكر مخصص ✎";
+  const isCustomActive = !PHRASES.includes(activePhrase);
+  customBtn.setAttribute("aria-pressed", isCustomActive?"true":"false");
+  customBtn.addEventListener("click",()=>{
+    activePhrase = customPhrase || activePhrase;
+    save(); renderPhrases(); renderCustomBox(true);
+  });
+  box.appendChild(customBtn);
+}
+
+function renderCustomBox(forceOpen){
+  let box=document.getElementById("customBox");
+  const isCustomActive = !PHRASES.includes(activePhrase) || forceOpen;
+  if(!isCustomActive){ if(box) box.remove(); return; }
+  if(!box){
+    box=document.createElement("div");
+    box.id="customBox";
+    box.style.cssText="max-width:420px;margin:10px auto 0;display:flex;gap:8px";
+    box.innerHTML =
+      '<input id="customInput" type="text" placeholder="اكتب ذكرك هنا..." '+
+      'style="flex:1;padding:9px 14px;border-radius:10px;border:1px solid var(--line);background:var(--paper);color:var(--ink);font-family:Cairo,sans-serif;font-size:.9rem">'+
+      '<button id="customSave" type="button" class="btn" style="flex-shrink:0">تعيين</button>';
+    const host = document.getElementById("phrases");
+    const anchor = host && host.parentNode ? host.parentNode : document.body;
+    anchor.insertBefore(box, (host && host.nextSibling) || null);
+    document.getElementById("customInput").value = customPhrase;
+    document.getElementById("customSave").addEventListener("click",()=>{
+      const v=document.getElementById("customInput").value.trim();
+      if(!v) return;
+      customPhrase=v; activePhrase=v; save(); renderPhrases();
+    });
+    document.getElementById("customInput").addEventListener("keydown",e=>{
+      if(e.key==="Enter") document.getElementById("customSave").click();
+    });
+  }
+}
+
+function renderPeople(){
+  const box=document.getElementById("people");
+  box.innerHTML="";
+  people.forEach((p,i)=>{
+    const participantName=String(p.name??"");
+    const count=Number.isFinite(Number(p.count))?Math.max(0,Number(p.count)):0;
+    const complete = count>=goal;
+    const el=document.createElement("div");
+    el.className="person"+(complete?" complete":"");
+    el.innerHTML =
+      '<div style="flex:1">'+
+      '<input class="pname" value="'+escapeHtml(participantName)+'" aria-label="اسم المشارك رقم '+(i+1)+'" data-i="'+i+'">'+
+      '<div class="pbar"><i style="width:'+Math.min(100,(count/goal)*100)+'%"></i></div>'+
+      '</div>'+
+      '<span class="pcount">'+count+(complete?" ✓":"")+'</span>'+
+      '<button class="pplus" type="button" aria-label="أضف تسبيحة للمشارك '+escapeHtml(participantName)+'" data-i="'+i+'">+</button>'+
+      '<button class="prm" type="button" aria-label="إزالة المشارك '+escapeHtml(participantName)+'" data-rm="'+i+'">✕</button>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll(".pname").forEach(inp=>{
+    inp.addEventListener("input",e=>{ people[+e.target.dataset.i].name=e.target.value; save(); });
+  });
+  box.querySelectorAll(".pplus").forEach(btn=>{
+    btn.addEventListener("click",e=>{
+      const i=+e.target.dataset.i;
+      people[i].count++; save(); renderPeople(); renderTotals();
+      if(navigator.vibrate) try{navigator.vibrate(8)}catch(err){}
+    });
+  });
+  box.querySelectorAll(".prm").forEach(btn=>{
+    btn.addEventListener("click",e=>{
+      people.splice(+e.target.dataset.rm,1); save(); renderPeople(); renderTotals();
+    });
+  });
+}
+
+function renderTotals(){
+  const total = people.reduce((s,p)=>s+p.count,0);
+  const done = people.filter(p=>p.count>=goal).length;
+  document.getElementById("totals").textContent =
+    "المجموع الكلي: "+total+" — "+done+" من "+people.length+" أكملوا الهدف";
+}
+
+document.getElementById("goal").value=goal;
+document.getElementById("goal").addEventListener("input",e=>{
+  goal = Math.max(1, Number(e.target.value)||33); save(); renderPeople(); renderTotals();
+});
+document.getElementById("addBtn").addEventListener("click",()=>{
+  const inp=document.getElementById("nameInput");
+  const v=inp.value.trim();
+  if(!v) return;
+  people.push({name:v,count:0}); save(); renderPeople(); renderTotals(); inp.value="";
+});
+document.getElementById("nameInput").addEventListener("keydown",e=>{
+  if(e.key==="Enter") document.getElementById("addBtn").click();
+});
+document.getElementById("resetAll").addEventListener("click",()=>{
+  people.forEach(p=>p.count=0); save(); renderPeople(); renderTotals();
+});
+
+renderPhrases(); renderCustomBox(); renderPeople(); renderTotals();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

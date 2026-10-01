@@ -1,0 +1,48 @@
+/**
+ * تنسيق مشترك لصفحات الأدوات.
+ *
+ * كان زرّ الرجوع إلى المكتبة منسوخًا بنمطه الطويل في اثنتين وثلاثين صفحة،
+ * فتختلف نسخًا، ويصعب تغييره في موضع واحد. فصار له صنفٌ هنا.
+ */
+
+/* زرّ الرجوع إلى المكتبة — ثابت في أعلى الصفحة، لا يغطي المحتوى. */
+.back-link {
+  position: fixed;
+  top: calc(env(safe-area-inset-top, 0px) + 10px);
+  /* يسار الشاشة دائمًا: زرّ تبديل الوضع على هذه الصفحات عند ٦٤ بكسل،
+     فالرجوع عند ١٤ يجاوره ولا يتزاحمان، ويبقى في موضعه المعتاد. */
+  left: 14px;
+  z-index: 50;
+  background: var(--ink, #13322c);
+  color: var(--paper, #f6efdf);
+  text-decoration: none;
+  font-family: "Cairo", sans-serif;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 7px 14px;
+  border-radius: 999px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.back-link:hover,
+.back-link:focus-visible {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.22);
+}
+
+/* مساحة للزرّ حتى لا يغطّي أول عنوان.
+   المحدد يعمّ كل صفحة فيها الزرّ تلقائيًا بلا تعديل علىBODY. */
+.back-link ~ .wrap,
+.back-link ~ header {
+  padding-top: 58px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .back-link {
+    transition: none;
+  }
+}

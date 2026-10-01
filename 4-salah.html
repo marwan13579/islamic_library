@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>تعلّم الصلاة خطوة بخطوة</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.75}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 20px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:38ch;margin:.4rem auto 0}
+
+  nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--line);
+    display:flex;gap:4px;overflow-x:auto;padding:8px 12px;z-index:5;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{font-family:"Cairo";font-weight:600;font-size:.85rem;background:none;border:0;color:var(--ink-soft);
+    padding:8px 14px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+
+  section[hidden]{display:none}
+  .prose h2{font-family:"Amiri",serif;font-size:1.4rem;margin:26px 0 8px}
+  .prose p{margin:0 0 10px}
+  .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:14px 0}
+
+  .steps{counter-reset:step;display:flex;flex-direction:column;gap:10px;margin-top:16px}
+  .step{
+    background:var(--card);border:1px solid var(--line);border-radius:14px;
+    padding:16px 16px 16px 16px;display:flex;gap:14px;
+  }
+  .num{
+    counter-increment:step;font-family:"Amiri",serif;font-weight:700;font-size:1.3rem;color:var(--gold);
+    min-width:34px;height:34px;border:2px solid var(--gold-soft);border-radius:50%;
+    display:grid;place-items:center;flex-shrink:0;
+  }
+  .num::before{content: counter(step)}
+  .step .content{flex:1}
+  .step h3{margin:0 0 6px;font-size:1.05rem}
+  .step .say{
+    font-family:"Amiri",serif;font-size:1.15rem;background:var(--paper-2);border-radius:8px;
+    padding:8px 12px;margin:8px 0;
+  }
+  .step p{margin:0;font-size:.9rem;color:var(--ink-soft)}
+
+  .kidbox{background:var(--card);border:2px dashed var(--gold-soft);border-radius:14px;padding:16px;margin:20px 0}
+  .kidbox h2{font-family:"Amiri",serif;margin:0 0 8px;font-size:1.2rem;color:var(--green)}
+
+  table.timing{width:100%;border-collapse:collapse;margin:14px 0;font-size:.9rem}
+  table.timing th,table.timing td{border:1px solid var(--line);padding:8px 10px;text-align:center}
+  table.timing th{background:var(--paper-2)}
+
+  footer{margin-top:34px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>تعلّم الصلاة</h1>
+  <p>دليل مبسّط خطوة بخطوة للأطفال وحديثي الإسلام — بالصوت والحركة والكلمة.</p>
+</header>
+
+<nav class="tabs" id="tabs"></nav>
+<main id="main"></main>
+
+<footer>الصلاة عمود الدين، من أقامها أقام الدين، ومن هدمها هدم الدين.</footer>
+</div>
+
+<script>
+const WUDU_STEPS = [
+  ["النية","انوِ بقلبك أنك تتوضأ لرفع الحدث والصلاة، بلا تلفظ."],
+  ["غسل اليدين","اغسل كفّيك ثلاث مرات إلى الرسغين، وابدأ باليمنى."],
+  ["المضمضة والاستنشاق","خذ ماءً بيدك، أدخله فمك وحرّكه ثم اطرحه — ثلاث مرات. ثم استنشق الماء بأنفك وانثره — ثلاث مرات."],
+  ["غسل الوجه","اغسل وجهك من منبت الشعر إلى الذقن، ومن الأذن إلى الأذن — ثلاث مرات."],
+  ["غسل اليدين إلى المرفقين","اغسل يدك اليمنى من أطراف الأصابع إلى المرفق ثلاثًا، ثم اليسرى."],
+  ["مسح الرأس","بلّل يديك وامسح رأسك من مقدمته إلى مؤخرته ثم أرجعهما — مرة واحدة. وامسح أذنيك بالماء."],
+  ["غسل الرجلين","اغسل رجلك اليمنى إلى الكعبين ثلاثًا مع تخليل الأصابع، ثم اليسرى."],
+  ["الدعاء بعد الوضوء","قل: أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ."]
+];
+
+const PRAYER_STEPS = [
+  ["استقبال القبلة والنية","قف مستقبلًا الكعبة، وانوِ بقلبك الصلاة التي تريد أداءها (الفجر، الظهر...) دون أن تتلفظ بالنية."],
+  ["تكبيرة الإحرام","ارفع يديك إلى منكبيك أو أذنيك وقل: «اللَّهُ أَكْبَرُ» — بهذا تدخل في الصلاة ويحرم عليك الكلام والحركة الزائدة.", "اللَّهُ أَكْبَرُ"],
+  ["وضع اليدين وقراءة الاستفتاح","ضع يدك اليمنى على اليسرى فوق صدرك، ثم اقرأ دعاء الاستفتاح.", "سُبْحَانَكَ اللَّهُمَّ وَبِحَمْدِكَ، وَتَبَارَكَ اسْمُكَ، وَتَعَالَى جَدُّكَ، وَلَا إِلَهَ غَيْرُكَ"],
+  ["قراءة الفاتحة","اقرأ سورة الفاتحة كاملة، فهي ركن لا تصح الصلاة بدونها، ثم اقرأ ما تيسّر من القرآن في الركعتين الأوليين."],
+  ["الركوع","كبّر وانحنِ حتى يستوي ظهرك، وضع يديك على ركبتيك، وقل التسبيح ثلاثًا.", "سُبْحَانَ رَبِّيَ الْعَظِيمِ (٣ مرات)"],
+  ["الرفع من الركوع","ارفع رأسك وظهرك معتدلًا وأنت تقول التحميد، ثم قف مستقيمًا.", "سَمِعَ اللَّهُ لِمَنْ حَمِدَهُ، رَبَّنَا وَلَكَ الْحَمْدُ"],
+  ["السجود الأول","كبّر واسجد على سبعة أعضاء (الجبهة مع الأنف، الكفّان، الركبتان، أطراف القدمين)، وقل التسبيح ثلاثًا.", "سُبْحَانَ رَبِّيَ الْأَعْلَى (٣ مرات)"],
+  ["الجلوس بين السجدتين","ارفع رأسك من السجود واجلس مطمئنًا، وادعُ بهذا الدعاء.", "رَبِّ اغْفِرْ لِي، رَبِّ اغْفِرْ لِي"],
+  ["السجود الثاني","اسجد مرة أخرى كالسجدة الأولى بنفس التسبيح، وبهذا تكتمل الركعة الأولى."],
+  ["إكمال باقي الركعات","قم لأداء الركعة التالية بنفس الترتيب (فاتحة، ركوع، سجودان)، بحسب عدد ركعات الصلاة."],
+  ["التشهد","اجلس بعد إتمام الركعات وضع يديك على فخذيك، وارفع إصبعك السبابة عند الشهادة، واقرأ التشهد.", "التَّحِيَّاتُ لِلَّهِ وَالصَّلَوَاتُ وَالطَّيِّبَاتُ، السَّلَامُ عَلَيْكَ أَيُّهَا النَّبِيُّ وَرَحْمَةُ اللَّهِ وَبَرَكَاتُهُ، السَّلَامُ عَلَيْنَا وَعَلَى عِبَادِ اللَّهِ الصَّالِحِينَ، أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ"],
+  ["الصلاة الإبراهيمية","في التشهد الأخير، بعد الشهادة صلِّ على النبي ﷺ.", "اللَّهُمَّ صَلِّ عَلَى مُحَمَّدٍ وَعَلَى آلِ مُحَمَّدٍ، كَمَا صَلَّيْتَ عَلَى آلِ إِبْرَاهِيمَ، إِنَّكَ حَمِيدٌ مَجِيدٌ"],
+  ["التسليم","التفت بوجهك إلى يمينك وقل السلام، ثم إلى يسارك وقل مثلها — وبهذا تختم صلاتك.", "السَّلَامُ عَلَيْكُمْ وَرَحْمَةُ اللَّهِ (يمينًا ثم يسارًا)"]
+];
+
+const KIDS_TIPS = [
+  ["ابدأ بالقدوة","صلِّ أمام طفلك وأشركه معك في الصف، فالتقليد أول وسيلة تعلّم عنده."],
+  ["علّمه الوضوء أولًا كلعبة ممتعة","اجعل الوضوء وقتًا مرحًا: عدّ معه، وشجّعه على ترتيب الأعضاء بنفسه."],
+  ["قصّر في البداية","علّمه سورة الفاتحة وسورة قصيرة، ولا تحمّله كل الأدعية الطويلة دفعة واحدة."],
+  ["استخدم الحركة الجسدية","اجعله يقلّد وضعياتك: القيام، الركوع، السجود — الأطفال يتعلمون بالحركة أسرع من الكلام."],
+  ["اربط الصلاة بالحب لا بالخوف","لا تجعلها عقابًا أو تهديدًا، بل صِلة حب مع الله وفرحة يومية."],
+  ["امدحه على المحاولة لا الإتقان","لو نسي كلمة أو تحرّك، لا تُحرجه، بل شجّعه وصحّح بلطف بعد الصلاة."]
+];
+
+const NEW_MUSLIM_TIPS = [
+  ["ابدأ بالضروريات فقط","تعلّم الوضوء وصلاة واحدة أولًا (كالظهر) بإتقان، ثم انتقل للباقي تدريجيًا."],
+  ["احفظ الفاتحة بالنطق الصحيح","استمع لها من قارئ متقن مرارًا قبل أن تحفظها، فهي ركن أساسي."],
+  ["لا تنتظر الكمال","صلِّ بما تحفظ الآن ولو كان قليلًا، وأضف إليه تدريجيًا — الله يقبل من العبد جهده."],
+  ["استخدم تطبيقًا لمواقيت الصلاة","حمّل تطبيق مواقيت صلاة موثوقًا يضبط لك الأوقات حسب مكانك."],
+  ["اسأل بلا خجل","توجّه لأقرب مسجد أو مركز إسلامي، فأهل العلم يفرحون بتعليم من أسلم حديثًا."],
+  ["اطمئن؛ لست وحدك","كل مسلم بدأ يومًا بالتعلم، وأخطاء البداية مغفورة ومتوقعة."]
+];
+
+const TIMES = [
+  ["الفجر","من طلوع الفجر الثاني إلى شروق الشمس","٢"],
+  ["الظهر","من زوال الشمس إلى دخول وقت العصر","٤"],
+  ["العصر","من انتهاء وقت الظهر إلى اصفرار الشمس","٤"],
+  ["المغرب","من غروب الشمس إلى مغيب الشفق الأحمر","٣"],
+  ["العشاء","من مغيب الشفق إلى منتصف الليل (ويمتد للضرورة)","٤"]
+];
+
+function stepsList(arr){
+  const wrap=document.createElement("div");
+  wrap.className="steps";
+  arr.forEach(([title,desc,say])=>{
+    const el=document.createElement("div");
+    el.className="step";
+    el.innerHTML = '<span class="num"></span><div class="content">'+
+      '<h3>'+title+'</h3>'+
+      (say?'<div class="say">'+say+'</div>':'')+
+      '<p>'+desc+'</p></div>';
+    wrap.appendChild(el);
+  });
+  return wrap;
+}
+
+function tipsBox(title,arr){
+  const box=document.createElement("div");
+  box.className="kidbox";
+  let html='<h2>'+title+'</h2>';
+  arr.forEach(([t,d])=>{ html += '<p><b>'+t+':</b> '+d+'</p>'; });
+  box.innerHTML=html;
+  return box;
+}
+
+function panelWudu(){
+  const frag=document.createElement("div");
+  frag.className="prose";
+  frag.innerHTML = '<p>الوضوء شرط لصحة الصلاة، وهو تطهير أعضاء مخصوصة بالماء. تعلّمه أولًا قبل الصلاة نفسها.</p>';
+  frag.appendChild(stepsList(WUDU_STEPS));
+  return frag;
+}
+
+function panelPrayer(){
+  const frag=document.createElement("div");
+  frag.className="prose";
+  frag.innerHTML = '<p>هذا ترتيب صلاة عادية من ركعتين (كالفجر)؛ الظهر والعصر والعشاء أربع ركعات، والمغرب ثلاث — كرّر خطوات "إكمال باقي الركعات" بحسب العدد، وتجلس للتشهد الأول بعد الركعة الثانية إن كانت الصلاة أكثر من ركعتين، دون الصلاة الإبراهيمية ولا التسليم، ثم تكمل الباقي.</p>';
+  frag.appendChild(stepsList(PRAYER_STEPS));
+  return frag;
+}
+
+function panelTimes(){
+  const frag=document.createElement("div");
+  frag.className="prose";
+  frag.innerHTML = '<p>الصلوات المفروضة خمس كل يوم وليلة، لكل منها وقت محدد.</p>';
+  const t=document.createElement("table");
+  t.className="timing";
+  t.innerHTML = '<tr><th>الصلاة</th><th>الوقت</th><th>عدد الركعات</th></tr>'+
+    TIMES.map(([n,w,r])=>'<tr><td>'+n+'</td><td>'+w+'</td><td>'+r+'</td></tr>').join('');
+  frag.appendChild(t);
+  const note=document.createElement("div");
+  note.className="box";
+  note.innerHTML = '<p style="margin:0">استخدم تطبيق مواقيت صلاة موثوقًا لمعرفة الأوقات الدقيقة في مدينتك، لأنها تختلف يوميًا حسب موقع الشمس.</p>';
+  frag.appendChild(note);
+  return frag;
+}
+
+function panelKids(){
+  const frag=document.createElement("div");
+  frag.className="prose";
+  return tipsBox("نصائح لتعليم الأطفال", KIDS_TIPS);
+}
+
+function panelNew(){
+  return tipsBox("نصائح لحديثي الإسلام", NEW_MUSLIM_TIPS);
+}
+
+const TABS = [
+  ["wudu","الوضوء", panelWudu],
+  ["prayer","خطوات الصلاة", panelPrayer],
+  ["times","المواقيت", panelTimes],
+  ["kids","للأطفال", panelKids],
+  ["new","لحديثي الإسلام", panelNew]
+];
+
+const tabsEl=document.getElementById("tabs");
+const main=document.getElementById("main");
+const panels={};
+
+TABS.forEach(([id,label,build],i)=>{
+  const b=document.createElement("button");
+  b.className="tab"; b.type="button"; b.textContent=label;
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.addEventListener("click",()=>select(id));
+  tabsEl.appendChild(b);
+
+  const s=document.createElement("section");
+  if(i!==0) s.hidden=true;
+  s.appendChild(build());
+  main.appendChild(s);
+  panels[id]=s;
+});
+
+function select(id){
+  TABS.forEach(([t],i)=>{
+    panels[t].hidden = t!==id;
+    tabsEl.children[i].setAttribute("aria-selected", t===id?"true":"false");
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

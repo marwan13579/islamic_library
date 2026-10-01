@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>بحث شامل في المكتبة</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.75}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:42ch;margin:.4rem auto 0}
+
+  .search{display:block;width:100%;padding:12px 18px;border-radius:999px;border:1px solid var(--line);
+    background:var(--card);color:var(--ink);font-family:"Cairo";font-size:.95rem;margin:20px 0 8px}
+  .filters{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .fbtn{font-family:"Cairo";font-weight:600;font-size:.78rem;padding:6px 13px;border-radius:999px;
+    background:var(--paper-2);border:1px solid var(--line);color:var(--ink-soft);cursor:pointer}
+  .fbtn[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+
+  .count{font-size:.82rem;color:var(--ink-soft);margin-bottom:10px}
+  .results{display:flex;flex-direction:column;gap:10px}
+  .r{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px}
+  .r .cat{display:inline-block;font-size:.7rem;background:var(--paper-2);color:var(--gold);padding:2px 10px;border-radius:999px;margin-bottom:8px}
+  .r .text{font-family:"Amiri",serif;font-size:1.1rem;line-height:1.95;margin:0}
+  .r .src{font-size:.78rem;color:var(--ink-soft);margin-top:8px}
+  .r a{display:inline-block;margin-top:8px;font-size:.78rem;color:var(--gold);text-decoration:none}
+  .empty{text-align:center;color:var(--ink-soft);font-size:.9rem;padding:40px 0}
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>بحث شامل</h1>
+  <p>دوّر في الأذكار والأحاديث والأدعية المتوفرة عبر أدوات المكتبة كلها من مكان واحد.</p>
+</header>
+
+<input class="search" id="search" type="search" placeholder="ابحث عن كلمة، ذكر، أو حديث..." aria-label="البحث الشامل في المكتبة">
+<div class="filters" id="filters"></div>
+<p class="count" id="count"></p>
+<div class="results" id="results"></div>
+<p class="empty" id="empty" hidden>اكتب كلمة للبحث، أو اختر تصنيفًا.</p>
+
+<footer>وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ</footer>
+</div>
+
+<script>
+const R=(cat,text,src,link,linkLabel)=>({cat,text,src,link,linkLabel});
+
+const INDEX = [
+  R("أذكار الصباح","أَصْبَحْنَا وَأَصْبَحَ الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ","رواه مسلم","1-adhkar.html","نور الذكر"),
+  R("أذكار الصباح","سَيِّدُ الاستغفار: اللَّهُمَّ أَنْتَ رَبِّي لَا إِلَهَ إِلَّا أَنْتَ، خَلَقْتَنِي وَأَنَا عَبْدُكَ","رواه البخاري","1-adhkar.html","نور الذكر"),
+  R("أذكار الصباح","حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ، وَهُوَ رَبُّ الْعَرْشِ الْعَظِيمِ (٧ مرات)","من قالها كفاه الله ما أهمه","1-adhkar.html","نور الذكر"),
+  R("أذكار المساء","أَمْسَيْنَا وَأَمْسَى الْمُلْكُ لِلَّهِ، وَالْحَمْدُ لِلَّهِ، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ","رواه مسلم","1-adhkar.html","نور الذكر"),
+  R("أذكار النوم","بِاسْمِكَ رَبِّي وَضَعْتُ جَنْبِي، وَبِكَ أَرْفَعُهُ، إِنْ أَمْسَكْتَ نَفْسِي فَارْحَمْهَا","متفق عليه","1-adhkar.html","نور الذكر"),
+  R("أذكار النوم","اللَّهُمَّ أَسْلَمْتُ نَفْسِي إِلَيْكَ، وَفَوَّضْتُ أَمْرِي إِلَيْكَ، وَوَجَّهْتُ وَجْهِي إِلَيْكَ","متفق عليه — من مات من ليلته مات على الفطرة","1-adhkar.html","نور الذكر"),
+
+  R("أربعون النووية","إِنَّمَا الْأَعْمَالُ بِالنِّيَّاتِ، وَإِنَّمَا لِكُلِّ امْرِئٍ مَا نَوَى","رواه البخاري ومسلم","3-arbaeen.html","الأربعون النووية"),
+  R("أربعون النووية","لَا يُؤْمِنُ أَحَدُكُمْ حَتَّى يُحِبَّ لِأَخِيهِ مَا يُحِبُّ لِنَفْسِهِ","رواه البخاري ومسلم","3-arbaeen.html","الأربعون النووية"),
+  R("أربعون النووية","مَنْ حُسْنِ إِسْلَامِ الْمَرْءِ تَرْكُهُ مَا لَا يَعْنِيهِ","رواه الترمذي","3-arbaeen.html","الأربعون النووية"),
+  R("أربعون النووية","الْحَلَالُ بَيِّنٌ، وَالْحَرَامُ بَيِّنٌ، وَبَيْنَهُمَا أُمُورٌ مُشْتَبِهَاتٌ","رواه البخاري ومسلم","3-arbaeen.html","الأربعون النووية"),
+  R("أربعون النووية","الدِّينُ النَّصِيحَةُ","رواه مسلم","3-arbaeen.html","الأربعون النووية"),
+  R("أربعون النووية","اتَّقِ اللَّهَ حَيْثُمَا كُنْتَ، وَأَتْبِعِ السَّيِّئَةَ الْحَسَنَةَ تَمْحُهَا","رواه الترمذي","3-arbaeen.html","الأربعون النووية"),
+
+  R("أدعية المناسبات","اللَّهُمَّ إِنِّي أَعُوذُ بِكَ مِنْ وَعْثَاءِ السَّفَرِ، وَكَآبَةِ الْمَنْظَرِ","رواه مسلم — دعاء السفر","6-munasabat.html","أذكار المناسبات"),
+  R("أدعية المناسبات","أَذْهِبِ الْبَأْسَ رَبَّ النَّاسِ، اشْفِ أَنْتَ الشَّافِي، لَا شِفَاءَ إِلَّا شِفَاؤُكَ","متفق عليه — دعاء المريض","6-munasabat.html","أذكار المناسبات"),
+  R("أدعية المناسبات","لَا إِلَهَ إِلَّا اللَّهُ الْعَظِيمُ الْحَلِيمُ، لَا إِلَهَ إِلَّا اللَّهُ رَبُّ الْعَرْشِ الْعَظِيمِ","متفق عليه — دعاء الكرب","6-munasabat.html","أذكار المناسبات"),
+  R("أدعية المناسبات","بِسْمِ اللَّهِ وَلَجْنَا، وَبِسْمِ اللَّهِ خَرَجْنَا، وَعَلَى اللَّهِ رَبِّنَا تَوَكَّلْنَا","رواه أبو داود — دخول البيت","6-munasabat.html","أذكار المناسبات"),
+  R("أدعية المناسبات","بِسْمِ اللَّهِ، وَالْحَمْدُ لِلَّهِ الَّذِي أَطْعَمَنِي هَذَا","رواه أبو داود — بعد الطعام","6-munasabat.html","أذكار المناسبات"),
+
+  R("أوقات الإجابة","الدُّعَاءُ لَا يُرَدُّ بَيْنَ الْأَذَانِ وَالْإِقَامَةِ","رواه أبو داود والترمذي","12-mustajab.html","أوقات الإجابة"),
+  R("أوقات الإجابة","فِي الْجُمُعَةِ سَاعَةٌ لَا يُوَافِقُهَا عَبْدٌ مُسْلِمٌ وَهُوَ قَائِمٌ يُصَلِّي إِلَّا أَعْطَاهُ اللَّهُ إِيَّاهُ","متفق عليه","12-mustajab.html","أوقات الإجابة"),
+  R("أوقات الإجابة","اللَّهُمَّ ارْحَمْنِي بِالْقُرْآنِ، وَاجْعَلْهُ لِي إِمَامًا وَنُورًا وَهُدًى وَرَحْمَةً","دعاء ختم القرآن","12-mustajab.html","أوقات الإجابة"),
+
+  R("آداب الزيارة","أَذْهِبِ الْبَأْسَ رَبَّ النَّاسِ، اشْفِ أَنْتَ الشَّافِي","متفق عليه — دعاء عيادة المريض","19-adab-ziyara.html","آداب الزيارة والعيادة"),
+  R("آداب الزيارة","إِنَّ لِلَّهِ مَا أَخَذَ وَلَهُ مَا أَعْطَى، وَكُلُّ شَيْءٍ عِنْدَهُ بِأَجَلٍ مُسَمًّى","متفق عليه — دعاء العزاء","19-adab-ziyara.html","آداب الزيارة والعيادة"),
+  R("آداب الزيارة","بَارَكَ اللَّهُ لَكَ، وَبَارَكَ عَلَيْكَ، وَجَمَعَ بَيْنَكُمَا فِي خَيْرٍ","رواه أبو داود والترمذي — دعاء تهنئة الزواج","19-adab-ziyara.html","آداب الزيارة والعيادة"),
+
+  R("أسماء الله الحسنى","الرَّحْمَٰن: ذو الرحمة الواسعة التي تشمل كل الخلق في الدنيا","اسم من أسماء الله الحسنى","5-asmaulhusna.html","أسماء الله الحسنى"),
+  R("أسماء الله الحسنى","اللَّطِيف: الرفيق بعباده، العالم بدقائق الأمور","اسم من أسماء الله الحسنى","5-asmaulhusna.html","أسماء الله الحسنى"),
+  R("أسماء الله الحسنى","التَّوَّاب: الذي يقبل توبة عباده مهما كثرت ذنوبهم","اسم من أسماء الله الحسنى","5-asmaulhusna.html","أسماء الله الحسنى"),
+
+  R("قصص الأنبياء","يوسف عليه السلام: حسده إخوته فألقَوه في البئر، ثم مكّنه الله في الأرض","من قصص الأنبياء","8-qasas-anbiya.html","قصص الأنبياء"),
+  R("قصص الأنبياء","أيوب عليه السلام: ابتلاه الله سنوات طويلة فصبر، ففرّج الله كربه","من قصص الأنبياء","8-qasas-anbiya.html","قصص الأنبياء"),
+  R("قصص الأنبياء","يونس عليه السلام: نادى في بطن الحوت بالتوحيد والاستغفار فنجّاه الله","من قصص الأنبياء","8-qasas-anbiya.html","قصص الأنبياء"),
+
+  R("رمضان","اللَّهُمَّ بَلِّغْنَا رَمَضَانَ، وَأَعِنَّا عَلَى صِيَامِهِ وَقِيَامِهِ، وَتَقَبَّلْهُ مِنَّا","دعاء استقبال رمضان","7-ramadan.html","تقويم رمضان"),
+  R("رمضان","اللَّهُمَّ إِنَّكَ عَفُوٌّ تُحِبُّ الْعَفْوَ فَاعْفُ عَنِّي","دعاء العشر الأواخر — رواه الترمذي","7-ramadan.html","تقويم رمضان")
+];
+
+const CATS = [...new Set(INDEX.map(r=>r.cat))];
+let activeCat="all";
+
+function renderFilters(){
+  const box=document.getElementById("filters");
+  box.innerHTML="";
+  const allBtn=document.createElement("button");
+  allBtn.className="fbtn"; allBtn.type="button"; allBtn.textContent="الكل";
+  allBtn.setAttribute("aria-pressed", "true");
+  allBtn.addEventListener("click",()=>{ activeCat="all"; syncFilterBtns(allBtn); render(); });
+  box.appendChild(allBtn);
+  CATS.forEach(c=>{
+    const b=document.createElement("button");
+    b.className="fbtn"; b.type="button"; b.textContent=c;
+    b.setAttribute("aria-pressed","false");
+    b.addEventListener("click",()=>{ activeCat=c; syncFilterBtns(b); render(); });
+    box.appendChild(b);
+  });
+}
+function syncFilterBtns(active){
+  [...document.getElementById("filters").children].forEach(b=>b.setAttribute("aria-pressed", b===active?"true":"false"));
+}
+
+function render(){
+  const q=document.getElementById("search").value.trim();
+  const box=document.getElementById("results");
+  const empty=document.getElementById("empty");
+  const countEl=document.getElementById("count");
+  box.innerHTML="";
+  let list = INDEX.filter(r=> activeCat==="all" || r.cat===activeCat);
+  if(q) list = list.filter(r=> (r.text+r.src+r.cat).includes(q));
+  if(!q && activeCat==="all"){ empty.hidden=false; countEl.textContent=""; return; }
+  empty.hidden=true;
+  countEl.textContent = list.length+" نتيجة";
+  list.forEach(r=>{
+    const el=document.createElement("div");
+    el.className="r";
+    el.innerHTML =
+      '<span class="cat">'+r.cat+'</span>'+
+      '<p class="text">'+r.text+'</p>'+
+      '<p class="src">'+r.src+'</p>'+
+      '<a href="'+r.link+'">فتح في '+r.linkLabel+' ↗</a>';
+    box.appendChild(el);
+  });
+}
+
+renderFilters();
+document.getElementById("search").addEventListener("input",render);
+render();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

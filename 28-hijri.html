@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>التقويم الهجري</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:720px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.88rem;max-width:44ch;margin:.4rem auto 0}
+
+  nav.tabs{position:sticky;top:env(safe-area-inset-top,0px);background:var(--paper);border-bottom:1px solid var(--line);
+    display:flex;gap:4px;overflow-x:auto;padding:8px 12px;z-index:5;scrollbar-width:none}
+  nav.tabs::-webkit-scrollbar{display:none}
+  .tab{font-family:"Cairo";font-weight:600;font-size:.85rem;background:none;border:0;color:var(--ink-soft);
+    padding:9px 15px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .tab[aria-selected="true"]{background:var(--ink);color:var(--paper)}
+  section[hidden]{display:none}
+
+  .todaybox{background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;padding:22px;text-align:center;margin:20px 0}
+  .todaybox .hijri{font-family:"Amiri",serif;font-size:1.7rem;color:var(--gold);margin:0}
+  .todaybox .greg{font-size:.85rem;color:var(--ink-soft);margin-top:6px}
+
+  .note{font-size:.8rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:16px 0}
+
+  .convcard{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:16px 0}
+  .convcard h2{font-family:"Amiri",serif;font-size:1.1rem;margin:0 0 12px}
+  .row3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:10px}
+  .row3 select,.row3 input{padding:9px 8px;border-radius:8px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.85rem;text-align:center}
+  .convbtn{font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);border:0;
+    padding:9px 20px;border-radius:999px;cursor:pointer;font-size:.85rem}
+  .result{margin-top:12px;font-family:"Amiri",serif;font-size:1.15rem;color:var(--green);text-align:center}
+
+  .occasion{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 16px;margin-bottom:8px}
+  .occasion .top{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .occasion .name{font-family:"Amiri",serif;font-size:1.05rem}
+  .occasion .days{font-size:.75rem;background:var(--gold-soft);color:#2b1e05;padding:2px 10px;border-radius:999px;white-space:nowrap}
+  .occasion .dates{font-size:.8rem;color:var(--ink-soft);margin-top:4px}
+  .occasion .desc{font-size:.83rem;color:var(--ink-soft);margin-top:6px}
+
+  .fastcard{background:var(--card);border:1px solid var(--green);border-radius:14px;padding:16px;margin-bottom:10px}
+  .fastcard h3{font-family:"Amiri",serif;font-size:1rem;margin:0 0 6px;color:var(--green)}
+  .fastcard p{font-size:.85rem;color:var(--ink-soft);margin:0 0 6px}
+  .fastcard .upcoming{font-size:.82rem;font-weight:700;color:var(--ink)}
+
+  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>التقويم الهجري</h1>
+  <p>التاريخ الهجري اليوم، تحويل هجري ↔ ميلادي، المناسبات الإسلامية، والصيام المستحب.</p>
+</header>
+<nav class="tabs" id="tabs"></nav>
+<main id="main"></main>
+<footer>هُوَ الَّذِي جَعَلَ الشَّمْسَ ضِيَاءً وَالْقَمَرَ نُورًا وَقَدَّرَهُ مَنَازِلَ لِتَعْلَمُوا عَدَدَ السِّنِينَ وَالْحِسَابَ</footer>
+</div>
+
+<script>
+/* ---------- reliable Gregorian <-> Julian Day (via JS Date, UTC noon) ---------- */
+function gregorianToJD(y, m, d) {
+  return Date.UTC(y, m - 1, d, 12, 0, 0) / 86400000 + 2440587.5;
+}
+function jdToGregorian(jd) {
+  const dt = new Date((jd - 2440587.5) * 86400000);
+  return [dt.getUTCFullYear(), dt.getUTCMonth() + 1, dt.getUTCDate()];
+}
+/* ---------- tabular (arithmetic) Islamic calendar <-> Julian Day ---------- */
+const ISLAMIC_EPOCH = 1948440;
+function islamicToJD(y, m, d) {
+  return d + Math.ceil(29.5 * (m - 1)) + (y - 1) * 354 + Math.floor((3 + 11 * y) / 30) + ISLAMIC_EPOCH - 1;
+}
+function jdToIslamic(jdIn) {
+  let jd = Math.floor(jdIn) - ISLAMIC_EPOCH + 10632;
+  let n = Math.floor((jd - 1) / 10631);
+  jd = jd - 10631 * n + 354;
+  let j = (Math.floor((10985 - jd) / 5316)) * (Math.floor((50 * jd) / 17719)) + (Math.floor(jd / 5670)) * (Math.floor((43 * jd) / 15238));
+  jd = jd - (Math.floor((30 - j) / 15)) * (Math.floor((17719 * j) / 50)) - (Math.floor(j / 16)) * (Math.floor((15238 * j) / 43)) + 29;
+  let month = Math.floor((24 * jd) / 709);
+  let day = jd - Math.floor((709 * month) / 24);
+  let year = 30 * n + j - 30;
+  return [year, month, day];
+}
+function todayJD(){
+  const n = new Date();
+  return gregorianToJD(n.getFullYear(), n.getMonth()+1, n.getDate());
+}
+
+const HIJRI_MONTHS = ["محرم","صفر","ربيع الأول","ربيع الآخر","جمادى الأولى","جمادى الآخرة","رجب","شعبان","رمضان","شوال","ذو القعدة","ذو الحجة"];
+const GREG_MONTHS = ["يناير","فبراير","مارس","أبريل","مايو","يونيو","يوليو","أغسطس","سبتمبر","أكتوبر","نوفمبر","ديسمبر"];
+const AR_NUM = n => n.toString().replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+
+function fmtHijri([y,m,d]){ return AR_NUM(Math.round(d))+" "+HIJRI_MONTHS[m-1]+" "+AR_NUM(y)+" هـ"; }
+function fmtGreg([y,m,d]){ return AR_NUM(d)+" "+GREG_MONTHS[m-1]+" "+AR_NUM(y)+" م"; }
+
+/* ================= Tab 1: Today + summary ================= */
+function buildToday(){
+  const frag=document.createElement("div");
+  const jd=todayJD();
+  const hijri=jdToIslamic(jd);
+  const box=document.createElement("div");
+  box.className="todaybox";
+  box.innerHTML = '<p class="hijri">'+fmtHijri(hijri)+'</p><p class="greg">الموافق '+fmtGreg([new Date().getFullYear(), new Date().getMonth()+1, new Date().getDate()])+'</p>';
+  frag.appendChild(box);
+  const note=document.createElement("div");
+  note.className="note";
+  note.textContent="هذا التاريخ محسوب حسابيًا بالتقويم الهجري الجدولي (تقريبي)، وقد يختلف يومًا واحدًا عن الإعلان الرسمي المعتمد على رؤية الهلال في بلدك. للمناسبات التعبدية (بداية رمضان، الأعياد) اعتمد دائمًا على الإعلان الرسمي المحلي.";
+  frag.appendChild(note);
+  return frag;
+}
+
+/* ================= Tab 2: Converter ================= */
+function buildConverter(){
+  const frag=document.createElement("div");
+
+  const g2h=document.createElement("div");
+  g2h.className="convcard";
+  g2h.innerHTML =
+    '<h2>ميلادي ← هجري</h2>'+
+    '<div class="row3">'+
+    '<input id="gDay" type="number" min="1" max="31" placeholder="يوم" aria-label="اليوم الميلادي">'+
+    '<select id="gMonth" aria-label="الشهر الميلادي">'+GREG_MONTHS.map((m,i)=>'<option value="'+(i+1)+'">'+m+'</option>').join('')+'</select>'+
+    '<input id="gYear" type="number" placeholder="سنة" aria-label="السنة الميلادية" value="'+new Date().getFullYear()+'">'+
+    '</div>'+
+    '<button class="convbtn" id="g2hBtn" type="button">تحويل</button>'+
+    '<p class="result" id="g2hResult"></p>';
+  frag.appendChild(g2h);
+
+  const h2g=document.createElement("div");
+  h2g.className="convcard";
+  h2g.innerHTML =
+    '<h2>هجري ← ميلادي</h2>'+
+    '<div class="row3">'+
+    '<input id="hDay" type="number" min="1" max="30" placeholder="يوم" aria-label="اليوم الهجري">'+
+    '<select id="hMonth" aria-label="الشهر الهجري">'+HIJRI_MONTHS.map((m,i)=>'<option value="'+(i+1)+'">'+m+'</option>').join('')+'</select>'+
+    '<input id="hYear" type="number" placeholder="سنة" aria-label="السنة الهجرية" value="'+jdToIslamic(todayJD())[0]+'">'+
+    '</div>'+
+    '<button class="convbtn" id="h2gBtn" type="button">تحويل</button>'+
+    '<p class="result" id="h2gResult"></p>';
+  frag.appendChild(h2g);
+
+  const note=document.createElement("div");
+  note.className="note";
+  note.textContent="التحويل حسابي تقريبي (فرق يوم واحد ممكن مقارنة برؤية الهلال الفعلية).";
+  frag.appendChild(note);
+
+  setTimeout(()=>{
+    document.getElementById("g2hBtn").addEventListener("click",()=>{
+      const d=parseInt(document.getElementById("gDay").value);
+      const m=parseInt(document.getElementById("gMonth").value);
+      const y=parseInt(document.getElementById("gYear").value);
+      if(!d||!m||!y){ document.getElementById("g2hResult").textContent="أدخل تاريخًا صحيحًا"; return; }
+      const jd=gregorianToJD(y,m,d);
+      document.getElementById("g2hResult").textContent = fmtHijri(jdToIslamic(jd));
+    });
+    document.getElementById("h2gBtn").addEventListener("click",()=>{
+      const d=parseInt(document.getElementById("hDay").value);
+      const m=parseInt(document.getElementById("hMonth").value);
+      const y=parseInt(document.getElementById("hYear").value);
+      if(!d||!m||!y){ document.getElementById("h2gResult").textContent="أدخل تاريخًا صحيحًا"; return; }
+      const jd=islamicToJD(y,m,d);
+      document.getElementById("h2gResult").textContent = fmtGreg(jdToGregorian(jd));
+    });
+  },0);
+
+  return frag;
+}
+
+/* ================= Tab 3: Islamic occasions ================= */
+const OCCASIONS = [
+  [1,1,"رأس السنة الهجرية","بداية شهر محرم وأول السنة الهجرية الجديدة."],
+  [1,10,"يوم عاشوراء","يُستحب صيامه، وفيه نجّى الله موسى عليه السلام وقومه من فرعون."],
+  [3,12,"ذكرى المولد النبوي","تاريخ مولد النبي ﷺ حسب القول المشهور؛ الاحتفال به مسألة خلافية بين العلماء، ومنهم من يرى الاكتفاء بالاقتداء بسيرته ﷺ في كل وقت."],
+  [7,27,"ذكرى الإسراء والمعراج","التاريخ الدقيق لحادثة الإسراء والمعراج غير مؤكد تاريخيًا، وهذا التاريخ هو الأشهر في كتب السيرة."],
+  [8,15,"ليلة النصف من شعبان","لها فضل عند بعض العلماء استنادًا لأحاديث مختلف في تصحيحها، وهي مسألة خلافية."],
+  [9,1,"بداية شهر رمضان","الشهر الذي فُرض فيه الصيام، ونزل فيه القرآن."],
+  [9,27,"تحرّي ليلة القدر","تُحرّى في الليالي الوترية من العشر الأواخر من رمضان، وليلتها الحقيقية غير معلومة على وجه اليقين."],
+  [10,1,"عيد الفطر","أول أيام شهر شوال، عقب انتهاء صيام رمضان."],
+  [12,9,"يوم عرفة","يُستحب صيامه لغير الحاج، وهو ركن الحج الأعظم لمن كان حاجًا."],
+  [12,10,"عيد الأضحى","يوم النحر، وفيه يُضحّي المسلمون اقتداءً بسنة إبراهيم عليه السلام."],
+  [12,11,"أيام التشريق (١)","من أيام الذكر والأكل والشرب، ويُكره صيامها."]
+];
+
+function nextOccurrence(month, day, currentYear, currentJD){
+  let jd = islamicToJD(currentYear, month, day);
+  if(jd < currentJD){ jd = islamicToJD(currentYear+1, month, day); }
+  return jd;
+}
+
+function buildOccasions(){
+  const frag=document.createElement("div");
+  const jd=todayJD();
+  const curY = jdToIslamic(jd)[0];
+  const list = OCCASIONS.map(([m,d,name,desc])=>{
+    const occJD = nextOccurrence(m,d,curY,jd);
+    const daysLeft = Math.round(occJD - jd);
+    return {m,d,name,desc,occJD,daysLeft};
+  }).sort((a,b)=>a.daysLeft-b.daysLeft);
+
+  list.forEach(o=>{
+    const el=document.createElement("div");
+    el.className="occasion";
+    const hijriDate = jdToIslamic(o.occJD);
+    const gregDate = jdToGregorian(o.occJD);
+    el.innerHTML =
+      '<div class="top"><span class="name">'+o.name+'</span>'+
+      '<span class="days">'+(o.daysLeft===0?"اليوم":"بعد "+AR_NUM(o.daysLeft)+" يوم")+'</span></div>'+
+      '<div class="dates">'+fmtHijri(hijriDate)+' — الموافق '+fmtGreg(gregDate)+'</div>'+
+      '<div class="desc">'+o.desc+'</div>';
+    frag.appendChild(el);
+  });
+  return frag;
+}
+
+/* ================= Tab 4: Recommended fasting ================= */
+function buildFasting(){
+  const frag=document.createElement("div");
+  const jd=todayJD();
+  const curY = jdToIslamic(jd)[0];
+
+  function card(title, desc, upcomingText){
+    const el=document.createElement("div");
+    el.className="fastcard";
+    el.innerHTML='<h3>'+title+'</h3><p>'+desc+'</p><p class="upcoming">📅 '+upcomingText+'</p>';
+    frag.appendChild(el);
+  }
+
+  // Ashura
+  const ashuraJD = nextOccurrence(1,10,curY,jd);
+  card("يوم عاشوراء (١٠ محرم)",
+    "يُستحب صيامه، ويُستحب معه صيام التاسع (تاسوعاء) مخالفةً لأهل الكتاب.",
+    "القادم: "+fmtGreg(jdToGregorian(ashuraJD))+" ("+fmtHijri(jdToIslamic(ashuraJD))+")");
+
+  // Arafah
+  const arafahJD = nextOccurrence(12,9,curY,jd);
+  card("يوم عرفة (٩ ذو الحجة)",
+    "يُستحب صيامه لغير الحاج، ويكفّر السنة الماضية والباقية بإذن الله.",
+    "القادم: "+fmtGreg(jdToGregorian(arafahJD))+" ("+fmtHijri(jdToIslamic(arafahJD))+")");
+
+  // Ramadan start
+  const ramadanJD = nextOccurrence(9,1,curY,jd);
+  card("شهر رمضان",
+    "الصيام فيه فرض على كل مسلم مكلّف قادر مقيم.",
+    "القادم: "+fmtGreg(jdToGregorian(ramadanJD))+" ("+fmtHijri(jdToIslamic(ramadanJD))+")");
+
+  // White days - next occurrence (13,14,15 of current or next Hijri month)
+  const curHijri = jdToIslamic(jd);
+  let wy=curHijri[0], wm=curHijri[1];
+  let whiteJD = islamicToJD(wy, wm, 13);
+  if(whiteJD < jd){
+    wm++; if(wm>12){ wm=1; wy++; }
+    whiteJD = islamicToJD(wy, wm, 13);
+  }
+  const whiteEnd = islamicToJD(wy, wm, 15);
+  card("الأيام البيض (١٣ - ١٥ من كل شهر هجري)",
+    "يُستحب صيام ثلاثة أيام من كل شهر هجري، وأفضلها الأيام البيض؛ من صامها فكأنما صام الدهر.",
+    "القادمة: من "+fmtGreg(jdToGregorian(whiteJD))+" إلى "+fmtGreg(jdToGregorian(whiteEnd)));
+
+  // Shawwal 6 days
+  const shawwalJD = nextOccurrence(10,2,curY,jd);
+  card("ستة أيام من شوال",
+    "تُصام بعد عيد الفطر (لا في يوم العيد نفسه)؛ من صامها مع رمضان فكأنما صام الدهر كله.",
+    "يبدأ شوال: "+fmtGreg(jdToGregorian(nextOccurrence(10,1,curY,jd))));
+
+  const note=document.createElement("div");
+  note.className="note";
+  note.textContent="التواريخ هنا تقديرية بالحساب الجدولي، وتختلف الأيام الفعلية قليلًا حسب رؤية الهلال المعتمدة في بلدك — تحقق من التقويم الرسمي قبل الاعتماد عليها في الصيام.";
+  frag.appendChild(note);
+
+  return frag;
+}
+
+/* ================= wiring ================= */
+const TABS = [
+  ["today","اليوم", buildToday],
+  ["converter","تحويل التاريخ", buildConverter],
+  ["occasions","المناسبات", buildOccasions],
+  ["fasting","الصيام المستحب", buildFasting]
+];
+const tabsEl=document.getElementById("tabs");
+const main=document.getElementById("main");
+const panels={};
+TABS.forEach(([id,label,build],i)=>{
+  const b=document.createElement("button");
+  b.className="tab"; b.type="button"; b.textContent=label;
+  b.setAttribute("aria-selected", i===0?"true":"false");
+  b.addEventListener("click",()=>select(id));
+  tabsEl.appendChild(b);
+  const s=document.createElement("section");
+  if(i!==0) s.hidden=true;
+  s.appendChild(build());
+  main.appendChild(s);
+  panels[id]=s;
+});
+function select(id){
+  TABS.forEach(([t],i)=>{
+    panels[t].hidden = t!==id;
+    tabsEl.children[i].setAttribute("aria-selected", t===id?"true":"false");
+  });
+  window.scrollTo({top:0,behavior:"smooth"});
+}
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

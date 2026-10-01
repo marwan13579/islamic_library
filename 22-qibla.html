@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<script src="service-messages.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>اتجاه القبلة</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:560px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:38ch;margin:.4rem auto 0}
+
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0}
+  .locbtn{display:block;width:100%;font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);
+    border:0;padding:12px;border-radius:999px;cursor:pointer;font-size:.95rem}
+  .locmsg{font-size:.82rem;color:var(--ink-soft);text-align:center;margin-top:10px}
+
+  .compassWrap{display:flex;justify-content:center;margin:28px 0}
+  .compass{position:relative;width:min(75vw,280px);height:min(75vw,280px)}
+  .ring{width:100%;height:100%;border-radius:50%;border:3px solid var(--gold-soft);
+    background:var(--card);position:relative;transition:transform .15s linear}
+  .ring::before{content:"N";position:absolute;top:8px;left:50%;transform:translateX(-50%);
+    font-family:"Cairo";font-weight:700;color:var(--ink-soft);font-size:.85rem}
+  .needle{
+    position:absolute;top:50%;left:50%;width:6px;height:42%;background:var(--gold);
+    transform-origin:bottom center;transform:translate(-50%,-100%) rotate(0deg);
+    border-radius:6px 6px 0 0;transition:transform .3s ease;
+  }
+  .needle::after{content:"🕋";position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:1.3rem}
+  .center{position:absolute;top:50%;left:50%;width:10px;height:10px;background:var(--ink);
+    border-radius:50%;transform:translate(-50%,-50%)}
+
+  .degbox{text-align:center;margin:10px 0 20px}
+  .degbox .n{font-family:"Amiri",serif;font-size:2rem;color:var(--gold);margin:0}
+  .degbox .l{font-size:.82rem;color:var(--ink-soft)}
+
+  .manual{margin-top:16px}
+  .manual label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:5px}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .row2 input{width:100%;padding:9px 12px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.9rem}
+  .calcbtn{margin-top:10px;font-family:"Cairo";font-weight:600;background:var(--paper-2);color:var(--ink);
+    border:1px solid var(--line);padding:8px 18px;border-radius:999px;cursor:pointer;font-size:.85rem}
+
+  .note{font-size:.8rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin-top:16px}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>اتجاه القبلة</h1>
+  <p>احسب زاوية القبلة من موقعك نحو الكعبة المشرفة.</p>
+</header>
+
+<div class="card">
+  <button class="locbtn" id="locBtn" type="button">📍 استخدام موقعي الحالي</button>
+  <p class="locmsg" id="locMsg">لم يتم تحديد الموقع بعد</p>
+  <button class="locbtn" id="compassBtn" type="button" style="margin-top:8px;background:var(--card);color:var(--ink);border:1px solid var(--line)">🧭 تفعيل البوصلة الحية (يدوّر مع هاتفك)</button>
+  <p class="locmsg" id="compassMsg"></p>
+</div>
+
+<div class="compassWrap">
+  <div class="compass">
+    <div class="ring">
+      <div class="needle" id="needle"></div>
+      <div class="center"></div>
+    </div>
+  </div>
+</div>
+
+<div class="degbox">
+  <p class="n" id="degText">—</p>
+  <p class="l">درجة من الشمال، مع اتجاه عقارب الساعة</p>
+</div>
+
+<div class="card manual">
+  <p style="margin:0 0 10px;font-size:.9rem">أو أدخل إحداثياتك يدويًا</p>
+  <div class="row2">
+    <div><label for="lat">خط العرض (Latitude)</label><input id="lat" type="number" step="any" placeholder="مثال: 30.04"></div>
+    <div><label for="lon">خط الطول (Longitude)</label><input id="lon" type="number" step="any" placeholder="مثال: 31.24"></div>
+  </div>
+  <button class="calcbtn" id="calcBtn" type="button">احسب</button>
+</div>
+
+<div class="note">
+البوصلة أعلاه تعرض زاوية القبلة بالنسبة للشمال الجغرافي، وليست بوصلة حقيقية تتحرك مع دوران جهازك. للمحاذاة الفعلية، استخدم تطبيق بوصلة على جهازك لتحديد اتجاه الشمال أولًا، ثم أدر نفسك بمقدار الدرجة الظاهرة هنا باتجاه عقارب الساعة.
+</div>
+
+<footer>وَمِنْ حَيْثُ خَرَجْتَ فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ</footer>
+</div>
+
+<script>
+const KAABA_LAT=21.4225, KAABA_LON=39.8262;
+function rad(x){return x*Math.PI/180}
+function deg(x){return x*180/Math.PI}
+
+function qiblaBearing(lat,lon){
+  const phi1=rad(lat), phi2=rad(KAABA_LAT), dLon=rad(KAABA_LON-lon);
+  const y=Math.sin(dLon)*Math.cos(phi2);
+  const x=Math.cos(phi1)*Math.sin(phi2)-Math.sin(phi1)*Math.cos(phi2)*Math.cos(dLon);
+  let brng=deg(Math.atan2(y,x));
+  return (brng+360)%360;
+}
+
+function updateUI(lat,lon){
+  const b=qiblaBearing(lat,lon);
+  lastBearing=b;
+  if(!compassActive){
+    document.getElementById("needle").style.transform="translate(-50%,-100%) rotate("+b+"deg)";
+  }
+  document.getElementById("degText").textContent=b.toFixed(1)+"°";
+}
+
+let compassActive=false;
+let lastBearing=0;
+function handleOrientation(e){
+  let heading = e.webkitCompassHeading!==undefined ? e.webkitCompassHeading : (e.alpha!==null ? (360-e.alpha) : null);
+  if(heading===null) return;
+  const needleAngle = (lastBearing - heading + 360) % 360;
+  const needle=document.getElementById("needle");
+  needle.style.transform="translate(-50%,-100%) rotate("+needleAngle+"deg)";
+}
+document.getElementById("compassBtn").addEventListener("click", async ()=>{
+  const msg=document.getElementById("compassMsg");
+  if(compassActive){
+    window.removeEventListener("deviceorientationabsolute", handleOrientation);
+    window.removeEventListener("deviceorientation", handleOrientation);
+    compassActive=false;
+    document.getElementById("needle").style.transition="transform .3s ease";
+    updateUI(document.getElementById("lat").value||30.0444, document.getElementById("lon").value||31.2357);
+    msg.textContent="تم إيقاف البوصلة الحية.";
+    return;
+  }
+  if(typeof DeviceOrientationEvent!=="undefined" && typeof DeviceOrientationEvent.requestPermission==="function"){
+    try{
+      const perm = await DeviceOrientationEvent.requestPermission();
+      if(perm!=="granted"){ msg.textContent="لم يُسمح بالوصول لحساسات الحركة."; return; }
+    }catch(err){ msg.textContent="تعذّر طلب إذن الحساسات."; return; }
+  }
+  compassActive=true;
+  document.getElementById("needle").style.transition="none";
+  window.addEventListener("deviceorientationabsolute", handleOrientation, true);
+  window.addEventListener("deviceorientation", handleOrientation, true);
+  msg.textContent="البوصلة الحية مفعّلة — أدر هاتفك، والسهم سيبقى مشيرًا لاتجاه القبلة. أمسك الهاتف مسطحًا كالبوصلة العادية للحصول على أفضل دقة.";
+});
+
+document.getElementById("locBtn").addEventListener("click",()=>{
+  if(!navigator.geolocation){
+    document.getElementById("locMsg").textContent="متصفحك لا يدعم تحديد الموقع.";
+    return;
+  }
+  document.getElementById("locMsg").textContent="جارٍ تحديد الموقع...";
+  navigator.geolocation.getCurrentPosition(pos=>{
+    const {latitude,longitude}=pos.coords;
+    document.getElementById("lat").value=latitude.toFixed(4);
+    document.getElementById("lon").value=longitude.toFixed(4);
+    document.getElementById("locMsg").textContent="تم تحديد الموقع محليًا ("+latitude.toFixed(2)+", "+longitude.toFixed(2)+") — لم يُرسل لأي خادم.";
+    updateUI(latitude,longitude);
+  },error=>{
+    document.getElementById("locMsg").textContent=IslamicServiceMessages.locationError(error);
+  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
+});
+
+document.getElementById("calcBtn").addEventListener("click",()=>{
+  const lat=parseFloat(document.getElementById("lat").value);
+  const lon=parseFloat(document.getElementById("lon").value);
+  if(isNaN(lat)||isNaN(lon)){ document.getElementById("locMsg").textContent="أدخل خطي العرض والطول بشكل صحيح."; return; }
+  document.getElementById("locMsg").textContent="تم الحساب يدويًا من الإحداثيات المُدخلة.";
+  updateUI(lat,lon);
+});
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>

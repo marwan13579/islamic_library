@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>صانع البطاقات الدعوية</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(2rem,7vw,2.8rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:40ch;margin:.4rem auto 0}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:16px;margin:16px 0}
+  .field{margin-bottom:12px}
+  .field label{display:block;font-size:.83rem;color:var(--ink-soft);margin-bottom:5px}
+  .field textarea,.field input,.field select{width:100%;padding:10px 12px;border-radius:10px;border:1px solid var(--line);
+    background:var(--paper);color:var(--ink);font-family:"Cairo"}
+  .field textarea{min-height:90px;resize:vertical}
+  .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .themes{display:flex;gap:8px;flex-wrap:wrap}
+  .swatch{width:44px;height:44px;border-radius:50%;border:3px solid transparent;cursor:pointer}
+  .swatch[aria-pressed="true"]{border-color:var(--gold)}
+  .previewwrap{display:flex;justify-content:center;margin:16px 0}
+  canvas{max-width:100%;height:auto;border-radius:14px;box-shadow:0 8px 28px rgba(0,0,0,.2)}
+  .btnrow{display:flex;gap:8px;flex-wrap:wrap;justify-content:center}
+  .btn{font-family:"Cairo";font-weight:700;font-size:.85rem;padding:10px 20px;border-radius:999px;border:0;cursor:pointer;
+    background:var(--ink);color:var(--paper)}
+  .btn.sec{background:var(--paper-2);color:var(--ink);border:1px solid var(--line)}
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>صانع البطاقات الدعوية</h1>
+  <p>حوّل أي آية أو حديث أو ذكر إلى بطاقة جميلة تحمّلها كصورة وتشاركها.</p>
+</header>
+
+<div class="card">
+  <div class="field">
+    <label for="txt">النص (آية، حديث، ذكر...)</label>
+    <textarea id="txt" placeholder="اكتب أو الصق النص هنا">سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ</textarea>
+  </div>
+  <div class="field">
+    <label for="src">المصدر (اختياري)</label>
+    <input id="src" type="text" placeholder="مثال: متفق عليه — أو سورة البقرة: 255">
+  </div>
+  <div class="row2">
+    <div class="field"><label for="size">حجم الخط</label>
+      <input id="size" type="range" min="36" max="90" value="60"></div>
+    <div class="field"><label for="ratio">المقاس</label>
+      <select id="ratio">
+        <option value="square">مربع (منشورات)</option>
+        <option value="story">طولي (ستوري)</option>
+        <option value="wide">عرضي</option>
+      </select></div>
+  </div>
+  <div class="field">
+    <label>الألوان</label>
+    <div class="themes" id="themes"></div>
+  </div>
+</div>
+
+<div class="previewwrap"><canvas id="cv"></canvas></div>
+
+<div class="btnrow">
+  <button class="btn" id="dlBtn" type="button">⬇ تحميل PNG</button>
+  <button class="btn sec" id="shareBtn" type="button">↗ مشاركة</button>
+</div>
+
+<footer>الدَّالُّ عَلَى الْخَيْرِ كَفَاعِلِهِ</footer>
+</div>
+
+<script>
+const THEMES = [
+  {name:"زمرد وذهب", bg1:"#0d3b2e", bg2:"#13544a", text:"#F6EFDF", accent:"#D3AE62"},
+  {name:"ذهبي فاتح", bg1:"#F6EFDF", bg2:"#EBDDB8", text:"#13322C", accent:"#9C7420"},
+  {name:"ليلي", bg1:"#0a1512", bg2:"#16302a", text:"#EFE3C9", accent:"#D3AE62"},
+  {name:"أزرق هادئ", bg1:"#12324a", bg2:"#1d4d6e", text:"#F1F6FA", accent:"#E6C979"}
+];
+let themeIdx=0;
+const cv=document.getElementById("cv");
+const ctx=cv.getContext("2d");
+
+const themesBox=document.getElementById("themes");
+THEMES.forEach((t,i)=>{
+  const b=document.createElement("button");
+  b.className="swatch"; b.type="button"; b.title=t.name;
+  b.style.background="linear-gradient(135deg,"+t.bg1+","+t.bg2+")";
+  b.setAttribute("aria-pressed", i===0?"true":"false");
+  b.addEventListener("click",()=>{
+    themeIdx=i;
+    [...themesBox.children].forEach(x=>x.setAttribute("aria-pressed","false"));
+    b.setAttribute("aria-pressed","true");
+    draw();
+  });
+  themesBox.appendChild(b);
+});
+
+function dims(){
+  const r=document.getElementById("ratio").value;
+  if(r==="story") return [1080,1920];
+  if(r==="wide") return [1600,900];
+  return [1080,1080];
+}
+
+function wrapText(text, maxWidth){
+  const words=text.split(/\s+/);
+  const lines=[]; let line="";
+  words.forEach(w=>{
+    const test=line?line+" "+w:w;
+    if(ctx.measureText(test).width>maxWidth && line){ lines.push(line); line=w; } else line=test;
+  });
+  if(line) lines.push(line);
+  return lines;
+}
+
+function draw(){
+  const [W,H]=dims();
+  cv.width=W; cv.height=H;
+  const t=THEMES[themeIdx];
+  const g=ctx.createLinearGradient(0,0,W,H);
+  g.addColorStop(0,t.bg1); g.addColorStop(1,t.bg2);
+  ctx.fillStyle=g; ctx.fillRect(0,0,W,H);
+
+  // decorative border
+  ctx.strokeStyle=t.accent; ctx.lineWidth=6;
+  ctx.strokeRect(40,40,W-80,H-80);
+  ctx.lineWidth=2;
+  ctx.strokeRect(58,58,W-116,H-116);
+
+  // corner ornaments (simple geometric diamonds)
+  ctx.fillStyle=t.accent;
+  [[58,58],[W-58,58],[58,H-58],[W-58,H-58]].forEach(([x,y])=>{
+    ctx.save(); ctx.translate(x,y); ctx.rotate(Math.PI/4);
+    ctx.fillRect(-9,-9,18,18); ctx.restore();
+  });
+
+  const text=document.getElementById("txt").value.trim() || "—";
+  const src=document.getElementById("src").value.trim();
+  const fs=parseInt(document.getElementById("size").value)*(W/1080);
+  ctx.direction="rtl"; ctx.textAlign="center"; ctx.textBaseline="middle";
+  ctx.font=fs+"px Amiri, serif";
+  ctx.fillStyle=t.text;
+  const lines=wrapText(text, W-240);
+  const lh=fs*1.75;
+  const totalH=lines.length*lh;
+  let y=(H-totalH)/2 + lh/2 - (src?fs*0.4:0);
+  lines.forEach(l=>{ ctx.fillText(l, W/2, y); y+=lh; });
+
+  if(src){
+    ctx.font=(fs*0.45)+"px Cairo, sans-serif";
+    ctx.fillStyle=t.accent;
+    ctx.fillText(src, W/2, y+fs*0.3);
+  }
+  ctx.font=(fs*0.32)+"px Cairo, sans-serif";
+  ctx.fillStyle=t.accent; ctx.globalAlpha=.7;
+  ctx.fillText("المكتبة الإسلامية", W/2, H-90);
+  ctx.globalAlpha=1;
+}
+
+["txt","src","size","ratio"].forEach(id=>document.getElementById(id).addEventListener("input",draw));
+document.getElementById("ratio").addEventListener("change",draw);
+
+document.getElementById("dlBtn").addEventListener("click",()=>{
+  const a=document.createElement("a");
+  a.href=cv.toDataURL("image/png");
+  a.download="islamic-card.png";
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
+});
+document.getElementById("shareBtn").addEventListener("click",async()=>{
+  try{
+    const blob=await new Promise(res=>cv.toBlob(res,"image/png"));
+    const file=new File([blob],"islamic-card.png",{type:"image/png"});
+    if(navigator.canShare && navigator.canShare({files:[file]})){
+      await navigator.share({files:[file], text:document.getElementById("txt").value});
+    } else {
+      await navigator.clipboard.writeText(document.getElementById("txt").value);
+      alert("تم نسخ النص — حمّل الصورة وشاركها يدويًا.");
+    }
+  }catch(e){}
+});
+
+(document.fonts && document.fonts.ready ? document.fonts.ready : Promise.resolve()).then(draw);
+draw();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+
+</body>
+</html>

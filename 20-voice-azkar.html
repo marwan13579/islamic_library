@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<script src="service-messages.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>سجّل صوتك بالأذكار</title>
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    --red:#B23B3B;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+    --red:#D86B6B;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+    --red:#D86B6B;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
+  .wrap{max-width:640px;margin:0 auto;padding:0 16px 60px}
+  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
+  header h1{font-family:"Amiri",serif;font-size:clamp(1.9rem,7vw,2.7rem);margin:0}
+  header p{color:var(--ink-soft);font-size:.9rem;max-width:40ch;margin:.4rem auto 0}
+
+  .note{font-size:.82rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin:18px 0}
+
+  .promptcard{background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;padding:20px;margin:18px 0;text-align:center}
+  .promptcard .text{font-family:"Amiri",serif;font-size:1.3rem;line-height:2;margin:0}
+  .promptrow{display:flex;gap:8px;justify-content:center;margin-top:14px}
+  .navbtn{background:var(--paper-2);border:1px solid var(--line);color:var(--ink);border-radius:999px;
+    padding:7px 16px;cursor:pointer;font-family:"Cairo";font-size:.82rem}
+
+  .recbox{text-align:center;margin:24px 0}
+  .recbtn{width:84px;height:84px;border-radius:50%;background:var(--red);color:#fff;border:0;
+    font-size:2rem;cursor:pointer;display:inline-grid;place-items:center}
+  .recbtn.recording{animation:pulse 1.2s infinite}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(178,59,59,.5)}70%{box-shadow:0 0 0 18px rgba(178,59,59,0)}100%{box-shadow:0 0 0 0 rgba(178,59,59,0)}}
+  .rectime{font-family:"Amiri",serif;font-size:1.1rem;margin-top:10px;color:var(--ink-soft)}
+  .permMsg{font-size:.82rem;color:var(--ink-soft);margin-top:10px}
+
+  h2.h{font-family:"Amiri",serif;font-size:1.15rem;margin:26px 0 10px}
+  .recordings{display:flex;flex-direction:column;gap:10px}
+  .rec{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px}
+  .rec .top{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px}
+  .rec .label{font-size:.85rem;font-weight:700}
+  .rec .del{background:none;border:0;color:var(--ink-soft);cursor:pointer;font-size:1rem}
+  .rec audio{width:100%}
+  .rec .dl{display:inline-block;margin-top:8px;font-size:.78rem;color:var(--gold);text-decoration:none}
+
+  footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
+</style>
+<style>
+/* cross-device responsiveness: phones, tablets, laptops */
+html{-webkit-text-size-adjust:100%}
+*{-webkit-tap-highlight-color:transparent}
+button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
+input,select,textarea{font-size:16px!important}
+button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
+@media (min-width:600px){
+  input,select,textarea{font-size:.92rem!important}
+}
+@media (min-width:900px){
+  .wrap{padding-left:32px;padding-right:32px}
+  body{font-size:1.02rem}
+}
+@media (min-width:1200px){
+  .wrap{max-width:min(78vw,900px)}
+}
+@media (max-width:360px){
+  .wrap{padding-left:12px;padding-right:12px}
+}
+@media (orientation:landscape) and (max-height:500px){
+  header{padding-top:14px;padding-bottom:10px}
+}
+</style>
+<style>
+/* Emerald & Gold glassmorphism accent layer */
+:root{
+  --glass-bg: rgba(255,255,255,.55);
+  --glass-border: rgba(255,255,255,.35);
+  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
+}
+:root[data-theme="dark"], :root:not([data-theme="light"]){
+  @media (prefers-color-scheme: dark){
+    --glass-bg: rgba(18,46,40,.55);
+    --glass-border: rgba(255,255,255,.08);
+    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+  }
+}
+:root[data-theme="dark"]{
+  --glass-bg: rgba(18,46,40,.55);
+  --glass-border: rgba(255,255,255,.08);
+  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
+}
+body{
+  background-image:
+    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
+    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
+    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
+  background-attachment:fixed;
+}
+.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
+details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
+.hcard, .warnbox, .continuebar{
+  backdrop-filter: blur(14px) saturate(160%);
+  -webkit-backdrop-filter: blur(14px) saturate(160%);
+  background-color: var(--glass-bg) !important;
+  border-color: var(--glass-border) !important;
+  box-shadow: var(--glass-shadow);
+}
+header{
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="wrap">
+<header>
+  <h1>سجّل صوتك بالأذكار</h1>
+  <p>سجّل نفسك وأنت تقرأ الذكر لتسمعه لاحقًا أو ترسله لمن تحب — مسجّل شخصي، مش تلاوة جاهزة.</p>
+</header>
+
+<div class="note">
+🎙️ هذا مسجّل صوتي بسيط يستخدم ميكروفون جهازك مباشرة — لا يرفع أي صوت لأي خادم. التسجيلات تبقى في هذه الصفحة أثناء الجلسة فقط؛ حمّلها لو حابب تحتفظ بيها بعد إغلاق الصفحة.
+</div>
+
+<div class="promptcard">
+  <p class="text" id="promptText"></p>
+  <div class="promptrow">
+    <button class="navbtn" id="prevBtn">◂ السابق</button>
+    <button class="navbtn" id="nextBtn">التالي ▸</button>
+  </div>
+</div>
+
+<div class="recbox">
+  <button class="recbtn" id="recBtn">🎙️</button>
+  <p class="rectime" id="recTime">0:00</p>
+  <p class="permMsg" id="permMsg"></p>
+</div>
+
+<h2 class="h">تسجيلاتك</h2>
+<div class="recordings" id="recordings"></div>
+<p id="emptyMsg" style="text-align:center;color:var(--ink-soft);font-size:.85rem">لا توجد تسجيلات بعد.</p>
+
+<footer>وَاذْكُر رَّبَّكَ فِي نَفْسِكَ تَضَرُّعًا وَخِيفَةً وَدُونَ الْجَهْرِ مِنَ الْقَوْلِ</footer>
+</div>
+
+<script>
+const PROMPTS = [
+  "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ",
+  "لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ",
+  "أَسْتَغْفِرُ اللَّهَ وَأَتُوبُ إِلَيْهِ",
+  "اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى نَبِيِّنَا مُحَمَّدٍ",
+  "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ، عَلَيْهِ تَوَكَّلْتُ",
+  "رَبِّ اغْفِرْ لِي وَارْحَمْنِي وَاهْدِنِي وَعَافِنِي وَارْزُقْنِي",
+  "اللَّهُمَّ أَعِنِّي عَلَى ذِكْرِكَ وَشُكْرِكَ وَحُسْنِ عِبَادَتِكَ"
+];
+let idx=0;
+function renderPrompt(){ document.getElementById("promptText").textContent = PROMPTS[idx]; }
+document.getElementById("prevBtn").addEventListener("click",()=>{ idx=(idx-1+PROMPTS.length)%PROMPTS.length; renderPrompt(); });
+document.getElementById("nextBtn").addEventListener("click",()=>{ idx=(idx+1)%PROMPTS.length; renderPrompt(); });
+renderPrompt();
+
+let mediaRecorder=null, chunks=[], startTime=0, timerInt=null;
+let recordings=[];
+
+const recBtn=document.getElementById("recBtn");
+const recTime=document.getElementById("recTime");
+const permMsg=document.getElementById("permMsg");
+
+function fmt(sec){ const m=Math.floor(sec/60), s=sec%60; return m+":"+String(s).padStart(2,"0"); }
+
+async function startRecording(){
+  if(!window.isSecureContext){
+    permMsg.textContent="التسجيل يحتاج HTTPS أو localhost لحماية إذن الميكروفون.";
+    return;
+  }
+  if(!navigator.mediaDevices?.getUserMedia||typeof MediaRecorder==="undefined"){
+    permMsg.textContent="متصفحك لا يدعم تسجيل الصوت.";
+    return;
+  }
+  permMsg.textContent="جارٍ طلب إذن الميكروفون...";
+  try{
+    const stream = await navigator.mediaDevices.getUserMedia({audio:true});
+    chunks=[];
+    mediaRecorder = new MediaRecorder(stream);
+    mediaRecorder.ondataavailable = e=>{ if(e.data.size>0) chunks.push(e.data); };
+    mediaRecorder.onstop = ()=>{
+      const blob = new Blob(chunks, {type:"audio/webm"});
+      const url = URL.createObjectURL(blob);
+      recordings.unshift({url, label: PROMPTS[idx], ts: Date.now()});
+      renderRecordings();
+      stream.getTracks().forEach(t=>t.stop());
+    };
+    mediaRecorder.start();
+    startTime = Date.now();
+    recBtn.classList.add("recording");
+    recBtn.textContent="⏹️";
+    permMsg.textContent="";
+    timerInt = setInterval(()=>{
+      recTime.textContent = fmt(Math.floor((Date.now()-startTime)/1000));
+    },250);
+  }catch(err){
+    permMsg.textContent = IslamicServiceMessages.microphoneError(err);
+  }
+}
+function stopRecording(){
+  if(mediaRecorder && mediaRecorder.state!=="inactive") mediaRecorder.stop();
+  clearInterval(timerInt);
+  recBtn.classList.remove("recording");
+  recBtn.textContent="🎙️";
+  recTime.textContent="0:00";
+}
+recBtn.addEventListener("click",()=>{
+  if(recBtn.classList.contains("recording")) stopRecording();
+  else startRecording();
+});
+
+function renderRecordings(){
+  const box=document.getElementById("recordings");
+  const empty=document.getElementById("emptyMsg");
+  box.innerHTML="";
+  if(recordings.length===0){ empty.style.display="block"; return; }
+  empty.style.display="none";
+  recordings.forEach((r,i)=>{
+    const el=document.createElement("div");
+    el.className="rec";
+    const d=new Date(r.ts);
+    el.innerHTML =
+      '<div class="top"><span class="label">'+r.label+'</span><button class="del" data-i="'+i+'">✕</button></div>'+
+      '<audio controls src="'+r.url+'"></audio>'+
+      '<a class="dl" href="'+r.url+'" download="dhikr-'+d.getTime()+'.webm">تحميل التسجيل</a>';
+    box.appendChild(el);
+  });
+  box.querySelectorAll(".del").forEach(b=>{
+    b.addEventListener("click",()=>{
+      const i=+b.dataset.i;
+      URL.revokeObjectURL(recordings[i].url);
+      recordings.splice(i,1);
+      renderRecordings();
+    });
+  });
+}
+renderRecordings();
+</script>
+<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
+<script>
+(function(){
+  var KEY="lib-theme-pref";
+  var saved=null;
+  try{ saved=localStorage.getItem(KEY); }catch(e){}
+  if(saved) document.documentElement.setAttribute("data-theme", saved);
+  var btn=document.getElementById("themeToggle");
+  if(btn){
+    btn.addEventListener("click", function(){
+      var cur=document.documentElement.getAttribute("data-theme");
+      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
+      var next = isDark ? "light" : "dark";
+      document.documentElement.setAttribute("data-theme", next);
+      try{ localStorage.setItem(KEY, next); }catch(e){}
+    });
+  }
+})();
+</script>
+</body>
+</html>
