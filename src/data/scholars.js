@@ -152,5 +152,5 @@ export const SCHOLARS =   [
       "bio": "واضع أصول الفقه، صاحب «الرسالة» و«الأم»."
     }
   ]
-  // ── مدمج من deepseek_html_20260929_997a67.html ──
+  // ── مدمج من legacy_html_20260929_997a67.html ──
 

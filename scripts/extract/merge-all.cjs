@@ -23,8 +23,8 @@ const WRITE = process.argv.includes("--write");
 
 const NOUR = path.join(SRC_DIR, "النُّور وصَلِّ لِي.html");
 const NOOR = path.join(SRC_DIR, "نور الهدى.html");
-const LEGACY = path.join(SRC_DIR, "deepseek_html_20260929_997a67.html");
-const V1 = path.join(SRC_DIR, "deepseek_html_20260929_7a7dd5.html");
+const LEGACY = path.join(SRC_DIR, "legacy_html_20260929_997a67.html");
+const V1 = path.join(SRC_DIR, "legacy_html_20260929_7a7dd5.html");
 
 /* ------------------------------ أدوات ------------------------------ */
 

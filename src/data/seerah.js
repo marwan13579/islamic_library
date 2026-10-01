@@ -35,5 +35,5 @@ export const SEERAH =   [
       "desc": "توفي في ربيع الأول عن ٦٣ سنة."
     }
   ]
-  // ── مدمج من deepseek_html_20260929_997a67.html ──
+  // ── مدمج من legacy_html_20260929_997a67.html ──
 

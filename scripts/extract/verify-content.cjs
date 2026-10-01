@@ -17,8 +17,8 @@ const SOURCE_DIR = path.resolve(
   process.env.ISLAMIC_LIBRARY_SOURCE_DIR || path.join(os.homedir(), "Downloads", "إسلامى"),
 );
 const SITE_FILE = path.join(SOURCE_DIR, "نور الهدى.html");
-const V1_FILE = path.join(SOURCE_DIR, "deepseek_html_20260929_7a7dd5.html");
-const LEGACY_FILE = path.join(SOURCE_DIR, "deepseek_html_20260929_997a67.html");
+const V1_FILE = path.join(SOURCE_DIR, "legacy_html_20260929_7a7dd5.html");
+const LEGACY_FILE = path.join(SOURCE_DIR, "legacy_html_20260929_997a67.html");
 const NOUR_APP = path.join(SOURCE_DIR, "النُّور وصَلِّ لِي.html");
 const REQUIRE_SOURCES = process.env.VERIFY_CONTENT_REQUIRE_SOURCES === "1";
 
@@ -93,7 +93,7 @@ if (fs.existsSync(V1_FILE)) {
   failures.push(missingExplanation.length);
 }
 
-/* ------- المحتوى المدمج من deepseek_html_20260929_997a67.html ------- */
+/* ------- المحتوى المدمج من legacy_html_20260929_997a67.html ------- */
 
 /** يحمّل قيمة مُصدَّرة من وحدة ES في المشروع. */
 function loadModule(file, exportName) {

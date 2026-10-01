@@ -71,7 +71,7 @@ npm test                 # اختبارات node:test — بيانات، عرض�
 npm run check:js         # فحص بناء الجملة لكل ملفات JS
 npm run verify:content   # يقارن النصوص بالمصادر المتاحة ويفحص ثبات البيانات المضمنة
 npm run extract:data     # يعيد توليد src/data من ملفات HTML المرجعية
-npm run merge:legacy     # يدمج ما فات من deepseek_html_20260929_997a67.html
+npm run merge:legacy     # يدمج ما فات من legacy_html_20260929_997a67.html
 npm run merge:all       # فحص شامل: ما الناقص من كل ملفات المصدر (يعرض فقط)
 npm run check:browser    # يفتح ٤٠ صفحة في Chromium ويرصد أخطاء وقت التشغيل
 npm run check:quran      # التفسير والتجويد والترجمة كلمة بكلمة ومؤقّت الإذاعة
@@ -280,7 +280,7 @@ npm run review:ci     # مع فشل CI عند غياب التخريج في مج�
 
 ### دمج ملف قديم ناقص
 
-`deepseek_html_20260929_997a67.html` نسخة أقدم من `نور الهدى.html`، لكنه يحتوي
+`legacy_html_20260929_997a67.html` نسخة أقدم من `نور الهدى.html`، لكنه يحتوي
 أسئلة اختبار وعُلَماء ومحاور سيرة لم تكن في ملفات المصدر المستخدمة.
 
 ```sh

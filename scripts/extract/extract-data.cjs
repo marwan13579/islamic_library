@@ -8,7 +8,7 @@ const { htmlToBlocks } = require("./blocks.cjs");
 const SOURCE_DIR = "/home/abokhaled/Downloads/إسلامى";
 const SITE_FILE = path.join(SOURCE_DIR, "نور الهدى.html");
 const APP_FILE = path.join(SOURCE_DIR, "النُّور وصَلِّ لِي.html");
-const V1_FILE = path.join(SOURCE_DIR, "deepseek_html_20260929_7a7dd5.html");
+const V1_FILE = path.join(SOURCE_DIR, "legacy_html_20260929_7a7dd5.html");
 const NAMES_SUPPLEMENT = path.join(SOURCE_DIR, "بيانات-مكملة-أسماء-الله-٩٩.ts");
 const OUT_DIR = path.join(__dirname, "..", "..", "src", "data");
 const ASSET_DIR = path.join(__dirname, "..", "..", "src", "assets");
@@ -207,7 +207,7 @@ function extractQuestionBank() {
       ]) +
       `\n/** إجمالي أسئلة البنك: ${total} */\n` +
       exportConst("QUESTION_BANK_SIZE", total),
-    "deepseek_html_20260929_7a7dd5.html — QB",
+    "legacy_html_20260929_7a7dd5.html — QB",
   );
 }
 

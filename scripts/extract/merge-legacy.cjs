@@ -1,7 +1,7 @@
 "use strict";
 
 /**
- * دمج محتوى الملف deepseek_html_20260929_997a67.html في المشروع.
+ * دمج محتوى الملف legacy_html_20260929_997a67.html في المشروع.
  *
  * هذا الملف نسخة أقدم وأصغر من «نور الهدى.html»، لكنه يحتوي عناصر
  * ناقصة في المشروع (أسئلة اختبار، أسماء، علماء، سيرة، مقالات).
@@ -18,7 +18,7 @@ const path = require("node:path");
 const { evaluateDeclarations } = require("./script-data.cjs");
 
 const ROOT = path.join(__dirname, "..", "..");
-const SOURCE = "/home/abokhaled/Downloads/إسلامى/deepseek_html_20260929_997a67.html";
+const SOURCE = "/home/abokhaled/Downloads/إسلامى/legacy_html_20260929_997a67.html";
 const WRITE = process.argv.includes("--write");
 
 /** يطبّع النص للمقارنة: يحذف التشكيل والتطويل والمسافات وأشكال الهمزة. */
@@ -179,7 +179,7 @@ function main() {
     const groups = loadExports(bankFile, ["QUESTION_BANK", "QUESTION_GROUPS"]);
     const header = [
       "/**",
-      " * مولَّد آليًا من: deepseek_html_20260929_7a7dd5.html — QB",
+      " * مولَّد آليًا من: legacy_html_20260929_7a7dd5.html — QB",
       " * المصدر: ملف HTML مرجعي (المحتوى الحرفي محفوظ).",
       " *LETعديل المحتوى راجع أهل العلم ثم عدّل الملف المصدر أو هذا الملف.",
       " */",
@@ -194,7 +194,7 @@ function main() {
 
     const body = [
       header,
-      "/** بنك الأسئلة ثلاثي الأنواع (مصدره: deepseek_html_20260929_7a7dd5.html + 997a67) */",
+      "/** بنك الأسئلة ثلاثي الأنواع (مصدره: legacy_html_20260929_7a7dd5.html + 997a67) */",
       `export const QUESTION_BANK = ${indent(JSON.stringify(groups.QUESTION_BANK, null, 2), 0)};`,
       "/** المجموعات المعروضة في شاشة إعدادات الاختبار */",
       `export const QUESTION_GROUPS = ${indent(JSON.stringify(groups.QUESTION_GROUPS, null, 2), 0)};`,
@@ -209,7 +209,7 @@ function main() {
   const appendTo = (file, exportName, items, shape) => {
     if (!items.length) return;
     const list = loadExports(file, [exportName])[exportName];
-    const marker = "\n  // ── مدمج من deepseek_html_20260929_997a67.html ──\n";
+    const marker = "\n  // ── مدمج من legacy_html_20260929_997a67.html ──\n";
     const merged = [...list, ...items.map(shape)];
     const text = fs.readFileSync(file, "utf8");
     const start = text.indexOf(`export const ${exportName} = [`);

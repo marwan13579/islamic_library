@@ -100,5 +100,5 @@ export const SAYINGS =   [
       "src": "منهج السلف في الاتباع"
     }
   ]
-  // ── مدمج من deepseek_html_20260929_997a67.html ──
+  // ── مدمج من legacy_html_20260929_997a67.html ──
 
