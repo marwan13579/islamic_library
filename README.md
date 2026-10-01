@@ -21,6 +21,26 @@ npm run serve          # python3 -m http.server 8765
 في Cloudflare Pages استخدم أمر البناء `npm run build:pages` ومجلد الإخراج `dist`.
 يحتوي الناتج ملفات التشغيل فقط، ويتحقق قبل النشر من وجود كل ملفات Service Worker.
 
+### النشر
+
+المشروع على Cloudflare Pages تحت الاسم `islamic-library`، والنشر يتم تلقائيًا
+عند كل push على `main` عبر `.github/workflows/deploy.yml`: مهمة `verify` تشغّل
+`npm test` وفحصي الصيغة والأيقونات، ومهمة `deploy` تبني ثم ترفع `dist/`.
+
+```sh
+git push origin main    # يبني وينشر تلقائيًا
+```
+
+المطلوب في مستودع GitHub سرّان: `CLOUDFLARE_ACCOUNT_ID` و`CLOUDFLARE_API_TOKEN`.
+
+للنشر اليدوي من الجهاز:
+
+```sh
+npx wrangler pages deploy dist --project-name islamic-library --branch main
+```
+
+وهذا الأمر يعتمد على جلسة `wrangler` المخزّنة محليًا.
+
 ثم افتح `http://localhost:8765/src/site/noor.html` أو `.../src/app/app.html`.
 يلزم HTTP عبر localhost أو HTTPS لتفعيل Service Worker والإشعارات وتحديد الموقع.
 
