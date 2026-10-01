@@ -44,6 +44,31 @@ npx wrangler pages deploy dist --project-name islamic-library --branch main
 
 وهذا الأمر يعتمد على جلسة `wrangler` المخزّنة محليًا.
 
+#### Vercel
+
+المشروع مرتبط بحساب Vercel تحت الاسم `islamic-library`، وإعداداته في `vercel.json`:
+أمر البناء `npm run build:pages` ومجلد الإخراج `dist` مع نفس ترويسات `_headers`.
+نُشر على <https://islamic-library-green.vercel.app>.
+
+للنشر من الجهاز:
+
+```sh
+vercel build --prod && vercel deploy --prebuilt --prod
+```
+
+استعمل `--prebuilt` دائمًا: البناء على خوادم Vercel يخطئ في `npm ci`،
+لكن البناء المحلي يُنتج `.vercel/output` صحيحًا وينشر دون خطوة بناء.
+
+#### Netlify
+
+الإعداد في `netlify.toml`: أمر البناء `npm run build:pages` ومجلد الإخراج `dist`.
+النشر يتطلّب جلسة Netlify، فإن لم تكن موجودة:
+
+```sh
+npx netlify-cli login
+npx netlify-cli deploy --dir=dist --prod
+```
+
 ثم افتح `http://localhost:8765/src/site/noor.html` أو `.../src/app/app.html`.
 يلزم HTTP عبر localhost أو HTTPS لتفعيل Service Worker والإشعارات وتحديد الموقع.
 
