@@ -1,0 +1,215 @@
+/**
+ * تحميل محتوى المكتبة المقسّم من `content/`.
+ *
+ * المحتوى ٢٤٩ ميغابايت فلا يُحمَّل دفعة واحدة. كل شيء هنا يقرأ ملفًا واحدًا
+ * عند الحاجة ثم يحتفظ به في الذاكرة، مع دمج الطلبات المتزامنة على الملف نفسه
+ * حتى لا يُطلب مرتين عند ضغط المستخدم زرّين معًا.
+ *
+ * يُبنى المحتوى بـ `scripts/build-content-library.cjs`.
+ * @module lib/shards
+ */
+
+/** جذر المحتوى على القرص/CDN. */
+export const CONTENT_ROOT = "content";
+
+/**
+ * @typedef {object} Summary
+ * @property {string} id معرّف العنصر
+ * @property {string} t النوع: fatwa أو khutbahs أو history أو quiz
+ * @property {string} ti العنوان
+ * @property {string} su الملخّص
+ * @property {string[]} c الفئات
+ * @property {string} a المؤلف أو الشيخ
+ * @property {string} d التاريخ نصًّا
+ * @property {number} r دقائق القراءة
+ * @property {0|1} au هل يوجد صوت — ١ إن كان للعنصر تسجيل
+ * @property {[number, number]} p موضع العنصر في جزء المحتوى
+ */
+
+/** @type {Map<string, Promise<any>>} الطلبات المعلّقة حسب مسار الملف. */
+const pending = new Map();
+
+/** @type {Map<string, any>} الملفات المقروءة. */
+const cache = new Map();
+
+/** @type {Map<string, {n: number, at: number}>} عدّاد الاستعمال لكل ملف. */
+const usage = new Map();
+
+/** @type {Promise<any>|null} */
+let manifestPromise = null;
+
+/**
+ * يبني مسار ملف داخل جذر المحتوى.
+ * @param {...string} parts
+ * @returns {string}
+ */
+function contentPath(...parts) {
+  return `${CONTENT_ROOT}/${parts.join("/")}`;
+}
+
+/**
+ * يقرأ ملف JSON من المحتوى ويخزّنه.
+ * الطلب الثاني لنفس الملف ينتظر الأول بدل أن يُنشئ طلبًا جديدًا.
+ * @param {string} path مسار نسبي داخل `content/`
+ * @returns {Promise<any>}
+ */
+export function load(path) {
+  const hit = cache.get(path);
+  if (hit !== undefined) {
+    usage.set(path, { n: (usage.get(path)?.n || 0) + 1, at: Date.now() });
+    return Promise.resolve(hit);
+  }
+  const flying = pending.get(path);
+  if (flying) return flying;
+
+  const request = fetch(`${CONTENT_ROOT}/${path}`, { cache: "force-cache" })
+    .then((res) => {
+      if (!res.ok) throw new Error(`تعذّر تحميل ${path} (${res.status})`);
+      return res.json();
+    })
+    .then((data) => {
+      cache.set(path, data);
+      usage.set(path, { n: 1, at: Date.now() });
+      return data;
+    })
+    .finally(() => {
+      pending.delete(path);
+    });
+
+  pending.set(path, request);
+  return request;
+}
+
+/** @returns {Promise<any>} بيان المحتوى الإجمالي. */
+export function manifest() {
+  manifestPromise ||= load("manifest.json");
+  return manifestPromise;
+}
+
+/**
+ * @typedef {object} CollectionMeta
+ * @property {string} type
+ * @property {number} count
+ * @property {string[]} listFiles
+ * @property {string[]} itemFiles
+ * @property {{name: string, count: number}[]} categories
+ */
+
+/** @type {Map<string, Promise<CollectionMeta>>} */
+const metaCache = new Map();
+
+/**
+ * بيان مجموعة واحدة: عدد عناصرها، ملفاتها، وفئاتها.
+ * @param {string} type
+ * @returns {Promise<CollectionMeta>}
+ */
+export function collectionMeta(type) {
+  if (!metaCache.has(type)) {
+    metaCache.set(type, load(`library/${type}/meta.json`));
+  }
+  return /** @type {Promise<CollectionMeta>} */ (metaCache.get(type));
+}
+
+/**
+ * صفحة ملخّصات واحدة. القوائم مرتّبة الأحدث أولًا.
+ * @param {string} type
+ * @param {number} index
+ * @returns {Promise<Summary[]>}
+ */
+export function listShard(type, index) {
+  return load(`library/${type}/list/${String(index).padStart(3, "0")}.json`);
+}
+
+/**
+ * جزء محتوى كامل. يُحمَّل عند فتح عنصر فقط.
+ * @param {string} type
+ * @param {number} index
+ * @returns {Promise<any[]>}
+ */
+export function itemShard(type, index) {
+  return load(`library/${type}/items/part-${String(index).padStart(3, "0")}.json`);
+}
+
+/** @returns {Promise<any>} فهرس البحث: عدد المستندات ودلاء المصطلحات. */
+export function searchManifest() {
+  return load("search/manifest.json");
+}
+
+/**
+ * دلو مصطلحات. الحرف الأول من المصطلح يحدّد الدلو، فإن قسّمه البناءُ
+ * بالحرف الثاني فيُؤخذ الجزء الذي يطابق prefix.
+ * @param {string} file
+ */
+export function searchFile(file) {
+  return load(`search/${file}`);
+}
+
+/**
+ * شريحة من بيانات المستندات، ٣٠٠٠ مستند في كل شريحة.
+ * @param {number} index
+ */
+export function searchDocs(index) {
+  return load(`search/docs/${String(index).padStart(3, "0")}.json`);
+}
+
+/** @returns {Promise<any>} فهرس سور القرآن. */
+export function surahIndex() {
+  return load("surahs.json");
+}
+
+/**
+ * تفسير سورة كاملة.
+ * @param {number} number من ١ إلى ١١٤
+ */
+export function tafsirOf(number) {
+  return load(`tafsir/sura-${String(number).padStart(3, "0")}.json`);
+}
+
+/** @returns {Promise<any>} فهرس أبواب حصن المسلم. */
+export function hisnIndex() {
+  return load("hisn/index.json");
+}
+
+/**
+ * باب من حصن المسلم.
+ * @param {number} no
+ */
+export function hisnBab(no) {
+  return load(`hisn/bab-${String(no).padStart(3, "0")}.json`);
+}
+
+/** @returns {Promise<any>} القرّاء الـ١٥٨. */
+export function reciters() {
+  return load("reciters.json");
+}
+
+/** @returns {Promise<any[]>} الإذاعات. */
+export function stations() {
+  return load("radio.json");
+}
+
+/**
+ * يفرّغ ذاكرة الملفات. يُستدعى عند الحاجة إلى استعادة الذاكرة،
+ * مع الإبقاء على البيان لأن الواجهة تعتمد عليه في كل نداء.
+ * @param {{ keepManifest?: boolean }} [options]
+ */
+export function trim(options = {}) {
+  const { keepManifest = true } = options;
+  const entries = [...cache.entries()];
+  entries.sort((a, b) => {
+    const ua = usage.get(a[0]) || { n: 0, at: 0 };
+    const ub = usage.get(b[0]) || { n: 0, at: 0 };
+    if (ua.n !== ub.n) return ua.n - ub.n;
+    return ua.at - ub.at;
+  });
+  for (const [path] of entries) {
+    if (keepManifest && path === "manifest.json") continue;
+    cache.delete(path);
+    usage.delete(path);
+  }
+}
+
+/** @returns {{cached: number, pending: number}} حالة الذاكرة للاختبار. */
+export function cacheStats() {
+  return { cached: cache.size, pending: pending.size };
+}

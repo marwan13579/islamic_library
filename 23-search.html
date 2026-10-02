@@ -7,6 +7,7 @@
 <title>بحث شامل في المكتبة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="library.css">
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -114,21 +115,24 @@ header{
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 
 <div class="wrap">
-<header>
-  <h1>بحث شامل</h1>
-  <p>دوّر في الأذكار والأحاديث والأدعية المتوفرة عبر أدوات المكتبة كلها من مكان واحد.</p>
-</header>
+  <header>
+    <h1>بحث شامل</h1>
+    <p>أربعون ألف عنصر: الفتاوى والخطب والتاريخ والتفسير وحصن المسلم والاختبارات، مع الأذكار والأحاديث.</p>
+  </header>
 
-<input class="search" id="search" type="search" placeholder="ابحث عن كلمة، ذكر، أو حديث..." aria-label="البحث الشامل في المكتبة">
-<div class="filters" id="filters"></div>
-<p class="count" id="count"></p>
-<div class="results" id="results"></div>
-<p class="empty" id="empty" hidden>اكتب كلمة للبحث، أو اختر تصنيفًا.</p>
+  <input class="search" id="search" type="search" placeholder="اكتب كلمة… مثل: زكاة المال" aria-label="البحث الشامل في المكتبة">
+  <div class="filters" id="filters"></div>
+  <p class="count" id="count"></p>
+  <div class="results" id="results"></div>
+  <p class="empty" id="empty" hidden>اكتب كلمة للبحث، أو اختر نوعًا.</p>
 
-<footer>وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ</footer>
+  <footer>وَذَكِّرْ فَإِنَّ الذِّكْرَىٰ تَنفَعُ الْمُؤْمِنِينَ</footer>
 </div>
 
-<script>
+<script type="module">
+import { search } from "./src/lib/search.js";
+import { escapeHtml } from "./src/lib/text.js";
+
 const R=(cat,text,src,link,linkLabel)=>({cat,text,src,link,linkLabel});
 
 const INDEX = [
@@ -173,53 +177,123 @@ const INDEX = [
 ];
 
 const CATS = [...new Set(INDEX.map(r=>r.cat))];
+const TYPES = [
+  {id:"", label:"الكل"},
+  {id:"fatwa", label:"الفتاوى", page:"37-fatwa.html"},
+  {id:"tafsir", label:"التفسير", page:"35-tafsir.html"},
+  {id:"hisn", label:"حصن المسلم", page:"36-hisn.html"},
+  {id:"khutbahs", label:"الخطب", page:"38-khutbah.html"},
+  {id:"history", label:"التاريخ", page:"39-tarikh.html"},
+  {id:"quiz", label:"الاختبارات", page:""},
+];
 let activeCat="all";
+let activeType="";
+let seq=0;
 
 function renderFilters(){
   const box=document.getElementById("filters");
   box.innerHTML="";
-  const allBtn=document.createElement("button");
-  allBtn.className="fbtn"; allBtn.type="button"; allBtn.textContent="الكل";
-  allBtn.setAttribute("aria-pressed", "true");
-  allBtn.addEventListener("click",()=>{ activeCat="all"; syncFilterBtns(allBtn); render(); });
-  box.appendChild(allBtn);
-  CATS.forEach(c=>{
+  for(const t of TYPES){
+    const b=document.createElement("button");
+    b.className="fbtn"; b.type="button"; b.textContent=t.label;
+    b.setAttribute("aria-pressed", t.id===activeType?"true":"false");
+    b.addEventListener("click",()=>{ activeType=t.id; renderFilters(); render(); });
+    box.appendChild(b);
+  }
+  for(const c of CATS){
     const b=document.createElement("button");
     b.className="fbtn"; b.type="button"; b.textContent=c;
-    b.setAttribute("aria-pressed","false");
-    b.addEventListener("click",()=>{ activeCat=c; syncFilterBtns(b); render(); });
+    b.setAttribute("aria-pressed", c===activeCat?"true":"false");
+    b.addEventListener("click",()=>{ activeCat = activeCat===c?"all":c; renderFilters(); render(); });
     box.appendChild(b);
-  });
-}
-function syncFilterBtns(active){
-  [...document.getElementById("filters").children].forEach(b=>b.setAttribute("aria-pressed", b===active?"true":"false"));
+  }
 }
 
-function render(){
+/** نتيجة واحدة من فهرس المكتبة — العنوان يحمل وسم التظليل. */
+function libraryRow(hit){
+  const type = TYPES.find(t=>t.id===hit.type);
+  const href = `reader.html?type=${encodeURIComponent(hit.type)}&id=${encodeURIComponent(hit.id)}`;
+  const where = hit.extra && Array.isArray(hit.extra)
+    ? (hit.type==="tafsir" ? `سورة ${hit.extra[0]} · الآية ${hit.extra[1]}` : "")
+    : "";
+  return {
+    cat: type ? type.label : hit.type,
+    text: hit.title,
+    src: [hit.summary, where, hit.dateText].filter(Boolean).join(" · "),
+    link: href,
+    linkLabel: "فتح",
+  };
+}
+
+async function render(){
   const q=document.getElementById("search").value.trim();
   const box=document.getElementById("results");
   const empty=document.getElementById("empty");
   const countEl=document.getElementById("count");
+  const mine = ++seq;
+
+  if(!q && activeType==="" && activeCat==="all"){
+    box.innerHTML=""; empty.hidden=false; countEl.textContent="";
+    return;
+  }
+
+  /* الذِّكر المختارة من أدوات المكتبة —Index صغير ثابت. */
+  let curated = INDEX.filter(r=> activeCat==="all" || r.cat===activeCat);
+  if(q) curated = curated.filter(r=> normalizeAr(r.text+r.src+r.cat).includes(normalizeAr(q)));
+
+  let rows = curated.map(r=>r);
+  let total = curated.length;
+
+  /* وفوقها فهرس المكتبة الكبير. */
+  if(q || activeType){
+    box.innerHTML='<p class="empty">جارٍ البحث…</p>';
+    let hits=[];
+    let grand=0;
+    try{
+      const res=await search(q,{limit:40,type:activeType||null});
+      if(mine!==seq) return;
+      hits=res.results; grand=res.total;
+    }catch(e){
+      if(mine!==seq) return;
+    }
+    rows = hits.map(libraryRow).concat(rows);
+    total = grand + curated.length;
+  }
+
+  if(mine!==seq) return;
   box.innerHTML="";
-  let list = INDEX.filter(r=> activeCat==="all" || r.cat===activeCat);
-  if(q) list = list.filter(r=> (r.text+r.src+r.cat).includes(q));
-  if(!q && activeCat==="all"){ empty.hidden=false; countEl.textContent=""; return; }
-  empty.hidden=true;
-  countEl.textContent = list.length+" نتيجة";
-  list.forEach(r=>{
+  if(!rows.length){ box.innerHTML='<p class="empty">لا نتائج مطابقة.</p>'; }
+  rows.forEach(r=>{
     const el=document.createElement("div");
     el.className="r";
     el.innerHTML =
-      '<span class="cat">'+r.cat+'</span>'+
-      '<p class="text">'+r.text+'</p>'+
-      '<p class="src">'+r.src+'</p>'+
-      '<a href="'+r.link+'">فتح في '+r.linkLabel+' ↗</a>';
+      '<span class="cat">'+escapeHtml(r.cat)+'</span>'+
+      '<p class="text">'+marked(r.text)+'</p>'+
+      (r.src?'<p class="src">'+escapeHtml(r.src)+'</p>':'')+
+      '<a href="'+escapeHtml(r.link)+'">فتح في '+escapeHtml(r.linkLabel)+' ↗</a>';
     box.appendChild(el);
   });
+  empty.hidden=true;
+  countEl.textContent = total+" نتيجة";
+}
+
+/** يحوّل وسم التظليل من lib/search إلى <mark>. */
+function marked(value){
+  return escapeHtml(String(value))
+    .replace(/\[\[H\]\]/g,"<mark>")
+    .replace(/\[\[\/H\]\]/g,"</mark>");
+}
+
+function normalizeAr(v){
+  return String(v).replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا");
 }
 
 renderFilters();
-document.getElementById("search").addEventListener("input",render);
+let timer=0;
+document.getElementById("search").addEventListener("input",()=>{
+  clearTimeout(timer);
+  timer=setTimeout(render,260);
+});
 render();
 </script>
 <button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>

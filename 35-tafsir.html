@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>التفسير الميسر · المكتبة الإسلامية</title>
+<meta name="description" content="تفسير ميسر لكل آيات القرآن الكريم من المصحف، مرفق بترجمة معنى الآية. يقرأ سورة تلو الأخرى.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="library.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.75}
+  .lib-wrap{max-width:860px;margin:0 auto;padding:0 16px 72px}
+  .lib-head{text-align:center;padding:34px 16px 16px;border-bottom:1px solid var(--line)}
+  .lib-head h1{font-family:"Amiri",serif;font-size:clamp(1.9rem,7vw,2.7rem);margin:0}
+  .lib-head p{color:var(--ink-soft);font-size:.88rem;max-width:48ch;margin:.4rem auto 0}
+
+  .surahs{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:8px;margin:16px 0}
+  .surah{display:block;width:100%;background:var(--card);border:1px solid var(--line);color:var(--ink);
+    padding:12px;border-radius:12px;cursor:pointer;text-align:center;font-family:"Cairo"}
+  .surah[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .surah .n{font-size:.7rem;color:var(--ink-soft)}
+  .surah[aria-pressed="true"] .n{color:var(--gold)}
+
+  .juz{font-size:.82rem;color:var(--ink-soft);margin:6px 0 12px}
+  .ayah{font-family:"Amiri",serif;font-size:1.35rem;line-height:2.4;color:var(--green);text-align:center;
+    border-bottom:1px dashed var(--line);padding:18px 0;margin:0 0 8px}
+  .tafsir{font-family:"Amiri",serif;font-size:1.1rem;line-height:2.15;margin:0 0 22px;padding:0 4px}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="lib-head">
+  <h1>التفسير الميسر</h1>
+  <p>تفسير ميسر لكل آيات القرآن الكريم، مرفق بمعنى الآية. يقرأ السورة كاملة من الملف الواحد.</p>
+</div>
+
+<main class="lib-wrap">
+  <div class="lib-tools">
+    <input class="lib-search" id="juz" type="search" placeholder="ابحث عن سورة أو رقم جزء…" aria-label="بحث في السور">
+    <select class="lib-search" id="sort" style="max-width:180px;font-family:Cairo" aria-label="ترتيب السور">
+      <option value="1">ترتيب المصحف</option>
+      <option value="0">ترتيب تنزيل</option>
+    </select>
+  </div>
+  <p class="lib-count" id="count"></p>
+  <div class="surahs" id="grid"></div>
+  <div id="reader"><p class="lib-state">اختر سورة للبدء</p></div>
+</main>
+
+
+<script type="module">
+  import { readSurah, tafsirIndex } from "./src/lib/library.js";
+  import { renderBody } from "./src/lib/content-ui.js";
+  import { escapeHtml, toArNum } from "./src/lib/text.js";
+
+  const grid = document.getElementById("grid");
+  const reader = document.getElementById("reader");
+  const count = document.getElementById("count");
+  const juz = document.getElementById("juz");
+  const sort = document.getElementById("sort");
+
+  const parts = await tafsirIndex();
+  let list = parts.surahs.map((s) => ({ ...s, file: String(s.no).padStart(3, "0") }));
+
+  const byMode = () => sort.value === "0" ? "desc" : "asc";
+
+  function paint() {
+    const q = juz.value.trim();
+    const mode = byMode();
+    const ordered = mode === "asc"
+      ? list
+      : [...list].sort((a, b) => b.no - a.no);
+    ordered.filter = ordered.filter; // preserve array methods
+    const shown = ordered.filter((s) => !q || String(s.no).includes(q) || s.name.includes(q));
+    grid.innerHTML = "";
+    count.textContent = `${toArNum(shown.length)} سورة`;
+    for (const s of shown) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "surah";
+      btn.innerHTML = `<span class="n">${toArNum(s.no)}</span><div>${escapeHtml(s.name)}</div>`;
+      btn.addEventListener("click", () => readSura(s.no));
+      grid.appendChild(btn);
+    }
+  }
+
+  paint();
+  juz.addEventListener("input", paint);
+  sort.addEventListener("change", paint);
+
+  async function readSura(no) {
+    const sura = await readSurah(no);
+    if (!sura) return;
+    reader.innerHTML = "";
+    const head = document.createElement("div");
+    head.className = "rhead";
+    head.innerHTML = `<h1>${escapeHtml(sura.name)}</h1><p class="sub">سورة ${toArNum(sura.no)} · ${toArNum(sura.ayat.length)} آية</p>`;
+    reader.appendChild(head);
+
+    for (const aya of sura.ayat) {
+      const block = document.createElement("div");
+      /* «div» لا «p»: الشروح فقرات، و«p» داخل «p» يُغلقه المتصفح
+         فيعيد بناء DOM فتفقد الآيات. */
+      block.innerHTML =
+        `<p class="ayah">${escapeHtml(aya.t)}</p>` +
+        `<div class="tafsir"><strong>${toArNum(aya.n)}</strong> ${renderBody(String(aya.f).replace(/\[\d+\]\s*/g, ""))}</div>`;
+      reader.appendChild(block);
+    }
+
+    const nav = document.createElement("div");
+    nav.className = "navrow";
+    const p = (s, l) => {
+      const a = document.createElement("a");
+      a.href = `?juz=${s}`;
+      a.textContent = l;
+      nav.appendChild(a);
+    };
+    if (sura.no > 1) p(sura.no - 1, "‹ السابقة");
+    if (sura.no < 114) p(sura.no + 1, "التالي ›");
+    reader.appendChild(nav);
+  }
+</script>
+<footer class="lib-foot">
+  المحتوى من تطبيق <a href="https://github.com/rn0x/Altaqwaa" target="_blank" rel="noopener noreferrer">Altaqwaa</a>
+  برخصة GPL-3.0، من كتب أهل العلم. راجع المصدر لكليّة النصّ.
+</footer>
+
+</body>
+</html>

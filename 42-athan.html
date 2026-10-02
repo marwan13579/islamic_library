@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مواقيت الأذان · المكتبة الإسلامية</title>
+<meta name="description" content="مواقيت الصلوات الخمس بمدينتك، مع تنبيه عند الأذان وصوت أذان يُسمع في وقته.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="library.css">
+<style>
+  .nextbox{background:var(--card);border:2px solid var(--gold-soft);border-radius:20px;padding:22px 18px;
+    text-align:center;margin:18px 0}
+  .nextbox .lbl{font-size:.8rem;color:var(--gold);font-weight:700;margin:0 0 6px}
+  .nextbox .name{font-family:"Amiri",serif;font-size:2.1rem;line-height:1.3;margin:0}
+  .nextbox .clock{font-size:1.5rem;color:var(--ink-soft);font-variant-numeric:tabular-nums;margin:6px 0 0}
+  .nextbox .left{font-size:.9rem;color:var(--ink-soft);margin:8px 0 0}
+
+  .times{display:flex;flex-direction:column;gap:8px;margin:14px 0}
+  .trow{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
+    border-radius:14px;padding:12px 15px}
+  .trow.now{border-color:var(--gold);background:var(--paper-2)}
+  .trow .nm{flex:1;font-weight:700;font-size:.95rem}
+  .trow .nm small{display:block;font-weight:400;font-size:.72rem;color:var(--ink-soft)}
+  .trow .tm{font-size:1.05rem;font-variant-numeric:tabular-nums;font-weight:700}
+  .trow button{font-family:"Cairo";font-size:.76rem;font-weight:600;background:var(--paper-2);border:1px solid var(--line);
+    color:var(--ink);padding:6px 12px;border-radius:999px;cursor:pointer;white-space:nowrap}
+  .trow button.on{background:var(--gold);border-color:var(--gold);color:#2b1e05}
+
+  .panel{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin:14px 0}
+  .panel h3{font-family:"Cairo";font-size:.95rem;color:var(--gold);margin:0 0 10px}
+  .row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:10px}
+  .row label{font-size:.82rem;color:var(--ink-soft)}
+  input[type=range]{accent-color:var(--gold)}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<header class="lib-head">
+  <h1>مواقيت الأذان</h1>
+  <p>الصلوات الخمس بمدينتك، وتنبيه يصلك عند دخول الوقت.</p>
+</header>
+
+<main class="lib-wrap">
+  <div class="nextbox" id="next">
+    <p class="lbl">جارٍ تحديد موضعك…</p>
+  </div>
+
+  <div class="times" id="times"></div>
+
+  <div class="panel">
+    <h3>التنبيه عند الأذان</h3>
+    <p id="notif" style="font-size:.84rem;color:var(--ink-soft);margin:0">
+      التنبيه يُجدوَل داخل المتصفح، فيصلك حتى بعد إغلاق الصفحة ما دام المتصفح مفتوحًا.
+    </p>
+    <div class="row">
+      <button type="button" id="enable" class="tab">فعّل التنبيه</button>
+      <button type="button" id="disable" class="tab">أوقفه</button>
+      <button type="button" id="test" class="tab">جرّب إشعارًا</button>
+    </div>
+  </div>
+
+  <div class="panel">
+    <h3>طريقة الحساب</h3>
+    <div class="lib-chips" id="methods"></div>
+  </div>
+
+  <div class="panel">
+    <h3>صوت الأذان</h3>
+    <p style="font-size:.84rem;color:var(--ink-soft);margin:0 0 8px">
+      يُشغَّل عند كل أذان إن سمح المتصفح، أو يدويًا متى شئت.
+    </p>
+    <div class="row">
+      <button type="button" id="azan" class="tab">شغّل الأذان الآن</button>
+      <label><input type="checkbox" id="auto"> شغّله تلقائيًا عند الأذان</label>
+    </div>
+    <div id="azanRow" hidden style="margin-top:12px"></div>
+  </div>
+</main>
+
+<script type="module">
+  import { fetchPrayerTimes, CALC_METHODS, methodName, requestLocation, locationError } from "./src/lib/api.js";
+  import { read as readStorage, write as writeStorage, KEYS } from "./src/lib/storage.js";
+  import { mountPlayer, play as playTrack } from "./src/lib/player.js";
+  import { toArNum } from "./src/lib/text.js";
+
+  mountPlayer();
+
+  const ORDER = ["Fajr", "Dhuhr", "Asr", "Maghrib", "Isha"];
+  const NAMES = { Fajr: "الفجر", Dhuhr: "الظهر", Asr: "العصر", Maghrib: "المغرب", Isha: "العشاء" };
+
+  /** نداءات الأذان المتاحة على islamcan.com. */
+  const AZAN_URL = "https://www.islamcan.com/audio/adhan/azan1.mp3";
+
+  const nextBox = document.getElementById("next");
+  const timesBox = document.getElementById("times");
+  const azanRow = document.getElementById("azanRow");
+
+  let timings = readStorage("athan_timings", null);
+  let method = readStorage(KEYS.calcMethod ?? "athan_method", 5);
+  let ticks = 0;
+
+  /* ------------------------------------------------------- الجدولة */
+
+  /** يحوّل «04:12 (EET)» إلى ساعة ودقيقة رقميتين. */
+  function clock(value) {
+    const m = String(value ?? "").match(/(\d{1,2}):(\d{2})/);
+    return m ? { h: Number(m[1]), m: Number(m[2]) } : null;
+  }
+
+  /** @returns {{key: string, at: Date, label: string}|null} أقرب صلاة */
+  function upcoming() {
+    const now = Date.now();
+    const rows = ORDER.map((key) => {
+      const c = clock(timings && timings[key]);
+      if (!c) return null;
+      const at = new Date();
+      at.setHours(c.h, c.m, 0, 0);
+      return { key, at, label: NAMES[key] };
+    }).filter(Boolean);
+    const after = rows.filter((row) => row.at.getTime() >= now);
+    return after[0] || rows[rows.length - 1] || null;
+  }
+
+  /**
+   * يرسل الجدول لعامل الخدمة، فيجدول التنبيه هناك.
+   * الصفحة وحدها لا تصلح: مؤقّتاتها تموت مع إغلاقها.
+   */
+  async function pushSchedule() {
+    if (!("serviceWorker" in navigator)) return false;
+    const reg = await navigator.serviceWorker.ready.catch(() => null);
+    if (!reg || !reg.active) return false;
+    const schedule = ORDER.map((key) => {
+      const c = clock(timings && timings[key]);
+      if (!c) return null;
+      const at = new Date();
+      at.setHours(c.h, c.m, 0, 0);
+      return { key, name: NAMES[key], at: at.getTime(), href: location.pathname };
+    }).filter(Boolean);
+    reg.active.postMessage({ type: "schedule-athan", schedule });
+    return true;
+  }
+
+  async function syncNotifications() {
+    const box = document.getElementById("notif");
+    if (!("Notification" in window)) {
+      box.textContent = "هذا المتصفح لا يدعم الإشعارات.";
+      return;
+    }
+    if (Notification.permission !== "granted") {
+      box.textContent = "التنبيه غير مفعّل. اضغط «فعّل التنبيه».";
+      return;
+    }
+    /* الإيقاف اختيار محفوظ: لولاه لأعاد تحميل الصفحة الجدولةَ التي
+       أوقفها المستخدم قبل دقيقة. */
+    if (readStorage("athan_notif_off", false)) {
+      box.textContent = "التنبيه موقوف. اضغط «فعّل التنبيه» ليعود.";
+      return;
+    }
+    const ok = await pushSchedule();
+    box.textContent = ok
+      ? `التنبيه مفعّل وجدولته ${ORDER.length} أذانًا لدى المتصفح.`
+      : "التنبيه مفعّل، لكن تعذّر تسجيله لدى المتصفح.";
+  }
+
+  /* ------------------------------------------------------- العرض */
+
+  function draw() {
+    if (!timings) return;
+    const near = upcoming();
+    const now = Date.now();
+
+    timesBox.innerHTML = "";
+    for (const key of ORDER) {
+      const c = clock(timings[key]);
+      if (!c) continue;
+      const isNow = near && near.key === key;
+      const row = document.createElement("div");
+      row.className = `trow${isNow ? " now" : ""}`;
+      row.innerHTML =
+        `<span class="nm">${NAMES[key]}<small>${isNow ? "الصلاة القادمة" : ""}</small></span>` +
+        `<span class="tm">${toArNum(String(c.h).padStart(2, "0"))}:${toArNum(String(c.m).padStart(2, "0"))}</span>`;
+      const playBtn = document.createElement("button");
+      playBtn.type = "button";
+      playBtn.textContent = "أذان";
+      playBtn.addEventListener("click", () => playAzaan(NAMES[key]));
+      row.appendChild(playBtn);
+      timesBox.appendChild(row);
+    }
+
+    if (near) {
+      const left = near.at.getTime() - now;
+      nextBox.innerHTML =
+        `<p class="lbl">${left > 0 ? "الصلاة القادمة" : "حان الآن وقت"}</p>` +
+        `<p class="name">${near.label}</p>` +
+        `<p class="clock">${toArNum(String(near.at.getHours()).padStart(2, "0"))}:${toArNum(String(near.at.getMinutes()).padStart(2, "0"))}</p>` +
+        `<p class="left">${left > 0 ? `بعد ${span(left)}` : "حان الآن — حيّ على الصلاة"}</p>`;
+    }
+    void ticks;
+  }
+
+  /** @param {number} ms @returns {string} */
+  function span(ms) {
+    const total = Math.max(0, Math.floor(ms / 1000));
+    const h = Math.floor(total / 3600);
+    const m = Math.floor((total % 3600) / 60);
+    const s = total % 60;
+    const parts = [];
+    if (h) parts.push(`${toArNum(h)} ساعة`);
+    if (m) parts.push(`${toArNum(m)} دقيقة`);
+    if (!h) parts.push(`${toArNum(s)} ثانية`);
+    return parts.join(" و");
+  }
+
+  /* ------------------------------------------------------- الصوت */
+
+  function playAzaan(label) {
+    azanRow.hidden = false;
+    azanRow.innerHTML = "";
+    playTrack({ src: AZAN_URL, title: `أذان ${label}`, subtitle: "أذان Mecca", page: location.pathname });
+  }
+
+  document.getElementById("azan").addEventListener("click", () => {
+    azanRow.hidden = false;
+    azanRow.innerHTML = "";
+    playTrack({ src: AZAN_URL, title: "الأذان", subtitle: "أذان مكة المكرمة", page: location.pathname });
+  });
+
+  const auto = document.getElementById("auto");
+  auto.checked = readStorage("athan_auto_audio", false);
+  auto.addEventListener("change", () => writeStorage("athan_auto_audio", auto.checked));
+
+  /* ------------------------------------------------------- التحديث */
+
+  async function load() {
+    let coords;
+    try {
+      coords = await requestLocation();
+    } catch {
+      nextBox.innerHTML =
+        `<p class="lbl">لم يُعطَ الموقع</p><p class="name">—</p>` +
+        `<p class="left">فعّل خدمة الموقع أو اكتب مدينتك في «طريقة الحساب».</p>`;
+      return;
+    }
+
+    writeStorage("athan_coords", coords);
+    try {
+      timings = await fetchPrayerTimes(coords, method);
+      writeStorage("athan_timings", timings);
+      nextBox.innerHTML = "";
+      draw();
+      syncNotifications();
+    } catch (error) {
+      nextBox.innerHTML =
+        `<p class="lbl">تعذّر جلب المواقيت</p><p class="name">—</p>` +
+        `<p class="left">${String(error && error.message ? error.message : locationError(error))}</p>`;
+    }
+  }
+
+  function drawMethods() {
+    const box = document.getElementById("methods");
+    box.innerHTML = "";
+    for (const m of CALC_METHODS) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "lib-chip";
+      b.textContent = methodName(m);
+      b.setAttribute("aria-pressed", m === method ? "true" : "false");
+      b.addEventListener("click", () => {
+        method = m;
+        writeStorage("athan_method", m);
+        drawMethods();
+        load();
+      });
+      box.appendChild(b);
+    }
+  }
+
+  /* ------------------------------------------------------- الأحداث */
+
+  document.getElementById("enable").addEventListener("click", async () => {
+    if (!("Notification" in window)) {
+      document.getElementById("notif").textContent = "هذا المتصفح لا يدعم الإشعارات.";
+      return;
+    }
+    writeStorage("athan_notif_off", false);
+    const permission = await Notification.requestPermission();
+    if (permission === "granted") syncNotifications();
+    else document.getElementById("notif").textContent = "لم يُسمح بالإشعارات.";
+  });
+
+  document.getElementById("disable").addEventListener("click", async () => {
+    writeStorage("athan_notif_off", true);
+    const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.ready.catch(() => null) : null;
+    if (reg && reg.active) reg.active.postMessage({ type: "cancel-athan" });
+    document.getElementById("notif").textContent = "التنبيه موقوف.";
+  });
+
+  document.getElementById("test").addEventListener("click", async () => {
+    const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.ready.catch(() => null) : null;
+    const payload = { type: "notify", title: "🕌 حان الآن وقت الصلاة", body: "حي على الصلاة، حي على الفلاح", tag: "athan-test" };
+    if (reg && reg.active) reg.active.postMessage(payload);
+    else if ("Notification" in window && Notification.permission === "granted") {
+      try {
+        new Notification(payload.title, { body: payload.body });
+      } catch {
+        document.getElementById("notif").textContent = "تعذّر إظهار الإشعار.";
+      }
+    }
+  });
+
+  drawMethods();
+  draw();
+  await load();
+
+  /* العدّ تنازلي كل ثانية، ويحدّث مرة في الدقيقة فقط. */
+  setInterval(() => {
+    if (ticks++ % 2 === 0) draw();
+  }, 500);
+
+  /* العامل يُخبرنا حلّ وقت الصلاة، فيُشغَّل الأذان إن طلبه المستخدم
+     أو كان مفعَّلًا تلقائيًا. */
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.addEventListener("message", (event) => {
+      if (!event.data || event.data.type !== "athan-now") return;
+      if (!auto.checked && !readStorage("athan_auto_audio", false)) return;
+      playAzaan(event.data.name);
+    });
+  }
+</script>
+</body>
+</html>

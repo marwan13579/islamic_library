@@ -53,6 +53,14 @@
   .pbar i{display:block;height:100%;background:var(--gold);border-radius:inherit}
   .person.complete .pbar i{background:var(--green)}
 
+  /* مساحة النقر: أوسع من الزرّ، فيضربها الإبهام دون النظر. */
+  .tapzone{margin:20px 0 4px;padding:30px 18px;border-radius:22px;text-align:center;cursor:pointer;
+    background:var(--card);border:2px solid var(--gold-soft);user-select:none;-webkit-tap-highlight-color:transparent}
+  .tapzone:active{background:var(--paper-2);transform:scale(.99)}
+  .tapzone:focus-visible{outline:2px solid var(--gold);outline-offset:3px}
+  .tapphrase{font-family:"Amiri",serif;font-size:1.7rem;line-height:1.9;color:var(--ink)}
+  .taphint{font-size:.78rem;color:var(--ink-soft);margin-top:8px}
+
   .addrow{display:flex;gap:8px;margin-top:16px}
   .addrow input{flex:1;min-width:0;padding:10px 14px;border-radius:999px;border:1px solid var(--line);
     background:var(--card);color:var(--ink);font-family:"Cairo";font-size:.9rem}
@@ -146,6 +154,11 @@ header{
 
 <div class="people" id="people"></div>
 
+<div class="tapzone" id="tapZone" role="button" tabindex="0">
+  <div class="tapphrase" id="tapPhrase"></div>
+  <div class="taphint">انقر للعدّ · أو اضغط مفتاح المسافة</div>
+</div>
+
 <div class="addrow">
   <input id="nameInput" type="text" placeholder="اسم مشارك جديد..." aria-label="اسم المشارك الجديد">
   <button class="addbtn" id="addBtn" type="button">إضافة</button>
@@ -158,7 +171,22 @@ header{
 </div>
 
 <script>
-const PHRASES = ["سبحان الله","الحمد لله","الله أكبر","لا إله إلا الله","أستغفر الله","اللهم صل على محمد ﷺ"];
+const PHRASES = [
+  "سبحان الله",
+  "الحمد لله",
+  "الله أكبر",
+  "لا إله إلا الله",
+  "أستغفر الله",
+  "أستغفر الله العظيم وأتوب إليه",
+  "سبحان الله وبحمده",
+  "سبحان الله العظيم",
+  "لا حول ولا قوة إلا بالله",
+  "الله لا إله إلا هو الحي القيوم",
+  "اللهم صل على محمد ﷺ",
+  "اللهم اجعلني من التوابين",
+  "لا إله إلا الله الملك الحق المبين",
+  "سبحان الله والحمد لله ولا إله إلا الله والله أكبر",
+];
 let customPhrase = localStorage.getItem("gtasbeeh-custom") || "";
 let activePhrase = localStorage.getItem("gtasbeeh-phrase") || PHRASES[0];
 let goal = Number(localStorage.getItem("gtasbeeh-goal")||33);
@@ -167,12 +195,22 @@ try{ people = JSON.parse(localStorage.getItem("gtasbeeh-people")||"null") || [
   {name:"أنا", count:0}
 ]; }catch(e){ people=[{name:"أنا",count:0}]; }
 
+/* العدّ اليومي يُصفَّر مع تغيّر التاريخ، لا مع إعادة تحميل الصفحة. */
+function todayKey(){ return new Date().toISOString().slice(0,10); }
+let today=todayKey();
+let daily=0;
+try{ const rec=JSON.parse(localStorage.getItem("gtasbeeh-daily")||"null");
+  if(rec && rec.day===today){ daily=Number(rec.total)||0; } }catch(e){}
+
+function saveDaily(){ try{ localStorage.setItem("gtasbeeh-daily", JSON.stringify({day:today,total:daily})); }catch(e){} }
+
 function save(){
   try{
     localStorage.setItem("gtasbeeh-phrase", activePhrase);
     localStorage.setItem("gtasbeeh-custom", customPhrase);
     localStorage.setItem("gtasbeeh-goal", String(goal));
     localStorage.setItem("gtasbeeh-people", JSON.stringify(people));
+    saveDaily();
   }catch(e){}
 }
 
@@ -187,7 +225,7 @@ function renderPhrases(){
     const b=document.createElement("button");
     b.className="pbtn"; b.type="button"; b.textContent=p;
     b.setAttribute("aria-pressed", p===activePhrase?"true":"false");
-    b.addEventListener("click",()=>{ activePhrase=p; save(); renderPhrases(); renderCustomBox(); });
+    b.addEventListener("click",()=>{ activePhrase=p; save(); renderPhrases(); renderCustomBox(); renderTap(); });
     box.appendChild(b);
   });
   const customBtn=document.createElement("button");
@@ -229,6 +267,17 @@ function renderCustomBox(forceOpen){
   }
 }
 
+let activeIndex=0;
+
+function renderTap(){
+  const z=document.getElementById("tapZone");
+  if(!z) return;
+  document.getElementById("tapPhrase").textContent = activePhrase;
+  z.setAttribute("aria-label","عدّاد "+String(people[activeIndex]?.name||""));
+  z.querySelector(".taphint").textContent =
+    "انقر للعدّ لـ"+String(people[activeIndex]?.name||"المشارك")+" · عدد "+String(people[activeIndex]?.count||0);
+}
+
 function renderPeople(){
   const box=document.getElementById("people");
   box.innerHTML="";
@@ -252,11 +301,7 @@ function renderPeople(){
     inp.addEventListener("input",e=>{ people[+e.target.dataset.i].name=e.target.value; save(); });
   });
   box.querySelectorAll(".pplus").forEach(btn=>{
-    btn.addEventListener("click",e=>{
-      const i=+e.target.dataset.i;
-      people[i].count++; save(); renderPeople(); renderTotals();
-      if(navigator.vibrate) try{navigator.vibrate(8)}catch(err){}
-    });
+    btn.addEventListener("click",e=>tap(+e.target.dataset.i));
   });
   box.querySelectorAll(".prm").forEach(btn=>{
     btn.addEventListener("click",e=>{
@@ -265,12 +310,43 @@ function renderPeople(){
   });
 }
 
+/* النقر على المساحة الكبيرة يزيد عدّادParticipant المحدَّد. */
+function tap(i){
+  people[i].count++; daily++;
+  save();
+  renderPeople();
+  renderTotals();
+  if(navigator.vibrate) try{ navigator.vibrate(people[i].count%goal===0?[30,40,30]:8); }catch(err){}
+  if(people[i].count===goal && navigator.vibrate) try{ navigator.vibrate([60,50,60,50,120]); }catch(err){}
+}
+
 function renderTotals(){
   const total = people.reduce((s,p)=>s+p.count,0);
   const done = people.filter(p=>p.count>=goal).length;
-  document.getElementById("totals").textContent =
-    "المجموع الكلي: "+total+" — "+done+" من "+people.length+" أكملوا الهدف";
+  const el=document.getElementById("totals");
+  el.textContent =
+    "المجموع الكلي: "+total+" — "+done+" من "+people.length+" أكملوا الهدف — اليوم: "+daily;
 }
+
+const tapZone=document.getElementById("tapZone");
+function doTap(){ if(people.length){ activeIndex=Math.min(activeIndex,people.length-1); tap(activeIndex); } }
+tapZone.addEventListener("click",doTap);
+tapZone.addEventListener("keydown",e=>{ if(e.key==="Enter"||e.key===" "){ e.preventDefault(); doTap(); } });
+
+/* اختيار المشاركة بالنقر على اسمها. */
+document.getElementById("people").addEventListener("click",e=>{
+  const row=e.target.closest(".person");
+  if(!row||e.target.closest("button")) return;
+  const inp=row.querySelector(".pname");
+  if(inp){ activeIndex=+inp.dataset.i; renderTap(); }
+});
+
+/* تصفير يومي تلقائي عند تغيّر اليوم. */
+setInterval(()=>{
+  const now=todayKey();
+  if(now===today) return;
+  today=now; daily=0; saveDaily(); renderTotals(); renderTap();
+},30000);
 
 document.getElementById("goal").value=goal;
 document.getElementById("goal").addEventListener("input",e=>{
@@ -289,7 +365,7 @@ document.getElementById("resetAll").addEventListener("click",()=>{
   people.forEach(p=>p.count=0); save(); renderPeople(); renderTotals();
 });
 
-renderPhrases(); renderCustomBox(); renderPeople(); renderTotals();
+renderPhrases(); renderCustomBox(); renderPeople(); renderTotals(); renderTap();
 </script>
 <button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
 <script>

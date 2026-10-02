@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>حصن المسلم · المكتبة الإسلامية</title>
+<meta name="description" content="أذكار الصباح والمساء والنوم ودعاء الخلاء وأذكار اليوم والليلة من كتاب حصن المسلم للسعدي. مع أصوات مسموعة.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="library.css">
+<style>
+  :root{
+    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
+    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F;
+    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }}
+  :root[data-theme="dark"]{
+    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.75}
+  .lib-wrap{max-width:860px;margin:0 auto;padding:0 16px 72px}
+  .lib-head{text-align:center;padding:34px 16px 16px;border-bottom:1px solid var(--line)}
+  .lib-head h1{font-family:"Amiri",serif;font-size:clamp(1.9rem,7vw,2.7rem);margin:0}
+  .lib-head p{color:var(--ink-soft);font-size:.88rem;max-width:48ch;margin:.4rem auto 0}
+
+  .babs{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:10px;margin:16px 0}
+  .bab{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;
+    text-align:center;font-family:"Cairo"}
+  .bab[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .bab .c{font-size:.7rem;color:var(--ink-soft);display:block;margin-top:4px}
+  .bab[aria-pressed="true"] .c{color:var(--gold)}
+  .dua{font-family:"Amiri",serif;font-size:1.05rem;line-height:2.15;margin:0 0 18px}
+  .dua-num{font-family:"Cairo";font-weight:700;color:var(--gold);margin-left:8px}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="lib-head">
+  <h1>حصن المسلم</h1>
+  <p>أذكار يومية وليلة من كتاب حصن المسلم للسعدي — يقرأ بابًا واحدًا بلا تحميل الباب.</p>
+</div>
+
+<main class="lib-wrap">
+  <input class="lib-search" id="juz" type="search" placeholder="ابحث عن باب أو ذكر…" aria-label="بحث في حصن المسلم">
+  <p class="lib-count" id="count"></p>
+  <div class="babs" id="grid"></div>
+  <div id="reader"><p class="lib-state">اختر بابًا للبدء</p></div>
+</main>
+
+
+<script type="module">
+  import { readBab, hisnIndex, isBookmarked, toggleBookmark } from "./src/lib/library.js";
+  import { renderBody } from "./src/lib/content-ui.js";
+  import { escapeHtml, toArNum } from "./src/lib/text.js";
+  import { mountPlayer, play as playTrack } from "./src/lib/player.js";
+
+  const grid = document.getElementById("grid");
+  const reader = document.getElementById("reader");
+  const count = document.getElementById("count");
+  const juz = document.getElementById("juz");
+
+  const index = await hisnIndex();
+
+  function paint() {
+    const q = juz.value.trim();
+    const shown = index.bab.filter((b) => !q || b.title.includes(q));
+    grid.innerHTML = "";
+    count.textContent = `${toArNum(shown.length)} بابًا`;
+    for (const b of shown) {
+      const btn = document.createElement("button");
+      btn.type = "button";
+      btn.className = "bab";
+      btn.innerHTML = `<div>${escapeHtml(b.title)}</div><span class="c">${toArNum(b.count)} ذكرًا</span>`;
+      btn.addEventListener("click", () => openBab(b.no));
+      grid.appendChild(btn);
+    }
+  }
+
+  mountPlayer();
+  paint();
+  juz.addEventListener("input", paint);
+
+  async function openBab(no) {
+    const bab = await readBab(no);
+    if (!bab) return;
+    reader.innerHTML = "";
+    const head = document.createElement("div");
+    head.className = "rhead";
+    head.innerHTML = `<h1>${escapeHtml(bab.title)}</h1><p class="sub">باب ${toArNum(bab.no)} · ${toArNum(bab.items.length)} ذكرًا</p>`;
+    reader.appendChild(head);
+
+    if (bab.audio) {
+      const div = document.createElement("div");
+      div.className = "audio";
+      div.innerHTML = `<span>صوت الباب</span>`;
+      const listen = document.createElement("button");
+      listen.type = "button";
+      listen.className = "sbtn";
+      listen.textContent = "استماع";
+      listen.addEventListener("click", () =>
+        playTrack({ src: bab.audio, title: bab.title, subtitle: "حصن المسلم", page: location.pathname })
+      );
+      const get = document.createElement("a");
+      get.href = bab.audio;
+      get.download = "";
+      get.textContent = "تنزيل";
+      div.append(listen, get);
+      reader.appendChild(div);
+    }
+
+    for (let i = 0; i < bab.items.length; i += 1) {
+      const row = bab.items[i];
+      /* «div» لا «p»: كل ذكر فقرات، و«p» داخل «p» يُغلقه المتصفح. */
+      const block = document.createElement("div");
+      block.className = "dua";
+      block.innerHTML = `<span class="dua-num">${toArNum(i + 1)}.</span>${renderBody(row.t)}`;
+      reader.appendChild(block);
+    }
+
+    const nav = document.createElement("div");
+    nav.className = "navrow";
+    if (bab.no > 1) {
+      const a = document.createElement("a");
+      a.href = `?no=${bab.no - 1}`;
+      a.textContent = "‹ السابق";
+      nav.appendChild(a);
+    }
+    if (bab.no < 132) {
+      const a = document.createElement("a");
+      a.href = `?no=${bab.no + 1}`;
+      a.textContent = "التالي ›";
+      nav.appendChild(a);
+    }
+    reader.appendChild(nav);
+
+    const saved = isBookmarked("hisn-" + bab.no);
+    const mark = document.createElement("button");
+    mark.type = "button";
+    mark.textContent = saved ? "محفوظ ✓" : "حفظ في المفضّلة";
+    mark.className = saved ? "on" : "";
+    mark.addEventListener("click", () => {
+      const now = toggleBookmark("hisn-" + bab.no);
+      mark.textContent = now ? "محفوظ ✓" : "حفظ في المفضّلة";
+      mark.className = now ? "on" : "";
+    });
+    reader.appendChild(mark);
+  }
+
+  /* قراءة من عنوان الصفحة مباشرة. */
+  if (new URLSearchParams(location.search).has("no")) openBab(Number(new URLSearchParams(location.search).get("no")));
+</script>
+<footer class="lib-foot">
+  المحتوى من تطبيق <a href="https://github.com/rn0x/Altaqwaa" target="_blank" rel="noopener noreferrer">Altaqwaa</a>
+  برخصة GPL-3.0، من كتب أهل العلم. راجع المصدر لكليّة النصّ.
+</footer>
+
+</body>
+</html>

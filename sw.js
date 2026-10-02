@@ -70,6 +70,14 @@ const SHELL = [
   "./23-search.html", "./24-ibadat.html", "./25-azkar-shamila.html", "./26-daily-system.html",
   "./27-hadith.html", "./28-hijri.html", "./29-prayer-times.html", "./30-quran-full.html",
   "./31-card-maker.html", "./32-radio-hub.html",
+  // المكتبة المستوردة — صفحاتها وأصولها القليلة فقط.
+  "./library.css", "./35-tafsir.html", "./36-hisn.html", "./37-fatwa.html",
+  "./38-khutbah.html", "./39-tarikh.html", "./40-reciters.html", "./41-quiz.html",
+  "./42-athan.html", "./reader.html",
+  "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
+  "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
+  // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.
+  "./content/manifest.json",
   // بنية المشروع الجديدة
   "./src/site/noor.html", "./src/site/site.css", "./src/site/site.js",
   "./src/site/render.js", "./src/site/sections.js", "./src/assets/icons.svg",
@@ -103,6 +111,9 @@ const API_HOSTS = [
 ];
 
 const absolute = (url) => new URL(url, SCOPE).href;
+
+/* أقصى مدّة يقبلها setTimeout: أسبوع واحد، وما فوقها يُجدول تكرارًا. */
+const MAX_TIMEOUT = 2147483647;
 
 /* ------------------------------ التثبيت ------------------------------ */
 
@@ -144,11 +155,69 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "notify") {
     event.waitUntil(showNotification(event.data));
   }
+  if (event.data && event.data.type === "schedule-athan") {
+    self.waitUntil(scheduleAthan(event.data.schedule || []));
+  }
+  if (event.data && event.data.type === "cancel-athan") {
+    self.waitUntil(cancelAthan());
+  }
 });
+
+/* ------------------------------ جدولة الأذان ------------------------------ */
+
+/**
+ * المؤقّتات تُجدول هنا لا في الصفحة: مؤقّت الصفحة يموت بإغلاقها،
+ * أما هذا فيبقى ما دام المتصفح مفتوحًا فيلفية أو في مقدمة.
+ * @type {Map<string, number>}
+ */
+const ATHAN_TIMERS = new Map();
+
+/**
+ * يجدول إشعارًا لكل صلاة في اليوم، ويلغي ما سبق جدولته.
+ * @param {{key: string, name: string, at: number, href: string}[]} schedule
+ */
+async function scheduleAthan(schedule) {
+  await cancelAthan();
+  for (const entry of schedule) {
+    const delay = entry.at - Date.now();
+    if (delay <= 0 || delay > MAX_TIMEOUT) continue;
+    ATHAN_TIMERS.set(
+      entry.key,
+      setTimeout(() => {
+        ATHAN_TIMERS.delete(entry.key);
+        announceAthan(entry);
+      }, delay)
+    );
+  }
+  return ATHAN_TIMERS.size;
+}
+
+/** يلغي كل المؤقّتات المجدولة. */
+async function cancelAthan() {
+  for (const id of ATHAN_TIMERS.values()) clearTimeout(id);
+  ATHAN_TIMERS.clear();
+}
+
+/**
+ * يُعلن الأذان: إشعار لكل الأصوات، ورسالة للصفحة المفتوحة فتشغّل الصوت.
+ * @param {{key: string, name: string, href: string}} entry
+ */
+async function announceAthan(entry) {
+  await showNotification({
+    title: `🕌 حان الآن وقت صلاة ${entry.name}`,
+    body: "حي على الصلاة، حي على الفلاح",
+    tag: `athan-${entry.key}`,
+    url: entry.href,
+  });
+  const clients = await self.clients.matchAll({ type: "window" });
+  for (const client of clients) {
+    client.postMessage({ type: "athan-now", name: entry.name });
+  }
+}
 
 /* ------------------------------ الإشعارات ------------------------------ */
 
-async function showNotification({ title, body, tag }) {
+async function showNotification({ title, body, tag, url }) {
   if (self.registration.showNotification) {
     await self.registration.showNotification(title, {
       body,
@@ -159,7 +228,7 @@ async function showNotification({ title, body, tag }) {
       badge: absolute("icons/favicon-32.png"),
       vibrate: [200, 100, 200],
       requireInteraction: false,
-      data: { url: absolute("src/app/app.html#tab/prayer") },
+      data: { url: absolute(url || "src/app/app.html#tab/prayer") },
     });
   }
 }

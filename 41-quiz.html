@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="storage-fallback.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الاختبارات · المكتبة الإسلامية</title>
+<meta name="description" content="٥٨٢٠ سؤالًا في التفسير والفقه والعقيدة والحديث والتاريخ واللغة. اختبار قصير بتصحيح فوري ونتيجة في النهاية.">
+<link rel="icon" href="icons/icon-192.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="tools.css">
+<link rel="stylesheet" href="library.css">
+<style>
+  .setup{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:8px;margin:14px 0}
+  .pick{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;cursor:pointer;
+    text-align:start;font-family:"Cairo";color:var(--ink)}
+  .pick[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+  .pick b{display:block;font-size:.95rem}
+  .pick span{font-size:.74rem;opacity:.75}
+
+  .qbox{background:var(--card);border:1px solid var(--gold-soft);border-radius:18px;padding:20px 18px;margin:14px 0}
+  .qbox .meta{display:flex;justify-content:space-between;align-items:center;font-size:.76rem;color:var(--ink-soft);margin-bottom:10px}
+  .qbox .q{font-family:"Amiri",serif;font-size:1.2rem;line-height:2.1;margin:0 0 16px}
+  .opt{display:block;width:100%;text-align:start;font-family:"Cairo";font-size:.95rem;background:var(--paper-2);
+    border:1px solid var(--line);color:var(--ink);padding:12px 15px;border-radius:12px;margin:8px 0;cursor:pointer}
+  .opt:disabled{cursor:default}
+  .opt.ok{background:var(--green);border-color:var(--green);color:#fff}
+  .opt.no{background:#7a2f2f;border-color:#7a2f2f;color:#fff}
+  .opt .mk{font-weight:700;margin-inline-end:6px}
+
+  .progress{height:6px;background:var(--paper-2);border-radius:999px;overflow:hidden;margin:10px 0 4px}
+  .progress i{display:block;height:100%;background:var(--gold);width:0;transition:width .25s}
+
+  .score{text-align:center;padding:26px 16px}
+  .score .big{font-family:"Amiri",serif;font-size:3rem;line-height:1.2;color:var(--gold)}
+  .score .sub{color:var(--ink-soft);font-size:.9rem}
+  .verdict{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin:12px 0;
+    text-align:start;font-size:.88rem}
+  .verdict .q{font-family:"Amiri",serif;line-height:1.9;margin:0 0 6px}
+  .verdict .pick-ans{font-size:.82rem;margin:3px 0;padding-inline-start:14px}
+  .verdict .right{color:var(--green);font-weight:700}
+</style>
+</head>
+<body>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<header class="lib-head">
+  <h1>الاختبارات</h1>
+  <p>خمسة آلاف سؤال في التفسير والفقه والعقيدة والحديث والتاريخ واللغة، تُصحَّح لك في الحال.</p>
+</header>
+
+<main class="lib-wrap">
+  <section id="setup">
+    <p class="lib-count">اختر بابًا</p>
+    <div class="setup" id="cats"></div>
+    <div class="lib-chips" id="lens"></div>
+    <div class="lib-tools" style="margin-top:14px">
+      <label for="n" style="font-size:.84rem;color:var(--ink-soft)">عدد الأسئلة</label>
+      <select class="lib-search" id="n" style="max-width:110px" aria-label="عدد الأسئلة">
+        <option>5</option><option selected>10</option><option>20</option><option>30</option>
+      </select>
+      <button class="tab" id="start" type="button">ابدأ الاختبار</button>
+    </div>
+  </section>
+
+  <section id="run" hidden>
+    <div class="progress"><i id="bar"></i></div>
+    <p class="lib-count" id="rstat"></p>
+    <div id="quiz"></div>
+    <div class="lib-pager" id="nav"></div>
+  </section>
+
+  <section id="done" hidden>
+    <div class="score">
+      <div class="big" id="pct"></div>
+      <p class="sub" id="line"></p>
+    </div>
+    <div class="lib-pager">
+      <button type="button" id="again">اختبار جديد</button>
+      <button type="button" id="review">مراجعة الأسئلة</button>
+    </div>
+    <div id="report"></div>
+  </section>
+</main>
+
+<script type="module">
+  import { collectionMeta } from "./src/lib/shards.js";
+  import { sampleByCategory, sampleAll, openAt } from "./src/lib/library.js";
+  import { escapeHtml, toArNum } from "./src/lib/text.js";
+  import { read as readStorage, write as writeStorage } from "./src/lib/storage.js";
+
+  const setup = document.getElementById("setup");
+  const run = document.getElementById("run");
+  const done = document.getElementById("done");
+  const quiz = document.getElementById("quiz");
+
+  /** الأبواب الرئيسة: المستويات الثلاثة للأسئلة كلّها. */
+  const ALL = "الكل";
+  const CATS = [ALL, "التفسير", "الفقه", "العقيدة", "الحديث", "التاريخ", "اللغة العربية", "الحج"];
+  const LENS = [
+    { id: "", label: "كل المستويات" },
+    { id: "level1", label: "الأول" },
+    { id: "level2", label: "الثاني" },
+    { id: "level3", label: "الثالث" },
+  ];
+
+  const meta = await collectionMeta("quiz");
+  const LEVEL_KEY = "lib-quiz-level";
+  const HISTORY_KEY = "lib-quiz-history";
+
+  let category = CATS[1];
+  let level = readStorage(LEVEL_KEY, "");
+  let questions = [];
+  let at = 0;
+  let answers = [];
+
+  /* ------------------------------------------------------- الإعداد */
+
+  function drawCats() {
+    const box = document.getElementById("cats");
+    box.innerHTML = "";
+    for (const name of CATS) {
+      const group = meta.categories.find((c) => c.name === name);
+      const total = name === ALL ? meta.count : group && group.count;
+      if (name !== ALL && !group) continue;
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "pick";
+      b.innerHTML = `<b>${escapeHtml(name)}</b><span>${toArNum(total)} سؤالًا</span>`;
+      b.setAttribute("aria-pressed", name === category ? "true" : "false");
+      b.addEventListener("click", () => {
+        category = name;
+        drawCats();
+      });
+      box.appendChild(b);
+    }
+  }
+
+  function drawLens() {
+    const box = document.getElementById("lens");
+    box.innerHTML = "";
+    for (const l of LENS) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "lib-chip";
+      b.textContent = l.label;
+      b.setAttribute("aria-pressed", l.id === level ? "true" : "false");
+      b.addEventListener("click", () => {
+        level = l.id;
+        writeStorage(LEVEL_KEY, level);
+        drawLens();
+      });
+      box.appendChild(b);
+    }
+  }
+
+  /* ------------------------------------------------------- الاختبار */
+
+  /**
+   * يختار أسئلة التصنيف ثم يفتح ما وقع عليها فقط.
+   *
+   * المستوى محفوظ في عنصره لا في ملخّصه، فلا يُعرف قبل الفتح. فيُؤخذ
+   * عدد أضعاف المطلوب ثم يُصفّى بعد الفتح، وإلا نفد المستويات العليا
+   * من باب صغير.
+   * @param {number} count
+   */
+  async function build(count) {
+    quiz.innerHTML = `<p class="lib-state">جارٍ تحضير الأسئلة…</p>`;
+    const want = level ? count * 4 : count;
+    const picks = category === ALL
+      ? await sampleAll("quiz", want)
+      : await sampleByCategory("quiz", category, want);
+
+    /** @type {any[]} */
+    const loaded = [];
+    for (const row of picks) {
+      if (loaded.length >= count) break;
+      const item = await openAt("quiz", row.p);
+      if (!item || !item.quiz || !item.quiz.answers || !item.quiz.answers.length) continue;
+      if (level && item.quiz.level !== level) continue;
+      loaded.push(item);
+    }
+    return loaded;
+  }
+
+  function shuffle(list) {
+    const out = [...list];
+    for (let i = out.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [out[i], out[j]] = [out[j], out[i]];
+    }
+    return out;
+  }
+
+  function drawQuestion() {
+    const item = questions[at];
+    if (!item) return;
+    const answers0 = item.quiz.answers;
+
+    const box = document.createElement("div");
+    box.className = "qbox";
+    box.innerHTML =
+      `<div class="meta"><span>${escapeHtml(category)}</span><span>${toArNum(at + 1)} / ${toArNum(questions.length)}</span></div>` +
+      `<p class="q">${escapeHtml(item.content || item.title)}</p>`;
+
+    const options = shuffle(answers0.map((a, i) => ({ ...a, i })));
+    for (const opt of options) {
+      const b = document.createElement("button");
+      b.type = "button";
+      b.className = "opt";
+      b.innerHTML = `${escapeHtml(opt.text)}`;
+      b.addEventListener("click", () => answer(item, answers0, opt, box));
+      box.appendChild(b);
+    }
+    quiz.innerHTML = "";
+    quiz.appendChild(box);
+
+    document.getElementById("bar").style.width = `${Math.round((at / questions.length) * 100)}%`;
+    document.getElementById("rstat").textContent = `${toArNum(questions.length)} سؤالًا · صحّ ${toArNum(answers.filter((a) => a.ok).length)}`;
+    drawNav();
+  }
+
+  function answer(item, all, picked, box) {
+    const ok = Boolean(picked.correct);
+    answers.push({ id: item.id, ok, question: item.content || item.title, picked: picked.text, right: all.find((a) => a.correct)?.text || "" });
+
+    for (const b of box.querySelectorAll(".opt")) {
+      b.disabled = true;
+    }
+    /* الترتيب عشوائي، فيُعلَّم الصحيح بالنص لا بالترتيب. */
+    for (const b of box.querySelectorAll(".opt")) {
+      if (b.textContent === (all.find((a) => a.correct)?.text || "")) b.classList.add("ok");
+    }
+    if (!ok) {
+      for (const b of box.querySelectorAll(".opt")) {
+        if (b.textContent === picked.text) b.classList.add("no");
+      }
+    }
+    drawNav();
+    drawStats();
+  }
+
+  function drawStats() {
+    document.getElementById("rstat").textContent =
+      `${toArNum(questions.length)} سؤالًا · صحّ ${toArNum(answers.filter((a) => a.ok).length)}`;
+  }
+
+  function drawNav() {
+    const nav = document.getElementById("nav");
+    nav.innerHTML = "";
+    const next = document.createElement("button");
+    next.type = "button";
+    next.textContent = at + 1 >= questions.length ? "إنهاء" : "السؤال التالي";
+    next.disabled = answers.length <= at;
+    next.addEventListener("click", () => {
+      if (at + 1 >= questions.length) finish();
+      else {
+        at += 1;
+        drawQuestion();
+      }
+    });
+    nav.appendChild(next);
+  }
+
+  /* ------------------------------------------------------ النتيجة */
+
+  function finish() {
+    const right = answers.filter((a) => a.ok).length;
+    const total = answers.length;
+    const pct = total ? Math.round((right / total) * 100) : 0;
+    document.getElementById("pct").textContent = `${toArNum(pct)}٪`;
+    document.getElementById("line").textContent =
+      `${toArNum(right)} إجابة صحيحة من ${toArNum(total)} · ${category}`;
+
+    const history = readStorage(HISTORY_KEY, []);
+    history.unshift({ at: Date.now(), pct, right, total, category });
+    writeStorage(HISTORY_KEY, history.slice(0, 20));
+
+    run.hidden = true;
+    done.hidden = false;
+    document.getElementById("report").innerHTML = "";
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  }
+
+  function drawReport() {
+    const box = document.getElementById("report");
+    box.innerHTML = "";
+    const wrong = answers.filter((a) => !a.ok);
+    if (!wrong.length) {
+      box.innerHTML = `<p class="lib-empty">لا خطأ. أحسنت.</p>`;
+      return;
+    }
+    const head = document.createElement("p");
+    head.className = "lib-count";
+    head.textContent = `${toArNum(wrong.length)} خطأ:`;
+    box.appendChild(head);
+
+    for (const a of wrong) {
+      const card = document.createElement("div");
+      card.className = "verdict";
+      card.innerHTML =
+        `<p class="q">${escapeHtml(a.question)}</p>` +
+        `<p class="pick-ans">إجابتك: <span class="mk">✗</span>${escapeHtml(a.picked)}</p>` +
+        `<p class="pick-ans right">الصحيح: ${escapeHtml(a.right)}</p>`;
+      const open = document.createElement("a");
+      open.href = `reader.html?type=quiz&id=${encodeURIComponent(a.id)}`;
+      open.textContent = "اقرأ السؤال بمصدره ↗";
+      open.style.fontSize = ".8rem";
+      card.appendChild(open);
+      box.appendChild(card);
+    }
+  }
+
+  /* ------------------------------------------------------ الأحداث */
+
+  document.getElementById("start").addEventListener("click", async () => {
+    const count = Number(document.getElementById("n").value) || 10;
+    const picked = await build(count);
+    if (picked.length < 3) {
+      quiz.innerHTML = `<p class="lib-empty">لا يكفي أسئلة في هذا الباب والمستوى. جرّب بابًا آخر أو «كل المستويات».</p>`;
+      return;
+    }
+    questions = shuffle(picked);
+    at = 0;
+    answers = [];
+    setup.hidden = true;
+    done.hidden = true;
+    run.hidden = false;
+    drawQuestion();
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  document.getElementById("again").addEventListener("click", () => {
+    setup.hidden = false;
+    run.hidden = true;
+    done.hidden = true;
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  });
+
+  document.getElementById("review").addEventListener("click", drawReport);
+
+  drawCats();
+  drawLens();
+</script>
+<footer class="lib-foot">
+  المحتوى من تطبيق <a href="https://github.com/rn0x/Altaqwaa" target="_blank" rel="noopener noreferrer">Altaqwaa</a>
+  برخصة GPL-3.0، من كتب أهل العلم. راجع المصدر لكليّة النصّ.
+</footer>
+
+</body>
+</html>

@@ -16,8 +16,10 @@ for (const entry of fs.readdirSync(ROOT, { withFileTypes: true })) {
   }
 }
 
-for (const directory of ["icons", "src", "vendor"]) {
-  fs.cpSync(path.join(ROOT, directory), path.join(OUTPUT, directory), { recursive: true });
+for (const directory of ["icons", "src", "vendor", "content"]) {
+  const from = path.join(ROOT, directory);
+  if (!fs.existsSync(from)) continue;
+  fs.cpSync(from, path.join(OUTPUT, directory), { recursive: true });
 }
 
 const sw = fs.readFileSync(path.join(OUTPUT, "sw.js"), "utf8");
