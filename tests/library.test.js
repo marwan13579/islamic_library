@@ -273,17 +273,17 @@ test("ترتيب «الأحدث» لا يقرأ إلا جزءًا واحدًا �
   }
 });
 
-test("الترتيب غير الافتراضي لا يتداخل بين صفحاته", async () => {
+test("الترتيب بغير الافتراضي لا يتداخل بين صفحاته", async () => {
   const lib = await library();
   /* كل صفحة تُقتطع من ترتيب القوائم كله بعدّاده، لا من نافذتها وحدها.
      وكان يُرتَّب كل نافذة وحدها فتتشابك الصفحات. */
-  for (const sort of ["oldest", "popular"]) {
-    const first = await lib.browse("quiz", { page: 1, sort });
-    const second = await lib.browse("quiz", { page: 2, sort });
-    assert.equal(first.items.length, 30, `${sort}`);
+  for (const type of ["quiz", "fatwa", "khutbahs"]) {
+    const first = await lib.browse(type, { page: 1, sort: "oldest" });
+    const second = await lib.browse(type, { page: 2, sort: "oldest" });
+    assert.equal(first.items.length, 30, type);
     const seen = new Set(first.items.map((row) => row.id));
     const overlap = second.items.filter((row) => seen.has(row.id));
-    assert.deepEqual(overlap, [], `${sort}: تكرّرت عناصر بين الصفحتين`);
+    assert.deepEqual(overlap, [], `${type}: تكرّرت عناصر بين الصفحتين`);
   }
 });
 

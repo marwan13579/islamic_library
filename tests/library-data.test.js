@@ -77,14 +77,16 @@ test("ترتيب الخطب بتاريخها: الأحدث أحدث تاريخً
   );
 });
 
-test("«الأكثر» متسلسل عبر الصفحات لا متداخل", async () => {
-  serveContent();
-  const { browse } = await load("src/lib/library.js");
-  const a = await browse("fatwa", { page: 1, perPage: 10, sort: "popular" });
-  const b = await browse("fatwa", { page: 2, perPage: 10, sort: "popular" });
-  const maxA = Math.max(...a.items.map((i) => i.r));
-  const minB = Math.min(...b.items.map((i) => i.r));
-  assert.ok(maxA >= minB, "صفحتا «الأكثر» متداخلتان");
+test("لا ترتيبٌ ثالث في الواجهة: طوله لا يُعرف إلا بترتيب الجميع", () => {
+  /* الترتيب بدقائق القراءة يحتاج كل الملخّصات: عشرة ميغابايت للفتاوى
+     صفحةً واحدة، واسمه «الأكثر» يكذب إذ لا أكثرية في المصدر. فحُذف من
+     شريط الترتيب، ولا يبقى إلا ما يُعرف بترتيب القوائم نفسها. */
+  const ui = fs.readFileSync(path.join(ROOT, "src/lib/content-ui.js"), "utf8");
+  const sorts = /const SORTS = \[([\s\S]*?)\];/.exec(ui);
+  assert.ok(sorts, "لا شريط ترتيب في الواجهة");
+  const ids = [...sorts[1].matchAll(/id: "([^"]+)"/g)].map((m) => m[1]);
+  assert.deepEqual(ids, ["newest", "oldest"], `فرزات غير متوقّعة: ${ids.join("، ")}`);
+  assert.ok(!/sort === "popular"/.test(fs.readFileSync(path.join(ROOT, "src/lib/library.js"), "utf8")));
 });
 
 test("صفحات التصنيف لا تتشابك في الاتجاهين", async () => {

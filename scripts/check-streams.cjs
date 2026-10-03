@@ -70,9 +70,28 @@ function probe(url, redirects = 0) {
   });
 }
 
+/**
+ * @param {string} url
+ * @param {number} [tries] محاولات قبل الحكم على الموت
+ * @returns {Promise<{code: any, type: string}>}
+ */
+async function probeWithRetry(url, tries = 3) {
+  let out = {};
+  for (let attempt = 1; attempt <= tries; attempt += 1) {
+    out = await probe(url, 3);
+    /* ٥٠٠ و«لاشبكة» و«انتهى الوقت» ليست موتًا، هي ازدحام أو شبكة.
+       المحطة الحيّة ترد ٥٠٠ مرّة ثم ترد ٢٠٠، والحكم عليها بعد محاولة
+       واحدة يجعل الفрес يبلّغ عن محطات سليمة. */
+    if (out.code !== 500 && out.code !== "ERR") break;
+    if (attempt < tries) await new Promise((r) => setTimeout(r, 1200 * attempt));
+  }
+  return out;
+}
+
 async function main(){
   const DEAD = [];
   let ok = 0;
+  let flaky = 0;
 
   const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
   let first = true;
@@ -80,18 +99,36 @@ async function main(){
     // خادم البث يحدّ المعدّل فيرد 500 عند تتابع الطلبات
     if (!first) await sleep(900);
     first = false;
-    let r = await probe(s.url, 3);
-    if (r.code === 500 || r.code === "ERR") {
-      await sleep(1600);
-      r = await probe(s.url, 3);
-    }
+    let r = await probeWithRetry(s.url);
     const good = r.code === 200 && /audio|octet-stream|mpeg/i.test(r.type);
     console.log(`  ${good ? "✔" : "✘"} ${r.code} ${String(r.type).padEnd(24)} ${s.name}`);
     if (good) ok++;
     else DEAD.push(`${s.name} — ${s.url}`);
   }
 
+  /* الفحص إمّا يردّ ١٠٠٪ أو يبلّغ بموتٍ، لا ثُلثًا. فمن لم يثبت موته
+     يُعاد فحصه من جديد، فإن ثبت موته بعد ستّ محاولات فهو ميت. */
+  if (DEAD.length) {
+    console.log("\n… إعادة فحص من لم يثبت موته");
+    const dead = [];
+    for (const line of DEAD) {
+      const [name, url] = line.split(" — ");
+      const r = await probeWithRetry(url, 3);
+      const good = r.code === 200 && /audio|octet-stream|mpeg/i.test(r.type);
+      if (good) {
+        flaky += 1;
+        console.log(`  ✔ ${r.code} ${name} (تأخّر لا موت)`);
+        ok += 1;
+      } else {
+        dead.push(line);
+      }
+    }
+    DEAD.length = 0;
+    DEAD.push(...dead);
+  }
+
   console.log(`\n${ok}/${streams.length} محطة تعمل`);
+  if (flaky) console.log(`  و${flaky} منها تأخّرت لا ماتت:الفحص الأول أخطأ فيها`);
   if (DEAD.length) {
     console.log("\n✘ محطات ميتة يجب حذفها أو تحديثها:");
     DEAD.forEach((d) => console.log("   " + d));

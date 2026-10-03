@@ -36,7 +36,6 @@ export const COLLECTIONS = {
 const SORTS = [
   { id: "newest", label: "الأحدث" },
   { id: "oldest", label: "الأقدم" },
-  { id: "popular", label: "الأكثر" },
 ];
 
 /**
@@ -248,7 +247,7 @@ export async function mountCollection(type, refs) {
       `<span class="m">` +
       (row.a ? `<span class="lib-badge">${escapeHtml(row.a)}</span>` : "") +
       (row.d ? `<span class="lib-badge">${escapeHtml(row.d)}</span>` : "") +
-      (row.r ? `<span class="lib-badge">${toArNum(row.r)} قراءة</span>` : "") +
+      (row.r ? `<span class="lib-badge">${toArNum(row.r)} دقائق</span>` : "") +
       `</span>`;
     el.addEventListener("click", () => {
       location.href = `reader.html?type=${encodeURIComponent(kind)}&id=${encodeURIComponent(row.id)}`;

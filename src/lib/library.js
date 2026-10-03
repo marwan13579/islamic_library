@@ -16,17 +16,6 @@ export const PAGE_SIZE = 30;
 /** @typedef {import("./shards.js").CollectionMeta} CollectionMeta */
 
 /**
- * ترتيب «الأكثر قراءة»: ترتيب محسوب لا ترتيب قائم في الملفات، فلا مفرّ
- * من قراءة كل الملخّصات. أما «الأحدث» و«الأقدم» فيأتيان من اتجاه القوائم
- * نفسه، كما في `reversed`.
- * @param {Summary[]} items
- * @returns {Summary[]}
- */
-function mostRead(items) {
-  return [...items].sort((a, b) => b.r - a.r);
-}
-
-/**
  * نافذة من ترتيب معكوس: تُقرأ الملفات من آخرها وتُعكس كل واحدة، فيصير
  * العنصرالأوّل هو الأحدث. هكذا «الأقدم» لا يكلّف أكثر من «الأحدث»: صفحة
  * واحدة من النهاية لا كل القوائم.
@@ -82,15 +71,6 @@ async function firstSize(read, count) {
   return (await read(0)).length || 1;
 }
 
-/** كل ملخّصات مجموعة، للترتيب الذي لا يُعرف إلا بترتيب الجميع. */
-async function allSummaries(type, meta) {
-  const out = [];
-  for (let index = 0; index < meta.listFiles.length; index += 1) {
-    out.push(...(await listShard(type, index)));
-  }
-  return out;
-}
-
 /**
  * اتجاه «الأحدث» في مجموعة واحدة.
  *
@@ -118,23 +98,21 @@ export async function browse(type, options = {}) {
   const meta = await collectionMeta(type);
   const per = Math.max(1, Math.min(200, perPage));
   const current = Math.max(1, page);
-  const files = meta.listFiles.length;
   const start = (current - 1) * per;
-
-  /* «الأكثر» ترتيب محسوب لا ترتيب قائم، فلا مفرّ من قراءة كل الملخّصات.
-     أمّا «الأحدث» و«الأقدم» فهما اتجاها ترتيب القوائم: يكفي أن تُقرأ
-     نافذة من أولها أو من آخرها، لا كل الملفات.
-
-     وكان كل ترتيبٍ غير «الأحدث» يرتّب نافذة الصفحة وحدها، فتتشابك الصفحات:
-     الصفحة الثانية تعيد ما في الأولى، و«التالي» يتقدّم في الوقت. */
   const read = (index) => listShard(type, index);
+
+  /* «الأحدث» و«الأقدم» اتجاها ترتيب القوائم نفسها، فيكفي أن تُقرأ نافذة
+     من طرفها إلى طرفها. وثالثٌ ليس هنا: الترتيب بدقائق القراءة لا يُعرف
+     إلا بترتيب الجميع، فيقرأ كل القوائم — عشرة ميغابايت للفتاوى — واسمه
+     «الأكثر» يكذب على قارئه أصلًا، إذ لا أكثرية في المصدر. فحُذف.
+
+     وكان كل ترتيبٍ يرتّب نافذة الصفحة وحدها، فتتشابك الصفحات: الثانية
+     تعيد ما في الأولى، و«التالي» يتقدّم في الوقت. */
   let window;
-  if (sort === "popular") {
-    window = mostRead(await allSummaries(type, meta)).slice(start, start + per);
-  } else if (reversed(meta, sort)) {
-    window = await reversedWindow(files, start, per, read);
+  if (reversed(meta, sort)) {
+    window = await reversedWindow(meta.listFiles.length, start, per, read);
   } else {
-    window = await forwardWindow(files, start, per, read);
+    window = await forwardWindow(meta.listFiles.length, start, per, read);
   }
 
   return {
@@ -224,14 +202,9 @@ export async function browseCategory(type, category, options = {}) {
   const total = entry.count;
   const read = (index) => load(`library/${type}/cat/${entry.dir}/${entry.files[index]}`);
 
-  /* ملفات التصنيف محفوظة بترتيب القوائم نفسها، فينطبق عليها ما سبق:
-     «الأحدث» و«الأقدم» نافذة من طرفٍ أو من طرف، و«الأكثر» كامل القائمة. */
+  /* ملفات التصنيف محفوظة بترتيب القوائم نفسها، فينطبق عليها ما سبق. */
   let rows;
-  if (sort === "popular") {
-    const all = [];
-    for (let index = 0; index < entry.files.length; index += 1) all.push(...(await read(index)));
-    rows = mostRead(all).slice(start, start + per);
-  } else if (reversed(meta, sort)) {
+  if (reversed(meta, sort)) {
     rows = await reversedWindow(entry.files.length, start, per, read);
   } else {
     rows = await forwardWindow(entry.files.length, start, per, read);
