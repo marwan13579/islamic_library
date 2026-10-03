@@ -99,9 +99,8 @@
   const timesBox = document.getElementById("times");
   const azanRow = document.getElementById("azanRow");
 
-  let timings = readStorage("athan_timings", null);
-  let method = readStorage(KEYS.calcMethod ?? "athan_method", 5);
-  let ticks = 0;
+  let timings = readStorage(KEYS.athanTimings, null);
+  let method = readStorage(KEYS.calcMethod, 5);
 
   /* ------------------------------------------------------- الجدولة */
 
@@ -111,18 +110,33 @@
     return m ? { h: Number(m[1]), m: Number(m[2]) } : null;
   }
 
-  /** @returns {{key: string, at: Date, label: string}|null} أقرب صلاة */
-  function upcoming() {
+  /**
+   * المواقيت الخمسة اليوم. وبعد العشاء لا يعود الوقت إلى العشاء آخر
+   * اليوم أبدًا، بل إلى فجر الغد، كما تفعل صفحة المواقيت.
+   * @returns {{key: string, at: Date, label: string}[]}
+   */
+  function rows() {
     const now = Date.now();
-    const rows = ORDER.map((key) => {
+    return ORDER.map((key) => {
       const c = clock(timings && timings[key]);
       if (!c) return null;
       const at = new Date();
       at.setHours(c.h, c.m, 0, 0);
       return { key, at, label: NAMES[key] };
     }).filter(Boolean);
-    const after = rows.filter((row) => row.at.getTime() >= now);
-    return after[0] || rows[rows.length - 1] || null;
+  }
+
+  /** @returns {{key: string, at: Date, label: string}|null} أقرب صلاة */
+  function upcoming() {
+    const today = rows();
+    const after = today.filter((row) => row.at.getTime() >= Date.now());
+    if (after[0]) return after[0];
+    // فجر الغد، بتوقيت الغد لا بتوقيت اليوم.
+    const tomorrow = today[0];
+    if (!tomorrow) return null;
+    const at = new Date(tomorrow.at);
+    at.setDate(at.getDate() + 1);
+    return { ...tomorrow, at, tomorrow: true };
   }
 
   /**
@@ -132,13 +146,16 @@
   async function pushSchedule() {
     const reg = await readyWorker();
     if (!reg) return false;
-    const schedule = ORDER.map((key) => {
+    const schedule = [];
+    for (const key of ORDER) {
       const c = clock(timings && timings[key]);
-      if (!c) return null;
+      if (!c) continue;
       const at = new Date();
       at.setHours(c.h, c.m, 0, 0);
-      return { key, name: NAMES[key], at: at.getTime(), href: location.pathname };
-    }).filter(Boolean);
+      // ما فات اليوم لا يُجدول، فيُدفع إلى الغد ليبقى التنبيه قائمًا.
+      if (at.getTime() <= Date.now()) at.setDate(at.getDate() + 1);
+      schedule.push({ key, name: NAMES[key], at: at.getTime(), href: location.pathname });
+    }
     reg.active.postMessage({ type: "schedule-athan", schedule });
     return true;
   }
@@ -155,7 +172,7 @@
     }
     /* الإيقاف اختيار محفوظ: لولاه لأعاد تحميل الصفحة الجدولةَ التي
        أوقفها المستخدم قبل دقيقة. */
-    if (readStorage("athan_notif_off", false)) {
+    if (readStorage(KEYS.athanNotifOff, false)) {
       box.textContent = "التنبيه موقوف. اضغط «فعّل التنبيه» ليعود.";
       return;
     }
@@ -167,38 +184,63 @@
 
   /* ------------------------------------------------------- العرض */
 
-  function draw() {
-    if (!timings) return;
-    const near = upcoming();
-    const now = Date.now();
+  /** @type {Map<string, {row: HTMLElement, small: HTMLElement, tm: HTMLElement}>} */
+  const rowRefs = new Map();
 
-    timesBox.innerHTML = "";
+  /**
+   * يبني الصفوف مرّة واحدة. كانت تُبنى كل نصف ثانية، فتُمحى الأزرار
+   * وتُعاد، فيضيع التركيز على زر الأذان ويضيع معه الوصول بلوحة المفاتيح.
+   */
+  function buildRows() {
+    if (!timings) return;
+    rowRefs.clear();
+    const frag = document.createDocumentFragment();
     for (const key of ORDER) {
       const c = clock(timings[key]);
       if (!c) continue;
-      const isNow = near && near.key === key;
       const row = document.createElement("div");
-      row.className = `trow${isNow ? " now" : ""}`;
-      row.innerHTML =
-        `<span class="nm">${NAMES[key]}<small>${isNow ? "الصلاة القادمة" : ""}</small></span>` +
-        `<span class="tm">${toArNum(String(c.h).padStart(2, "0"))}:${toArNum(String(c.m).padStart(2, "0"))}</span>`;
+      row.className = "trow";
+      const nm = document.createElement("span");
+      nm.className = "nm";
+      nm.append(document.createTextNode(NAMES[key]));
+      const small = document.createElement("small");
+      nm.appendChild(small);
+      const tm = document.createElement("span");
+      tm.className = "tm";
+      tm.textContent = toArNum(String(c.h).padStart(2, "0")) + ":" + toArNum(String(c.m).padStart(2, "0"));
       const playBtn = document.createElement("button");
       playBtn.type = "button";
       playBtn.textContent = "أذان";
+      playBtn.setAttribute("aria-label", `استماع إلى أذان ${NAMES[key]}`);
       playBtn.addEventListener("click", () => playAzaan(NAMES[key]));
-      row.appendChild(playBtn);
-      timesBox.appendChild(row);
+      row.append(nm, tm, playBtn);
+      rowRefs.set(key, { row, small, tm });
+      frag.appendChild(row);
+    }
+    timesBox.replaceChildren(frag);
+  }
+
+  /** يحدّث ما يتغيّر: الصلاة القادمة، والعدّ التنازلي. */
+  function draw() {
+    if (!timings) return;
+    if (!rowRefs.size) buildRows();
+    const near = upcoming();
+    const now = Date.now();
+
+    for (const [key, ref] of rowRefs) {
+      const isNow = near && near.key === key;
+      ref.row.classList.toggle("now", Boolean(isNow));
+      ref.small.textContent = isNow ? "الصلاة القادمة" : "";
     }
 
     if (near) {
       const left = near.at.getTime() - now;
       nextBox.innerHTML =
-        `<p class="lbl">${left > 0 ? "الصلاة القادمة" : "حان الآن وقت"}</p>` +
+        `<p class="lbl">${left > 0 ? (near.tomorrow ? "الصلاة القادمة غدًا" : "الصلاة القادمة") : "حان الآن وقت"}</p>` +
         `<p class="name">${near.label}</p>` +
         `<p class="clock">${toArNum(String(near.at.getHours()).padStart(2, "0"))}:${toArNum(String(near.at.getMinutes()).padStart(2, "0"))}</p>` +
         `<p class="left">${left > 0 ? `بعد ${span(left)}` : "حان الآن — حيّ على الصلاة"}</p>`;
     }
-    void ticks;
   }
 
   /** @param {number} ms @returns {string} */
@@ -229,8 +271,8 @@
   });
 
   const auto = document.getElementById("auto");
-  auto.checked = readStorage("athan_auto_audio", false);
-  auto.addEventListener("change", () => writeStorage("athan_auto_audio", auto.checked));
+  auto.checked = readStorage(KEYS.athanAutoAudio, false);
+  auto.addEventListener("change", () => writeStorage(KEYS.athanAutoAudio, auto.checked));
 
   /* ------------------------------------------------------- التحديث */
 
@@ -245,10 +287,10 @@
       return;
     }
 
-    writeStorage("athan_coords", coords);
+    writeStorage(KEYS.athanCoords, coords);
     try {
       timings = await fetchPrayerTimes(coords, method);
-      writeStorage("athan_timings", timings);
+      writeStorage(KEYS.athanTimings, timings);
       nextBox.innerHTML = "";
       draw();
       syncNotifications();
@@ -270,7 +312,7 @@
       b.setAttribute("aria-pressed", m === method ? "true" : "false");
       b.addEventListener("click", () => {
         method = m;
-        writeStorage("athan_method", m);
+        writeStorage(KEYS.calcMethod, m);
         drawMethods();
         load();
       });
@@ -285,7 +327,7 @@
       document.getElementById("notif").textContent = "هذا المتصفح لا يدعم الإشعارات.";
       return;
     }
-    writeStorage("athan_notif_off", false);
+    writeStorage(KEYS.athanNotifOff, false);
     const permission = await Notification.requestPermission();
     if (permission === "granted") syncNotifications();
     else document.getElementById("notif").textContent = "لم يُسمح بالإشعارات.";
@@ -311,7 +353,7 @@
   }
 
   document.getElementById("disable").addEventListener("click", async () => {
-    writeStorage("athan_notif_off", true);
+    writeStorage(KEYS.athanNotifOff, true);
     const reg = await readyWorker();
     if (reg) reg.active.postMessage({ type: "cancel-athan" });
     document.getElementById("notif").textContent = "التنبيه موقوف.";
@@ -334,17 +376,25 @@
   draw();
   await load();
 
-  /* العدّ تنازلي كل ثانية، ويحدّث مرة في الدقيقة فقط. */
+  /* العدّ التنازلي كل ثانية. الصفوف مبنية مرّة، فلا نلمس إلا ما تغيّر. */
+  setInterval(draw, 1000);
+
+  /* الجدول المُرسل إلى عامل واحد يوم واحد، فنجدّده كل نصف ساعة
+     وعود ة الصفحة، لئلا استيقظ المستخدم فجرًا فوجد التنبيه قد انقطع. */
   setInterval(() => {
-    if (ticks++ % 2 === 0) draw();
-  }, 500);
+    if (readStorage(KEYS.athanNotifOff, false)) return;
+    pushSchedule().catch(() => {});
+  }, 30 * 60 * 1000);
+  document.addEventListener("visibilitychange", () => {
+    if (!document.hidden && !readStorage(KEYS.athanNotifOff, false)) pushSchedule().catch(() => {});
+  });
 
   /* العامل يُخبرنا حلّ وقت الصلاة، فيُشغَّل الأذان إن طلبه المستخدم
      أو كان مفعَّلًا تلقائيًا. */
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.addEventListener("message", (event) => {
       if (!event.data || event.data.type !== "athan-now") return;
-      if (!auto.checked && !readStorage("athan_auto_audio", false)) return;
+      if (!auto.checked && !readStorage(KEYS.athanAutoAudio, false)) return;
       playAzaan(event.data.name);
     });
   }

@@ -72,6 +72,12 @@ export function load(path) {
       usage.set(path, { n: 1, at: Date.now() });
       return data;
     })
+    .catch((error) => {
+      /* تفشل شبكة واحدة كان يُقفل القسم كلَّ الجلسة: نخرج الوعد المرفوض
+         من المخزن حتى تُحاول الصفحة التالية من جديد. */
+      if (cache.get(path) === undefined) usage.delete(path);
+      throw error;
+    })
     .finally(() => {
       pending.delete(path);
     });
@@ -82,7 +88,12 @@ export function load(path) {
 
 /** @returns {Promise<any>} بيان المحتوى الإجمالي. */
 export function manifest() {
-  manifestPromise ||= load("manifest.json");
+  if (!manifestPromise) {
+    manifestPromise = load("manifest.json").catch((error) => {
+      manifestPromise = null;
+      throw error;
+    });
+  }
   return manifestPromise;
 }
 
@@ -105,7 +116,11 @@ const metaCache = new Map();
  */
 export function collectionMeta(type) {
   if (!metaCache.has(type)) {
-    metaCache.set(type, load(`library/${type}/meta.json`));
+    const request = load(`library/${type}/meta.json`).catch((error) => {
+      metaCache.delete(type);
+      throw error;
+    });
+    metaCache.set(type, request);
   }
   return /** @type {Promise<CollectionMeta>} */ (metaCache.get(type));
 }

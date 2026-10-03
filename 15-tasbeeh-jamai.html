@@ -195,12 +195,29 @@ try{ people = JSON.parse(localStorage.getItem("gtasbeeh-people")||"null") || [
   {name:"أنا", count:0}
 ]; }catch(e){ people=[{name:"أنا",count:0}]; }
 
-/* العدّ اليومي يُصفَّر مع تغيّر التاريخ، لا مع إعادة تحميل الصفحة. */
-function todayKey(){ return new Date().toISOString().slice(0,10); }
+/* العدّ اليومي يُصفَّر مع تغيّر التاريخ، لا مع إعادة تحميل الصفحة.
+   والتاريخ المحلي لا UTC: toISOString في GMT، فيصفّر العدّ عند منتصف
+   الليل العالمي قبل ليل المستخدم بثلاث ساعات، ومن سبّح ٢٣:٣٠ خسر
+   عدّه. وهذا نسخة dateKey من src/lib/dates.js، وهذه صفحة سكربت عادي
+   فلا تستطيع الاستيراد. */
+function todayKey(){
+  const d=new Date();
+  const m=String(d.getMonth()+1).padStart(2,"0");
+  const day=String(d.getDate()).padStart(2,"0");
+  return `${d.getFullYear()}-${m}-${day}`;
+}
 let today=todayKey();
 let daily=0;
 try{ const rec=JSON.parse(localStorage.getItem("gtasbeeh-daily")||"null");
   if(rec && rec.day===today){ daily=Number(rec.total)||0; } }catch(e){}
+
+/** إن بقيت الصفحة مفتوحةً بعد منتصف الليل تصفّر العدّ. */
+function rollDay(){
+  const now=todayKey();
+  if(now===today) return;
+  today=now; daily=0;
+  saveDaily();
+}
 
 function saveDaily(){ try{ localStorage.setItem("gtasbeeh-daily", JSON.stringify({day:today,total:daily})); }catch(e){} }
 
@@ -310,8 +327,9 @@ function renderPeople(){
   });
 }
 
-/* النقر على المساحة الكبيرة يزيد عدّادParticipant المحدَّد. */
+/* النقر على المساحة الكبيرة يزيد عدّاد الشخص المحدَّد. */
 function tap(i){
+  rollDay();
   people[i].count++; daily++;
   save();
   renderPeople();

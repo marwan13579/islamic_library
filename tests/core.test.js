@@ -229,7 +229,10 @@ test("service worker refreshes known assets and bypasses dynamic requests",async
   assert.equal(dispatch({url:"https://api.example.test/data",method:"GET",mode:"cors"}).response,undefined);
   assert.equal(dispatch({url:scope+"submit",method:"POST",mode:"cors"}).response,undefined);
   const response=await dispatch({url:scope+"unknown-route",method:"GET",mode:"navigate"}).response;
-  assert.deepEqual(response,{body:"app shell"});
+  // صفحة عدم الاتصال تسبق الفهرس: صفحة غير معروفة تُفتح على ما يفهمه
+  // المستخدم، لا على فهرس وشريط عنوانه يقول صفحة أخرى.
+  assert.deepEqual(response,{body:"asset"});
+  assert.equal(entries.has(scope+"offline.html"),true);
   const staticPage=dispatch({url:scope+"index.html?cache-bust=1",method:"GET",mode:"navigate"});
   assert.deepEqual(await staticPage.response,{body:"app shell"});
 });

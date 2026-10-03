@@ -8,7 +8,7 @@
 
 const STATE_KEY = "lib-player-state";
 
-/** @typedef {{src: string, title: string, subtitle: string, page: string}} Track */
+/** @typedef {{src: string, title: string, subtitle: string, page: string, at?: number}} Track */
 
 /** @type {HTMLAudioElement | null} */
 let audio = null;
@@ -16,6 +16,11 @@ let audio = null;
 let root = null;
 /** @type {Track | null} */
 let current = null;
+/** آخر ثانية نُحفظ فيها الموضع، فلا نكتب في التخزين كل نبضة. */
+let savedAt = 0;
+
+/** موضعٌ محفوظ ينتظر معرفة المدّة ليُطبَّق. */
+let restoreSeekAt = 0;
 
 /**
  * يبني المشغّل ويلحقه بالصفحة. لا يفعل شيئًا إن كان موجودًا.
@@ -66,6 +71,12 @@ function wire() {
     const seek = root.querySelector(".pl-seek");
     if (document.activeElement !== seek) seek.value = String(pct);
     root.querySelector(".pl-time").textContent = stamp(audio.currentTime);
+    /* الموضع جزءٌ من حفظ المقطع: لولاه لاستأنف كل تلاوة من أولها. */
+    const now = Date.now();
+    if (now - savedAt > 4000) {
+      savedAt = now;
+      saveState(audio.currentTime);
+    }
   });
   audio.addEventListener("play", () => {
     root.querySelector('[data-act="play"]').textContent = "⏸";
@@ -75,6 +86,15 @@ function wire() {
   });
   audio.addEventListener("ended", () => {
     root.querySelector('[data-act="play"]').textContent = "▶";
+  });
+  audio.addEventListener("loadedmetadata", () => {
+    /* الموضع المحفوظ لا يُقبل قبل أن تعرف الوسائط مدتها. */
+    if (restoreSeekAt > 0 && Number.isFinite(audio.duration)) {
+      const at = Math.min(restoreSeekAt, Math.max(0, audio.duration - 5));
+      audio.currentTime = at;
+      root.querySelector(".pl-time").textContent = stamp(at);
+      restoreSeekAt = 0;
+    }
   });
   audio.addEventListener("error", () => {
     root.querySelector(".pl-sub").textContent = "تعذّر تحميل الصوت";
@@ -89,6 +109,8 @@ export function play(track) {
   mountPlayer();
   if (!root || !audio) return;
   current = track;
+  restoreSeekAt = 0;
+  savedAt = 0;
   audio.src = track.src;
   audio.play().catch(() => {
     root.querySelector(".pl-sub").textContent = "اضغط للتشغيل";
@@ -111,7 +133,7 @@ export function stop(clear = false) {
     audio.load();
     root.hidden = true;
     current = null;
-    sessionStorage?.removeItem?.(STATE_KEY);
+    forgetState();
     document.documentElement.classList.remove("has-player");
   }
 }
@@ -144,12 +166,21 @@ function readState() {
   }
 }
 
-function saveState() {
+function saveState(at = 0) {
   if (!current) return;
   try {
-    sessionStorage.setItem(STATE_KEY, JSON.stringify(current));
+    sessionStorage.setItem(STATE_KEY, JSON.stringify({ ...current, at }));
   } catch {
     /* تبويب خاص: بلا حفظ */
+  }
+}
+
+/** يمحو المحفوظ، ويصمت إن كان التخزين محجوبًا. */
+function forgetState() {
+  try {
+    sessionStorage.removeItem(STATE_KEY);
+  } catch {
+    /* لا شيء يُفقد إن كان محجوبًا أصلًا */
   }
 }
 
@@ -164,9 +195,16 @@ function restore(track) {
   audio.src = track.src;
   root.hidden = false;
   root.querySelector(".pl-title").textContent = track.title;
+  /* لا نبدأ التشغيل تلقائيًا، لكن نضع الموضع: أوّل نقرة تكمل من حيث
+     توقّف المستخدم لا من أوّل التلاوة. */
+  const at = Number(track.at) || 0;
+  if (at > 0 && Number.isFinite(audio.duration) && at < audio.duration - 5) {
+    audio.currentTime = at;
+  }
   root.querySelector(".pl-sub").textContent = "اضغط ⏵ للمتابعة";
   root.querySelector('[data-act="play"]').textContent = "▶";
   document.documentElement.classList.add("has-player");
+  restoreSeekAt = at;
 }
 
 /** @param {number} seconds @returns {string} */

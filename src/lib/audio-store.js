@@ -28,36 +28,49 @@ async function open() {
 export async function cacheAudio(url, onProgress) {
   const cache = await open();
   if (!cache) return false;
-  if (await cache.match(url)) {
-    if (onProgress) onProgress(1);
+  try {
+    if (await cache.match(url)) {
+      if (onProgress) onProgress(1);
+      return true;
+    }
+
+    const response = await fetch(url);
+    if (!response.ok) return false;
+
+    /* التقدّم يحتاج قراءة التدفّق بأنفسها؛ ومن لا يعرضه يكفيه فاكتمال. */
+    const total = Number(response.headers.get("content-length")) || 0;
+    if (!onProgress || !response.body || !total) {
+      await cache.put(url, response.clone());
+      if (onProgress) onProgress(1);
+      return true;
+    }
+
+    const reader = response.body.getReader();
+    const chunks = [];
+    let got = 0;
+    for (;;) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      chunks.push(value);
+      got += value.length;
+      onProgress(Math.min(1, got / total));
+    }
+    const blob = new Blob(chunks, { type: "audio/mpeg" });
+    /* نحفظ الحجم في الترويسة: لولاه لقينا نقرأ كل ملف مرّة أخرى
+       في listAudio لنعرف حجمه. */
+    await cache.put(
+      url,
+      new Response(blob, {
+        headers: { "content-type": "audio/mpeg", "content-length": String(blob.size) },
+      }),
+    );
+    onProgress(1);
     return true;
+  } catch {
+    /* امتلاء الحصة أو انقطاع الشبكة أو إلغاء المستخدم: لا نُبلّغ به
+       على أنه نجاح. وتعرض الصفحة رسالة الفشل. */
+    return false;
   }
-
-  const response = await fetch(url);
-  if (!response.ok) return false;
-
-  /* التقدّم يحتاج قراءة التدفّق بأنفسها؛ ومن لا يعرضه يكفيه“快تمل”. */
-  const total = Number(response.headers.get("content-length")) || 0;
-  if (!onProgress || !response.body || !total) {
-    await cache.put(url, response.clone());
-    if (onProgress) onProgress(1);
-    return true;
-  }
-
-  const reader = response.body.getReader();
-  const chunks = [];
-  let got = 0;
-  for (;;) {
-    const { done, value } = await reader.read();
-    if (done) break;
-    chunks.push(value);
-    got += value.length;
-    onProgress(Math.min(1, got / total));
-  }
-  const blob = new Blob(chunks, { type: "audio/mpeg" });
-  await cache.put(url, new Response(blob, { headers: { "content-type": "audio/mpeg" } }));
-  onProgress(1);
-  return true;
 }
 
 /**
@@ -75,6 +88,8 @@ export async function removeAudio(url) {
 
 /**
  * يسرد التلاوات المحفوظة وحجمها.
+ * نقرأ الترويسة فقط: قراءة الملف كله كانت تُحمّل كل ما حُفظ في الذاكرة
+ * دفعة واحدة — عشرات الميغابايت على هاتف فيه ١٥٠ تلاوة.
  * @returns {Promise<CachedAudio[]>}
  */
 export async function listAudio() {
@@ -84,9 +99,24 @@ export async function listAudio() {
   const out = [];
   for (const request of keys) {
     const response = await cache.match(request);
-    const length = Number(response?.headers.get("content-length")) || 0;
-    const blob = response ? await response.blob() : null;
-    out.push({ url: request.url, bytes: blob ? blob.size : length });
+    if (!response) continue;
+    let bytes = Number(response.headers.get("content-length")) || 0;
+    if (!bytes) {
+      // ملف حُفظ قبل حفظ الترويسة: نقيسه مرة واحدة ثم نسجّل مقاسه.
+      const blob = await response.blob();
+      bytes = blob.size;
+      try {
+        await cache.put(
+          request,
+          new Response(blob, {
+            headers: { "content-type": blob.type || "audio/mpeg", "content-length": String(bytes) },
+          }),
+        );
+      } catch {
+        /* نكتفي بالحجم في هذه الجلسة إن رفض المتصفح الكتابة */
+      }
+    }
+    out.push({ url: request.url, bytes });
   }
   return out.sort((a, b) => b.bytes - a.bytes);
 }

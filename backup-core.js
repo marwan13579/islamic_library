@@ -23,7 +23,10 @@
     "mushaf-reviewdates","mushaf-daily","mushaf-streak","mushaf-lastday","mushaf-markedtoday",
     "azkar-shamila-progress","daily-system-state","daily-system-streak","daily-system-lastfull",
     "hadith-favorites","prayertimes-state","prayertimes-notify","quran-settings","quran-bookmarks",
-    "quran-notes","quran-lastpos","ramadan-day","ramadan-state","ramadan-itikaf","ramadan-eidlist",
+    "quran-notes","quran-lastpos",    "ramadan-day","ramadan-state","ramadan-itikaf","ramadan-eidlist",
+    // المكتبة المستوردة: التسبيح اليومي، سجل الاختبار، وإعدادات الأذان.
+    "gtasbeeh-daily","lib-quiz-level","lib-quiz-history",
+    "athan_timings","athan_coords","athan_method","athan_auto_audio","athan_notif_off",
   ]);
 
   function createBackup(storage,createdAt=new Date()){

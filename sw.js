@@ -16,6 +16,15 @@
 const CACHE_VERSION = "islamic-library-v33";
 const CACHE = CACHE_VERSION;
 
+/**
+ * ذاكرة المحتوى منفصلة عن الـshell: لها ميزانيتها، وتُمحى مع ارتفاع
+ * CACHE_VERSION لأن المحتوى يتغيّر بالنشر لا بتثبيت التطبيق.
+ */
+const CONTENT_CACHE = `${CACHE_VERSION}-content`;
+
+/** مسار شجرة المحتوى نسبةً إلى الجذر. */
+const CONTENT_DIR = "content/";
+
 const SHELL = [
   "./",
   "./index.html",
@@ -101,6 +110,9 @@ const SCOPE = new URL(self.registration.scope);
 const APP_SHELL = new URL("index.html", SCOPE).href;
 const OFFLINE_PAGE = new URL("offline.html", SCOPE).href;
 const PRECACHED = new Set(SHELL.map((asset) => new URL(asset, SCOPE).href));
+
+/** بادئة المسار التي تحتها شجرة المحتوى، للمقارنة بـpathname لا بالعنوان. */
+const CONTENT_PREFIX = new URL(CONTENT_DIR, SCOPE).pathname;
 const API_HOSTS = [
   "api.aladhan.com",
   "api.alquran.cloud",
@@ -156,10 +168,16 @@ self.addEventListener("message", (event) => {
     event.waitUntil(showNotification(event.data));
   }
   if (event.data && event.data.type === "schedule-athan") {
-    self.waitUntil(scheduleAthan(event.data.schedule || []));
+    /* waitUntil من الحدث لا من النطاق: self.waitUntil غير موجودة أصلًا،
+       والنداء منها يرمي TypeError داخل العامل. */
+    event.waitUntil(
+      scheduleAthan(event.data.schedule || []).then((count) => {
+        if (event.ports && event.ports[0]) event.ports[0].postMessage({ type: "scheduled", count });
+      }),
+    );
   }
   if (event.data && event.data.type === "cancel-athan") {
-    self.waitUntil(cancelAthan());
+    event.waitUntil(cancelAthan());
   }
 });
 
@@ -172,12 +190,52 @@ self.addEventListener("message", (event) => {
  */
 const ATHAN_TIMERS = new Map();
 
+/** مخزن الجدول الصامد: العامل يُقتل بعد خمول قصير فيفقد ذاكرته. */
+const SCHEDULE_STORE = "athan-schedule";
+
+/** @returns {Promise<import("./sw.js").AthanEntry[]>} الجدول المحفوظ */
+async function readStoredSchedule() {
+  try {
+    const cache = await caches.open(SCHEDULE_STORE);
+    const response = await cache.match(new URL("./__athan", SCOPE).href);
+    if (!response) return [];
+    const data = await response.json();
+    return Array.isArray(data) ? data : [];
+  } catch {
+    return [];
+  }
+}
+
+/** @param {{key: string, name: string, at: number, href: string}[]} schedule */
+async function writeStoredSchedule(schedule) {
+  try {
+    const cache = await caches.open(SCHEDULE_STORE);
+    await cache.put(
+      new URL("./__athan", SCOPE).href,
+      new Response(JSON.stringify(schedule), { headers: { "content-type": "application/json" } }),
+    );
+  } catch {
+    /* التخزين ممتلئ أو محظور: الجدول يبقى في الذاكرة لهذه الجلسة */
+  }
+}
+
 /**
  * يجدول إشعارًا لكل صلاة في اليوم، ويلغي ما سبق جدولته.
  * @param {{key: string, name: string, at: number, href: string}[]} schedule
+ * @returns {Promise<number>} كم مؤقّتًا قائمًا
  */
 async function scheduleAthan(schedule) {
-  await cancelAthan();
+  await clearTimers();
+  await writeStoredSchedule(schedule);
+  return armAthan(schedule);
+}
+
+/**
+ * يشدّ المؤقّتات من جدول، متجاوزًا الأوقات التي فاتت.
+ * @param {{key: string, name: string, at: number, href: string}[]} schedule
+ * @returns {Promise<number>} كم مؤقّتًا قائمًا
+ */
+async function armAthan(schedule) {
   for (const entry of schedule) {
     const delay = entry.at - Date.now();
     if (delay <= 0 || delay > MAX_TIMEOUT) continue;
@@ -185,18 +243,35 @@ async function scheduleAthan(schedule) {
       entry.key,
       setTimeout(() => {
         ATHAN_TIMERS.delete(entry.key);
-        announceAthan(entry);
-      }, delay)
+        /* الجهاز قد ينام فلا يُطلق المؤقّت في موعده، فيستيقظ متأخرًا.
+           نفحص الفارق: أذان فات بيوم لا يُنبَه، وأذان تأخّر دقيقة يُنبَه. */
+        const late = Date.now() - entry.at;
+        if (late > 10 * 60 * 1000) return;
+        announceAthan(entry).catch(() => {});
+      }, delay),
     );
   }
   return ATHAN_TIMERS.size;
 }
 
-/** يلغي كل المؤقّتات المجدولة. */
-async function cancelAthan() {
+/** يفرّغ المؤقّتات من الذاكرة فقط، بلا مساس بالمحفوظ. */
+async function clearTimers() {
   for (const id of ATHAN_TIMERS.values()) clearTimeout(id);
   ATHAN_TIMERS.clear();
 }
+
+/** يلغي كل المؤقّتات ويمحو المحفوظ. */
+async function cancelAthan() {
+  await clearTimers();
+  await writeStoredSchedule([]);
+}
+
+/* العامل يُقتل ويُبعث: نُعيد شدّ المؤقّتات من المحفوظ قبل أن ينام. */
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    readStoredSchedule().then((schedule) => armAthan(schedule)).catch(() => {}),
+  );
+});
 
 /**
  * يُعلن الأذان: إشعار لكل الأصوات، ورسالة للصفحة المفتوحة فتشغّل الصوت.
@@ -271,17 +346,33 @@ self.addEventListener("fetch", (event) => {
     event.respondWith(
       fetch(request)
         .then((response) => {
-          const copy = response.clone();
-          caches.open(CACHE).then((cache) => cache.put(request, copy).catch(() => {}));
+          // لا نخزّن رد خطأ: صفحة 404 مخزَّنة تبقى حتى رفع CACHE_VERSION.
+          if (response.ok) {
+            const copy = response.clone();
+            event.waitUntil(
+              caches
+                .open(CACHE)
+                .then((cache) => cache.put(request, copy))
+                .catch(() => {}),
+            );
+          }
           return response;
         })
         .catch(async () => {
           const cache = await caches.open(CACHE);
+          const path = absolute(url.pathname.replace(SCOPE.pathname, ""));
+          const isShellPage = path === APP_SHELL || path === absolute("");
           const cached =
             (await cache.match(request)) ||
-            (await cache.match(absolute(url.pathname.replace(SCOPE.pathname, "")))) ||
-            (await cache.match(APP_SHELL));
-          return cached || (await cache.match(OFFLINE_PAGE)) || Response.error();
+            (await cache.match(path)) ||
+            // صفحة الفهرس هي الصحيحة لصفحتها هي، أما صفحة أخرى مجهولة
+            // فالأصدق أن يرى المستخدم صفحة عدم الاتصال، لا فهرسًا عنوانه
+            // عن صفحة أخرى.
+
+            (isShellPage
+              ? await cache.match(APP_SHELL)
+              : ((await cache.match(OFFLINE_PAGE)) || (await cache.match(APP_SHELL))));
+          return cached || Response.error();
         }),
     );
     return;
@@ -305,6 +396,83 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 4) أي مورد آخر داخل النطاق (مسارات ديناميكية): يمرّ للشبكة دون تخزين —
-  //    تفاديًا لتخزين ردود لا نعرف صلاحيتها.
+  // 4) شجرة المحتوى: ذاكرة تخزين عند الطلب. المحتوى لا يتغيّر بين النشرَين،
+  //    ومن يفتح صفحة قد تسبقها صفحات المحتوى فقط — فنقرأ ما طلبه.
+  if (url.pathname.startsWith(CONTENT_PREFIX)) {
+    event.respondWith(contentStrategy(request));
+    return;
+  }
+
+  // 5) أي مورد آخر داخل النطاق: يمرّ للشبكة دون تخزين.
 });
+
+/** ميزانية التخزين بايتًا. الـshell وحده نحو ٤ م.ب، والمحتوى ٢٨٣ م.ب. */
+const CONTENT_BUDGET = 96 * 1024 * 1024;
+
+/** ما خزّنّاه من المحتوى، حتى لا نكرّر الحساب في كل طلب. */
+let contentBytes = null;
+
+/**
+ * يحسب حجم ما خُزّن من المحتوى.
+ * @param {Cache} cache
+ * @returns {Promise<number>}
+ */
+async function measureContent(cache) {
+  const requests = await cache.keys();
+  let total = 0;
+  for (const request of requests) {
+    const response = await cache.match(request);
+    const size = Number(response?.headers.get("content-length")) || 0;
+    total += size;
+  }
+  return total;
+}
+
+/**
+ * يقرأ: من الذاكرة فورًا، وإلا من الشبكة ثم يُخزَّن ويُبتر من الأقدم
+ * حين تتجاوز الميزانية.
+ * @param {Request} request
+ * @returns {Promise<Response>}
+ */
+async function contentStrategy(request) {
+  const cache = await caches.open(CONTENT_CACHE);
+  const cached = await cache.match(request);
+  if (cached) return cached;
+  try {
+    const response = await fetch(request);
+    if (!response.ok) return response;
+    const size = Number(response.headers.get("content-length")) || 0;
+    // بلا حجم نعلمه لا نخزّن: قد يكون ملفًا ضخمًا فيتجاوز الميزانية وحده.
+    if (!size) return response;
+    if (contentBytes === null) contentBytes = await measureContent(cache);
+    if (contentBytes + size > CONTENT_BUDGET) await trimContent(cache, size);
+    await cache.put(request, response.clone());
+    contentBytes = (contentBytes ?? 0) + size;
+    return response;
+  } catch {
+    return cached || Response.error();
+  }
+}
+
+/**
+ * يحذف من الأقدم حتى تسع الميزانية.
+ * @param {Cache} cache
+ * @param {number} incoming حجم ما هو قادم
+ */
+async function trimContent(cache, incoming) {
+  const requests = await cache.keys();
+  let total = 0;
+  const sizes = [];
+  for (const request of requests) {
+    const response = await cache.match(request);
+    const size = Number(response?.headers.get("content-length")) || 0;
+    sizes.push({ request, size });
+    total += size;
+  }
+  for (const row of sizes) {
+    if (total + incoming <= CONTENT_BUDGET) break;
+    await cache.delete(row.request);
+    total -= row.size;
+  }
+  contentBytes = total;
+}

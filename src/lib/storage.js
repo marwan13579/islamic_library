@@ -167,6 +167,53 @@ export const KEYS = {
   radioVolume: "radio_volume",
   sadakaCards: "sadaka_cards",
   cardState: "card_state",
+  /* المكتبة المستوردة */
+  tasbihDaily: "gtasbeeh-daily",
+  tasbihCustom: "gtasbeeh-custom",
+  tasbihPhrase: "gtasbeeh-phrase",
+  tasbihGoal: "gtasbeeh-goal",
+  tasbihPeople: "gtasbeeh-people",
+  quizLevel: "lib-quiz-level",
+  quizHistory: "lib-quiz-history",
+  athanTimings: "athan_timings",
+  athanCoords: "athan_coords",
+  athanMethod: "athan_method",
+  athanAutoAudio: "athan_auto_audio",
+  athanNotifOff: "athan_notif_off",
+  /* صفحات قديمة كانت تُصدَّر بلا تعريف هنا، فسقطت بصمت عند الاستيراد */
+  tadabburEntries: "tadabbur-entries",
+  wirdGoal: "wird-goal",
+  wirdLog: "wird-log",
+  qadaOwed: "qada-owed",
+  qadaDone: "qada-done",
+  mushafProgress: "mushaf-progress",
+  mushafReviewDates: "mushaf-reviewdates",
+  mushafDaily: "mushaf-daily",
+  mushafStreak: "mushaf-streak",
+  mushafLastDay: "mushaf-lastday",
+  mushafMarkedToday: "mushaf-markedtoday",
+  azkarShamilaProgress: "azkar-shamila-progress",
+  dailySystemState: "daily-system-state",
+  dailySystemStreak: "daily-system-streak",
+  dailySystemLastFull: "daily-system-lastfull",
+  hadithFavorites: "hadith-favorites",
+  prayerTimesState: "prayertimes-state",
+  prayerTimesNotify: "prayertimes-notify",
+  quranSettings: "quran-settings",
+  quranBookmarksPage: "quran-bookmarks",
+  quranNotesPage: "quran-notes",
+  quranLastPos: "quran-lastpos",
+  themePref: "lib-theme-pref",
+  ramadanDay: "ramadan-day",
+  ramadanState: "ramadan-state",
+  ramadanItikaf: "ramadan-itikaf",
+  ramadanEidList: "ramadan-eidlist",
+  hubLang: "hub-lang",
+  hubFavorites: "hub-favorites",
+  hubNotes: "hub-notes",
+  hubLastUsed: "hub-lastused",
+  hubRamadanLoc: "hub-ramadan-loc",
+  nourProgress: "nour-progress",
 };
 
 /**
@@ -213,6 +260,54 @@ export const IMPORT_TYPES = {
   // منطقيات
   focus_mode: "boolean",
   notif_enabled: "boolean",
+  athan_auto_audio: "boolean",
+  athan_notif_off: "boolean",
+  // المكتبة المستوردة
+  "gtasbeeh-daily": "object",
+  "gtasbeeh-custom": "array",
+  "gtasbeeh-phrase": "string",
+  "gtasbeeh-goal": "number",
+  "gtasbeeh-people": "array",
+  "nour-progress": "object",
+  "lib-quiz-level": "string",
+  "lib-quiz-history": "array",
+  /* صفحات قديمة: الأنواع مستنبطة من قراءتها في الصفحة نفسها */
+  "tadabbur-entries": "array",
+  "wird-goal": "number",
+  "wird-log": "object",
+  "qada-owed": "array",
+  "qada-done": "array",
+  "mushaf-progress": "object",
+  "mushaf-reviewdates": "object",
+  "mushaf-daily": "number",
+  "mushaf-streak": "number",
+  "mushaf-lastday": "string",
+  "mushaf-markedtoday": "string",
+  "azkar-shamila-progress": "object",
+  "daily-system-state": "object",
+  "daily-system-streak": "number",
+  "daily-system-lastfull": "string",
+  "hadith-favorites": "object",
+  "prayertimes-state": "object",
+  // مخزَّن "1"/"0" لا كمنطقي، فهو رقم في عيون القراءة.
+  "prayertimes-notify": "number",
+  "quran-settings": "object",
+  "quran-bookmarks": "object",
+  "quran-notes": "object",
+  "quran-lastpos": "string",
+  "lib-theme-pref": "string",
+  "ramadan-day": "number",
+  "ramadan-state": "object",
+  "ramadan-itikaf": "object",
+  "ramadan-eidlist": "string",
+  "hub-lang": "string",
+  "hub-favorites": "object",
+  "hub-notes": "object",
+  "hub-lastused": "object",
+  "hub-ramadan-loc": "string",
+  athan_timings: "object",
+  athan_coords: "object",
+  athan_method: "number",
 };
 
 /**
@@ -226,6 +321,45 @@ function matchesType(value, type) {
 }
 
 /**
+ * قيم النسخة الاحتياطية نصوص، لأن التخزين نصوص: كل ما كُتب بـwrite
+ * مرّ على JSON.stringify. فنُعيدها إلى أنواعها قبل فحص النوع والكتابة،
+ * وإلا رُفض كل كائن وقائمة ورقم ومنطقي في الملف.
+ * @param {unknown} value
+ * @returns {unknown}
+ */
+function decodeStored(value) {
+  if (typeof value !== "string") return value;
+  const trimmed = value.trim();
+  if (!trimmed) return value;
+  if (trimmed === "true") return true;
+  if (trimmed === "false") return false;
+  if (/^-?\d+(?:\.\d+)?$/.test(trimmed)) return Number(trimmed);
+  const first = trimmed[0];
+  if (first !== "{" && first !== "[" && first !== '"') return value;
+  try {
+    return JSON.parse(trimmed);
+  } catch {
+    return value;
+  }
+}
+
+/**
+ * يكتب قيمة كما هي، بلا ترميز JSON إضافي.
+ * النسخة الاحتياطية التقاطٌ حرفي لما في التخزين، فالنصّ يُستعاد نصًّا:
+ * لولا ذلك لأصبح `lib-theme-pref` محفوظًا بـ"\"dark\"" فيرفضه القارئ.
+ * @param {string} key
+ * @param {string} value
+ */
+function writeRaw(key, value) {
+  try {
+    /** @type {any} */ (target()).setItem(key, value);
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+/**
  * يقبل من ملف الاستيراد المفاتيح المعرَّفة بنوعها الصحيح فقط.
  * يُرجع ما كُتب وما رُفض.
  * @param {Record<string, unknown>} parsed
@@ -235,9 +369,20 @@ export function importKnownKeys(parsed) {
   const known = new Set(Object.values(KEYS));
   const written = [];
   const rejected = [];
-  for (const [key, value] of Object.entries(parsed)) {
+  for (const [key, raw] of Object.entries(parsed)) {
+    if (!known.has(key)) {
+      rejected.push(key);
+      continue;
+    }
     const expected = IMPORT_TYPES[key];
-    if (!known.has(key) || (expected && !matchesType(value, expected))) {
+    // النصّ يعود كما جاء: النسخة تلتقط التخزين حرفيًا.
+    if (expected === "string" && typeof raw === "string") {
+      writeRaw(key, raw);
+      written.push(key);
+      continue;
+    }
+    const value = decodeStored(raw);
+    if (expected && !matchesType(value, expected)) {
       rejected.push(key);
       continue;
     }

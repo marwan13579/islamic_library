@@ -1098,7 +1098,13 @@ function importData() {
       if (!parsed || typeof parsed !== "object" || Array.isArray(parsed)) {
         return void showToast("الملف لا يحتوي على بيانات صالحة.");
       }
-      const { written, rejected } = importKnownKeys(parsed);
+      // الملف يأتي من createBackup داخل غلاف {format,version,createdAt,data}.
+      // تمرير الغلاف كما هو يجعل كل مفتاح مجهولًا فيُرفض الملف كله.
+      const payload =
+        parsed.data && typeof parsed.data === "object" && !Array.isArray(parsed.data)
+          ? parsed.data
+          : parsed;
+      const { written, rejected } = importKnownKeys(payload);
       if (!written.length) {
         return void showToast("لا يحتوي الملف على بيانات معروفة للتطبيق.");
       }

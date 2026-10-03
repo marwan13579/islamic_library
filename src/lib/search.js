@@ -32,11 +32,13 @@ const COMBINING = /^[ً-ْٰۖ-ۭـ]$/;
 /**
  * يقطّع النص إلى مصطلحات عربية صالحة للبحث.
  * التطبيع من `lib/text` نفسه، فيوافق البناءُ في السكربت والواجهة هنا.
+ * الهمزة المفردة تُحذف هنا كما حذفها بناءُ الفهرس: فكلمة «شيء» تُخزَّن
+ * «شي»، ولو أبقينا الهمزة في الاستعلام لبحثنا عن مصطلحٍ غير موجود أبدًا.
  * @param {unknown} text
  * @returns {string[]}
  */
 export function tokenize(text) {
-  return (normalizeAr(text).match(ARABIC_RUN) || []).filter(
+  return (normalizeAr(text).replace(/ء/g, "").match(ARABIC_RUN) || []).filter(
     (tok) => tok.length >= MIN_TOKEN && tok.length <= MAX_TOKEN
   );
 }
@@ -170,8 +172,15 @@ export function highlight(text, terms) {
 async function loadBucket(mf, token) {
   const group = mf.groups.find((g) => g.l === token[0]);
   if (!group) return [];
-  const wanted = group.split ? [token[1] || "·"] : [""];
-  const files = group.files.filter((f) => wanted.includes(f.k)).map((f) => f.f);
+  /* كل ملف سجّل بادئته (p). الملف الذي بادئته «الز» لا يُقرأ لصطلح
+     «الصلاة»، ولا واحدًا من ٨٤ ملفًا كانت تشترك كلها في الحرف الثاني.
+     وإن كان المصطلح أقصر من بادئة الملف نقرأ الشجرة، ولا يقع ذلك
+     إلا في استعلام حرفين. */
+  const files = group.split
+    ? group.files
+        .filter((f) => token.startsWith(f.p) || f.p.startsWith(token))
+        .map((f) => f.f)
+    : group.files.map((f) => f.f);
   if (!files.length) return [];
   return Promise.all(files.map((file) => searchFile(file)));
 }

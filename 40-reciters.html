@@ -134,7 +134,7 @@
     body.appendChild(box);
 
     /* ما المحفوظ؟ سؤال واحد للمخزن كله، لا سؤال لكل سورة: ١١٤ نداء
-       كانت将对 السورة الواحدة تتأخر نصف ثانية. */
+       كانت كل سورة وحدها تستأخر نصف ثانية. */
     const saved = new Set((await listAudio()).map((row) => row.url));
 
     const list = document.createElement("div");
