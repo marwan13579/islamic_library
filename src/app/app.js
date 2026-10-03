@@ -1487,7 +1487,7 @@ function openSettings() {
     <div class="settings-group">
       <h3>ℹ️ عن التطبيق</h3>
       <p class="meta">الإصدار ${APP_VERSION} — «بوابة النور»</p>
-      <p class="meta"><a href="../noor.html">🌐 موقع نور الهدى</a> · <a href="../index.html">📚 المكتبة الإسلامية</a></p>
+      <p class="meta"><a href="../site/noor.html">🌐 موقع نور الهدى</a> · <a href="../../index.html">📚 المكتبة الإسلامية</a></p>
     </div>`;
   const settingsModal = $("settingsModal");
   if (lastFocus === null) lastFocus = document.activeElement;

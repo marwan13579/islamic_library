@@ -26,6 +26,27 @@ jobs:
       - run: npm test
       - run: npm run check:js
       - run: npm run check:icons
+      - run: npm run verify:content
+      - run: npm run review:ci
+
+  browser:
+    # فحص زمن التشغيل في متصفح حقيقي. لا يحجب النشر: continue-on-error
+    # حتى لا يوقف إفلاس عابرٌ تحديثًا لموقع يعمل، وتبقى النتيجة في التقرير.
+    name: Browser checks (advisory)
+    runs-on: ubuntu-latest
+    continue-on-error: true
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npx playwright install --with-deps chromium
+      - name: Resolve Chromium path
+        run: echo "CHROMIUM_PATH=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux*/chrome | head -1)" >> "$GITHUB_ENV"
+      - run: npm run check:browser
+      - run: npm run check:interaction
 
   deploy:
     name: Build and deploy

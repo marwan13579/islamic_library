@@ -243,6 +243,49 @@ test("بحث فارغ أو بلا نتيجة لا يرمي", async () => {
   assert.ok(miss.total === 0 || miss.results.length === 0);
 });
 
+test("ترتيب «الأحدث» لا يقرأ إلا جزءًا واحدًا مهما كبرت المجموعة", async () => {
+  const lib = await library();
+  const s = await shards();
+  const meta = await s.collectionMeta("fatwa");
+  assert.ok(meta.listFiles.length > 20, `عدد قوائم الفتاوى غير كافٍ للاختبار: ${meta.listFiles.length}`);
+
+  /* الفتاوى بلا تاريخ، فترتيبُها بالتاريخ مستحيل وترتيبُ البناء هو
+     الجواب. وكان الطريق يمرّ بكل القوائم — عشرة ميغابايت — لأن شرط
+     التاريخ كان يمنع المسار الخفيف، فصار يفتح الصفحة也是这样. */
+  s.trim({ keepManifest: false });
+  const realFetch = global.fetch;
+  const read = [];
+  global.fetch = async (url) => {
+    read.push(String(url));
+    return realFetch(url);
+  };
+  try {
+    for (const page of [1, 2, 7]) {
+      read.length = 0;
+      const out = await lib.browse("fatwa", { page });
+      assert.equal(out.items.length, 30);
+      const lists = read.filter((u) => /list\/\d+\.json$/.test(u));
+      assert.ok(lists.length <= 2, `الصفحة ${page} قرأت ${lists.length} قائمة بدل واحدة`);
+    }
+  } finally {
+    global.fetch = realFetch;
+  }
+});
+
+test("الترتيب غير الافتراضي لا يتداخل بين صفحاته", async () => {
+  const lib = await library();
+  /* الترتيب GLOBAL لا يُعرف إلا بترتيب الجميع، فكل صفحة تُقتطع بعد
+     الترتيب لا قبله. وكان يُرتَّب كل نافذة وحدها فتتشابك الصفحات. */
+  for (const sort of ["oldest", "popular"]) {
+    const first = await lib.browse("quiz", { page: 1, sort });
+    const second = await lib.browse("quiz", { page: 2, sort });
+    assert.equal(first.items.length, 30, `${sort}`);
+    const seen = new Set(first.items.map((row) => row.id));
+    const overlap = second.items.filter((row) => seen.has(row.id));
+    assert.deepEqual(overlap, [], `${sort}: تكرّرت عناصر بين الصفحتين`);
+  }
+});
+
 /* ------------------------------------------------------ الذاكرة */
 
 test("الملف الواحد يُقرأ مرة واحدة مهما تكرّر الطلب", async () => {

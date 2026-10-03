@@ -13,7 +13,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v33";
+const CACHE_VERSION = "islamic-library-v34";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -45,10 +45,8 @@ const SHELL = [
   "./backup-core.js",
   "./service-messages.js",
   "./khatma-core.js",
-  "./tailwind.generated.css",
   "./fonts.css",
   "./vendor/quran-arabic.json",
-  "./vendor/html2canvas.min.js",
   "./vendor/fontawesome/css/all.min.css",
   "./vendor/fontawesome/webfonts/fa-solid-900.woff2",
   "./vendor/fontawesome/webfonts/fa-regular-400.woff2",
