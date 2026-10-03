@@ -33,7 +33,8 @@ test("التففسير يفتح سورةً بالرابط العميق", () => {
   /* لم يبقَ بناءُ ?juz= الميت. */
   assert.doesNotMatch(html, /href = `\?juz=/, "بقي رابط ?juz= الميت في الصفحة");
   /* والحدّ من عدد السور في البيان، لا من رقمٍ ثابت. */
-  assert.match(html, /if \(sura\.no < lastSurah\)/, "الحدّ ثابت على ١١٤");
+  assert.match(html, /const last = parts\.surahs\.length;/, "الحدّ ثابت على ١١٤");
+  assert.match(html, /if \(sura\.no < last\)/, "شريط التنقّل لم يقرأ الحدّ من البيان");
 });
 
 test("كل نوع بحث له صفحة مجموعة قائمة", () => {

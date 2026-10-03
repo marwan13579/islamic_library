@@ -61,7 +61,6 @@ async function sortedByCode(type, sort) {
   const meta = await s.collectionMeta(type);
   const rows = [];
   for (let i = 0; i < meta.listFiles.length; i += 1) rows.push(...(await s.listShard(type, i)));
-  if (sort === "popular") return { rows, sorted: [...rows].sort((a, b) => b.r - a.r) };
   if (sort === "oldest") {
     return { rows, sorted: [...rows].sort((a, b) => stamp(a).localeCompare(stamp(b))) };
   }
@@ -72,7 +71,7 @@ async function sortedByCode(type, sort) {
 
 test("فهرس الترتيب يطابق الترتيب المحسوب بالحرف", async () => {
   for (const type of TYPES) {
-    for (const sort of ["newest", "oldest", "popular"]) {
+    for (const sort of ["newest", "oldest"]) {
       const index = JSON.parse(
         fs.readFileSync(path.join(CONTENT, "library", type, "order.json"), "utf8"),
       );
@@ -147,7 +146,6 @@ test("تحميل الصفحة ثابت مهما بَعُدت عن الأولى",
       ["newest", 1],
       ["newest", lastPage],
       ["oldest", lastPage],
-      ["popular", lastPage],
     ]) {
       s.trim({ keepManifest: false });
       read = [];
