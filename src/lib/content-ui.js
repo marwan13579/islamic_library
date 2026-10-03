@@ -6,7 +6,7 @@
  * @module lib/content-ui
  */
 
-import { escapeHtml, toArNum } from "./text.js";
+import { escapeHtml, toArNum, normalizeAr } from "./text.js";
 import { collectionMeta } from "./shards.js";
 import { browse, browseCategory, PAGE_SIZE } from "./library.js";
 
@@ -76,16 +76,11 @@ export function renderBody(value) {
 }
 
 /**
- * يحوّل نصًّا يحمل وسم تظليل البحث إلى HTML آمن.
- * الوسم من `lib/search` لا من المستخدم، والبقية مهرَّبة قبل الحقن.
- * @param {string} value
+ * قيمة من عنوان الصفحة.
+ * @param {string} name
+ * @param {string} [fallback]
  * @returns {string}
  */
-export function marked(value) {
-  return escapeHtml(String(value ?? "").replace(/\[\[H\]\]/g, "").replace(/\[\[\/H\]\]/g, ""));
-}
-
-/** @param {string} name @param {string} [fallback] */
 export function param(name, fallback = "") {
   return new URLSearchParams(location.search).get(name) || fallback;
 }
@@ -162,7 +157,11 @@ export async function mountCollection(type, refs) {
     const chip = document.createElement("button");
     chip.type = "button";
     chip.className = "lib-chip";
-    chip.innerHTML = `${escapeHtml(group.name)}<span class="n">${toArNum(group.count)}</span>`;
+    /* عدّاد الفئات في البيان يعدّ التكرارات، وعدّاد التصنيف يعدّ العناصر.
+       والفارق ظاهر: «الجهاد والسير» ٩٦ في الشارة و٦٧ في القائمة نفسها،
+       فيلزم واحدٌ منهما. والقائمة هي التي تُعرض، فالعدّاد منها. */
+    const count = (meta.catIndex && meta.catIndex[group.name]?.count) ?? group.count;
+    chip.innerHTML = `${escapeHtml(group.name)}<span class="n">${toArNum(count)}</span>`;
     chip.setAttribute("aria-pressed", group.name === category ? "true" : "false");
     chip.addEventListener("click", () => {
       category = group.name;
@@ -178,6 +177,25 @@ export async function mountCollection(type, refs) {
     refs.list.innerHTML = `<p class="lib-state">جارٍ التحميل…</p>`;
     refs.count.textContent = "";
 
+    try {
+      await paint(target);
+    } catch (error) {
+      /* كان الفشل يترك «جارٍ التحميل…» إلى الأبد: لا قائمة ولا رسالة. */
+      refs.list.innerHTML =
+        `<p class="lib-empty">تعذّر تحميل المحتويات.</p>` +
+        `<p class="lib-state">${escapeHtml(messageOf(error))}</p>`;
+      refs.count.textContent = "";
+    }
+  }
+
+  /** @param {string} message */
+  function messageOf(error) {
+    const text = error && error.message ? String(error.message) : "";
+    if (/تعذّر تحميل/.test(text)) return text;
+    return "تحقّق من الاتصال ثم أعد المحاولة.";
+  }
+
+  async function paint() {
     let rows;
     let total;
     if (term) {
@@ -189,8 +207,12 @@ export async function mountCollection(type, refs) {
         seen.push(...chunk.items);
         if (!chunk.hasMore) break;
       }
-      const needle = term;
-      const hits = seen.filter((row) => `${row.ti} ${row.su}`.includes(needle));
+      /* التطبيع لا المطابقة الحرفية: «زكاه» كانت لا تجد «الزكاة»،
+         و«القران» لا تجد «القرآن» لاختلاف التاء المربوطة. */
+      const needle = normalizeAr(term);
+      const hits = needle
+        ? seen.filter((row) => normalizeAr(`${row.ti} ${row.su}`).includes(needle))
+        : [];
       total = hits.length;
       const start = (page - 1) * PAGE_SIZE;
       rows = hits.slice(start, start + PAGE_SIZE);

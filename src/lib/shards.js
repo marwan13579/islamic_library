@@ -102,6 +102,7 @@ export function manifest() {
  * @property {string} type
  * @property {number} count
  * @property {string[]} listFiles
+ * @property {"desc"|"asc"} listOrder اتجاه ترتيب ملفات القوائم: «desc» فالأحدث أولها
  * @property {string[]} itemFiles
  * @property {{name: string, count: number}[]} categories
  */

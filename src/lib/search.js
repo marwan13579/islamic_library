@@ -250,12 +250,14 @@ export function candidatesFor(token, bucket) {
  * يبحث في المكتبة كلها.
  * @param {string} query
  * @param {{limit?: number, offset?: number, type?: string|null, category?: string|null}} [options]
- * @returns {Promise<{results: any[], total: number}>}
+ * @returns {Promise<{results: any[], total: number, more: boolean}>} `total` عدد
+ *   النتائج المقروءة وحدها: أول `head` مرشّحًا فقط، فيُعلَم `more` إن بقي
+ *   مرشّح خارجها.
  */
 export async function search(query, options = {}) {
   const { limit = 30, offset = 0, type = null, category = null } = options;
   const tokens = tokenize(query).slice(0, MAX_TOKENS);
-  if (!tokens.length) return { results: [], total: 0 };
+  if (!tokens.length) return { results: [], total: 0, more: false };
 
   const mf = await searchManifest();
   const n = mf.n || 1;
@@ -296,7 +298,7 @@ export async function search(query, options = {}) {
     })
   );
 
-  if (!scores.size) return { results: [], total: 0 };
+  if (!scores.size) return { results: [], total: 0, more: false };
 
   /* التحديد بالنوع قبل تحميل بيانات المستندات: المستندات مرتّبة بالنوع
      في مدى متصل، فيُستبعد ما لا يطابق قبل قراءة أي شريحة. لولاه
@@ -311,7 +313,7 @@ export async function search(query, options = {}) {
     } else {
       ranked = [];
     }
-    if (!ranked.length) return { results: [], total: 0 };
+    if (!ranked.length) return { results: [], total: 0, more: false };
   }
 
   const head = Math.min(ranked.length, Math.max(offset + limit, limit) * 4);
@@ -345,7 +347,12 @@ export async function search(query, options = {}) {
   /* الترتيب الأول يحدّد شريحتَي المستندات المراد تحميلهما، فبقي ترتيب
    * BM25. ثم يُطبَّق التقديم التحريري للنوع، فيُعاد الترتيب النهائي. */
   results.sort((a, b) => b.score - a.score);
-  return { results: results.slice(offset, offset + limit), total: results.length };
+  /* `head` يحدّ ما قُرئ من المستندات، فما فوقه لم يُحكم عليه بعد. */
+  return {
+    results: results.slice(offset, offset + limit),
+    total: results.length,
+    more: ranked.length > head,
+  };
 }
 
 /**

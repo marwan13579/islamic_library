@@ -237,8 +237,8 @@ test("النص المرجعي يسبق بنك الاختبارات", async () =>
 
 test("بحث فارغ أو بلا نتيجة لا يرمي", async () => {
   const s = await search();
-  assert.deepEqual(await s.search(""), { results: [], total: 0 });
-  assert.deepEqual(await s.search("!!! 123 ??? "), { results: [], total: 0 });
+  assert.deepEqual(await s.search(""), { results: [], total: 0, more: false });
+  assert.deepEqual(await s.search("!!! 123 ??? "), { results: [], total: 0, more: false });
   const miss = await s.search("زقزقةChunks");
   assert.ok(miss.total === 0 || miss.results.length === 0);
 });
@@ -249,9 +249,10 @@ test("ترتيب «الأحدث» لا يقرأ إلا جزءًا واحدًا �
   const meta = await s.collectionMeta("fatwa");
   assert.ok(meta.listFiles.length > 20, `عدد قوائم الفتاوى غير كافٍ للاختبار: ${meta.listFiles.length}`);
 
-  /* الفتاوى بلا تاريخ، فترتيبُها بالتاريخ مستحيل وترتيبُ البناء هو
-     الجواب. وكان الطريق يمرّ بكل القوائم — عشرة ميغابايت — لأن شرط
-     التاريخ كان يمنع المسار الخفيف، فصار يفتح الصفحة也是这样. */
+  /* الفتاوى بلا تاريخ، فترتيبُها بالتاريخ مستحيل، والقوائم مرتّبة
+     بترتيب المصدر. وكان الطريق يمرّ بكل القوائم — عشرة ميغابايت — لأن
+     شرط التاريخ كان يمنع المسار الخفيف. الآن «الأحدث» نافذة من طرف
+     القوائم لا غير. */
   s.trim({ keepManifest: false });
   const realFetch = global.fetch;
   const read = [];
@@ -274,8 +275,8 @@ test("ترتيب «الأحدث» لا يقرأ إلا جزءًا واحدًا �
 
 test("الترتيب غير الافتراضي لا يتداخل بين صفحاته", async () => {
   const lib = await library();
-  /* الترتيب GLOBAL لا يُعرف إلا بترتيب الجميع، فكل صفحة تُقتطع بعد
-     الترتيب لا قبله. وكان يُرتَّب كل نافذة وحدها فتتشابك الصفحات. */
+  /* كل صفحة تُقتطع من ترتيب القوائم كله بعدّاده، لا من نافذتها وحدها.
+     وكان يُرتَّب كل نافذة وحدها فتتشابك الصفحات. */
   for (const sort of ["oldest", "popular"]) {
     const first = await lib.browse("quiz", { page: 1, sort });
     const second = await lib.browse("quiz", { page: 2, sort });

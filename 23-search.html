@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>بحث شامل في المكتبة</title>
 <link rel="stylesheet" href="fonts.css">
@@ -131,7 +132,7 @@ header{
 
 <script type="module">
 import { search } from "./src/lib/search.js";
-import { escapeHtml } from "./src/lib/text.js";
+import { escapeHtml, normalizeAr } from "./src/lib/text.js";
 
 const R=(cat,text,src,link,linkLabel)=>({cat,text,src,link,linkLabel});
 
@@ -249,10 +250,11 @@ async function render(){
     box.innerHTML='<p class="empty">جارٍ البحث…</p>';
     let hits=[];
     let grand=0;
+    let truncated=false;
     try{
       const res=await search(q,{limit:40,type:activeType||null});
       if(mine!==seq) return;
-      hits=res.results; grand=res.total;
+      hits=res.results; grand=res.total; truncated=Boolean(res.more);
     }catch(e){
       if(mine!==seq) return;
     }
@@ -274,7 +276,8 @@ async function render(){
     box.appendChild(el);
   });
   empty.hidden=true;
-  countEl.textContent = total+" نتيجة";
+  /* الفهرس يقرأ أوّل ١٦٠ مرشّحًا، فما زاد لا يُعلم، فيُقال «أكثر من». */
+  countEl.textContent = (truncated?"أكثر من ":"") + total + " نتيجة";
 }
 
 /** يحوّل وسم التظليل من lib/search إلى <mark>. */
@@ -282,10 +285,6 @@ function marked(value){
   return escapeHtml(String(value))
     .replace(/\[\[H\]\]/g,"<mark>")
     .replace(/\[\[\/H\]\]/g,"</mark>");
-}
-
-function normalizeAr(v){
-  return String(v).replace(/[ً-ْـ]/g,"").replace(/[أإآ]/g,"ا");
 }
 
 renderFilters();

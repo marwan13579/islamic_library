@@ -16,15 +16,95 @@ export const PAGE_SIZE = 30;
 /** @typedef {import("./shards.js").CollectionMeta} CollectionMeta */
 
 /**
- * ترتيب العرض: الأحدث، الأقدم، الأكثر قراءة.
+ * ترتيب «الأكثر قراءة»: ترتيب محسوب لا ترتيب قائم في الملفات، فلا مفرّ
+ * من قراءة كل الملخّصات. أما «الأحدث» و«الأقدم» فيأتيان من اتجاه القوائم
+ * نفسه، كما في `reversed`.
  * @param {Summary[]} items
- * @param {string} sort
  * @returns {Summary[]}
  */
-function order(items, sort) {
-  if (sort === "popular") return [...items].sort((a, b) => b.r - a.r);
-  if (sort === "oldest") return [...items].sort((a, b) => a.id.localeCompare(b.id));
-  return [...items].sort((a, b) => String(b.d).localeCompare(String(a.d)));
+function mostRead(items) {
+  return [...items].sort((a, b) => b.r - a.r);
+}
+
+/**
+ * نافذة من ترتيب معكوس: تُقرأ الملفات من آخرها وتُعكس كل واحدة، فيصير
+ * العنصرالأوّل هو الأحدث. هكذا «الأقدم» لا يكلّف أكثر من «الأحدث»: صفحة
+ * واحدة من النهاية لا كل القوائم.
+ * @param {number} count عدد ملفات القوائم
+ * @param {number} start أول عنصر مطلوب
+ * @param {number} per عدد عناصر الصفحة
+ * @param {(index: number) => Promise<Summary[]>} read
+ * @returns {Promise<Summary[]>}
+ */
+async function reversedWindow(count, start, per, read) {
+  let need = start + per;
+  /** @type {Summary[]} */
+  const head = [];
+  /* المجموع في ترتيب العرض لا معكوسه: العنصر صفر فيه أوّل الصفحة،
+     والمعكوس يجعله آخرها فيعود كل صفحة إلى نفسها. */
+  for (let index = count - 1; index >= 0 && need > 0; index -= 1) {
+    const part = await read(index);
+    for (let at = part.length - 1; at >= 0 && need > 0; at -= 1) {
+      head.push(part[at]);
+      need -= 1;
+    }
+  }
+  return head.slice(start, start + per);
+}
+
+/**
+ * نافذة بترتيب الملفات كما هي: من أوّلها إلى آخرها.
+ * @param {number} count
+ * @param {number} start
+ * @param {number} per
+ * @param {(index: number) => Promise<Summary[]>} read
+ * @returns {Promise<Summary[]>}
+ */
+async function forwardWindow(count, start, per, read) {
+  const perShard = await firstSize(read, count);
+  const first = Math.floor(start / perShard);
+  const offset = start - first * perShard;
+  /** @type {Summary[]} */
+  const rows = [];
+  for (let index = first; index < count && rows.length < offset + per; index += 1) {
+    rows.push(...(await read(index)));
+  }
+  return rows.slice(offset, offset + per);
+}
+
+/**
+ * @param {(index: number) => Promise<Summary[]>} read
+ * @param {number} count
+ * @returns {Promise<number>} عدد عناصر أول ملف
+ */
+async function firstSize(read, count) {
+  if (!count) return 1;
+  return (await read(0)).length || 1;
+}
+
+/** كل ملخّصات مجموعة، للترتيب الذي لا يُعرف إلا بترتيب الجميع. */
+async function allSummaries(type, meta) {
+  const out = [];
+  for (let index = 0; index < meta.listFiles.length; index += 1) {
+    out.push(...(await listShard(type, index)));
+  }
+  return out;
+}
+
+/**
+ * اتجاه «الأحدث» في مجموعة واحدة.
+ *
+ * البناء يرتّب القوائم تنازليًا بالتاريخ، فحيث وُجد تاريخ كانت «الأحدث»
+ * أول الملفات. وحيث لم يوجد — الفتاوى والتاريخ والاختبارات، لا تاريخ
+ * فيها أصلًا — بقي ترتيب المصدر، وهو تصاعدي بالمعرّف، فصارت «الأحدث»
+ * آخر الملفات. فالتصريح في البيان `listOrder` يوفّر التخمين.
+ * @param {CollectionMeta} meta
+ * @param {string} sort
+ * @returns {boolean} هل يُقرأ من النهاية
+ */
+function reversed(meta, sort) {
+  const newestAtEnd = meta.listOrder !== "desc";
+  return sort === "oldest" ? !newestAtEnd : newestAtEnd;
 }
 
 /**
@@ -38,21 +118,27 @@ export async function browse(type, options = {}) {
   const meta = await collectionMeta(type);
   const per = Math.max(1, Math.min(200, perPage));
   const current = Math.max(1, page);
-  const perShard = meta.listPerShard || 500;
-
+  const files = meta.listFiles.length;
   const start = (current - 1) * per;
-  const first = Math.floor(start / perShard);
-  const offsetInShard = start - first * perShard;
 
-  const rows = [];
-  for (let index = first; index < meta.listFiles.length && rows.length < offsetInShard + per; index += 1) {
-    rows.push(...(await listShard(type, index)));
+  /* «الأكثر» ترتيب محسوب لا ترتيب قائم، فلا مفرّ من قراءة كل الملخّصات.
+     أمّا «الأحدث» و«الأقدم» فهما اتجاها ترتيب القوائم: يكفي أن تُقرأ
+     نافذة من أولها أو من آخرها، لا كل الملفات.
+
+     وكان كل ترتيبٍ غير «الأحدث» يرتّب نافذة الصفحة وحدها، فتتشابك الصفحات:
+     الصفحة الثانية تعيد ما في الأولى، و«التالي» يتقدّم في الوقت. */
+  const read = (index) => listShard(type, index);
+  let window;
+  if (sort === "popular") {
+    window = mostRead(await allSummaries(type, meta)).slice(start, start + per);
+  } else if (reversed(meta, sort)) {
+    window = await reversedWindow(files, start, per, read);
+  } else {
+    window = await forwardWindow(files, start, per, read);
   }
-  const window = rows.slice(offsetInShard, offsetInShard + per);
-  const items = sort === "newest" ? window : order(window, sort);
 
   return {
-    items,
+    items: window,
     total: meta.count,
     page: current,
     pages: Math.max(1, Math.ceil(meta.count / per)),
@@ -134,27 +220,21 @@ export async function browseCategory(type, category, options = {}) {
 
   const per = Math.max(1, Math.min(200, perPage));
   const current = Math.max(1, page);
-  const perShard = entry.perShard || entry.count;
   const start = (current - 1) * per;
   const total = entry.count;
+  const read = (index) => load(`library/${type}/cat/${entry.dir}/${entry.files[index]}`);
 
-  /* الترتيب «الأحدث» هو ترتيب البناء، فلا يحتاج إعادة ترتيب.
-     غيره فيحتاج الصفحة كاملة، فتُقرأ كل ملفات التصنيف. */
+  /* ملفات التصنيف محفوظة بترتيب القوائم نفسها، فينطبق عليها ما سبق:
+     «الأحدث» و«الأقدم» نافذة من طرفٍ أو من طرف، و«الأكثر» كامل القائمة. */
   let rows;
-  if (sort === "newest") {
-    const first = Math.floor(start / perShard);
-    const offsetInShard = start - first * perShard;
-    const gathered = [];
-    for (let index = first; index < entry.files.length && gathered.length < offsetInShard + per; index += 1) {
-      gathered.push(...(await load(`library/${type}/cat/${entry.dir}/${entry.files[index]}`)));
-    }
-    rows = gathered.slice(offsetInShard, offsetInShard + per);
-  } else {
+  if (sort === "popular") {
     const all = [];
-    for (const file of entry.files) {
-      all.push(...(await load(`library/${type}/cat/${entry.dir}/${file}`)));
-    }
-    rows = order(all, sort).slice(start, start + per);
+    for (let index = 0; index < entry.files.length; index += 1) all.push(...(await read(index)));
+    rows = mostRead(all).slice(start, start + per);
+  } else if (reversed(meta, sort)) {
+    rows = await reversedWindow(entry.files.length, start, per, read);
+  } else {
+    rows = await forwardWindow(entry.files.length, start, per, read);
   }
 
   return {

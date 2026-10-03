@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>التفسير الميسر · المكتبة الإسلامية</title>
 <meta name="description" content="تفسير ميسر لكل آيات القرآن الكريم من المصحف، مرفق بترجمة معنى الآية. يقرأ سورة تلو الأخرى.">
@@ -54,7 +55,7 @@
 
 <main class="lib-wrap">
   <div class="lib-tools">
-    <input class="lib-search" id="juz" type="search" placeholder="ابحث عن سورة أو رقم جزء…" aria-label="بحث في السور">
+    <input class="lib-search" id="juz" type="search" placeholder="ابحث عن سورة بالاسم أو رقمها…" aria-label="ابحث عن سورة في التفسير">
     <select class="lib-search" id="sort" style="max-width:180px;font-family:Cairo" aria-label="ترتيب السور">
       <option value="1">ترتيب المصحف</option>
       <option value="0">ترتيب تنزيل</option>
@@ -69,7 +70,7 @@
 <script type="module">
   import { readSurah, tafsirIndex } from "./src/lib/library.js";
   import { renderBody } from "./src/lib/content-ui.js";
-  import { escapeHtml, toArNum } from "./src/lib/text.js";
+  import { escapeHtml, toArNum, normalizeAr } from "./src/lib/text.js";
 
   const grid = document.getElementById("grid");
   const reader = document.getElementById("reader");
@@ -80,6 +81,9 @@
   const parts = await tafsirIndex();
   let list = parts.surahs.map((s) => ({ ...s, file: String(s.no).padStart(3, "0") }));
 
+  /** رقم السورة من العنوان، كما تفعل صفحة الحصن بـ?no= */
+  const wanted = Number(new URLSearchParams(location.search).get("s"));
+
   const byMode = () => sort.value === "0" ? "desc" : "asc";
 
   function paint() {
@@ -88,8 +92,9 @@
     const ordered = mode === "asc"
       ? list
       : [...list].sort((a, b) => b.no - a.no);
-    ordered.filter = ordered.filter; // preserve array methods
-    const shown = ordered.filter((s) => !q || String(s.no).includes(q) || s.name.includes(q));
+    const needle = normalizeAr(q);
+    const shown = ordered.filter((s) =>
+      !needle || String(s.no) === needle || normalizeAr(s.name).includes(needle));
     grid.innerHTML = "";
     count.textContent = `${toArNum(shown.length)} سورة`;
     for (const s of shown) {
@@ -129,14 +134,18 @@
     nav.className = "navrow";
     const p = (s, l) => {
       const a = document.createElement("a");
-      a.href = `?juz=${s}`;
+      a.href = `?s=${s}`;
       a.textContent = l;
       nav.appendChild(a);
     };
     if (sura.no > 1) p(sura.no - 1, "‹ السابقة");
-    if (sura.no < 114) p(sura.no + 1, "التالي ›");
+    const last = parts.surahs.length;
+    if (sura.no < last) p(sura.no + 1, "التالي ›");
     reader.appendChild(nav);
   }
+
+  /* رابط ?s=N يفتح السورة مباشرة، كما كانت الروابط تعد بجزءٍ لا يُقرأ. */
+  if (wanted >= 1 && wanted <= parts.surahs.length) readSura(wanted);
 </script>
 <footer class="lib-foot">
   المحتوى من تطبيق <a href="https://github.com/rn0x/Altaqwaa" target="_blank" rel="noopener noreferrer">Altaqwaa</a>

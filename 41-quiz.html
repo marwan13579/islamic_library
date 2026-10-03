@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>الاختبارات · المكتبة الإسلامية</title>
 <meta name="description" content="٥٨٢٠ سؤالًا في التفسير والفقه والعقيدة والحديث والتاريخ واللغة. اختبار قصير بتصحيح فوري ونتيجة في النهاية.">
@@ -121,8 +122,11 @@
     box.innerHTML = "";
     for (const name of CATS) {
       const group = meta.categories.find((c) => c.name === name);
-      const total = name === ALL ? meta.count : group && group.count;
       if (name !== ALL && !group) continue;
+      /* عدّاد التصنيف يعدّ العناصر، وعدّاد الفئات يعدّ التكرارات، وهذا
+         ما يُسأل عنه فعلًا. */
+      const count = (meta.catIndex && meta.catIndex[name]?.count) ?? (group && group.count);
+      const total = name === ALL ? meta.count : count;
       const b = document.createElement("button");
       b.type = "button";
       b.className = "pick";
@@ -209,6 +213,9 @@
       b.type = "button";
       b.className = "opt";
       b.innerHTML = `${escapeHtml(opt.text)}`;
+      // التمييز بالعلم نفسه لا بالنص: خياران نصّهما واحد في المحتوى
+      // المستورد كانا يُضيآن معًا بالصواب.
+      if (opt.correct) b.dataset.correct = "1";
       b.addEventListener("click", () => answer(item, answers0, opt, box));
       box.appendChild(b);
     }
@@ -227,13 +234,13 @@
     for (const b of box.querySelectorAll(".opt")) {
       b.disabled = true;
     }
-    /* الترتيب عشوائي، فيُعلَّم الصحيح بالنص لا بالترتيب. */
+    /* الترتيب عشوائي، فيُعلَّم الصحيح بعلمه لا بنصّه. */
     for (const b of box.querySelectorAll(".opt")) {
-      if (b.textContent === (all.find((a) => a.correct)?.text || "")) b.classList.add("ok");
+      if (b.dataset.correct === "1") b.classList.add("ok");
     }
     if (!ok) {
       for (const b of box.querySelectorAll(".opt")) {
-        if (b.textContent === picked.text) b.classList.add("no");
+        if (b.textContent === picked.text && b.dataset.correct !== "1") b.classList.add("no");
       }
     }
     drawNav();

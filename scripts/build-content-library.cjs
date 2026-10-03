@@ -16,6 +16,12 @@
  * التشغيل:
  *   node scripts/build-content-library.cjs
  *   ALTAQWAA_RESOURCES=/path/to/resources node scripts/build-content-library.cjs
+ *   node scripts/build-content-library.cjs --meta-only
+ *
+ * `--meta-only` لا يعيد بناء المحتوى، يقرأ ملفات القوائم الموجودة ويكتب
+ * `meta.json` وحده. لحقول وصفية جديدة فقط: البناء الكامل يكتب ٢٨٣ ميغابايت
+ * ويقلب ملفات القوائم كلها، وهو ثقيل بلا فائدة إن كان الحقل وصفًا للقوائم
+ * الموجودة لا يُغيّرها.
  */
 
 const fs = require("node:fs");
@@ -248,7 +254,11 @@ function buildCollection(type) {
   const pageDir = path.join(dir, "items");
   const { files: itemFiles, locator } = shardBySize(items, pageDir, "part");
 
-  /* القوائم: ملخّصات بلا محتوى، مرتّبة الأحدث أولًا. */
+  /* القوائم: ملخّصات بلا محتوى، مرتّبة تنازليًا بالتاريخ.
+     ومجموعات بلا تاريخ أصلًا — الفتاوى والتاريخ والاختبارات — Comparing
+     تاريخ فارغ لا يبدّل شيئًا فيبقى ترتيب المصدر، وهو تصاعدي بالمعرّف.
+     فصار اتجاه «الأحدث» مجموعةً مجموعة لا واحدًا، ولهذا يُكتب في البيان
+     `listOrder` فتعرفه الواجهة بلا أن تخمّنه. */
   const summaries = items
     .map((item) => summaryOf(item, locator[item.id]))
     .sort((a, b) => String(b.d).localeCompare(String(a.d)));
@@ -313,6 +323,7 @@ function buildCollection(type) {
     source: (items[0] && items[0].source) || null,
     listFiles,
     listPerShard: LIST_PER_SHARD,
+    listOrder: summaries.some((s) => String(s.d || "").trim()) ? "desc" : "asc",
     itemFiles,
     categories,
     catIndex,
@@ -668,7 +679,32 @@ function buildSearchIndex(collections) {
 
 /* -------------------------------------------------------------------- بناء */
 
+/**
+ * يكتب `meta.json` وحده من قوائم موجودة، لحقول وصفية لا تغيّر القوائم.
+ * @param {string} type
+ */
+function writeMetaOnly(type) {
+  const dir = path.join(OUT, "library", type);
+  const meta = readJson(path.join(dir, "meta.json"));
+  let dated = false;
+  for (const file of meta.listFiles) {
+    if (readJson(path.join(dir, "list", file)).some((s) => String(s.d || "").trim())) {
+      dated = true;
+      break;
+    }
+  }
+  meta.listOrder = dated ? "desc" : "asc";
+  writeJson(path.join(dir, "meta.json"), meta);
+  log(`  ${type}: ${meta.count} عنصر · listOrder=${meta.listOrder}`);
+}
+
 function main() {
+  if (process.argv.includes("--meta-only")) {
+    for (const type of COLLECTIONS) writeMetaOnly(type);
+    log("\n✔ كُتبت البيانات الوصفية وحدها");
+    return;
+  }
+
   if (!fs.existsSync(RESOURCES)) {
     console.error(
       `لم أجد مصدر المحتوى في:\n  ${RESOURCES}\n` +
