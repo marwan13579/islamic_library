@@ -130,9 +130,8 @@
    * الصفحة وحدها لا تصلح: مؤقّتاتها تموت مع إغلاقها.
    */
   async function pushSchedule() {
-    if (!("serviceWorker" in navigator)) return false;
-    const reg = await navigator.serviceWorker.ready.catch(() => null);
-    if (!reg || !reg.active) return false;
+    const reg = await readyWorker();
+    if (!reg) return false;
     const schedule = ORDER.map((key) => {
       const c = clock(timings && timings[key]);
       if (!c) return null;
@@ -292,17 +291,36 @@
     else document.getElementById("notif").textContent = "لم يُسمح بالإشعارات.";
   });
 
+  /* sw.js مسجَّل في index.html فقط، فمن يفتح هذه الصفحة مباشرةً لا يجد
+     عاملاً. نضمن وجوده هنا بأن نتظر جاهزية، فإن لم يوجد نُسجّله بأنفسنا. */
+  async function readyWorker() {
+    if (!("serviceWorker" in navigator)) return null;
+    let reg = await Promise.race([
+      navigator.serviceWorker.ready,
+      new Promise((resolve) => setTimeout(() => resolve(null), 2000)),
+    ]);
+    if (!reg) {
+      try {
+        reg = await navigator.serviceWorker.register("./sw.js");
+        await navigator.serviceWorker.ready;
+      } catch {
+        return null;
+      }
+    }
+    return reg && reg.active ? reg : null;
+  }
+
   document.getElementById("disable").addEventListener("click", async () => {
     writeStorage("athan_notif_off", true);
-    const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.ready.catch(() => null) : null;
-    if (reg && reg.active) reg.active.postMessage({ type: "cancel-athan" });
+    const reg = await readyWorker();
+    if (reg) reg.active.postMessage({ type: "cancel-athan" });
     document.getElementById("notif").textContent = "التنبيه موقوف.";
   });
 
   document.getElementById("test").addEventListener("click", async () => {
-    const reg = "serviceWorker" in navigator ? await navigator.serviceWorker.ready.catch(() => null) : null;
+    const reg = await readyWorker();
     const payload = { type: "notify", title: "🕌 حان الآن وقت الصلاة", body: "حي على الصلاة، حي على الفلاح", tag: "athan-test" };
-    if (reg && reg.active) reg.active.postMessage(payload);
+    if (reg) reg.active.postMessage(payload);
     else if ("Notification" in window && Notification.permission === "granted") {
       try {
         new Notification(payload.title, { body: payload.body });
