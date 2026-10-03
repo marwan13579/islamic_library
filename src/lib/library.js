@@ -6,7 +6,7 @@
  * @module lib/library
  */
 
-import { collectionMeta, listShard, itemShard, load, tafsirOf, hisnIndex, hisnBab } from "./shards.js";
+import { collectionMeta, listShard, itemShard, load, orderIndex, tafsirOf, hisnIndex, hisnBab } from "./shards.js";
 import { read as readStorage, write as writeStorage, KEYS } from "./storage.js";
 
 /** عدد العناصر في صفحة القوائم. */
@@ -88,6 +88,74 @@ function reversed(meta, sort) {
 }
 
 /**
+ * مفتاح الترتيب الزمني: التاريخ إن وُجد، وإلا رقم المعرّف.
+ *
+ * في المجموعات بلا تاريخ — الفتاوى والتاريخ والاختبارات — كان حقل `d`
+ * فارغًا فيصير المقارنة بين فراغين، فلا يفرق «الأحدث» عن «الأقدم».
+ * فنزلنا إلى رقم المعرّف، ورُبط بطول ثابت فيصير الترتيب عدديًّا.
+ * @param {Summary} item
+ * @returns {string}
+ */
+function stamp(item) {
+  const date = String(item.d ?? "").trim();
+  if (date) return date;
+  const m = /(\d+)$/.exec(String(item.id ?? ""));
+  return m ? m[1].padStart(12, "0") : "";
+}
+
+/**
+ * ترتيب العرض: الأحدث، الأقدم. لا ثالثَ، إذ لا قياس للكثرة في المصدر.
+ *
+ * هذا هو تعريف الترتيب وحده، و`order.json` صورة محسوبة منه. فأينما غاب
+ * الفهرس حُسب الترتيب هنا، وحيثما حُسب الفهرس بفئه نفسها — يمنع
+ * `tests/library-sort-index.test.js` افتراقهما.
+ * @param {Summary[]} items
+ * @param {string} sort
+ * @returns {Summary[]}
+ */
+function order(items, sort) {
+  if (sort === "oldest") return [...items].sort((a, b) => stamp(a).localeCompare(stamp(b)));
+  return [...items].sort((a, b) => stamp(b).localeCompare(stamp(a)));
+}
+
+/** كل ملخّصات مجموعة، حين لا يتوفّر فهرس الترتيب. */
+async function allSummaries(type, meta) {
+  const out = [];
+  for (let index = 0; index < meta.listFiles.length; index += 1) {
+    out.push(...(await listShard(type, index)));
+  }
+  return out;
+}
+
+/**
+ * الملخّصات الموضوعة في مواضعها من الفهرس، بقراءة الأجزاء التي تقع فيها.
+ *
+ * كل الأجزاء كاملة عدا الأخير، فموضعٌ ب 나머 القسمة يدل على جزئه. ولا
+ * يُقرأ إلا ما تدور عليه الصفحة، فقد تقع عناصر صفحة «الأكثر»
+ * في شتّى الأجزاء، فتُقرأ كلها معًا لا واحدًا بعد واحد.
+ * @param {string} type
+ * @param {CollectionMeta} meta
+ * @param {number[]} positions
+ * @returns {Promise<Summary[]>}
+ */
+async function summariesAt(type, meta, positions) {
+  const perShard = meta.listPerShard || 500;
+  const last = meta.listFiles.length - 1;
+  const wanted = [...new Set(positions.map((at) => Math.min(Math.floor(at / perShard), last)))];
+
+  const shards = await Promise.all(wanted.map((at) => listShard(type, at)));
+  const byIndex = new Map(wanted.map((at, seat) => [at, shards[seat]]));
+
+  const out = [];
+  for (const position of positions) {
+    const index = Math.min(Math.floor(position / perShard), last);
+    const row = byIndex.get(index)[position - index * perShard];
+    if (row) out.push(row);
+  }
+  return out;
+}
+
+/**
  * يقرأ صفحة من قائمة مجموعة، بلا تحميل كل القوائم.
  * @param {string} type
  * @param {{page?: number, perPage?: number, sort?: string}} [options]
@@ -101,20 +169,25 @@ export async function browse(type, options = {}) {
   const start = (current - 1) * per;
   const read = (index) => listShard(type, index);
 
-  /* «الأحدث» و«الأقدم» اتجاها ترتيب القوائم نفسها، فيكفي أن تُقرأ نافذة
-     من طرفها إلى طرفها. وثالثٌ ليس هنا: الترتيب بدقائق القراءة لا يُعرف
-     إلا بترتيب الجميع، فيقرأ كل القوائم — عشرة ميغابايت للفتاوى — واسمه
-     «الأكثر» يكذب على قارئه أصلًا، إذ لا أكثرية في المصدر. فحُذف.
+  /* الترتيب لا يعرفه إلا الجميع، والجميع هنا ترتيبٌ حُسب مرةً واحدة
+     وحُفظ في `order.json` مواضعَ لا نصوصًا، فيقرأه المتصل ثم الجزء
+     الذي تقع فيه الصفحة: جزءًا واحدًا أو اثنين أيًّا كانت الصفحة.
+     وحيث يغيب الفهرس يقف طريق النافذة، وهو يقرأ من طرف القوائم
+     إلى طرفها.
 
-     وكان كل ترتيبٍ يرتّب نافذة الصفحة وحدها، فتتشابك الصفحات: الثانية
-     تعيد ما في الأولى، و«التالي» يتقدّم في الوقت. */
+     وثالثٌ لا يعود: الترتيب بدقائق القراءة يكذب على قارئه، إذ لا قياس
+     لكَم قُرئ في المصدر أصلًا. فبقي الأحدثُ والأقدم وحدهما. */
+  const index = await orderIndex(type);
+  const ranked = index && index.orders && index.orders[sort];
+
   let window;
-  if (reversed(meta, sort)) {
+  if (ranked) {
+    window = await summariesAt(type, meta, ranked.slice(start, start + per));
+  } else if (reversed(meta, sort)) {
     window = await reversedWindow(meta.listFiles.length, start, per, read);
   } else {
     window = await forwardWindow(meta.listFiles.length, start, per, read);
   }
-
   return {
     items: window,
     total: meta.count,

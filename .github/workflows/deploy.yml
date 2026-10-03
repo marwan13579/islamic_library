@@ -26,6 +26,7 @@ jobs:
       - run: npm test
       - run: npm run check:js
       - run: npm run check:icons
+      - run: npm run check:order
       - run: npm run verify:content
       - run: npm run review:ci
 
@@ -46,6 +47,7 @@ jobs:
       - name: Resolve Chromium path
         run: echo "CHROMIUM_PATH=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux*/chrome | head -1)" >> "$GITHUB_ENV"
       - run: npm run check:browser
+      - run: npm run check:reader
       - run: npm run check:interaction
 
   deploy:

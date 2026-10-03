@@ -12,6 +12,7 @@
   const BLOCKED_KEYS=new Set(["__proto__","prototype","constructor"]);
   const ALLOWED_KEYS=new Set([
     "theme","font-size","readLessons","lessonScroll","bookmarks","quizStats","weeklyDone","certificates",
+    "reader_font","reader_line","reader_last",
     "tasbihCount","totalTasbih","stats","calendar_type","continue-state","askDraft","last_tab",
     "khatma_state","khatma_assignees","khatma_dedication","prayer_city","user_coords","calc_method",
     "quran_font_size","focus_mode","quran_bookmarks","quran_ward","athkar_progress","athkar_streak",

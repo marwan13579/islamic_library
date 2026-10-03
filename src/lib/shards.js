@@ -137,6 +137,23 @@ export function listShard(type, index) {
 }
 
 /**
+ * ترتيب عناصر مجموعة في كل فرز، مواضعًا لا نصوصًا.
+ *
+ * يولّده `scripts/build-order-index.cjs` من القوائم نفسها. وحين يغيب —
+ * محتوى بُني قبل إضافته — يعود `null` فيقرأ المتصل القوائم كلها، فتبقى
+ * النتيجة صحيحة ويكون الثمن هو التحميل وحده.
+ * @param {string} type
+ * @returns {Promise<{v: number, type: string, count: number, orders: Record<string, number[]>}|null>}
+ */
+export function orderIndex(type) {
+  return load(`library/${type}/order.json`).catch((error) => {
+    /* غياب الفهرس ليس خطأً: يعود المتصل إلى الطريق القديم. */
+    if (!/\(404\)|404/.test(String((error && error.message) || ""))) throw error;
+    return null;
+  });
+}
+
+/**
  * جزء محتوى كامل. يُحمَّل عند فتح عنصر فقط.
  * @param {string} type
  * @param {number} index
@@ -199,9 +216,18 @@ export function reciters() {
   return load("reciters.json");
 }
 
-/** @returns {Promise<any[]>} الإذاعات. */
+/**
+ * الإذاعات.
+ *
+ * ولا تُعرض إلا ما كان بثًّا آمنًا: الموقع يُقدَّم على `https`، فالمتصفح
+ * يمنع مصدر `http` كمحتوى مخلوط فلا يعمل، ولا في صفحة `http` واحدة.
+ * والتصفية هنا لا في قائمة البيانات، فمن أعيد بناء المحتوى لا عاد
+ * الإذاعة المكسورة إلى الظهور.
+ * @returns {Promise<any[]>}
+ */
 export function stations() {
-  return load("radio.json");
+  return load("radio.json").then((list) =>
+    list.filter((station) => /^https:/i.test(String(station.link || station.url || ""))));
 }
 
 /**

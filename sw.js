@@ -13,7 +13,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v34";
+const CACHE_VERSION = "islamic-library-v35";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -96,6 +96,7 @@ const SHELL = [
   "./src/lib/pwa.js",
   "./src/components/theme.js", "./src/components/modal.js", "./src/components/toast.js",
   "./src/components/blocks.js", "./src/components/certificate.js", "./src/components/quiz.js",
+  "./src/components/reader-tools.js",
   "./src/data/manhaj-lessons.js", "./src/data/lessons.js", "./src/data/scholars.js",
   "./src/data/sayings.js", "./src/data/seerah.js", "./src/data/prophets.js", "./src/data/kids.js",
   "./src/data/qa.js", "./src/data/duas.js", "./src/data/adhkar.js", "./src/data/daily.js",

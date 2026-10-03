@@ -6,6 +6,8 @@
     "build:pages": "npm run build && node scripts/prepare-pages.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./tailwind.input.css -o ./tailwind.generated.css --minify",
     "download:quran": "node scripts/download-quran-data.cjs",
+    "build:order": "node scripts/build-order-index.cjs",
+    "check:order": "node scripts/build-order-index.cjs --check",
     "extract:data": "node scripts/extract/extract-data.cjs",
     "verify:content": "node scripts/extract/verify-content.cjs",
     "check:js": "node scripts/check-syntax.cjs",
@@ -14,7 +16,7 @@
     "check:icons": "node scripts/inject-sprite.cjs --check",
     "check:streams": "node scripts/check-streams.cjs",
     "smoke": "node scripts/smoke-all.mjs",
-    "check:all": "npm run check:js && npm run check:icons && npm run verify:content && npm test && npm run review && npm run check:browser && npm run check:quran && npm run check:interaction",
+    "check:all": "npm run check:js && npm run check:icons && npm run check:order && npm run verify:content && npm test && npm run review && npm run check:browser && npm run check:reader && npm run check:quran && npm run check:interaction",
     "icons": "python3 scripts/build-icons.py",
     "test": "node --test tests/*.test.js",
     "serve": "python3 -m http.server 8765",
@@ -22,7 +24,8 @@
     "merge:all": "node scripts/extract/merge-all.cjs",
     "check:quran": "node scripts/quran-read-check.mjs",
     "review": "node scripts/review-report.cjs",
-    "review:ci": "node scripts/review-report.cjs --ci"
+    "review:ci": "node scripts/review-report.cjs --ci",
+    "check:reader": "node scripts/check-reader.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.63.0",

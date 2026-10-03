@@ -135,6 +135,9 @@ export function has(key, id) {
 export const KEYS = {
   theme: "theme",
   fontSize: "font-size",
+  readerFont: "reader_font",
+  readerLine: "reader_line",
+  readerLast: "reader_last",
   readLessons: "readLessons",
   lessonScroll: "lessonScroll",
   bookmarks: "bookmarks",
@@ -247,6 +250,9 @@ export const IMPORT_TYPES = {
   askDraft: "string",
   prayer_city: "string",
   theme: "string",
+  reader_font: "string",
+  reader_line: "string",
+  reader_last: "string",
   // أعداد
   tasbihCount: "number",
   totalTasbih: "number",

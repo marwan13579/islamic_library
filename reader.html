@@ -48,6 +48,28 @@
   .audio{display:flex;align-items:center;gap:10px;background:var(--card);border:1px solid var(--line);
     border-radius:12px;padding:10px 14px;margin:12px 0;font-size:.82rem;color:var(--ink-soft)}
   .audio audio{flex:1;height:38px}
+  .navrow{display:flex;gap:8px;flex-wrap:wrap;margin-top:22px;padding-top:14px;border-top:1px dashed var(--line)}
+  .navrow a,.navrow button{font-family:"Cairo";font-weight:600;font-size:.82rem;background:var(--paper-2);
+    border:1px solid var(--line);color:var(--ink);padding:9px 16px;border-radius:999px;
+    cursor:pointer;text-decoration:none;display:inline-block}
+
+  /* أدوات القراءة — من src/components/reader-tools.js */
+  html{font-size:calc(16px * var(--fs, 1))}
+  .rtools{position:sticky;top:0;z-index:20;display:flex;flex-wrap:wrap;gap:6px;align-items:center;
+    padding:10px 0;margin-bottom:4px;background:color-mix(in srgb, var(--paper) 92%, transparent);
+    backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+  .rtool{font-family:"Cairo";font-size:.8rem;background:var(--card);border:1px solid var(--line);
+    color:var(--ink);padding:7px 12px;border-radius:10px;cursor:pointer;white-space:nowrap}
+  .rsel{padding:6px 8px}
+  .rfind-field{min-width:8.5em;flex:1 1 8.5em}
+  .rhits{font-size:.72rem;color:var(--ink-soft);min-width:4em}
+  .router{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin:0 0 14px}
+  .routline{margin:0;padding-inline-start:1.4em;font-size:.9rem;line-height:2}
+  .routline a{color:var(--ink);text-decoration:none}
+  .routline a:hover{color:var(--gold)}
+  .body{font-family:var(--rf, "Amiri", serif);line-height:var(--rl, 2.15)}
+  mark.rfind{background:var(--gold-soft);color:#2b1e05;border-radius:3px}
+ (فهرس الترتيب، قائمة انحدار دائمة، أدوات قارئ، وروابط البحث)
 </style>
 </head>
 <body>
@@ -56,6 +78,7 @@
 <div class="rhead">
   <h1 id="rTitle">جارٍ التحميل…</h1>
   <p class="sub" id="rSub"></p>
+  <p class="sub" id="shareNote" role="status"></p>
 </div>
 
 <main class="wrap" id="main"><p class="lib-state">جارٍ التحميل…</p></main>
@@ -64,6 +87,8 @@
   import { escapeHtml, toArNum } from "./src/lib/text.js";
   import { readItem, browse, isBookmarked, toggleBookmark } from "./src/lib/library.js";
   import { renderBody, param } from "./src/lib/content-ui.js";
+  import { mountReaderTools } from "./src/components/reader-tools.js";
+  import { read, write, KEYS } from "./src/lib/storage.js";
 
   const main = document.getElementById("main");
   const titleEl = document.getElementById("rTitle");
@@ -115,12 +140,58 @@
     );
   }
 
+  /** مشاركة العنصر: رابطه إن كان المتصفح يفعل، ونصّه وإلّا. */
+  async function shareItem(text) {
+    const url = location.href;
+    if (navigator.share) {
+      try {
+        await navigator.share({ title: document.title, text: text.slice(0, 400), url });
+        return;
+      } catch (error) {
+        if (error && error.name === "AbortError") return;
+      }
+    }
+    try {
+      await navigator.clipboard.writeText(`${document.title}\n${url}`);
+      const note = document.getElementById("shareNote");
+      if (note) {
+        note.textContent = "نُسخ رابط العنوان";
+        setTimeout(() => {
+          note.textContent = "";
+        }, 2000);
+      }
+    } catch {
+      /* لا حافظة ولا مشاركة: يبقى الرابط في شريط العنوان. */
+    }
+  }
+
+  /** آخر عنصر قُرئ، للرجوع إليه من صفحة أخرى. */
+  function lastRead() {
+    const raw = read(KEYS.readerLast, "");
+    const at = String(raw).indexOf(":");
+    return at < 1 ? null : { type: raw.slice(0, at), id: raw.slice(at + 1) };
+  }
+
   const type = param("type", "fatwa");
   const id = param("id", "");
 
+  const recent = lastRead();
+
   if (!id) {
     titleEl.textContent = "لا يوجد عنصر";
-    main.innerHTML = `<p class="lib-empty">اختر عنصرًا من المكتبة.</p>`;
+    const hint = document.createElement("p");
+    hint.className = "lib-empty";
+    hint.textContent = "اختر عنصرًا من المكتبة.";
+    main.innerHTML = "";
+    main.appendChild(hint);
+    if (recent) {
+      const back = document.createElement("p");
+      const link = document.createElement("a");
+      link.href = `reader.html?type=${encodeURIComponent(recent.type)}&id=${encodeURIComponent(recent.id)}`;
+      link.textContent = "افتح آخر ما قرأته";
+      back.appendChild(link);
+      main.appendChild(back);
+    }
   } else {
     const item = await readItem(type, id);
     if (!item) {
@@ -157,7 +228,18 @@
         body = renderBody(item.content) + refs(item);
       }
 
-      main.innerHTML = `<div class="body">${body}</div>`;
+      const prose = document.createElement("div");
+      prose.className = "body";
+      prose.innerHTML = body;
+      main.innerHTML = "";
+      main.appendChild(prose);
+
+      /* الأدوات تُركَّب على المتن مباشرة: تحتاج أن تُدرجه في الصفحة
+         قبل المتن، وأن تقرأ نصوصه — فلا يصحّ أن تُبنى نصًّا. */
+      mountReaderTools({ body: prose, onShare: shareItem });
+
+      /* وآخر موضع قراءة، بصيغة `type:id` فيقرأه الفهرس والقارئ معًا. */
+      write(KEYS.readerLast, `${type}:${id}`);
 
       const show = document.getElementById("showAns");
       if (show) {
