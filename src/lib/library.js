@@ -88,34 +88,22 @@ function reversed(meta, sort) {
 }
 
 /**
- * مفتاح الترتيب الزمني: التاريخ إن وُجد، وإلا رقم المعرّف.
- *
- * في المجموعات بلا تاريخ — الفتاوى والتاريخ والاختبارات — كان حقل `d`
- * فارغًا فيصير المقارنة بين فراغين، فلا يفرق «الأحدث» عن «الأقدم».
- * فنزلنا إلى رقم المعرّف، ورُبط بطول ثابت فيصير الترتيب عدديًّا.
- * @param {Summary} item
- * @returns {string}
- */
-function stamp(item) {
-  const date = String(item.d ?? "").trim();
-  if (date) return date;
-  const m = /(\d+)$/.exec(String(item.id ?? ""));
-  return m ? m[1].padStart(12, "0") : "";
-}
-
-/**
  * ترتيب العرض: الأحدث، الأقدم. لا ثالثَ، إذ لا قياس للكثرة في المصدر.
  *
- * هذا هو تعريف الترتيب وحده، و`order.json` صورة محسوبة منه. فأينما غاب
- * الفهرس حُسب الترتيب هنا، وحيثما حُسب الفهرس بفئه نفسها — يمنع
+ * الترتيبُ ترتيبُ البناء معكوسًا أو كما هو، لا ترتيبٌ يُعاد اشتقاقه من
+ * الحقول: فمفتاحٌ زمني مشتقّ من `d` يخرج بالمجموعات التي تشترك في
+ * تاريخها، وبلا تاريخٍ أصلًا يقع على الرقم الأخير من المعرّف فيرتب
+ * المجموعةَ ترتيبًا لم يقصده أحد. و`order.json` صورة محسوبة من هنا،
+ * فأينما غاب الفهرس حُسب الترتيب، وحيثما حُسب بفئه نفسها — يمنع
  * `tests/library-sort-index.test.js` افتراقهما.
+ * @param {CollectionMeta} meta
  * @param {Summary[]} items
  * @param {string} sort
  * @returns {Summary[]}
  */
-function order(items, sort) {
-  if (sort === "oldest") return [...items].sort((a, b) => stamp(a).localeCompare(stamp(b)));
-  return [...items].sort((a, b) => stamp(b).localeCompare(stamp(a)));
+function order(meta, items, sort) {
+  if (sort === "oldest") return reversed(meta, sort) ? items : [...items].reverse();
+  return reversed(meta, sort) ? [...items].reverse() : items;
 }
 
 /** كل ملخّصات مجموعة، حين لا يتوفّر فهرس الترتيب. */

@@ -47,13 +47,8 @@ installBrowser();
 const shards = () => import(`file://${path.join(ROOT, "src/lib/shards.js")}`);
 const library = () => import(`file://${path.join(ROOT, "src/lib/library.js")}`);
 
-/** مفاتيح المقارنة كما في `order()` — تُعاد هنا عمدًا لاختبار الافتراق. */
-function stamp(item) {
-  const date = String(item.d ?? "").trim();
-  if (date) return date;
-  const m = /(\d+)$/.exec(String(item.id ?? ""));
-  return m ? m[1].padStart(12, "0") : "";
-}
+/** اتجاه «الأحدث» كما في `reversed()` — يُعاد هنا عمدًا لاختبار الافتراق. */
+const newestAtEnd = (meta) => meta.listOrder !== "desc";
 
 /** الترتيب الكامل بالطريقة التي كانت تعمل قبل الفهرس. */
 async function sortedByCode(type, sort) {
@@ -61,10 +56,11 @@ async function sortedByCode(type, sort) {
   const meta = await s.collectionMeta(type);
   const rows = [];
   for (let i = 0; i < meta.listFiles.length; i += 1) rows.push(...(await s.listShard(type, i)));
-  if (sort === "oldest") {
-    return { rows, sorted: [...rows].sort((a, b) => stamp(a).localeCompare(stamp(b))) };
-  }
-  return { rows, sorted: [...rows].sort((a, b) => stamp(b).localeCompare(stamp(a))) };
+  /* الترتيب هو ترتيب البناء معكوسًا أو كما هو. اشتقاق مفتاحٍ من الحقول
+     بدلًا من ذلك يخرجه عن ترتيبه: فالخطبةُ تتشارك ١٢٧٧ تاريخًا، والاختبار
+     لا تاريخ له أصلًا فيقع المفتاح على رقم المعرّف الأخير. */
+  const newest = newestAtEnd(meta) ? [...rows].reverse() : rows;
+  return { rows, sorted: sort === "oldest" ? [...newest].reverse() : newest };
 }
 
 /* ------------------------------------------------------ الدلالة */

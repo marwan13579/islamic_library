@@ -23,20 +23,15 @@ const ROOT = path.resolve(__dirname, "..");
 const LIBRARY = path.join(ROOT, "content", "library");
 
 /**
- * مفتاح الترتيب الزمني للعنصر.
+ * اتجاه «الأحدث» في مجموعة واحدة: يُقرأ من طرف القوائم أم من أولها.
  *
- * مكرَّر عن `stamp()` في `src/lib/library.js` بالحرفي، ومنه يجيء شرط
- * أنهما متطابقان. و`tests/library-sort-index.test.js` يمنع افتراقهما:
- * يبني الترتيب بالمفتاحين ويقارن النتائج، فإذا اختلفا فشل الفحص.
- * @param {{d?: string, id?: string}} item
- * @returns {string}
+ * مكرَّر عن `reversed()` في `src/lib/library.js`، ومنه يجيء شرط أنهما
+ * متطابقان، و`tests/library-sort-index.test.js` يمنع افتراقهما.
+ * @param {{listOrder?: string}} meta
+ * @returns {boolean}
  */
-function stamp(item) {
-  const date = String(item.d ?? "").trim();
-  if (date) return date;
-  const m = /(\d+)$/.exec(String(item.id ?? ""));
-  // الرقم يُربَّط بطول ثابت فيصير المقارنة النصوصية ترتيبًا عدديًا.
-  return m ? m[1].padStart(12, "0") : "";
+function newestAtEnd(meta) {
+  return meta.listOrder !== "desc";
 }
 
 function buildOrder(type, check) {
@@ -52,20 +47,18 @@ function buildOrder(type, check) {
     throw new Error(`${type}: القوائم فيها ${rows.length} والبيان يقول ${meta.count}`);
   }
 
-  const keys = rows.map(stamp);
+  /* الفهرس ترتيبُ البناء نفسُه معكوسًا أو كما هو، لا ترتيبٌ يُعاد
+     اشتقاقه من الحقول. وفارقُ ذلك ليس تجميليًا: فحين اشتُقّ مفتاحٌ زمني
+     من `d` خرجت الخطبةُ عن ترتيبها في المواريخ المشتركة — ١٢٧٧ تاريخًا
+     مكررًا في ٤٥٣١ خطبة، فرُتّبت غير ترتيبها؛ وفي الاختبار لا تاريخ
+     أصلًا، فوقع المفتاحُ على الرقم الأخير من المعرّف، وهو في ٥٨٢٠
+     سؤالًا لا يزيد على ٢٠ قيمة، فجمعت الأسئلةَ بأرقامها متفرّقةً ورتّبت
+     المجموعةَ ترتيبًا لم يقصده أحد.
+
+     فحقلُ التاريخ ليس ترتيبًا، وترتيبُ البناء هو الترتيب. */
   const every = rows.map((_, at) => at);
-
-  /* الترتيب يُحسب بترتيب الأجزاء ثم ترتيبها المخزَّنة، فناتج المطابقة
-     يدخل الترتيب المستقرّ فتساوي ناتج المقارنة على المصفوفة كلها. وعند
-     التعادل يرجع المقياس إلى الموضع، وهو ترتيب الترتيب المستقرّ نفسه —
-     فالمتساويات تبقى بترتيب البناء كما في `order()`.
-
-     و«الأقدم» يُحسب مستقلًا لا معكوسًا لـ«الأحدث»: المعكوس يقلب
-     المتساويات فيخرج عنها ترتيبًا مخالفًا للترتيب المستقرّ. */
-  const newer = (a, b) => (keys[b] < keys[a] ? -1 : keys[b] > keys[a] ? 1 : a - b);
-  const older = (a, b) => (keys[a] < keys[b] ? -1 : keys[a] > keys[b] ? 1 : a - b);
-  const newest = [...every].sort(newer);
-  const oldest = [...every].sort(older);
+  const newest = newestAtEnd(meta) ? [...every].reverse() : every;
+  const oldest = [...newest].reverse();
 
   /* ولا ثالثَ هنا: الحقل `r` دقائق قراءة لا عددُ مرّات، فترتيبه «الأكثر»
      ترتيبٌ بلا سند. فمن لا يجد في مصدره قياسًا للكثرة لا يدّعيه. */
