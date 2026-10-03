@@ -211,6 +211,35 @@ export function hisnBab(no) {
   return load(`hisn/bab-${String(no).padStart(3, "0")}.json`);
 }
 
+/** @returns {Promise<any>} فهرس سور «السراج في بيان غريب القرآن». */
+export function sirajIndex() {
+  return load("siraj/index.json");
+}
+
+/**
+ * غريب سورة بعينها: مدخلاتها بمعانيها، ملف واحد لكل سورة.
+ * @param {number} no من ١ إلى ١١٤
+ */
+export function sirajOf(no) {
+  return load(`siraj/sura-${String(no).padStart(3, "0")}.json`);
+}
+
+/**
+ * دلو كلمات الغريب على أول حرف: بحث «غُلْف» يقرأ دلو «غ» وحده.
+ * @param {string} letter حرف واحد بعد التطبيع
+ */
+export function sirajTerms(letter) {
+  return load(`siraj/terms/${letter}.json`);
+}
+
+/**
+ * مقدمة الكتاب أو خاتمته.
+ * @param {"muqaddima"|"khatima"} which
+ */
+export function sirajFront(which) {
+  return load(`siraj/${which}.json`);
+}
+
 /** @returns {Promise<any>} القرّاء الـ١٥٨. */
 export function reciters() {
   return load("reciters.json");

@@ -117,7 +117,10 @@
     reader.innerHTML = "";
     const head = document.createElement("div");
     head.className = "rhead";
-    head.innerHTML = `<h1>${escapeHtml(sura.name)}</h1><p class="sub">سورة ${toArNum(sura.no)} · ${toArNum(sura.ayat.length)} آية</p>`;
+    head.innerHTML =
+      `<h1>${escapeHtml(sura.name)}</h1>` +
+      `<p class="sub">سورة ${toArNum(sura.no)} · ${toArNum(sura.ayat.length)} آية · ` +
+      `<a href="43-siraj.html?s=${sura.no}">غريب السورة</a></p>`;
     reader.appendChild(head);
 
     for (const aya of sura.ayat) {

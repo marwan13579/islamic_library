@@ -6,6 +6,8 @@
     "build:pages": "npm run build && node scripts/prepare-pages.cjs",
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./tailwind.input.css -o ./tailwind.generated.css --minify",
     "download:quran": "node scripts/download-quran-data.cjs",
+    "download:siraj": "node scripts/fetch-siraj-source.cjs",
+    "build:siraj": "node scripts/build-siraj-content.cjs",
     "build:order": "node scripts/build-order-index.cjs",
     "check:order": "node scripts/build-order-index.cjs --check",
     "extract:data": "node scripts/extract/extract-data.cjs",

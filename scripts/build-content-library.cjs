@@ -747,11 +747,32 @@ function main() {
     ),
     tafsir,
     hisn,
+    /* السِراج في بيان غريب القرآن ليس من Altaqwaa: نصّه كتابٌ يبنى بـ
+       `npm run build:siraj` من `sources/siraj/raw.json`. فنقرأ بيانه ونرفعه
+       كما هو، وحين غاب اختفى الحقل من JSON لا خرج فيه. */
+    siraj: sirajSummary(),
     misc,
     search,
   });
 
   log("\n✔ اكتمل بناء المحتوى");
+}
+
+/**
+ * خلاصة «السراج» للبيان: عدد اللغات وكلمات الفهرس وسورها.
+ * @returns {{count: number, terms: number, surahs: number}|undefined}
+ */
+function sirajSummary() {
+  const file = path.join(OUT, "siraj", "index.json");
+  if (!fs.existsSync(file)) return undefined;
+  const data = readJson(file);
+  return {
+    count: data.count,
+    terms: data.terms,
+    surahs: (data.surahs || []).length,
+    source: data.source && data.source.url,
+    builtBy: "npm run build:siraj",
+  };
 }
 
 main();

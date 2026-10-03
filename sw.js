@@ -13,7 +13,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v35";
+const CACHE_VERSION = "islamic-library-v36";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -80,7 +80,7 @@ const SHELL = [
   // المكتبة المستوردة — صفحاتها وأصولها القليلة فقط.
   "./library.css", "./35-tafsir.html", "./36-hisn.html", "./37-fatwa.html",
   "./38-khutbah.html", "./39-tarikh.html", "./40-reciters.html", "./41-quiz.html",
-  "./42-athan.html", "./reader.html",
+  "./42-athan.html", "./43-siraj.html", "./reader.html",
   "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
   "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
   // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.

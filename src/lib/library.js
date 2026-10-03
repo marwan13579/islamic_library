@@ -6,7 +6,7 @@
  * @module lib/library
  */
 
-import { collectionMeta, listShard, itemShard, load, orderIndex, tafsirOf, hisnIndex, hisnBab } from "./shards.js";
+import { collectionMeta, listShard, itemShard, load, orderIndex, tafsirOf, hisnIndex, hisnBab, sirajOf } from "./shards.js";
 import { read as readStorage, write as writeStorage, KEYS } from "./storage.js";
 
 /** عدد العناصر في صفحة القوائم. */
@@ -306,6 +306,20 @@ export function tafsirIndex() {
 
 /** @returns {Promise<{count: number, bab: any[]}>} فهرس أبواب حصن المسلم. */
 export { hisnIndex };
+
+/**
+ * غريب سورة: «السراج في بيان غريب القرآن» بمداخله ومعانيها.
+ * @param {number} surah 1..114
+ * @returns {Promise<{no: number, name: string, verses: number, place: string, entries: any[]}|null>}
+ */
+export async function readSiraj(surah) {
+  const no = Math.max(1, Math.min(114, Math.round(Number(surah) || 1)));
+  try {
+    return await sirajOf(no);
+  } catch {
+    return null;
+  }
+}
 
 /**
  * يقرأ سورة كاملة مع تفسير آياتها: ملف واحد لكل سورة.
