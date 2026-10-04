@@ -85,6 +85,7 @@
   .pattern{position:absolute;inset:0;opacity:.1;pointer-events:none}
   header h1{font-family:"Amiri",serif;font-weight:700;margin:0;font-size:clamp(2.1rem,8vw,3.2rem);position:relative}
   .install-top{position:absolute;top:14px;right:14px;z-index:3}
+  #installToast{opacity:0;transition:opacity .3s}
   header p{margin:.4rem auto 0;max-width:40ch;color:var(--ink-soft);font-size:.92rem;position:relative}
 
   .search{
@@ -994,12 +995,6 @@ import("./src/lib/auto-notify.js")
   var installPrompt = null;
   var ua = navigator.userAgent;
   var isIOS = /iphone|ipad|ipod/i.test(ua);
-  var isAndroid = /android/i.test(ua);
-  var isFirefox = /firefox/i.test(ua);
-  var isSafari = /^((?!chrome|edge|crios|crr).)*safari/i.test(ua);
-  var isWindows = /windows/i.test(ua);
-  var isMac = /mac/i.test(ua);
-  var isLinux = /linux/i.test(ua);
   var btn = document.getElementById("installBtn");
   if(!btn) return;
   btn.hidden = false;
@@ -1011,20 +1006,25 @@ import("./src/lib/auto-notify.js")
     if(installPrompt){
       installPrompt.prompt();
       installPrompt.userChoice.then(function(choice){
-        if(choice.outcome==="accepted"){ alert("تم تثبيت التطبيق 🎉\nمكتبتك الآن متاحة من شريط المهام أو الإعدادات."); }
         installPrompt = null;
       });
       return;
     }
-    var msg;
-    if(isIOS){ msg="على الآيفون:\n١. افتح القائمة بمشاركة الصفحة (زر المربعات المربوطة)\n٢. اختر «إضافة إلى الشاشة الرئيسية»\n٣. سيظهر أيقونة على شاشتك"; }
-    else if(isAndroid && isFirefox){ msg="على أندرويد (فايرفوكس):\nافتح القائمة ≡ ثم «إضافة إلى الشاشة الرئيسية»"; }
-    else if(isMac && isSafari){ msg="على ماك (سفاري):\n١. اضغط على زر المشاركة (⧉) في شريط العناوين\n٢. اختر «إضافة إلى الشاشة الرئيسية»"; }
-    else if(isWindows && isFirefox){ msg="على ويندوز (فايرفوكس):\nافتح القائمة ≡ ثم «تثبيت هذه الموقع»"; }
-    else if(isWindows){ msg="على ويندوز:\nافتح القائمة ⋮ (Chrome/Edge) ثم «تثبيت المكتبة الإسلامية»"; }
-    else if(isLinux){ msg="على لينكس:\nفي Chrome/Edge افتح القائمة ⋮ ثم «تثبيت»، أو استخدم ← لإضافة إلى الشاشة الرئيسية"; }
-    else { msg="لتثبيت التطبيق:\nاستخدم خيار «إضافة إلى الشاشة الرئيسية» أو «تثبيت» من قائمة المتصفح."; }
-    alert(msg);
+    var toast = document.getElementById("installToast");
+    if(!toast){
+      var div = document.createElement("div");
+      div.id = "installToast";
+      div.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(13,50,44,.92);color:#fff;padding:12px 20px;border-radius:12px;font-family:Cairo,sans-serif;font-size:.85rem;z-index:9999;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3)";
+      div.style.direction = "rtl";
+      div.innerHTML = isIOS
+        ? "شارك الصفحة ثم اختر «إضافة إلى الشاشة الرئيسية» لتثبيت التطبيق 📱"
+        : "استخدم قائمة المتصفح (⋮ أو ≡) ثم «تثبيت» أو «إضافة إلى الشاشة الرئيسية» لتثبيت التطبيق";
+      document.body.appendChild(div);
+      toast = div;
+    }
+    toast.style.opacity = "1";
+    clearTimeout(toast._hide);
+    toast._hide = setTimeout(function(){ toast.style.opacity = "0"; }, 4500);
   });
 })();
 </script>
