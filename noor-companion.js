@@ -1308,29 +1308,32 @@
    */
   function summarizeSession(options) {
     var tearingDown = options && options.tearingDown;
-    if (session.summarized) return;
-    if (session.seconds < SESSION_MIN_SECONDS) return;
-    if (!session.surahs.length && !session.reflections && !session.actions) return;
+    if (session.summarized) return false;
+    if (session.seconds < SESSION_MIN_SECONDS) return false;
+    if (!session.surahs.length && !session.reflections && !session.actions) return false;
     session.summarized = true;
 
     bump("sessions");
+    var lines = sessionLines();
+
+    /* صفحة مخفية لا تراها العين، فلا نرسم فيها؛ نرسمها عند رجوعها. */
+    if (tearingDown || document.hidden) return true;
+    renderSummary(lines);
+    return true;
+  }
+
+  function sessionLines() {
     var lines = [];
     if (session.surahs.length) {
-      lines.push(
-        "<b>قرأت:</b> " +
-          esc(session.surahs.map(surahName).join("، "))
-      );
+      lines.push("<b>قرأت:</b> " + esc(session.surahs.map(surahName).join("، ")));
       lines.push("<b>وقت القراءة:</b> " + esc(sessionLabel()));
     }
-    if (session.reflections) {
-      lines.push("<b>تدبرت:</b> " + arNum(session.reflections) + " عبرة");
-    }
-    if (session.actions) {
-      lines.push("<b>عمل صالح:</b> " + arNum(session.actions));
-    }
+    if (session.reflections) lines.push("<b>تدبرت:</b> " + arNum(session.reflections) + " عبرة");
+    if (session.actions) lines.push("<b>عمل صالح:</b> " + arNum(session.actions));
+    return lines;
+  }
 
-    if (tearingDown) return;
-
+  function renderSummary(lines) {
     showCard({
       title: "🌙 حصيلة جلستك",
       body: '<p class="noor-meta" style="border:0;padding:0;margin-top:4px">' + lines.join("<br>") + "</p>",
@@ -1381,13 +1384,19 @@
     }
     setInterval(tick, 15000);
 
+    var pendingSummary = false;
     document.addEventListener("visibilitychange", function () {
       if (document.hidden) {
-        summarizeSession();
+        if (summarizeSession({ tearingDown: true })) pendingSummary = true;
         clearTimers();
-      } else {
-        schedule();
+        return;
       }
+      if (pendingSummary) {
+        pendingSummary = false;
+        var lines = sessionLines();
+        if (lines.length) renderSummary(lines);
+      }
+      schedule();
     });
     window.addEventListener("pagehide", function () { summarizeSession({ tearingDown: true }); });
   }
