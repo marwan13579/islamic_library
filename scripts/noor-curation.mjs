@@ -355,7 +355,7 @@ export const PAGE_ROUTES = [
     page: "hajj", feature: "hajj", topics: ["hajj"] },
   { match: ["7-ramadan"],
     page: "ramadan", feature: "fasting", topics: ["taqwa", "time"] },
-  { match: ["13-kids-adab", "19-adab-ziyara", "14-mawarith", "23-search", "41-quiz", "40-reciters", "32-radio", "21-sites", "37-fatwa", "33-academy", "31-card-maker"],
+  { match: ["13-kids-adab", "19-adab-ziyara", "14-mawarith", "41-quiz", "40-reciters", "32-radio", "21-sites", "37-fatwa", "33-academy", "31-card-maker"],
     page: "learn", feature: "library", topics: ["knowledge", "akhlaq"] },
   { match: ["16-tadabbur"],
     page: "quran", feature: "tadabbur", topics: ["quran"] },

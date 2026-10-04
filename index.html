@@ -57,7 +57,7 @@
   "description": "موقع إسلامي يجمع القرآن والأذكار والصلاة والقبلة والتسبيح والزكاة وأدوات تعليمية، ويعمل بدون إنترنت وبلا تسجيل.",
   "potentialAction": {
     "@type": "SearchAction",
-    "target": { "@type": "EntryPoint", "urlTemplate": "23-search.html?q={search_term_string}" },
+    "target": { "@type": "EntryPoint", "urlTemplate": "./?q={search_term_string}" },
     "query-input": "required name=search_term_string"
   }
 }
@@ -580,9 +580,6 @@ const TOOLS = [
   {id:"ibadat", emoji:"🕌", name:"العبادات — دليل تعليمي", desc:"الوضوء، فرائض وسنن الصلاة، الصيام، والزكاة", cat:"learn",
    url:"24-ibadat.html"},
 
-  {id:"libsearch", emoji:"🔎", name:"بحث شامل", desc:"دوّر في الأذكار والأحاديث والأدعية كلها من مكان واحد", cat:"dhikr",
-   url:"23-search.html"},
-
   {id:"prayertimes", emoji:"🕐", name:"مواقيت الصلاة", desc:"الفجر إلى العشاء، عدّ تنازلي، طرق حساب ومذاهب متعددة", cat:"calc",
    url:"29-prayer-times.html"},
 
@@ -595,8 +592,6 @@ const TOOLS = [
   {id:"sitesdir", emoji:"🗂️", name:"دليل المواقع الإسلامية", desc:"١٨ موقع مرجعي بشرح أقسام كل موقع", cat:"books",
    url:"21-sites-directory.html"},
 
-  {id:"libsearch2", emoji:"🔎", name:"البحث في المكتبة", desc:"بحث عربي في ٤٢ ألف عنصر: الفتاوى والخطب والتاريخ والتفسير وحصن المسلم", cat:"books",
-   url:"23-search.html"},
   {id:"libfatwa", emoji:"⚖️", name:"الفتاوى", desc:"فتاوى موثّقة مصنّفة في العبادات والمعاملات والفقه والآداب", cat:"books",
    url:"37-fatwa.html"},
   {id:"libtafsir", emoji:"📖", name:"التفسير الميسر", desc:"تفسير كل آية من القرآن الكريم مع معناها — ١١٤ سورة", cat:"books",
@@ -694,6 +689,8 @@ let sortMode="default";
 function toolCard(t){
   const wrap=document.createElement("div");
   wrap.className="tool";
+  /* يقرأ دليلُ المكتبة هذه البيانات ليعرض كل أداةٍ بوصفها ورابطها. */
+  wrap.dataset.tool=t.id;
   wrap.style.padding="0";
   const a=document.createElement("a");
   a.href=t.url; a.target=t.external?"_blank":"_self";
@@ -842,12 +839,19 @@ function renderCatsNav(){
 }
 renderCatsNav();
 
-document.getElementById("search").addEventListener("input",e=>{
-  query = e.target.value.trim();
-  renderAll();
+document.getElementById("search").addEventListener("input", e => {
+  const q = e.target.value.trim();
+  if (typeof openSearchModal === "function") {
+    openSearchModal();
+    const input = document.getElementById("searchModalInput");
+    if (input) {
+      input.value = q;
+      input.dispatchEvent(new Event("input"));
+    }
+  }
 });
-document.getElementById("search").addEventListener("focus",()=>{
-  if(typeof openSearchModal === "function") openSearchModal();
+document.getElementById("search").addEventListener("focus", () => {
+  if (typeof openSearchModal === "function") openSearchModal();
 });
 
 applyLanguage();

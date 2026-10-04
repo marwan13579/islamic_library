@@ -82,7 +82,7 @@ const SHELL = [
   "./11-hajj-umrah.html", "./12-mustajab.html", "./13-kids-adab.html", "./14-mawarith.html",
   "./15-tasbeeh-jamai.html", "./16-tadabbur.html", "./17-wird.html", "./18-qada.html",
   "./19-adab-ziyara.html", "./20-voice-azkar.html", "./21-sites-directory.html", "./22-qibla.html",
-  "./23-search.html", "./24-ibadat.html", "./25-azkar-shamila.html", "./26-daily-system.html",
+  "./24-ibadat.html", "./25-azkar-shamila.html", "./26-daily-system.html",
   "./27-hadith.html", "./28-hijri.html", "./29-prayer-times.html", "./30-quran-full.html",
   "./31-card-maker.html", "./32-radio-hub.html",
   // المكتبة المستوردة — صفحاتها وأصولها القليلة فقط.

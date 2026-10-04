@@ -19,7 +19,6 @@
     { "source": "/hijri", "destination": "/28-hijri.html", "permanent": true },
     { "source": "/quran-khatma", "destination": "/17-wird.html", "permanent": true },
     { "source": "/wird", "destination": "/17-wird.html", "permanent": true },
-    { "source": "/library", "destination": "/23-search.html", "permanent": true },
     { "source": "/islamic-library", "destination": "/", "permanent": true },
     { "source": "/today", "destination": "/", "permanent": true }
   ],

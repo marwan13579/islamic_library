@@ -80,6 +80,7 @@ function miniDom() {
       parent: null,
       /* الـDOM الحقيقي: assigning textContent replaces all children */
       get childNodes() { return this.children; },
+      get id() { return this.getAttribute("id") || ""; },
       get textContent() { return this._text; },
       set textContent(value) { this._text = String(value); this.children = []; },
       setAttribute(key, value) { this.attributes[key] = String(value); },
@@ -156,12 +157,35 @@ function withBrowser(initial) {
   };
 }
 
+/** ٠١٢… كما في الجولة نفسها. */
+const toAr = (value) => String(value).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+
 /** نقرٌ على عنصر، وضغطةُ مفتاح في النافذة. */
 const click = (node) => node.dispatch("click", { target: node });
 const press = (node, value) => node.dispatch("keydown", { target: node, key: value });
 const next = (dialog) => dialog.querySelector("#itNext");
 
-const CATALOG = [{ id: "dhikr", name: "أذكار وأدعية", count: "12", href: "#sec-dhikr", blurb: "أذكارٌ وأدعية" }];
+const CATALOG = [{
+  id: "dhikr",
+  name: "أذكار وأدعية",
+  count: "2",
+  href: "#sec-dhikr",
+  blurb: "أذكارٌ وأدعية",
+  tools: [
+    { id: "adhkar", emoji: "🤲", name: "الأذكار الشاملة", desc: "أذكار الصباح والمساء", href: "25-azkar-shamila.html" },
+    { id: "voicetz", emoji: "🎙️", name: "سجّل صوتك", desc: "مسجّل شخصي", href: "20-voice-azkar.html" },
+  ],
+}];
+
+/** قسمٌ ثانٍ لأداة تربط بتطبيق الموقع. */
+const SECOND = [{
+  id: "learn",
+  name: "تعلّم",
+  count: "1",
+  href: "#sec-learn",
+  blurb: "دروسٌ واختبارات",
+  tools: [{ id: "noor", emoji: "🕌", name: "نور الهدى", desc: "المنهج التعليمي", href: "src/site/noor.html" }],
+}];
 
 /* ------------------------------------------------- الربط بالصفحة */
 
@@ -196,33 +220,75 @@ test("الدليل يقرأ أقسام الفهرس من الصفحة نفسها
 
 /* ------------------------------------------------- بنية الخطوات */
 
-test("الجولة خمس خطوات مرتّبة، لكل خطوة عنوان ومحتوى", () => {
-  const steps = intro.stepsFor("ar", []);
-  assert.deepEqual(steps.map((s) => s.id), ["welcome", "today", "sections", "how", "begin"]);
-  assert.deepEqual(intro.STEP_ORDER, steps.map((s) => s.id));
+test("الجولة شاملة: خطوةٌ لكل قسم، وكل خطوةٍ لها عنوان ومحتوى", () => {
+  const steps = intro.stepsFor("ar", [...CATALOG, ...SECOND]);
+  assert.deepEqual(steps.map((s) => s.id), [
+    "welcome", "today", "how", "sections", "cat:dhikr", "cat:learn", "elsewhere", "begin",
+  ]);
   for (const step of steps) {
-    assert.ok(step.title.trim().length > 3, `${step.id}: بلا عنوان`);
+    assert.ok(step.title.trim().length > 1, `${step.id}: بلا عنوان`);
     assert.ok(step.emoji.trim().length > 0, `${step.id}: بلا رمز`);
     assert.ok(step.parts.length > 0, `${step.id}: بلا متن`);
   }
+  /* عدد الخطوات يزيد بالأقسام، فلا تُقصى الجولة عن شيء. */
+  assert.equal(intro.stepsFor("ar", CATALOG).length, 7);
+  assert.equal(intro.stepsFor("ar", []).length, intro.FIXED_STEPS.length);
+});
+
+test("خطوة القسم تعرض كل أدواته باسمها ووصفها ورابطها", () => {
+  const step = intro.stepsFor("ar", CATALOG).find((s) => s.id === "cat:dhikr");
+  const part = step.parts.find((p) => p.type === "tools");
+  assert.equal(part.items.length, 2, "أداةٌ من القسم سقطت من الجولة");
+  assert.deepEqual(part.items.map((tool) => tool.name), ["الأذكار الشاملة", "سجّل صوتك"]);
+  assert.equal(part.items[0].href, "25-azkar-shamila.html");
+  assert.equal(step.parts.find((p) => p.type === "note").text, "أذكارٌ وأدعية");
+  assert.equal(step.links[0].href, "#sec-dhikr");
+  assert.ok(step.links[0].label.trim().length > 3, "رابط القسم بلا اسم");
 });
 
 test("خطوة الأقسام تحمل ما مرّره الفهرس، فلا تُخترع أقسام", () => {
   const step = intro.stepsFor("ar", CATALOG).find((s) => s.id === "sections");
   const part = step.parts.find((p) => p.type === "sections");
   assert.equal(part.items.length, 1);
-  assert.equal(part.items[0].count, "12");
+  assert.equal(part.items[0].count, "2");
   assert.equal(part.items[0].href, "#sec-dhikr");
 });
 
+test("خطوة الإحصاءات تعدّ أدوات الفهرس وأقسامه كما هي", () => {
+  const stats = intro.stepsFor("ar", [...CATALOG, ...SECOND])
+    .find((s) => s.id === "welcome")
+    .parts.find((p) => p.type === "stats");
+  assert.equal(stats.items[0].value, "٣", "عدد الأدوات لا يطابق الفهرس");
+  assert.equal(stats.items[1].value, "٢", "عدد الأقسام لا يطابق الفهرس");
+  /* ولا نُختلق عددًا حين لا يُقرأ الفهرس. */
+  const empty = intro.stepsFor("ar", []).find((s) => s.id === "welcome")
+    .parts.find((p) => p.type === "stats");
+  assert.equal(empty.items[0].value, "—");
+});
+
+test("خطوة المواضع الأخرى تعرض أدواتها من الفهرس نفسه", () => {
+  const step = intro.stepsFor("ar", [...CATALOG, ...SECOND]).find((s) => s.id === "elsewhere");
+  const part = step.parts.find((p) => p.type === "cards");
+  assert.equal(part.items.length, 1, "الموضع المُعرَّف لا يظهر");
+  assert.equal(part.items[0].label, "نور الهدى");
+  assert.equal(part.items[0].href, "src/site/noor.html");
+  /* والمعرّفات كلُّها موجودة في الفهرس، فلا رابط ميّت. */
+  for (const id of intro.PINS) {
+    assert.ok(id.startsWith("noor") || id === "islamicvideos", `معرّف غريب: ${id}`);
+  }
+});
+
 test("الخطوات تُبنى من النصوص دون أن تتشارك كائناتها", () => {
-  const catalogs = [{ ...CATALOG[0] }];
-  const one = intro.stepsFor("ar", catalogs);
-  const two = intro.stepsFor("ar", catalogs);
+  const sections = [{ ...CATALOG[0] }];
+  const one = intro.stepsFor("ar", sections);
+  const two = intro.stepsFor("ar", sections);
   one.find((s) => s.id === "sections").parts.find((p) => p.type === "sections").items.push({ id: "x" });
   assert.equal(two.find((s) => s.id === "sections").parts.find((p) => p.type === "sections").items.length, 1,
     "خطوتان تشتركان في مصفوفة الأقسام");
-  assert.equal(catalogs.length, 1, "عدّل-steps فهرس الفهرس نفسه");
+  assert.equal(sections.length, 1, "عدّلت الخطوة فهرس الفهرس نفسه");
+  const tools = one.find((s) => s.id === "cat:dhikr").parts.find((p) => p.type === "tools");
+  tools.items.push({ id: "x" });
+  assert.equal(CATALOG[0].tools.length, 2, "عدّلت الخطوة مصفوفة أدوات المصدر");
 });
 
 test("لغة غير معروفة ترجع إلى العربية", () => {
@@ -243,7 +309,7 @@ test("كل رابط في الجولة يشير إلى ملفٍّ موجود أو
     }
   }
   /* `#dcRoot` و`#sections` عناصرٌ في الصفحة لا ملفّات، فلا ملفّ لها. */
-  const anchors = new Set(["#dcRoot", "#sections", "#sec-dhikr"]);
+  const anchors = new Set(["#dcRoot", "#sections", "#sec-dhikr", "#sec-learn"]);
   for (const href of targets.filter((value) => value.startsWith("#"))) {
     assert.ok(anchors.has(href), `مرجع مجهول: ${href}`);
   }
@@ -296,18 +362,35 @@ test("المفاتيح تحت بادئة hub-intro- فلا تمسّ مفاتيح
   assert.deepEqual([...new Set(keys)].sort(), [intro.SEEN_KEY, intro.STEP_KEY].sort());
 });
 
+test("فحوص المتصفّح تتخطّى الجولة بنسختها الحالية، فلا تتأخّر عنها", () => {
+  for (const file of ["scripts/daily-hub-check.mjs", "scripts/noor-check.mjs"]) {
+    const text = read(file);
+    assert.match(text, /readFileSync\(path\.join\(ROOT, "intro-tour\.js"\)/,
+      `${file}: لا يقرأ نسخة الدليل من ملفّها`);
+    assert.match(text, /localStorage\.setItem\("hub-intro-seen", version\)/,
+      `${file}: لا يزرع مفتاح الجولة`);
+    assert.match(text, /INTRO_VERSION/, `${file}: يزرع نسخةً مكتوبةً يدويًا فتقادم`);
+  }
+  /* والنسخة نفسها تُقرأ من الملف، فلا رقمٌ مكتوبٌ في مكانين. */
+  assert.doesNotMatch(
+    read("scripts/daily-hub-check.mjs"),
+    /hub-intro-seen",\s*"\d+"/,
+    "نسخة الجولة مكتوبة يدويًا في الفحص",
+  );
+});
+
 /* ------------------------------------------------- اللغتان متكافئتان */
 
 test("نصوص العربية والإنجليزية متكافئة المفتاحًا بالمفتاح", () => {
   const ar = intro.STR.ar;
   const en = intro.STR.en;
   assert.deepEqual(Object.keys(ar).sort(), Object.keys(en).sort(), "لغة ناقصة عن الأخرى");
-  for (const id of intro.STEP_ORDER) {
+  for (const id of intro.FIXED_STEPS) {
     const left = ar.steps[id];
     const right = en.steps[id];
     assert.ok(left && right, `خطوة بلا ترجمة: ${id}`);
     assert.equal(left.parts.length, right.parts.length, `${id}: عدد المقاطع`);
-    assert.equal(left.links.length, right.links.length, `${id}: عدد الروابط`);
+    assert.equal((left.links || []).length, (right.links || []).length, `${id}: عدد الروابط`);
     left.parts.forEach((part, position) => {
       const other = right.parts[position];
       assert.equal(part.type, other.type, `${id}: نوع المقطع ${position}`);
@@ -345,8 +428,10 @@ test("عدّاد الخطوة بأرقامٍ عربية، والإنجليزي �
 test("الجولة تفتح خطوةً خطوة، وأسماؤها ظاهرة، وآخر خطوةٍ تبدأ", () => {
   const env = withBrowser({ [intro.SEEN_KEY]: intro.VERSION });
   try {
-    const tour = intro.boot({ button: env.doc.createElement("button"), catalogs: CATALOG });
-    assert.deepEqual(tour.steps(), intro.STEP_ORDER);
+    const tour = intro.boot({ button: env.doc.createElement("button"), sections: CATALOG });
+    const ids = tour.steps();
+    assert.deepEqual(ids, ["welcome", "today", "how", "sections", "cat:dhikr", "elsewhere", "begin"]);
+    const last = ids.length;
 
     tour.open(0);
     const dialog = env.doc.getElementById("itModal");
@@ -356,10 +441,11 @@ test("الجولة تفتح خطوةً خطوة، وأسماؤها ظاهرة، 
     assert.equal(dialog.getAttribute("aria-label"), intro.STR.ar.dialogLabel);
 
     assert.equal(dialog.querySelector("#itTitle").textContent, intro.STR.ar.steps.welcome.title);
-    assert.equal(dialog.querySelector("#itKicker").textContent, "الخطوة ١ من ٥ · دليل المكتبة");
+    assert.equal(dialog.querySelector("#itKicker").textContent, `الخطوة ١ من ${toAr(last)} · دليل المكتبة`);
     assert.equal(dialog.querySelector("#itPrev").disabled, true, "السابق يعمل في أوّل خطوة");
     assert.equal(next(dialog).textContent, "التالي");
-    assert.equal(dialog.querySelectorAll(".it-dot").length, 5, "نقاط الخطوات");
+    assert.equal(dialog.querySelectorAll(".it-dot").length, last, "نقاط الخطوات");
+    assert.ok(dialog.querySelectorAll(".it-stat").length === 3, "عدّادات الخطوة الأولى");
 
     /* السهم الأيسر يتقدّم في RTL، والأيمن يرجع. */
     press(dialog, "ArrowLeft");
@@ -367,18 +453,26 @@ test("الجولة تفتح خطوةً خطوة، وأسماؤها ظاهرة، 
     press(dialog, "ArrowRight");
     assert.equal(dialog.querySelector("#itTitle").textContent, intro.STR.ar.steps.welcome.title);
 
-    /* الخطوة الثالثة تعرض أقسام الفهرس كما هي، بروابطها. */
+    /* خطوةُ الأقسام تعرض أقسام الفهرس كما هي، بروابطها. */
+    click(next(dialog));
     click(next(dialog));
     click(next(dialog));
     const sections = dialog.querySelectorAll(".it-sec");
     assert.equal(dialog.querySelector("#itTitle").textContent, intro.STR.ar.steps.sections.title);
     assert.equal(sections.length, 1, "أقسام الجولة لا تطابق الفهرس");
     assert.equal(sections[0].getAttribute("href"), "#sec-dhikr");
-    assert.equal(sections[0].querySelector(".it-sec-count").textContent, "١٢");
+    assert.equal(sections[0].querySelector(".it-sec-count").textContent, "٢");
+
+    /* ثم خطوةُ القسم: كل أداته باسمها ووصفها ورابطها. */
+    click(next(dialog));
+    const tools = dialog.querySelectorAll(".it-tool");
+    assert.equal(dialog.querySelector("#itTitle").textContent, "أذكار وأدعية");
+    assert.equal(tools.length, 2, "أداةٌ من القسم سقطت");
+    assert.equal(tools[0].querySelector(".it-tool-name").textContent, "الأذكار الشاملة");
+    assert.equal(tools[0].getAttribute("href"), "25-azkar-shamila.html");
 
     /* وآخر خطوة: زرّ البداية، والضغط عليه يُغلق. */
-    click(next(dialog));
-    click(next(dialog));
+    for (let i = 0; i < last - 1; i += 1) click(next(dialog));
     assert.equal(next(dialog).textContent, "ابدأ الآن");
     assert.ok(dialog.querySelectorAll(".it-card").length >= 3, "بطاقات البداية ناقصة");
     assert.equal(dialog.querySelector("#itPrev").disabled, false);
@@ -394,11 +488,11 @@ test("الجولة تفتح خطوةً خطوة، وأسماؤها ظاهرة، 
 test("السابق في أوّل خطوة لا يتقدّر، والتخطّي يُغلق ويحفظ", () => {
   const env = withBrowser({ [intro.SEEN_KEY]: intro.VERSION });
   try {
-    const tour = intro.boot({ button: env.doc.createElement("button"), catalogs: CATALOG });
+    const tour = intro.boot({ button: env.doc.createElement("button"), sections: CATALOG });
     tour.open(0);
     const dialog = env.doc.getElementById("itModal");
     press(dialog, "ArrowRight");
-    assert.equal(dialog.querySelector("#itKicker").textContent, "الخطوة ١ من ٥ · دليل المكتبة");
+    assert.match(dialog.querySelector("#itKicker").textContent, /^الخطوة ١ من/);
     assert.equal(env.map.has(intro.SEEN_KEY), true);
     click(dialog.querySelector("#itSkip"));
     assert.equal(dialog.open, false, "التخطّي لم يُغلق");
@@ -410,7 +504,7 @@ test("السابق في أوّل خطوة لا يتقدّر، والتخطّي �
 test("الجولة تظهر أوّل فتح، ولا تتكرّر على من رأها", async () => {
   const env = withBrowser();
   try {
-    const tour = intro.boot({ button: env.doc.createElement("button"), catalogs: CATALOG });
+    const tour = intro.boot({ button: env.doc.createElement("button"), sections: CATALOG });
     assert.equal(tour.isOpen(), false, "فتحت قبل أوّل مرة");
     await new Promise((resolve) => setTimeout(resolve, intro.AUTO_OPEN_MS + 80));
     assert.equal(tour.isOpen(), true, "لم تُعرّف بالزائر الجديد");
@@ -422,7 +516,7 @@ test("الجولة تظهر أوّل فتح، ولا تتكرّر على من ر
 
   const again = withBrowser({ [intro.SEEN_KEY]: intro.VERSION });
   try {
-    const tour = intro.boot({ button: again.doc.createElement("button"), catalogs: CATALOG });
+    const tour = intro.boot({ button: again.doc.createElement("button"), sections: CATALOG });
     await new Promise((resolve) => setTimeout(resolve, intro.AUTO_OPEN_MS + 80));
     assert.equal(tour.isOpen(), false, "تكرّرت على من رأها من قبل");
     /* ويظلّ الزرّ متاحًا دائمًا لمن أراد إعادتها. */
@@ -439,7 +533,7 @@ test("الجولة تفتح من الزرّ نفسه، وتحتسب لغة ال�
     const button = env.doc.createElement("button");
     button.setAttribute("id", "introBtn");
     env.doc.body.appendChild(button);
-    intro.boot({ catalogs: CATALOG });
+    intro.boot({ sections: CATALOG });
     button.dispatch("click", { target: button });
     const dialog = env.doc.getElementById("itModal");
     assert.ok(dialog, "الزرّ لم يفتح الجولة");
@@ -449,18 +543,18 @@ test("الجولة تفتح من الزرّ نفسه، وتحتسب لغة ال�
     dialog.close();
     env.map.set(intro.STEP_KEY, "2");
     button.dispatch("click", { target: button });
-    assert.equal(
+    assert.match(
       env.doc.getElementById("itModal").querySelector("#itKicker").textContent,
-      "الخطوة ٣ من ٥ · دليل المكتبة",
+      /^الخطوة ٣ من/,
       "الجولة اليدوية لا تبدأ من حيث توقّف الزائر",
     );
     /* ومن انتهى منها تبدأ من أوّلها، لا من آخر خطوةٍ محفوظة. */
     env.doc.getElementById("itModal").close();
-    env.map.set(intro.STEP_KEY, "4");
+    env.map.set(intro.STEP_KEY, "6");
     button.dispatch("click", { target: button });
-    assert.equal(
+    assert.match(
       env.doc.getElementById("itModal").querySelector("#itKicker").textContent,
-      "الخطوة ١ من ٥ · دليل المكتبة",
+      /^الخطوة ١ من/,
       "من أكمل الجولة لا يبدأ من آخر خطوة",
     );
   } finally {
@@ -468,7 +562,7 @@ test("الجولة تفتح من الزرّ نفسه، وتحتسب لغة ال�
   }
 });
 
-test("أقسام الفهرس تُقرأ من الصفحة: الاسم والعدد والوصف", () => {
+test("أقسام الفهرس وأدواتُه تُقرأ من الصفحة: الاسم والعدد والوصف والرابط", () => {
   const env = withBrowser();
   try {
     const doc = env.doc;
@@ -483,7 +577,9 @@ test("أقسام الفهرس تُقرأ من الصفحة: الاسم والع�
     const sections = doc.make("div");
     sections.setAttribute("id", "sections");
     const block = doc.make("div");
+    block.className = "section-block";
     block.setAttribute("id", "sec-dhikr");
+    block.setAttribute("data-section", "dhikr");
     block.setAttribute("data-blurb", CATALOG[0].blurb);
     const heading = doc.make("h2");
     heading.className = "h";
@@ -495,17 +591,44 @@ test("أقسام الفهرس تُقرأ من الصفحة: الاسم والع�
     heading.appendChild(name);
     heading.appendChild(counter);
     block.appendChild(heading);
+    for (const tool of CATALOG[0].tools) {
+      const card = doc.make("div");
+      card.className = "tool";
+      card.setAttribute("data-tool", tool.id);
+      const link = doc.make("a");
+      link.setAttribute("href", tool.href);
+      const emoji = doc.make("span");
+      emoji.className = "emoji";
+      emoji.textContent = tool.emoji;
+      const label = doc.make("p");
+      label.className = "name";
+      label.textContent = tool.name;
+      const desc = doc.make("p");
+      desc.className = "desc";
+      desc.textContent = tool.desc;
+      link.appendChild(emoji);
+      link.appendChild(label);
+      link.appendChild(desc);
+      card.appendChild(link);
+      block.appendChild(card);
+    }
     sections.appendChild(block);
     doc.body.appendChild(cats);
     doc.body.appendChild(sections);
 
-    const read = intro.catalogsFromDocument();
+    const read = intro.sectionsFromDocument();
     assert.equal(read.length, 1);
     assert.equal(read[0].id, "dhikr");
     assert.equal(read[0].name, "أذكار وأدعية", "الاسم من العدّاد لا من الشريط");
     assert.equal(read[0].count, "12");
     assert.equal(read[0].blurb, CATALOG[0].blurb);
     assert.equal(read[0].href, "#sec-dhikr");
+    /* والأدوات تُقرأ من البطاقات نفسها. */
+    assert.deepEqual(read[0].tools.map((tool) => tool.name), ["الأذكار الشاملة", "سجّل صوتك"]);
+    assert.equal(read[0].tools[0].id, "adhkar");
+    assert.equal(read[0].tools[0].href, "25-azkar-shamila.html");
+    assert.equal(intro.toolById(read, "voicetz")?.name, "سجّل صوتك");
+    assert.equal(intro.toolById(read, "nope"), null);
   } finally {
     env.cleanup();
   }

@@ -22,6 +22,11 @@ const MIME = {
   ".webmanifest": "application/manifest+json",
 };
 
+/** نسخةُ دليلِ المكتبة تُقرأ من الملف نفسه، فلا تتقادم الفحوص. */
+const INTRO_VERSION = fs
+  .readFileSync(path.join(ROOT, "intro-tour.js"), "utf8")
+  .match(/const VERSION = "(\d+)"/)?.[1] ?? "";
+
 const results = [];
 const pass = (ok, label) => {
   results.push({ ok, label });
@@ -75,9 +80,9 @@ async function openPage(pathname, { theme = "light", notif = null } = {}) {
   }, theme);
   /* جولةُ التعريف تحجب الصفحة أوّل فتح، وهذا الفحص يفحص ما تحتها —
      فمن أراد فحصَ الجولة نفسها فليزرع مفتاحَها (كما في daily-hub-check). */
-  await page.addInitScript(() => {
-    try { localStorage.setItem("hub-intro-seen", "1"); } catch {}
-  });
+  await page.addInitScript((version) => {
+    try { localStorage.setItem("hub-intro-seen", version); } catch {}
+  }, INTRO_VERSION);
   if (notif) {
     /* المتصفّح بلا واجهة يمنح الإذن مسبقًا، فنحاكي الحالة "لم يُقرَّر بعد"
        وهي الحالة التي يقابلها المستخدم فعلًا. */

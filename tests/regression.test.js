@@ -146,22 +146,14 @@ test("☐ المكتبة: المجموعات الأربع وفهارس ترتي�
 
 /* ---------------------------------------------------- البحث */
 
-test("☐ البحث: الفهرس قائم وكل نوع نتيجة يوصل إلى صفحة", () => {
-  for (const file of ["23-search.html", "src/lib/search.js", "content/search/manifest.json"]) {
+test("☐ البحث: المحرك الموحّد والنافذة المنبثقة قائمين", () => {
+  for (const file of ["src/components/search-modal.js", "src/lib/unified-search.js", "src/lib/search-registry.js"]) {
     assert.ok(has(file), `مفقود: ${file}`);
   }
-  const manifest = loadJson("content/search/manifest.json");
-  assert.ok(manifest.n > 10000, `مستندات الفهرس ${manifest.n}`);
-
-  /* كل نوع في واجهة البحث لا بدّ أن يحمل صفحةً في المكتبة. */
-  const library = read("src/lib/content-ui.js");
-  const pages = [...library.matchAll(/page:\s*"([^"]+)"/g)].map((m) => m[1]);
-  assert.ok(pages.length >= 3, "صفحات المكتبة غير مربوطة بأنواعها");
-  for (const page of pages) assert.ok(has(page), `صفحة نوعٍ في البحث مفقودة: ${page}`);
-
-  /* وأنواع البحث تغطّي ما في الفهرس. */
-  const search = read("23-search.html");
-  assert.match(search, /from "\.\/src\/lib\/(search|unified-search)\.js"/, "البحث لا يستعمل محرك البحث الموحّد");
+  const modal = read("src/components/search-modal.js");
+  assert.match(modal, /function createSearchModal\(\)/, "نافذة البحث غير موجودة");
+  assert.match(modal, /function openSearchModal\(\)/, "فتح النافذة غير موجود");
+  assert.match(modal, /searchAll|quickSearch/, "المحرك الموحّد غير مرفوع");
 });
 
 /* --------------------------------------------------- الأذكار */

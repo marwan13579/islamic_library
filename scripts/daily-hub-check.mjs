@@ -32,6 +32,16 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const EXECUTABLE = process.env.CHROMIUM_PATH
   || path.join(process.env.HOME, ".cache/ms-playwright/chromium-1243/chrome-linux64/chrome");
 const browser = await chromium.launch({ executablePath: EXECUTABLE, args: ["--no-sandbox"] });
+const toArNum = (value) => String(value).replace(/\d/g, (d) => "٠١٢٣٤٥٦٧٨٩"[d]);
+
+/**
+ * نسخةُ دليلِ المكتبة من الملف نفسه:فلو رُفعت تغيّرت النسخة رأيناها.
+ * نقرأها هنا ولا نكتب رقمًا، فلا يزاحم الفحصُ جولةَ تعريفٍ حديثة.
+ */
+const INTRO_VERSION = fs
+  .readFileSync(path.join(ROOT, "intro-tour.js"), "utf8")
+  .match(/const VERSION = "(\d+)"/)?.[1] ?? "";
+
 /** انتظارٌ واحد لكل تحميلات الفهرس، فالفحوص كلّها تفحص نفس الصفحة. */
 const waitUntilReady = { waitUntil: "networkidle" };
 
@@ -44,9 +54,9 @@ const ok = (message) => console.log("  ✔ " + message);
  * فنزرع مفتاح "رأيتُها" قبل التحميل، إلا في قسم الجولة نفسه.
  */
 async function skipIntro(page) {
-  await page.addInitScript(() => {
-    try { localStorage.setItem("hub-intro-seen", "1"); } catch {}
-  });
+  await page.addInitScript((version) => {
+    try { localStorage.setItem("hub-intro-seen", version); } catch {}
+  }, INTRO_VERSION);
   return page;
 }
 
@@ -235,13 +245,42 @@ async function skipIntro(page) {
   first.kicker.includes("١") ? ok("عدّاد الخطوة: " + first.kicker) : note("عدّاد غريب: " + first.kicker);
   first.named ? ok("كل عناصر الجولة مُسمّاة") : note("عنصر بلا اسم في الجولة");
 
-  // الخطوة التالية، ثم خطوةُ الأقسام: يجب أن تطابق الفهرس لا تختلق أقسامًا.
+  // «التالي» ينقل الخطوة، وعدّاد الجولة يوافق عدد خطواتها.
   await page.locator("#itNext").click();
   await page.waitForTimeout(120);
-  const moved = await page.evaluate(() => document.getElementById("itKicker")?.textContent?.trim() || "");
-  moved.includes("٢") ? ok("«التالي» ينقل الخطوة") : note("التالي لم ينقل: " + moved);
-  await page.locator("#itNext").click();
-  await page.waitForTimeout(120);
+  const moved = await page.evaluate(() => ({
+    kicker: document.getElementById("itKicker")?.textContent?.trim() || "",
+    steps: window.siteIntro?.steps().length || 0,
+    dots: document.querySelectorAll("#itDots .it-dot").length,
+  }));
+  moved.kicker.includes("٢") ? ok("«التالي» ينقل الخطوة") : note("التالي لم ينقل: " + moved.kicker);
+  moved.dots === moved.steps && moved.steps >= 6
+    ? ok(`الجولة ${toArNum(moved.steps)} خطوة (٦ ثابتة + خطوة لكل قسم)`)
+    : note(`خطوات الجولة ${moved.steps} ونقاطها ${moved.dots}`);
+
+  /* كل أداة في الفهرس تمرّ في الجولة، بنفس الاسم والوصف والرابط. */
+  const coverage = await page.evaluate(async () => {
+    const total = document.querySelectorAll("#sections .tool").length;
+    const seen = new Map();
+    const steps = window.siteIntro.steps();
+    for (const id of steps) {
+      window.siteIntro.open(steps.indexOf(id));
+      await new Promise((r) => setTimeout(r, 0));
+      for (const node of document.querySelectorAll("#itBody .it-tool")) {
+        seen.set(node.getAttribute("href"), node.querySelector(".it-tool-name")?.textContent?.trim() || "");
+      }
+    }
+    const cards = [...document.querySelectorAll("#sections .tool a")].map((a) => a.getAttribute("href"));
+    return { total, seen: seen.size, missing: cards.filter((href) => !seen.has(href)) };
+  });
+  coverage.seen === coverage.total
+    ? ok(`كل أدوات الفهرس في الجولة: ${toArNum(coverage.seen)}`)
+    : note(`في الجولة ${coverage.seen} من ${coverage.total}، ناقص: ${coverage.missing.slice(0, 4).join("، ")}`);
+
+  /* وخطوةُ الأقسام: لا تختلق قسمًا ولا رابطًا ميّتًا. */
+  const sectionsIndex = await page.evaluate(() => window.siteIntro.steps().indexOf("sections"));
+  await page.evaluate((index) => window.siteIntro.open(index), sectionsIndex);
+  await page.waitForTimeout(150);
   const listed = await page.evaluate(() => ({
     sections: document.querySelectorAll("#itBody .it-sec").length,
     categories: document.querySelectorAll("#cats [data-cat]").length,
@@ -260,6 +299,22 @@ async function skipIntro(page) {
     seen: localStorage.getItem("hub-intro-seen"),
   }));
   !closed.open && closed.seen ? ok("Escape أغلقها وحُفظ أنها رُئيت") : note(`بعد Escape: ${JSON.stringify(closed)}`);
+
+  // آخر خطوة: «ابدأ الآن» تُغلقها، لا أن تنقل خطوةً لا وجود لها.
+  await page.evaluate(() => window.siteIntro.open(window.siteIntro.steps().length - 1));
+  await page.waitForTimeout(150);
+  const last = await page.evaluate(() => ({
+    label: document.getElementById("itNext")?.textContent?.trim() || "",
+    cards: document.querySelectorAll("#itBody .it-card").length,
+  }));
+  last.label === "ابدأ الآن" && last.cards >= 3
+    ? ok("آخر خطوة: «ابدأ الآن» مع بطاقات البداية")
+    : note(`آخر خطوة: ${JSON.stringify(last)}`);
+  await page.locator("#itNext").click();
+  await page.waitForTimeout(120);
+  (await page.evaluate(() => document.getElementById("itModal")?.open)) === false
+    ? ok("«ابدأ الآن» أغلقت الجولة")
+    : note("«ابدأ الآن» لم تُغلق الجولة");
 
   // لا تتكرّر، ويظلّ الزرّ في الترويسة يفتحها.
   await page.reload(waitUntilReady);

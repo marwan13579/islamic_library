@@ -4829,7 +4829,6 @@
         "13-kids-adab",
         "19-adab-ziyara",
         "14-mawarith",
-        "23-search",
         "41-quiz",
         "40-reciters",
         "32-radio",

@@ -127,7 +127,8 @@ test("صفحة نور الذكر مرتبطة من الفهرس", () => {
     .readdirSync(ROOT)
     .filter((f) => /^\d+-.*\.html$/.test(f))
     // 33-academy صفحة تحويل، وlinkTesting يفحص رابطها لا بطاقتها.
-    .filter((f) => f !== "33-academy.html");
+    // 23-search.html صفحة تحويل إلى الصفحة الرئيسية بعد دمج البحث الموحّد.
+    .filter((f) => !["33-academy.html", "23-search.html"].includes(f));
   const missing = files.filter((f) => !index.includes(`"${f}"`));
   assert.deepEqual(missing, [], `أدوات غير مفهرسة: ${missing.join("، ")}`);
   // والبطاقة تُعرَّف بمعرّف فريد ومن فئة معروفة.

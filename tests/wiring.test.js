@@ -230,7 +230,9 @@ test("زرّ الرجوع له نصّ وسمٌه للقارئات الصوتية
 
 test("كل صفحة تستخدم صنف back-link تربط ورقة تعريفه", () => {
   // صفحة الفقد (offline.html) لها زرّ في المتن، فلا صنفَ لها.
-  const users = allHtml().filter((f) => read(f).includes('class="back-link"'));
+  // 23-search.html صفحة تحويل بعد دمج البحث الموحّد.
+  const skip = new Set(["offline.html", "23-search.html"]);
+  const users = allHtml().filter((f) => read(f).includes('class="back-link"') && !skip.has(f));
   assert.ok(users.length > 30, `عدد مستعملي الصنف ${users.length} غير متوقّع`);
   const missing = users.filter((f) => {
     const html = read(f);
