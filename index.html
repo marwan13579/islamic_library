@@ -84,6 +84,7 @@
   header{position:relative;overflow:hidden;text-align:center;padding:40px 16px 24px;border-bottom:1px solid var(--line)}
   .pattern{position:absolute;inset:0;opacity:.1;pointer-events:none}
   header h1{font-family:"Amiri",serif;font-weight:700;margin:0;font-size:clamp(2.1rem,8vw,3.2rem);position:relative}
+  .install-top{position:absolute;top:14px;right:14px;z-index:3}
   header p{margin:.4rem auto 0;max-width:40ch;color:var(--ink-soft);font-size:.92rem;position:relative}
 
   .search{
@@ -263,6 +264,9 @@ header{
     <rect width="100%" height="100%" fill="url(#star)" style="color:var(--gold)"/>
   </svg>
   <h1 id="siteTitle">المكتبة الإسلامية</h1>
+  <div class="install-top">
+    <button class="sortbtn" id="installBtn" type="button" hidden>📲 تثبيت التطبيق</button>
+  </div>
   <p id="siteSubtitle">كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.</p>
   <input class="search" id="search" type="search" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة">
   <div class="langbar">
@@ -274,7 +278,6 @@ header{
     <button class="sortbtn" id="sortRecent" type="button" aria-pressed="false">الأحدث استخدامًا</button>
   </div>
   <div class="backupbar">
-    <button class="sortbtn" id="installBtn" type="button" hidden>📲 تثبيت التطبيق</button>
     <button class="sortbtn" id="backupExport" type="button">تصدير نسخة</button>
     <button class="sortbtn" id="backupImport" type="button">استعادة نسخة</button>
     <input id="backupFile" type="file" accept="application/json,.json" hidden>
