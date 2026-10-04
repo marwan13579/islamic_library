@@ -628,6 +628,7 @@ async function performSearch() {
  */
 function showLoading() {
   const body = document.getElementById("searchModalBody");
+  if (!body) return;
   body.innerHTML = '<div class="search-modal-loading">جارٍ البحث...</div>';
 }
 
@@ -644,6 +645,8 @@ function showHistory() {
   if (suggestions) suggestions.hidden = true;
   if (results) results.hidden = true;
   if (empty) empty.hidden = true;
+  
+  if (!container) return;
   
   if (history.length === 0) {
     container.hidden = true;
@@ -687,6 +690,8 @@ function renderSuggestions(suggestions) {
   if (history) history.hidden = true;
   if (results) results.hidden = true;
   if (empty) empty.hidden = true;
+  
+  if (!container) return;
   
   if (suggestions.length === 0) {
     container.hidden = true;
@@ -735,6 +740,8 @@ function renderResults(results, categories, intent) {
   if (suggestions) suggestions.hidden = true;
   if (history) history.hidden = true;
   if (empty) empty.hidden = true;
+  
+  if (!container) return;
   
   container.hidden = false;
   
@@ -790,6 +797,8 @@ function showNoResults(query) {
   if (suggestions) suggestions.hidden = true;
   if (history) history.hidden = true;
   if (container) container.hidden = true;
+  
+  if (!empty) return;
   
   empty.hidden = false;
   empty.innerHTML = `

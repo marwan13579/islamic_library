@@ -227,6 +227,8 @@ export const KEYS = {
   noorShown: "noor-shown",
   noorStats: "noor-stats",
   noorActions: "noor-actions",
+  /* طبقة التفاعل — التقدّم الموحّد لكل الأدوات */
+  engage: "engage-v1",
 };
 
 /**
@@ -292,6 +294,8 @@ export const IMPORT_TYPES = {
   "noor-shown": "object",
   "noor-stats": "object",
   "noor-actions": "object",
+  // طبقة التفاعل: النقاط والأوسمة وأيام المتتالية وما علّمه من عناصر.
+  "engage-v1": "object",
   "lib-quiz-level": "string",
   "lib-quiz-history": "array",
   /* صفحات قديمة: الأنواع مستنبطة من قراءتها في الصفحة نفسها */

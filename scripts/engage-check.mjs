@@ -57,6 +57,7 @@ const pass = (ok, message) => {
 
 /** يفتح صفحة ويسجّل أخطاء الطرفية، ويمرّرها في `errors`. */
 async function open(context, pagePath) {
+  context.setDefaultTimeout(8000);
   const tab = await context.newPage();
   const errors = [];
   tab.on("pageerror", (error) => errors.push(String(error)));
@@ -68,16 +69,19 @@ async function open(context, pagePath) {
   return { tab, errors };
 }
 
-/** دليل المكتبة يُفتح تلقائيًّا في الفهرس، وهو `dialog` يعلو كل شيء.
- *  فنغلقه قبل النقر، وإلا اعترض كل نقرة. */
+/** دليل المكتبة (`intro-tour.js`) يُفتح تلقائيًّا بعد ٧٠٠ مللي ثانية من
+ *  الفهرس، وهو `dialog` يعلو كل شيء فيمنع كل نقرة. فننتظر ظهوره ثم نغلقه،
+ *  وإلا اعترض أول زرٍّ نضغطه. */
 async function dismissTour(tab) {
   const tour = tab.locator("#itModal");
-  if (await tour.count()) {
-    if (await tour.evaluate((node) => node.open).catch(() => false)) {
-      await tab.keyboard.press("Escape");
-      await tab.waitForTimeout(200);
-    }
+  try {
+    await tour.waitFor({ state: "visible", timeout: 2500 });
+  } catch {
+    return; // لم يُفتح — لا حاجة لإغلاق شيء
   }
+  await tab.keyboard.press("Escape");
+  await tab.waitForTimeout(200);
+  pass(!(await tour.evaluate((node) => node.open).catch(() => false)), "دليل المكتبة أُغلق قبل الفحص");
 }
 
 /* --------------------------------- 1) الشارة العائمة في كل صفحة ---------- */
@@ -144,6 +148,7 @@ console.log("=== 3) لوحة الأوسمة ===");
 {
   const context = await browser.newContext();
   const { tab, errors } = await open(context, "/index.html");
+  await dismissTour(tab);
   await tab.locator(".eg-pill").click();
   await tab.waitForTimeout(250);
   const opened = await tab.evaluate(() => {
@@ -175,6 +180,7 @@ console.log("=== 4) كتم النغمة ===");
 {
   const context = await browser.newContext();
   const { tab, errors } = await open(context, "/index.html");
+  await dismissTour(tab);
   await tab.locator(".eg-pill").click();
   await tab.waitForTimeout(200);
   const label = () => tab.evaluate(() =>
@@ -187,7 +193,8 @@ console.log("=== 4) كتم النغمة ===");
   pass(before !== after, `نصّ الزر يتغيّر: «${before}» ← «${after}»`);
   pass(stored === true, "الكتم محفوظ في التخزين");
   await tab.reload({ waitUntil: "load" });
-  await tab.waitForTimeout(250);
+  await tab.waitForTimeout(400);
+  await dismissTour(tab);
   await tab.locator(".eg-pill").click();
   await tab.waitForTimeout(200);
   pass((await label()) === after, "الكتم يبقى بعد إعادة التحميل");
@@ -337,7 +344,7 @@ console.log("=== 8) الطبقة تتبع الوضع الليلي ===");
 console.log("=== 9) حصاد تقدّم الأدوات القائمة ===");
 {
   const context = await browser.newContext();
-  const { tab } = await open(context, "/17-wird.html");
+  const { tab, errors } = await open(context, "/17-wird.html");
   const harvested = await tab.evaluate(async () => {
     localStorage.setItem("mushaf-progress", JSON.stringify({ 1: true, 2: true, 3: true }));
     window.Engagement.refresh();

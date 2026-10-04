@@ -133,13 +133,7 @@ NAMES99_COUNT = int(
 RADIO_COUNT = count_entries(read_source("src", "data", "radio.js"), "export const RADIO_STATIONS =")
 CITY_COUNT = count_entries(read_source("src", "data", "cities.js"), "export const CITY_COORDS =")
 RECITER_COUNT = count_entries(read_source("src", "lib", "quran-audio.js"), "export const RECITERS =")
-TEST_FILES = [name for name in os.listdir(os.path.join(ROOT, "tests")) if name.endswith(".test.js")]
-TEST_CASES = sum(read_source("tests", name).count("\ntest(") + read_source("tests", name).count("test(\n")
-                 for name in TEST_FILES)
-ARBAEEN_COUNT = count_entries(read_source("3-arbaeen.html"), "const H = [")
-HADITH_COUNT = count_entries(read_source("27-hadith.html"), "const HADITHS = [")
 PROPHETS_COUNT = count_entries(read_source("8-qasas-anbiya.html"), "const P =")
-AZKAR_SECTIONS = count_entries(read_source("25-azkar-shamila.html"), "const CATS =")
 SITES_COUNT = count_entries(read_source("21-sites-directory.html"), "const SITES =")
 MANHAJ_COUNT = count_entries(read_source("src", "data", "manhaj-lessons.js"),
                              "export const MANHAJ_LESSONS =")
@@ -159,7 +153,6 @@ MUNASABAT_DUAS = len(re.findall(r'^\s*D\("', MUNASABAT_SOURCE, re.M))
 # نفسها، فتُكتب هنا أعداد تُعرض في الموقع لا تقديرًا.
 MANIFEST = json.loads(read_source("content", "manifest.json"))
 QUIZ_COUNT = MANIFEST["collections"]["quiz"]["count"]
-QUIZ_CATEGORIES = MANIFEST["collections"]["quiz"]["categories"]
 FATAWA_COUNT = MANIFEST["collections"]["fatwa"]["count"]
 KHUTBAH_COUNT = MANIFEST["collections"]["khutbahs"]["count"]
 TAFSIR_COUNT = MANIFEST["tafsir"]["count"]
