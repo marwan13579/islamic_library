@@ -36,13 +36,14 @@ if (missing.length) {
 /* ---------------------------------------------------------------------------
  * robots.txt و sitemap.xml
  *
- * المشروع يُنشر على ثلاث مضيئة (Cloudflare Pages · Vercel · Netlify) فاسم
+ * المشروع يُنشر على ثلاث مضيئات (Cloudflare Pages · Vercel · Netlify) فاسم
  * النطاق يختلف بينها، ولا يصحّ أن نكتب نطاقًا واحدًا في الملف وتكون
- * البقية علىsitemap خاطئة. فنولّدهما هنا من SITE_ORIGIN، والفصل
- * الافتراضي هو نطاق Cloudflare Pages المذكور في README.
+ * البقية على sitemap خاطئة. فنولّدهما هنا من SITE_ORIGIN، والفصل
+ * الافتراضي هو نطاق مشروع Cloudflare Pages — تحقّق منه بـ:
+ * `wrangler pages project list` (الحقل "Project Domains").
  * ------------------------------------------------------------------------- */
 
-const ORIGIN = (process.env.SITE_ORIGIN || "https://islamic-library.pages.dev").replace(/\/+$/, "");
+const ORIGIN = (process.env.SITE_ORIGIN || "https://islamic-library-2mx.pages.dev").replace(/\/+$/, "");
 
 const SITE_PAGES = [
   ["", "رفيق المسلم اليومي — الصلاة والورد وآية اليوم والأذكار"],

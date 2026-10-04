@@ -98,6 +98,24 @@ test("☐ القنوات: لا رابط إلا ليوتيوب، وما ينتظ�
   }
 });
 
+test("☐ بانتظار المراجعة: سبب مكتوب، ولا رابط مكرّر لقناة معروضة", () => {
+  const publishedUrls = new Set(CHANNELS.map((channel) => channel.youtubeUrl).filter(Boolean));
+  const seen = new Set();
+  for (const channel of CHANNELS) {
+    assert.ok(!seen.has(channel.youtubeUrl || channel.id), `${channel.id}: مكرّر في البيانات`);
+    seen.add(channel.youtubeUrl || channel.id);
+    if (!channel.needsReview) continue;
+    assert.ok(channel.note && channel.note.length > 10, `${channel.id}: سبب البقاء غير مكتوب`);
+    assert.equal(channel.featured, false, `${channel.id}: مُختارة وهي بانتظار المراجعة`);
+    if (channel.candidateUrl) {
+      assert.ok(
+        !publishedUrls.has(channel.candidateUrl),
+        `${channel.id}: رابطه المرشّح هو نفسه رابط قناة معروضة — احذفه من قائمة المراجعة`,
+      );
+    }
+  }
+});
+
 test("☐ المختارات: لا يدخلها إلا موثّقة موصى بها", () => {
   const featured = CHANNELS.filter((channel) => channel.featured);
   assert.ok(featured.length >= 5, `المختارات ${featured.length} قليلة`);

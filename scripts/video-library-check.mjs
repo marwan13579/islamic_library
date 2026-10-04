@@ -17,6 +17,9 @@ import fs from "node:fs";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
 import { chromium } from "playwright-core";
+import { CHANNELS } from "../src/data/islamic-channels.js";
+
+const liveChannels = CHANNELS.filter((c) => c.verified && !c.needsReview && !c.disabled);
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const EXECUTABLE =
@@ -119,9 +122,19 @@ const selectAge = async (value) => {
   await tab.selectOption("#fAge", value);
   await tab.waitForTimeout(200);
 };
+const toNumber = (value) =>
+  Number(String(value).replace(/[٠-٩]/g, (digit) => "٠١٢٣٤٥٦٧٨٩".indexOf(digit)));
 await selectAge("kids36");
 const kids = await cardCount();
-pass(kids > 0 && kids < 12, `فلترة العمر 3–6 ترجع ${kids} قناة`);
+/* العدد يُقاس على البيانات لا على رقمٍ مكتوب في الفحص: تتغيّر المكتبة
+   بقنوات جديدة، فالفحص يسأل «هل مرّر الفلترة ما يستحقّه» لا «كم قناة كان». */
+const expectedKids = liveChannels.filter((channel) => channel.ageGroups.includes("kids36")).length;
+const kidsTotal = toNumber((await tab.textContent("#count")).match(/[٠-٩]+/g)?.at(-1) ?? "");
+pass(kids > 0, `فلترة العمر 3–6 تُظهر بطاقات (${kids})`);
+pass(
+  kidsTotal === expectedKids,
+  `فلترة العمر 3–6 تمرّر ${kidsTotal} قناة والبيانات فيها ${expectedKids}`,
+);
 await selectAge("all");
 
 await tab.selectOption("#fLang", "en");

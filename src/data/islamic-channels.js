@@ -324,6 +324,27 @@ export const CHANNELS = [
     keywords: ["القاضي", "qadhi", "yaseer", "fiqh", "english"],
   },
 
+  {
+    id: "islamic-kids-academy-hyderabad",
+    nameAr: "أكاديمية إسلاميكيدز",
+    nameEn: "Islamic Kids Academy",
+    youtubeUrl: "https://www.youtube.com/@IslamicKids",
+    channelId: "UCoyKTkz3gd-pYJZUaMHwe-Q",
+    language: ["en"],
+    ageGroups: ["kids36", "kids79", "kids1012", "family"],
+    categories: ["kids", "english", "akhlaq", "quran"],
+    type: "kids",
+    trustLevel: "recommended",
+    featured: true,
+    descriptionAr:
+      "منصة أطفال إسلامية بالإنجليزية تحمل شارة يوتيوب، تعرّف نفسها في وصفها بأنها منصة من هيderabad تُشجّع الأطفال على الإيمان والآداب.",
+    descriptionEn:
+      "A verified kids platform introducing Islamic stories, duas and good manners in English.",
+    verified: true,
+    needsReview: false,
+    keywords: ["islamic kids academy", "أكاديمية", "أطفال", "english", "stories", "hyderabad"],
+  },
+
   /* ────────────────────────────── القرآن والتلاوة ───────────────────── */
   {
     id: "king-fahd-complex",
@@ -965,7 +986,7 @@ export const CHANNELS = [
   {
     id: "islamic-kids-academy",
     nameAr: "أكاديمية الأطفال الإسلامية",
-    nameEn: "Islamic Kids Academy",
+    nameEn: "IslamicKidsAcademyOfficial",
     youtubeUrl: "https://www.youtube.com/@IslamicKidsAcademyTV",
     channelId: "UCOzQK0kytkF02uO118FKknA",
     language: ["en"],
@@ -1038,6 +1059,12 @@ export const CHANNELS = [
    *
    * الفحص: node scripts/verify-video-channels.mjs --describe <candidateUrl>
    * ومن ثبتت هويته: انقله إلى CHANNELS واضبط verified و trustLevel.
+   *
+   * سجلّ في ٢٠٢٦/١٠/٤: خرج مدخلان من هذا القسم بعد ثبوت نسبتهما لقنوات
+   * قائمة في المكتبة — «أم القرآن» إلى مجمع الملك فهد (king-fahd-complex)،
+   * و«قناة الأطفال الإسلامية» إلى Islamic Kids Academy (@IslamicKids) التي
+   * تحمل شارة يوتيوب وتصف نفسها في وصفها. ومن لم يثبت شيءٌ منها بقي هنا،
+   * ويُكتب في `note` سبب بقائه وتاريخ فحصه.
    * ═════════════════════════════════════════════════════════════════ */
   {
     id: "pending-quran-central",
@@ -1054,7 +1081,7 @@ export const CHANNELS = [
     descriptionAr: "قناة مرتبطة بموقع Quran Central — لم يثبت أيّ قناة هواة رسمية له.",
     verified: false,
     needsReview: true,
-    note: "ست قنوات تحمل الاسم تقريبًا، وكلها بلا نبذة تثبت الجهة. يلزم رابط الموقع الرسمي.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة تحت هذا الرابط فيها ٨٣٤ مشتركًا ووصفها «تلاوات هادئة» فقط، لا رابط لموقع Quran Central؛ ولم يثبت أنها قناة الموقع.",
     keywords: ["quran central", "قرآن", "تلاوة", "موقع"],
   },
   {
@@ -1062,7 +1089,7 @@ export const CHANNELS = [
     nameAr: "جست ون مسلم",
     nameEn: "Just One Muslim",
     youtubeUrl: "",
-    candidateUrl: "",
+    candidateUrl: "https://www.youtube.com/@JustOneMuslim",
     language: ["en"],
     ageGroups: ["teens1315", "teens1618", "youth", "everyone"],
     categories: ["tafsir", "seerah", "english"],
@@ -1072,7 +1099,7 @@ export const CHANNELS = [
     descriptionAr: "قناة الشيخ عبد الرحمن بن يوسف — لم يعثر الفحص على قناة تحمل الاسم.",
     verified: false,
     needsReview: true,
-    note: "لم تظهر في بحث YouTube بهذا الاسم ولا بغيره.",
+    note: "فُحص ٢٠٢٦/١٠/٤: ‏@JustOneMuslim موجودة (٤٠ مشتركًا) واسمها في يوتيوب «مسلم» ووصفها فارغ — لا يثبت أنها قناة عبد الرحمن بن يوسف.",
     keywords: ["just one muslim", "عبد الرحمن بن يوسف", "تفسير", "سيرة"],
   },
   {
@@ -1090,7 +1117,7 @@ export const CHANNELS = [
     descriptionAr: "دروس وفتاوى الشيخ الننوي بالإنجليزية.",
     verified: false,
     needsReview: true,
-    note: "لا نتيجة في بحث YouTube باسمه — يُرجَّح أن القناة أُزيلت أو غيّرت اسمها.",
+    note: "بحث ٢٠٢٦/١٠/٤: ‏@AlNinowy يرجع 404، وموقعه الرسمي shaykhninowy.org لا يشير في صفحته الرئيسية إلى قناة يوتيوب — فلا دليل على قناة رسمية له.",
     keywords: ["الننوي", "ninowy", "دروس", "فتاوى"],
   },
   {
@@ -1108,7 +1135,7 @@ export const CHANNELS = [
     descriptionAr: "تلاوات الشيخ أبو بكر الشاطري.",
     verified: false,
     needsReview: true,
-    note: "القناة تحمل الاسم ولا نبذة لها، فلا نجزم أنها رسمية.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة بلا وصف ولا كلمات، و‏@abubakral-shatri (نحو ٤ آلاف مشترك) بلا وصف أيضًا — لا نعرف أيّهما الرسمي.",
     keywords: ["الشاطري", "shatri", "تلاوة", "مرتل"],
   },
   {
@@ -1126,7 +1153,7 @@ export const CHANNELS = [
     descriptionAr: "تلاوات الشيخ الحاني الرفاعي.",
     verified: false,
     needsReview: true,
-    note: "القناة موجودة بلا وصف أو كلمات تُثبت أنها للشيخ.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة موجودة بلا وصف ولا كلمات، ولا رابط من الشيخ لموقعه؛ لم يثبت أنها قناته.",
     keywords: ["الرفاعي", "arrifai", "تلاوة"],
   },
   {
@@ -1144,7 +1171,7 @@ export const CHANNELS = [
     descriptionAr: "دروس وشبهات بالإنجليزية للشيخ محمد الأشرف.",
     verified: false,
     needsReview: true,
-    note: "القناة المرشحة صغيرة الحجم، ولا نعرف أهي القناة الرسمية أم قناة مشابهة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: ثلاث قنوات تتنازع الاسم — @MuhammadAlshareef (٤٩٨ مشتركًا)، و@MuhammadAlshareefTV (١٠٥٠، تصف نفسها بأنها الرسمية)، و@mohamedalshareef بلا وصف؛ ولا رابط من الشيخ يثبت أيّها.",
     keywords: ["الأشرف", "alshareef", "شبهات", "دروس"],
   },
   {
@@ -1162,7 +1189,7 @@ export const CHANNELS = [
     descriptionAr: "تلاوات الشيخ سعود الشريم.",
     verified: false,
     needsReview: true,
-    note: "لا نتيجة باسمه؛ النتائج كلها قنوات صغيرة غير معروفة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة المعروفة ‏@shuraym1414 تعلن في وصفها أنها «غير رسمية ولا تخضع لإشرافه» — فلا تُعرض، ولم يثبت غيرها.",
     keywords: ["الشريم", "shuraim", "تلاوة"],
   },
   {
@@ -1180,7 +1207,7 @@ export const CHANNELS = [
     descriptionAr: "قناة تبارك للأطفال: تلاوة وتدبّر وحفظ.",
     verified: false,
     needsReview: true,
-    note: "الاسم يطابق منتج تبارك، لكن القناة بلا وصف ولا رابط لموقعها.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة فيها ٧ مشتركين وبلا وصف ولا كلمات — لا صلة ظاهرة بتبارك.",
     keywords: ["براعم", "ترتيل", "tarteel", "أطفال", "حفظ"],
   },
   {
@@ -1198,7 +1225,7 @@ export const CHANNELS = [
     descriptionAr: "قناة تحمل اسم النبراس.",
     verified: false,
     needsReview: true,
-    note: "توجد قنوات تحمل اسم نبراس؛ لا نعرف أيّها مؤسسة النبراس العلمية.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة كبيرة (٢٢٨ ألف مشترك) لكن وصفها لا يذكر مؤسسة نبراس ولا موقعها؛ ننتظر رابطًا من الجهة نفسها.",
     keywords: ["نبراس", "nibras", "دروس"],
   },
   {
@@ -1216,7 +1243,7 @@ export const CHANNELS = [
     descriptionAr: "دروس أطفال بالإنجليزية.",
     verified: false,
     needsReview: true,
-    note: "القناة موجودة بلا وصف ولا كلمات تُبقي على هوية الجهة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: ١٢ مشتركًا بلا وصف ولا كلمات — لا نعرف الجهة التي تحمل الاسم.",
     keywords: ["kids islamic school", "أطفال", "دروس"],
   },
   {
@@ -1234,26 +1261,8 @@ export const CHANNELS = [
     descriptionAr: "محتوى تربوي للأطفال.",
     verified: false,
     needsReview: true,
-    note: "لا وصف ولا كلمات للبحث.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة موجودة بلا وصف ولا كلمات للبحث.",
     keywords: ["kids learn islam", "أطفال", "تربية"],
-  },
-  {
-    id: "pending-islamic-kids-channel",
-    nameAr: "قناة الأطفال الإسلامية",
-    nameEn: "Islamic Kids Channel",
-    youtubeUrl: "",
-    candidateUrl: "https://www.youtube.com/@IslamicKids",
-    language: ["ar"],
-    ageGroups: ["kids36", "kids79", "family"],
-    categories: ["kids", "quran"],
-    type: "kids",
-    trustLevel: "curated",
-    featured: false,
-    descriptionAr: "قناة أطفال باسم Islamic Kids Academy.",
-    verified: false,
-    needsReview: true,
-    note: "الاسم يشير إلى أكاديمية، لكن لا رابط موقع ولا نبذة.",
-    keywords: ["islamic kids", "أطفال", "أكاديمية", "قرآن"],
   },
   {
     id: "pending-noor-islamic-kids",
@@ -1270,7 +1279,7 @@ export const CHANNELS = [
     descriptionAr: "قناة أطفال باسم نور.",
     verified: false,
     needsReview: true,
-    note: "توجد قنوات아이不止ة بهذا الاسم؛ الصلة بنور كيدز غير مثبتة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: وصفها بالهندية والأردية، فهي ليست مرشّحة لمكتبة عربية-إنجليزية بهذا الاسم.",
     keywords: ["noor islamic kids", "أطفال", "نور"],
   },
   {
@@ -1288,7 +1297,7 @@ export const CHANNELS = [
     descriptionAr: "قناة باسم أهل القرآن.",
     verified: false,
     needsReview: true,
-    note: "الاسم عام، ولا نبذة تحدّد الجهة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة موجودة بلا وصف ولا نبذة تحدّد الجهة.",
     keywords: ["أهل القرآن", "ahlul quran", "تلاوة"],
   },
   {
@@ -1306,7 +1315,7 @@ export const CHANNELS = [
     descriptionAr: "دروس وتذكيرات إسلامية.",
     verified: false,
     needsReview: true,
-    note: "لا وصف للقناة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة بالفرنسية (Bayan al Islam)، لا العربية.",
     keywords: ["بيان", "bayan", "دروس", "تذكير"],
   },
   {
@@ -1324,7 +1333,7 @@ export const CHANNELS = [
     descriptionAr: "قناة تذكيرات إسلامية.",
     verified: false,
     needsReview: true,
-    note: "لا نبذة تحدّد المحتوى ولا الجهة.",
+    note: "فُحص ٢٠٢٦/١٠/٤: ٩٣ مشتركًا ووصفها صدقة جارية شخصية — لا نعرف إن كانت جهة «الباقيات» أم قناة فردية.",
     keywords: ["الباقيات", "تذكير", "أذكار"],
   },
   {
@@ -1342,7 +1351,7 @@ export const CHANNELS = [
     descriptionAr: "منصة تعليمية للشباب.",
     verified: false,
     needsReview: true,
-    note: "الاسم مختصر بلا وصف؛ نريد تأكيد أنها منصة مِداد التعليمية.",
+    note: "فُحص ٢٠٢٦/١٠/٤: القناة موجودة بلا وصف ولا كلمات.",
     keywords: ["مِداد", "midad", "منصة", "تعليم"],
   },
   {
@@ -1360,26 +1369,8 @@ export const CHANNELS = [
     descriptionAr: "دروس من مركز إسلامي.",
     verified: false,
     needsReview: true,
-    note: "لا يعرف أيّ مركز: الاسم عام ولا رابط موقع.",
+    note: "فُحص ٢٠٢٦/١٠/٤: ١٠٤ مشترك بلا وصف — ولا نعرف أيّ مركز.",
     keywords: ["islamic center", "مركز", "دروس"],
-  },
-  {
-    id: "pending-umm-al-quran",
-    nameAr: "أم القرآن",
-    nameEn: "Umm Al-Quran",
-    youtubeUrl: "",
-    candidateUrl: "https://www.youtube.com/@qurancomplex",
-    language: ["ar"],
-    ageGroups: ["everyone"],
-    categories: ["quran", "tajweed"],
-    type: "institution",
-    trustLevel: "curated",
-    featured: false,
-    descriptionAr: "مشروع لحفظ القرآن الكريم.",
-    verified: false,
-    needsReview: true,
-    note: "مبدئيًّا لم أجد قناة مستقلة؛ مدخل مؤقت لتراجع.",
-    keywords: ["أم القرآن", "umm al quran", "قرآن"],
   },
   {
     id: "pending-bayan-alsharif",
@@ -1396,7 +1387,7 @@ export const CHANNELS = [
     descriptionAr: "دروس حديث وسنة.",
     verified: false,
     needsReview: true,
-    note: "اسم متداول بين أكثر من قناة.",
+    note: "بحث ٢٠٢٦/١٠/٤ بالاسم: لم تظهر لها قناة واحدة في نتائج YouTube، ولم يثبت غيابها.",
     keywords: ["بيان الشريف", "حديث", "دروس"],
   },
   {
@@ -1414,7 +1405,7 @@ export const CHANNELS = [
     descriptionAr: "دروس فقه وحديث.",
     verified: false,
     needsReview: true,
-    note: "لم يثبت رابط رسمي.",
+    note: "بحث ٢٠٢٦/١٠/٤ بالاسم: لم تظهر لها قناة واحدة في نتائج YouTube، ولم يثبت غيابها.",
     keywords: ["بخيت", "bukhatir", "حديث", "فقه"],
   },
   {
@@ -1432,7 +1423,7 @@ export const CHANNELS = [
     descriptionAr: "دروس في العقيدة والرد على الشبهات.",
     verified: false,
     needsReview: true,
-    note: "لم يثبت رابط رسمي.",
+    note: "بحث ٢٠٢٦/١٠/٤ بالاسم: لم تظهر لها قناة واحدة في نتائج YouTube، ولم يثبت غيابها.",
     keywords: ["زيد", "الفارس", "شبهات", "عقيدة"],
   },
   {
@@ -1450,7 +1441,7 @@ export const CHANNELS = [
     descriptionAr: "قرآن كريم للأطفال بالعربية.",
     verified: false,
     needsReview: true,
-    note: "الاسم يتكرر في قنوات كثيرة؛ لا نعرف الأصل.",
+    note: "بحث ٢٠٢٦/١٠/٤ بالاسم: الاسم يتكرر ولا يظهر أصل واحد، فلا رابط مرشّح.",
     keywords: ["قرآن للأطفال", "kids", "quran", "عربي"],
   },
 ];

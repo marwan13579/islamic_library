@@ -67,9 +67,10 @@ jobs:
       - run: npm ci
       - name: Build
         env:
-          # نطاق Cloudflare Pages لمشروع islamic-library — يُستخدم في sitemap.xml
-          # و robots.txt. على Vercel/Netlify مرّر نطاقهما عند البناء محليًا.
-          SITE_ORIGIN: https://islamic-library.pages.dev
+          # نطاق مشروع Cloudflare Pages (تحقّق منه: wrangler pages project list
+          # ← الحقل "Project Domains"). يُستخدم في sitemap.xml و robots.txt.
+          # على Vercel/Netlify مرّر نطاقهما عند البناء محليًا.
+          SITE_ORIGIN: https://islamic-library-2mx.pages.dev
         run: npm run build:pages
       - name: Upload to Cloudflare Pages
         env:
