@@ -243,21 +243,46 @@
     const times = prayerTimes(when);
     if (!times) return null;
     const calc = calculations();
-    const all = PRAYERS.map((p) => ({
-      ...p,
-      hour: times[p.id],
-      at: toDate(times[p.id], when),
-      clock: calc && calc.formatPrayerClock ? calc.formatPrayerClock(times[p.id]) : "—",
-    }));
+
+    const build = (source, day) => PRAYERS.map((p) => {
+      const decimalHour = source[p.id];
+      const at = toDate(decimalHour, day);
+      return {
+        ...p,
+        hour: decimalHour,
+        at,
+        clock: calc && calc.formatPrayerClock ? calc.formatPrayerClock(decimalHour) : "—",
+      };
+    });
+
+    const all = build(times, when);
     const upcoming = all.find((p) => p.at && p.at.getTime() > when.getTime());
     let current = null;
     for (const prayer of all) {
       if (prayer.at && prayer.at.getTime() <= when.getTime()) current = prayer;
     }
+
+    let next = upcoming ?? null;
+    let tomorrow = false;
+    if (!next) {
+      // انقضى وقت صلوات اليوم (بعد العشاء مثلًا) — فالفجر القادم هو المعنى
+      // الصحيح لـ«الصلاة القادمة»، ولا فائدة في ترك الحقل فارغًا إلى الفجر.
+      const dayAfter = new Date(when.getFullYear(), when.getMonth(), when.getDate() + 1);
+      const nextTimes = prayerTimes(dayAfter);
+      if (nextTimes) {
+        const fajr = build(nextTimes, dayAfter)[0];
+        if (fajr.at && fajr.at.getTime() > when.getTime()) {
+          next = fajr;
+          tomorrow = true;
+        }
+      }
+    }
+
     return {
       all,
       current,
-      next: upcoming ?? null,
+      next,
+      tomorrow,
       location: getLocation(),
       method: getMethod(),
     };

@@ -63,14 +63,28 @@ test("manifest references only files that exist and carries PWA identity metadat
   assert.ok(manifest.icons.some((icon) => icon.sizes === "512x512"), "manifest needs a 512px icon");
 });
 
-test("both entry pages carry Apple web-app metadata and an install control", () => {
-  for (const page of ["src/site/noor.html", "src/app/app.html"]) {
+test("entry pages carry Apple web-app metadata and an install control", () => {
+  for (const page of ["index.html", "src/site/noor.html", "src/app/app.html"]) {
     const html = fs.readFileSync(path.join(root, page), "utf8");
+    assert.match(html, /rel="manifest"/, `${page} must link the web app manifest`);
     assert.match(html, /rel="apple-touch-icon"/, `${page} must link apple-touch-icon`);
     assert.match(html, /apple-mobile-web-app-capable/, `${page} must set apple-mobile-web-app-capable`);
+    assert.match(
+      html,
+      /name="theme-color"\s+content="(#[0-9a-fA-F]{3,8})"/,
+      `${page} must declare a theme-color`,
+    );
     assert.match(html, /id="installBtn"/, `${page} must expose an install button`);
-    assert.match(html, /id="updateBtn"/, `${page} must expose an update control`);
+    if (page !== "index.html") {
+      assert.match(html, /id="updateBtn"/, `${page} must expose an update control`);
+    }
   }
+  const indexHtml = fs.readFileSync(path.join(root, "index.html"), "utf8");
+  assert.match(
+    indexHtml,
+    /msapplication-TileColor/,
+    "index.html must declare a Windows tile color",
+  );
 });
 
 test("the offline fallback page links back into the working-offline features", () => {

@@ -328,7 +328,7 @@ export const ACTIONS = [
  * ---------------------------------------------------------------------- */
 export const PAGE_ROUTES = [
   { match: ["30-quran-full", "quran", "reader", "17-wird", "34-khatma", "35-tafsir", "43-siraj", "2-mushaf"],
-    page: "quran", feature: "reading", topics: ["quran", "tadabbur"] },
+    page: "quran", feature: "reading", topics: ["quran"] },
   { match: ["1-adhkar", "25-azkar", "15-tasbeeh", "20-voice", "36-hisn"],
     page: "azkar", feature: "dhikr", topics: ["dhikr"] },
   { match: ["4-salah", "26-daily-system", "18-qada", "42-athan", "24-ibadat"],
@@ -354,7 +354,7 @@ export const PAGE_ROUTES = [
   { match: ["13-kids-adab", "19-adab-ziyara", "14-mawarith", "23-search", "41-quiz", "40-reciters", "32-radio", "21-sites", "37-fatwa", "33-academy", "31-card-maker"],
     page: "learn", feature: "library", topics: ["knowledge", "akhlaq"] },
   { match: ["16-tadabbur"],
-    page: "quran", feature: "tadabbur", topics: ["quran", "tadabbur"] },
+    page: "quran", feature: "tadabbur", topics: ["quran"] },
   { match: ["index"],
     page: "home", feature: "hub", topics: ["dhikr", "khutbah"] },
 ];

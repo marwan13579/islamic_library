@@ -30,9 +30,16 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="المكتبة الإسلامية — رفيق المسلم اليومي">
 <meta name="twitter:description" content="الصلاة القادمة، ورد القرآن اليومي، آية اليوم وذكره، الأذكار والقبلة والتسبيح — في صفحة واحدة، بلا تسجيل.">
-<meta name="theme-color" content="#2F6B4F">
+<meta name="theme-color" content="#0b3d2c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="المكتبة الإسلامية">
+<meta name="msapplication-TileColor" content="#0b3d2c">
+<meta name="msapplication-TileImage" content="icons/icon-192.png">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="daily-companion.css">
 <script src="noor-companion.js" defer></script>
@@ -267,6 +274,7 @@ header{
     <button class="sortbtn" id="sortRecent" type="button" aria-pressed="false">الأحدث استخدامًا</button>
   </div>
   <div class="backupbar">
+    <button class="sortbtn" id="installBtn" type="button" hidden>📲 تثبيت التطبيق</button>
     <button class="sortbtn" id="backupExport" type="button">تصدير نسخة</button>
     <button class="sortbtn" id="backupImport" type="button">استعادة نسخة</button>
     <input id="backupFile" type="file" accept="application/json,.json" hidden>
@@ -969,5 +977,32 @@ document.getElementById("backupFile").addEventListener("change",async event=>{
 
 <script src="daily-home.js" defer></script>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script>
+<script>
+(function(){
+  var isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+  if(isStandalone){ var b=document.getElementById("installBtn"); if(b) b.hidden=true; return; }
+  var installPrompt = null;
+  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  var btn = document.getElementById("installBtn");
+  if(!btn) return;
+  window.addEventListener("beforeinstallprompt", function(e){
+    e.preventDefault();
+    installPrompt = e;
+    btn.hidden = false;
+  });
+  btn.addEventListener("click", function(){
+    if(!installPrompt){
+      if(isIOS){ alert("على الآيفون: افتح القائمة بمشاركة الصفحة (زر المربعات) ثم اختر «إضافة إلى الشاشة الرئيسية»."); return; }
+      btn.hidden = true; return;
+    }
+    installPrompt.prompt();
+    installPrompt.userChoice.then(function(choice){
+      if(choice.outcome==="accepted"){ btn.hidden=true; } else { btn.hidden=true; }
+      installPrompt = null;
+    });
+  });
+  if(isIOS){ btn.hidden = false; btn.textContent = "📲 تثبيت على الآيفون"; }
+})();
+</script>
 </body>
 </html>

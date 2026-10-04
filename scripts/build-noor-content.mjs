@@ -398,7 +398,7 @@ const payload = {
 /* يُصدَّر سكربتًا عاديًا (لا وحدة ES) ليعمل من كل صفحات الموقع ومن file:. */
 const banner =
   "/*\n" +
-  " * محتوى «رفيق النور» — مُولَّد آليًّا. لا تعدّله يدويًا.\n" +
+  " * noor-content.js — محتوى «رفيق النور». مُولَّد آليًّا، لا تعدّله يدويًا.\n" +
   " * المصدر: scripts/noor-curation.mjs  |  البناء: npm run build:noor\n" +
   " * الآيات مستخرجة من vendor/quran-arabic.json، وسائر النصوص من src/data/.\n" +
   ` * عدد العناصر: ${items.length}\n` +

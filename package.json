@@ -8,6 +8,7 @@
     "check:content": "node scripts/build-daily-content.cjs --check",
     "build:noor": "node scripts/build-noor-content.mjs",
     "check:noor": "node scripts/build-noor-content.mjs --check",
+    "check:noor-ui": "node scripts/noor-check.mjs",
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./tailwind.input.css -o ./tailwind.generated.css --minify",
     "download:quran": "node scripts/download-quran-data.cjs",
     "download:siraj": "node scripts/fetch-siraj-source.cjs",

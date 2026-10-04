@@ -8,6 +8,28 @@ import { normalizeAr } from "./text.js";
 /** إحداثيات الكعبة */
 export const KAABA = { lat: 21.4225, lng: 39.8262 };
 
+/** أقصى خط عرض (بين القطبين). */
+export const LAT_LIMIT = 90;
+/** أقصى خط طول (بين الظلّين). */
+export const LNG_LIMIT = 180;
+
+/**
+ * صحّة إحداثيات الموقع: خط العرض بين ٩٠ شمالًا وجنوبًا، والطول بين ١٨٠ شرقًا وغربًا.
+ *
+ * فبدونها يخرج حساب القبلة عن معناه كلّيًا (لأنّ `atan2` لا يميّز بين
+ * أطراف المجال)، فالتحقّق هنا يمنع أن تعرض الواجهة زاوية مغلوطة.
+ *
+ * @param {number} lat
+ * @param {number} lng
+ * @returns {boolean}
+ */
+export function isValidCoords(lat, lng) {
+  return (
+    Number.isFinite(lat) && Number.isFinite(lng) &&
+    Math.abs(lat) <= LAT_LIMIT && Math.abs(lng) <= LNG_LIMIT
+  );
+}
+
 /** نصاب الذهب بالجرام */
 export const NISAB_GOLD = 85;
 /** نصاب الفضة بالجرام */
@@ -19,16 +41,28 @@ const toRad = (value) => (value * Math.PI) / 180;
 const toDeg = (value) => (value * 180) / Math.PI;
 
 /**
- * اتجاه القبلة من موقع معيّن (بالدرجات، من الشمال الحقيقي).
- * @param {number} lat
- * @param {number} lng
- * @returns {number} 0..360
+ * اتجاه القبلة من موقع معيّن: الدائرة العظمى إلى الكعبة، بالدرجات من الشمال
+ * الحقيقي مع عقارب الساعة (٠ شمال · ٩٠ شرق · ١٨٠ جنوب · ٢٧٠ غرب).
+ *
+ *Formula baptism很多人的 كتاب «اتجاه القبلة»:
+ *
+ *     y = sin Δλ · cos φ₂
+ *     x = cos φ₁ · sin φ₂ − sin φ₁ · cos φ₂ · cos Δλ
+ *     θ = atan2(y, x)
+ *
+ * وفيها `cos φ₂` عامل لا بدّ منه؛ بحذفه ينحرف الاتجاه نحو القطب بضع درجات
+ * (نحو درجتين في مصر)، ولا يظهر الخلل إلا عند مقارنته بمرجع.
+ *
+ * @param {number} lat خط عرض الموقع
+ * @param {number} lng خط طول الموقع
+ * @returns {number | null} 0..360، و`null` إن كانت الإحداثيات خارج المدى
  */
 export function calcQibla(lat, lng) {
+  if (!isValidCoords(lat, lng)) return null;
   const phi1 = toRad(lat);
   const phi2 = toRad(KAABA.lat);
   const deltaLng = toRad(KAABA.lng - lng);
-  const y = Math.sin(deltaLng);
+  const y = Math.sin(deltaLng) * Math.cos(phi2);
   const x = Math.cos(phi1) * Math.sin(phi2) - Math.sin(phi1) * Math.cos(phi2) * Math.cos(deltaLng);
   return (toDeg(Math.atan2(y, x)) + 360) % 360;
 }

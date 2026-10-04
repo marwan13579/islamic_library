@@ -230,7 +230,7 @@ test("🔐 زرّ الإعدادات ينظّف كل الأنواع المعرو
 
 /* ============================================================== 3) المحرّك */
 
-test("⏱️ وضعQuiet يوقف كل مؤقّت فورًا", () => {
+test("⏱️ الوضع الهادئ يوقف كل مؤقّت فورًا", () => {
   const { api, restore } = loadEngine();
   const before = Object.keys(global).length;
   try {
@@ -265,8 +265,8 @@ test("🚫 لا يُطلب إذن الإشعارات بلا موافقة، ول�
   const requestAt = source.indexOf("Notification.requestPermission");
   assert.ok(requestAt > -1, "لا يوجد طلب إذن أصلًا؟");
 
-  const callers = source.slice(0, requestAt).split("Notification.requestPermission").length - 1;
-  assert.equal(callers, 1, "طلب الإذن مكرّر");
+  const occurrences = source.split("Notification.requestPermission").length - 1;
+  assert.equal(occurrences, 1, "طلب الإذن مكرّر");
   /* وكل نداء يمرّ عبر askNotificationPermission التي تفحص الإذن أولًا. */
   const body = source.slice(source.indexOf("function askNotificationPermission"), requestAt);
   assert.ok(body.includes('Notification.permission === "granted"'));
@@ -278,7 +278,7 @@ test("🚫 لا يُطلب إذن الإشعارات بلا موافقة، ول�
 test("🔗 الخطّافات في صفحات القراءة موجودة Calling فقط", () => {
   const quran = read("30-quran-full.html");
   assert.ok(
-    /function saveLastPos\(surah,ayah\)\{[^}]*window\.NoorCompanion\.observeReading/.test(quran),
+    /function saveLastPos\(surah,ayah\)\{[\s\S]{0,220}?window\.NoorCompanion\.observeReading/.test(quran),
     "saveLastPos لا تنادي رفيق النور",
   );
   /* الخطّاف محاط بـtry فلا يُعطّل تقدّم القراءة إن غاب النظام. */
@@ -300,6 +300,38 @@ test("🔗 لا يترك النظام نظام تقدّم موازيًا للق�
   for (const key of storageKeys) {
     if (key.startsWith("KEY.")) assert.ok(declared.has(key), `مفتاح غير مُعلَن: ${key}`);
   }
+});
+
+test("🎨 أنماط وقت التشغيل سليمة: لا قاعدة داخل قاعدة", () => {
+  const source = read("noor-companion.js");
+  const body = source.slice(source.indexOf("var CSS = ["), source.indexOf("].join(\"\");"));
+  assert.ok(body, "لم يُعثر على مصفوفة CSS");
+
+  /* الشريط ملصوق بلا فاصل، فإقحام قاعدة في منتصف أخرى يبتلع الاثنتين:
+     يسقط التنسيق كلّه ويفقد الزرّ قابلية النقر، ولا يظهر خطأ في الطرفية. */
+  const entries = [...body.matchAll(/"((?:[^"\\]|\\.)*)"/g)]
+    .map((m) => m[1].replace(/\\"/g, '"'))
+    .filter((s) => s.includes("{") || s.includes("}") || s.includes(";"));
+  const css = entries.join("");
+
+  assert.equal((css.match(/\{/g) ?? []).length, (css.match(/\}/g) ?? []).length,
+    "الأقواس غير متوازنة");
+
+  for (const rule of css.split("}")) {
+    const prelude = rule.split("{")[0];
+    assert.ok(!/[;{}]/.test(prelude) || prelude.trim() === "",
+      `مُقنِع قاعدة يحوي فواصل لا محلّ لها: ${prelude.slice(0, 90)}`);
+  }
+
+  /* القواعد المفتوحة فعلًا في صفحة المتصفح:يجب أن تحمل مظهرًا ونقرة. */
+  for (const selector of [".noor-card{", ".noor-btn{", ".noor-sheet{", ".noor-gear{"]) {
+    assert.ok(css.includes(selector), `قاعدة ناقصة: ${selector}`);
+  }
+  assert.ok(css.includes("box-shadow:0 8px 28px"), "فقدت البطاقة ظلّها (CSS مبتورة)");
+  assert.ok(
+    /\.noor-card \.noor-btn,.noor-card \.noor-x,.noor-card a\{pointer-events:auto\}/.test(css),
+    "زرّ البطاقة لا يستقبل النقر",
+  );
 });
 
 test("🔗 سطر واحد فقط في كل صفحة، ولا سكربت في صفحة الخطأ", () => {
@@ -352,7 +384,7 @@ test("🏗️ الناتج مطابق لما يولّده البناء", () => {
   assert.ok(fs.existsSync(path.join(ROOT, "scripts/noor-curation.mjs")));
 });
 
-test("🧹 الإzlالة ممكنة بسطرين لا غير", () => {
+test("🧹 الإزالة ممكنة بحذف سطرين لا غير", () => {
   /* لا شيء في صفحات الموقع يتحدّث عن النظام إلا وسم السكربت نفسه. */
   const html = fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"));
   for (const page of html) {

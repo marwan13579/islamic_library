@@ -528,13 +528,15 @@
     ".noor-root{position:fixed;inset-inline:0;bottom:calc(env(safe-area-inset-bottom,0px) + 76px);",
     "z-index:130;display:flex;justify-content:center;padding-inline:12px;pointer-events:none}",
     ".noor-card{pointer-events:none;width:100%;max-width:400px;background:var(--card,#fffaf0);",
-    // البطاقة مرئيّة فوق الصفحة لكنّها لا تعترض النقر: ما تحتها يبقى قابلًا
-    // للاستعمال، ولا يُمنع المستخدم عن قراءة أو الضغط على أي زرّ تحتها.
-    ".noor-card .noor-btn,.noor-card .noor-x,.noor-card a{pointer-events:auto}",
     "color:var(--ink,#13322c);border:1px solid var(--line,rgba(19,50,44,.14));",
     "border-inline-start:3px solid var(--gold,#9c7420);border-radius:14px;padding:14px 16px;",
     "box-shadow:0 8px 28px rgba(0,0,0,.18);font-family:Cairo,system-ui,sans-serif;font-size:.92rem;",
     "line-height:1.75}",
+    // البطاقة مرئيّة فوق الصفحة لكنّها لا تعترض النقر: ما تحتها يبقى قابلًا
+    // للاستعمال، ولا يُمنع المستخدم عن قراءة أو الضغط على أي زرّ تحتها.
+    // تنبيه: هذه القاعدة تلي قوس إغلاق `.noor-card` مباشرةً. الشريط ملصوق
+    // بلا فاصل، فإقحام قاعدة في منتصف قاعدة أخرى يُفسد الاثنين معًا.
+    ".noor-card .noor-btn,.noor-card .noor-x,.noor-card a{pointer-events:auto}",
     ".noor-card h3{margin:0 0 6px;font-size:.95rem;font-weight:700;color:var(--gold,#9c7420)}",
     ".noor-kind{font-size:.72rem;letter-spacing:.04em;color:var(--ink-soft,#3d5b53);",
     "border:1px solid var(--line,rgba(19,50,44,.14));border-radius:999px;padding:1px 9px;",

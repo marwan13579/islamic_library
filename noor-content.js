@@ -1,5 +1,5 @@
 /*
- * محتوى «رفيق النور» — مُولَّد آليًّا. لا تعدّله يدويًا.
+ * noor-content.js — محتوى «رفيق النور». مُولَّد آليًّا، لا تعدّله يدويًا.
  * المصدر: scripts/noor-curation.mjs  |  البناء: npm run build:noor
  * الآيات مستخرجة من vendor/quran-arabic.json، وسائر النصوص من src/data/.
  * عدد العناصر: 271
@@ -4683,8 +4683,7 @@
       "page": "quran",
       "feature": "reading",
       "topics": [
-        "quran",
-        "tadabbur"
+        "quran"
       ]
     },
     {
@@ -4844,8 +4843,7 @@
       "page": "quran",
       "feature": "tadabbur",
       "topics": [
-        "quran",
-        "tadabbur"
+        "quran"
       ]
     },
     {

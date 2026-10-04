@@ -67,7 +67,15 @@ const ok = (message) => console.log("  ✔ " + message);
   counts.quick >= 7 ? ok(`الاختصارات السريعة ${counts.quick}`) : note(`اختصارات قليلة: ${counts.quick}`);
   counts.cards >= 6 ? ok(`بطاقات اليوم ${counts.cards}`) : note(`بطاقات قليلة: ${counts.cards}`);
   counts.times === 6 ? ok("كل مواقيت اليوم معروضة") : note(`مواقيت ${counts.times} بدل 6`);
-  /^\d{2}:\d{2}(:\d{2})?$/.test(counts.count) ? ok(`العدّ التنازلي يعمل: ${counts.count}`) : note(`عدّ تنازلي غير صالح: "${counts.count}"`);
+  // وقتُ الاختبار متغيّر، فالمطلوب إمّا عدّ تنازلي صالح أو بيان صريح —
+  // ولا يصحّ أن نُفشل الفحص لأن الساعة كانت بعد العشاء.
+  const countdownLine = counts.count.trim();
+  const prayerNote = await page.evaluate(() => document.querySelector("#dcRoot .dc-count-label")?.textContent?.trim() || "");
+  const valid = /^\d{2}:\d{2}(:\d{2})?$/.test(countdownLine);
+  const explained = countdownLine === "" && prayerNote.length > 0;
+  (valid || explained)
+    ? ok(`العدّ التنازلي صالح: "${countdownLine || prayerNote}"`)
+    : note(`لا عدّ تنازلي ولا بيان: "${countdownLine}" / "${prayerNote}"`);
   counts.verse.length > 10 ? ok("آية اليوم معروضة") : note("آية اليوم فارغة");
   counts.verseRef ? ok("مرجع الآية موجود: " + counts.verseRef) : note("مرجع الآية مفقود");
   counts.now >= 8 ? ok(`بطاقات "ماذا تريد أن تفعل الآن؟" ${counts.now}`) : note(`بطاقات قليلة: ${counts.now}`);

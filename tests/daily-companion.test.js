@@ -431,3 +431,18 @@ test("robots و sitemap يُولَّدان في مخرجات النشر", () => 
   assert.match(prepare, /robots\.txt/);
   assert.match(prepare, /entry\.name === "_redirects"/, "_redirects يُنسخ إلى dist");
 });
+
+test("بعد آخر صلاة لا تفرغ «القادمة»: تصير فجر الغد", () => {
+  const lateNight = new Date(2026, 0, 1, 23, 30);
+  const state = dc.prayerState(lateNight);
+  assert.ok(state, "المواقيت تُحسب");
+  assert.equal(state.tomorrow, true, "لنا أن الفجر القادم فجر الغد");
+  assert.equal(state.next.id, "fajr");
+  assert.ok(state.next.at > lateNight, "الفجر بعد اللحظة");
+  assert.equal(state.current.id, "isha", "الحالية آخر صلاة اليوم");
+
+  // وأ，白天: القادمة اليوم لا غدًا.
+  const daytime = dc.prayerState(new Date(2026, 0, 1, 9, 0));
+  assert.equal(daytime.tomorrow, false);
+  assert.ok(daytime.next.at <= new Date(2026, 0, 2, 0, 0));
+});
