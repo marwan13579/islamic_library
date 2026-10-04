@@ -265,7 +265,7 @@ header{
   </svg>
   <h1 id="siteTitle">المكتبة الإسلامية</h1>
   <div class="install-top">
-    <button class="sortbtn" id="installBtn" type="button" hidden>📲 تثبيت التطبيق</button>
+    <button class="sortbtn" id="installBtn" type="button">📲 تثبيت التطبيق</button>
   </div>
   <p id="siteSubtitle">كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.</p>
   <input class="search" id="search" type="search" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة">
@@ -992,26 +992,40 @@ import("./src/lib/auto-notify.js")
   var isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
   if(isStandalone){ var b=document.getElementById("installBtn"); if(b) b.hidden=true; return; }
   var installPrompt = null;
-  var isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) || (navigator.platform==="MacIntel" && navigator.maxTouchPoints>1);
+  var ua = navigator.userAgent;
+  var isIOS = /iphone|ipad|ipod/i.test(ua);
+  var isAndroid = /android/i.test(ua);
+  var isFirefox = /firefox/i.test(ua);
+  var isSafari = /^((?!chrome|edge|crios|crr).)*safari/i.test(ua);
+  var isWindows = /windows/i.test(ua);
+  var isMac = /mac/i.test(ua);
+  var isLinux = /linux/i.test(ua);
   var btn = document.getElementById("installBtn");
   if(!btn) return;
+  btn.hidden = false;
   window.addEventListener("beforeinstallprompt", function(e){
     e.preventDefault();
     installPrompt = e;
-    btn.hidden = false;
   });
   btn.addEventListener("click", function(){
-    if(!installPrompt){
-      if(isIOS){ alert("على الآيفون: افتح القائمة بمشاركة الصفحة (زر المربعات) ثم اختر «إضافة إلى الشاشة الرئيسية»."); return; }
-      btn.hidden = true; return;
+    if(installPrompt){
+      installPrompt.prompt();
+      installPrompt.userChoice.then(function(choice){
+        if(choice.outcome==="accepted"){ alert("تم تثبيت التطبيق 🎉\nمكتبتك الآن متاحة من شريط المهام أو الإعدادات."); }
+        installPrompt = null;
+      });
+      return;
     }
-    installPrompt.prompt();
-    installPrompt.userChoice.then(function(choice){
-      if(choice.outcome==="accepted"){ btn.hidden=true; } else { btn.hidden=true; }
-      installPrompt = null;
-    });
+    var msg;
+    if(isIOS){ msg="على الآيفون:\n١. افتح القائمة بمشاركة الصفحة (زر المربعات المربوطة)\n٢. اختر «إضافة إلى الشاشة الرئيسية»\n٣. سيظهر أيقونة على شاشتك"; }
+    else if(isAndroid && isFirefox){ msg="على أندرويد (فايرفوكس):\nافتح القائمة ≡ ثم «إضافة إلى الشاشة الرئيسية»"; }
+    else if(isMac && isSafari){ msg="على ماك (سفاري):\n١. اضغط على زر المشاركة (⧉) في شريط العناوين\n٢. اختر «إضافة إلى الشاشة الرئيسية»"; }
+    else if(isWindows && isFirefox){ msg="على ويندوز (فايرفوكس):\nافتح القائمة ≡ ثم «تثبيت هذه الموقع»"; }
+    else if(isWindows){ msg="على ويندوز:\nافتح القائمة ⋮ (Chrome/Edge) ثم «تثبيت المكتبة الإسلامية»"; }
+    else if(isLinux){ msg="على لينكس:\nفي Chrome/Edge افتح القائمة ⋮ ثم «تثبيت»، أو استخدم ← لإضافة إلى الشاشة الرئيسية"; }
+    else { msg="لتثبيت التطبيق:\nاستخدم خيار «إضافة إلى الشاشة الرئيسية» أو «تثبيت» من قائمة المتصفح."; }
+    alert(msg);
   });
-  if(isIOS){ btn.hidden = false; btn.textContent = "📲 تثبيت على الآيفون"; }
 })();
 </script>
 </body>
