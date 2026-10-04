@@ -2,8 +2,12 @@
   "name": "islamic-library",
   "private": true,
   "scripts": {
-    "build": "npm run build:css && node scripts/build-vendor.cjs",
+    "build": "npm run build:css && node scripts/build-vendor.cjs && npm run build:content && npm run build:noor",
     "build:pages": "npm run build && node scripts/prepare-pages.cjs",
+    "build:content": "node scripts/build-daily-content.cjs",
+    "check:content": "node scripts/build-daily-content.cjs --check",
+    "build:noor": "node scripts/build-noor-content.mjs",
+    "check:noor": "node scripts/build-noor-content.mjs --check",
     "build:css": "tailwindcss -c tailwind.config.cjs -i ./tailwind.input.css -o ./tailwind.generated.css --minify",
     "download:quran": "node scripts/download-quran-data.cjs",
     "download:siraj": "node scripts/fetch-siraj-source.cjs",
@@ -18,7 +22,7 @@
     "check:icons": "node scripts/inject-sprite.cjs --check",
     "check:streams": "node scripts/check-streams.cjs",
     "smoke": "node scripts/smoke-all.mjs",
-    "check:all": "npm run check:js && npm run check:icons && npm run check:order && npm run verify:content && npm test && npm run review && npm run check:browser && npm run check:reader && npm run check:quran && npm run check:interaction",
+    "check:all": "npm run check:js && npm run check:icons && npm run check:order && npm run check:content && npm run check:noor && npm run verify:content && npm test && npm run review && npm run check:browser && npm run check:reader && npm run check:quran && npm run check:interaction && npm run check:daily && npm run videos:check && npm run check:videos",
     "icons": "python3 scripts/build-icons.py",
     "test": "node --test tests/*.test.js",
     "serve": "python3 -m http.server 8765",
@@ -27,7 +31,12 @@
     "check:quran": "node scripts/quran-read-check.mjs",
     "review": "node scripts/review-report.cjs",
     "review:ci": "node scripts/review-report.cjs --ci",
-    "check:reader": "node scripts/check-reader.mjs"
+    "check:reader": "node scripts/check-reader.mjs",
+    "check:daily": "node scripts/daily-hub-check.mjs",
+    "videos:verify": "node scripts/verify-video-channels.mjs",
+    "videos:check": "node scripts/verify-video-channels.mjs --data",
+    "videos:discover": "node scripts/verify-video-channels.mjs --search",
+    "check:videos": "node scripts/video-library-check.mjs"
   },
   "devDependencies": {
     "playwright-core": "^1.63.0",

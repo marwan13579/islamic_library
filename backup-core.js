@@ -28,6 +28,10 @@
     // المكتبة المستوردة: التسبيح اليومي، سجل الاختبار، وإعدادات الأذان.
     "gtasbeeh-daily","lib-quiz-level","lib-quiz-history",
     "athan_timings","athan_coords","athan_method","athan_auto_audio","athan_notif_off",
+    // مكتبة الفيديو الإسلامية: المفضلة وآخر ما شوهد
+    "video_favorites","video_recent",
+    // رفيق النور: إعدادات التذكير، وسجلّ ما عُرض، والإحصاءات، وأعمال اليوم.
+    "noor-settings","noor-shown","noor-stats","noor-actions",
   ]);
 
   function createBackup(storage,createdAt=new Date()){

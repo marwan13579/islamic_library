@@ -26,7 +26,18 @@ function collect(directory) {
   return out;
 }
 
-const files = ROOTS.flatMap((name) => collect(path.join(root, name)));
+/**
+ * سكربتات المشروع في الجذر: مكتبات Classics مشتركة تُحمَّل في <head>
+ * بلا defer، وأي خطأ فيها يُسقط الصفحة التي تستدعيها.
+ */
+function collectRootScripts() {
+  return fs
+    .readdirSync(root, { withFileTypes: true })
+    .filter((entry) => entry.isFile() && entry.name.endsWith(".js"))
+    .map((entry) => path.join(root, entry.name));
+}
+
+const files = [...ROOTS.flatMap((name) => collect(path.join(root, name))), ...collectRootScripts()];
 const failures = [];
 
 for (const file of files) {

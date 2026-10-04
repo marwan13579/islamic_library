@@ -5,11 +5,53 @@
 <script src="storage-fallback.js"></script>
 <script src="calculations.js"></script>
 <script src="backup-core.js"></script>
+<script src="daily-content.js"></script>
+<script src="daily-companion.js"></script>
+<script>
+/* نفس مفتاح الوضع الليلي المستخدم في بقية صفحات الموقع (lib-theme-pref)،
+   فيتذكّر الزائر اختياره بين الصفحات. */
+(function(){
+  try{
+    var saved=localStorage.getItem("lib-theme-pref");
+    if(saved==="dark"||saved==="light") document.documentElement.setAttribute("data-theme",saved);
+  }catch(e){}
+})();
+</script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>المكتبة الإسلامية</title>
+<title>المكتبة الإسلامية — رفيق المسلم اليومي | القرآن والأذكار والصلاة</title>
+<meta name="description" content="رفيق المسلم اليومي: الصلاة القادمة وعدّاد تنازلي، وردك اليومي وأيامك المتتالية، آية اليوم وذكره، الأذكار، مواقيت الصلاة، القبلة، والتسبيح. بلا تسجيل، ويعمل بدون إنترنت.">
+<link rel="canonical" href="./">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="المكتبة الإسلامية">
+<meta property="og:title" content="المكتبة الإسلامية — رفيق المسلم اليومي">
+<meta property="og:description" content="الصلاة القادمة، ورد القرآن اليومي، آية اليوم وذكره، الأذكار والقبلة والتسبيح — في صفحة واحدة، بلا تسجيل.">
+<meta property="og:url" content="./">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="المكتبة الإسلامية — رفيق المسلم اليومي">
+<meta name="twitter:description" content="الصلاة القادمة، ورد القرآن اليومي، آية اليوم وذكره، الأذكار والقبلة والتسبيح — في صفحة واحدة، بلا تسجيل.">
+<meta name="theme-color" content="#2F6B4F">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="daily-companion.css">
+<script src="noor-companion.js" defer></script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "المكتبة الإسلامية",
+  "alternateName": "رفيق المسلم اليومي",
+  "url": "./",
+  "inLanguage": "ar",
+  "description": "موقع إسلامي يجمع القرآن والأذكار والصلاة والقبلة والتسبيح والزكاة وأدوات تعليمية، ويعمل بدون إنترنت وبلا تسجيل.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": { "@type": "EntryPoint", "urlTemplate": "23-search.html?q={search_term_string}" },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -234,6 +276,11 @@ header{
 
 <a class="skip-link" href="#sections">تخطَّ إلى الأدوات</a>
 
+<!-- الرفيق اليومي: لوحة اليوم تُبنى هنا، ولا يمسّ فهرس الأدوات أدناه. -->
+<div class="wrap dc-scope">
+  <div id="dcRoot"></div>
+</div>
+
 <div class="wrap">
   <div id="ramadanBanner"></div>
   <div class="sincerity">
@@ -333,6 +380,7 @@ const I18N = {
       gtasbeeh:["Group Tasbih","A separate counter for each person present"],
       tadabbur:["Reflection Journal","Write your reflections on verses of the Qur'an"],
       wird:["Daily Qur'an Reading","Track your daily reading pages"],
+      noorcompanion:["Noor Companion","A gentle faith reminder you configure yourself: interval, content type, and quiet mode"],
       qada:["Missed Fasts Tracker","Log missed days and track making them up"],
       visiting:["Etiquette of Visiting","Visiting the sick, condolences, and congratulations"],
       voiceazkar:["Record Yourself Reciting Adhkar","A personal recorder for your own voice in dhikr"],
@@ -342,6 +390,7 @@ const I18N = {
       hijri:["Hijri Calendar","Hijri ↔ Gregorian conversion, occasions, and recommended fasting"],
       qibla:["Qibla Direction","Calculate the Qibla angle from your location"],
       sitesdir:["Islamic Websites Directory","18 reference sites with a guide to each site's sections"],
+      islamicvideos:["Islamic Video Library","Learn, watch and benefit — verified YouTube channels sorted by age, language and field"],
       b0:["Al-Qahtani's Nooniyyah — recited by Fares Abbad","Audio recitation — your own Drive file"],
       b1:["Al-Bidayah wan-Nihayah","Ibn Kathir — your own Drive file"],
       b2:["The Qur'an — A Word in a Picture","Your own Drive file"],
@@ -479,6 +528,8 @@ const TOOLS = [
    url:"16-tadabbur.html"},
   {id:"wird", emoji:"📖", name:"ورد القراءة اليومي", desc:"تابع صفحاتك اليومية من القرآن", cat:"quran",
    url:"17-wird.html"},
+  {id:"noorcompanion", emoji:"🌿", name:"رفيق النور", desc:"تذكير إيماني هادئ يضبطه أنت: الفاصل الزمني ونوع المحتوى والوضع الهادئ", cat:"dhikr",
+   url:"44-noor-companion.html"},
   {id:"qada", emoji:"🌙", name:"متابعة صيام القضاء", desc:"سجّل الأيام الفائتة وتابع قضاءها", cat:"calc",
    url:"18-qada.html"},
   {id:"visiting", emoji:"🤝", name:"آداب الزيارة والعيادة", desc:"عيادة المريض، العزاء، والتهنئة", cat:"learn",
@@ -520,6 +571,8 @@ const TOOLS = [
    url:"39-tarikh.html"},
   {id:"reciters", emoji:"🎙️", name:"القرّاء والتلاوة", desc:"١٥٨ قارئًا و١٧٧ إذاعة، مع تحميل السور كاملةً بلا إنترنت", cat:"quran",
    url:"40-reciters.html"},
+  {id:"islamicvideos", emoji:"🎬", name:"مكتبة الفيديو الإسلامية", desc:"تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال", cat:"books",
+   url:"islamic-videos/"},
   {id:"libquiz", emoji:"🧠", name:"الاختبارات", desc:"٥٨٢٠ سؤالًا في التفسير والفقه والعقيدة والحديث، بتصحيح فوري", cat:"learn",
    url:"41-quiz.html"},
   {id:"athan", emoji:"🕌", name:"مواقيت الأذان", desc:"الصلوات الخمس بمدينتك، وتنبيه وصوت أذان عند دخول الوقت", cat:"dhikr",
@@ -914,6 +967,7 @@ document.getElementById("backupFile").addEventListener("change",async event=>{
 });
 </script>
 
+<script src="daily-home.js" defer></script>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script>
 </body>
 </html>

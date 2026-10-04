@@ -27,6 +27,8 @@ jobs:
       - run: npm run check:js
       - run: npm run check:icons
       - run: npm run check:order
+      - run: npm run check:content
+      - run: npm run check:noor
       - run: npm run verify:content
       - run: npm run review:ci
 
@@ -49,6 +51,8 @@ jobs:
       - run: npm run check:browser
       - run: npm run check:reader
       - run: npm run check:interaction
+      - run: npm run check:daily
+      - run: npm run videos:check
 
   deploy:
     name: Build and deploy
@@ -61,7 +65,12 @@ jobs:
           node-version: 22
           cache: npm
       - run: npm ci
-      - run: npm run build:pages
+      - name: Build
+        env:
+          # نطاق Cloudflare Pages لمشروع islamic-library — يُستخدم في sitemap.xml
+          # و robots.txt. على Vercel/Netlify مرّر نطاقهما عند البناء محليًا.
+          SITE_ORIGIN: https://islamic-library.pages.dev
+        run: npm run build:pages
       - name: Upload to Cloudflare Pages
         env:
           CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}

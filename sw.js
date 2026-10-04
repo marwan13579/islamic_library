@@ -13,7 +13,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v36";
+const CACHE_VERSION = "islamic-library-v39";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -45,6 +45,10 @@ const SHELL = [
   "./backup-core.js",
   "./service-messages.js",
   "./khatma-core.js",
+  "./daily-content.js",
+  "./daily-companion.js",
+  "./daily-home.js",
+  "./daily-companion.css",
   "./fonts.css",
   "./vendor/quran-arabic.json",
   "./vendor/fontawesome/css/all.min.css",
@@ -81,6 +85,11 @@ const SHELL = [
   "./library.css", "./35-tafsir.html", "./36-hisn.html", "./37-fatwa.html",
   "./38-khutbah.html", "./39-tarikh.html", "./40-reciters.html", "./41-quiz.html",
   "./42-athan.html", "./43-siraj.html", "./reader.html",
+  // رفيق النور: ملفّان فقط. المحتوى ١٥٥ ك.ب يُجلَب عند أول تذكير لا عند الدخول.
+  "./noor-companion.js", "./noor-content.js", "./44-noor-companion.html",
+  // مكتبة الفيديو الإسلامية: صفحتان وملف تنسيق واحد ووحدتا منطق وبيانات فقط.
+  "./islamic-videos/index.html", "./islamic-videos/favorites/index.html", "./islamic-videos/videos.css",
+  "./src/data/islamic-channels.js", "./src/lib/video-library.js", "./src/lib/video-library-ui.js",
   "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
   "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
   // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.

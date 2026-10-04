@@ -1,0 +1,604 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<script src="../storage-fallback.js"></script>
+<script>
+/* نفس مفتاح الوضع الليلي في بقية صفحات الموقع (lib-theme-pref)،
+   فيتذكّر الزائر اختياره ولا تومض الصفحة فاتحةً في وضع ليلي. */
+(function(){
+  try{
+    var saved=localStorage.getItem("lib-theme-pref");
+    if(saved==="dark"||saved==="light") document.documentElement.setAttribute("data-theme",saved);
+  }catch(e){}
+})();
+</script>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>مكتبة الفيديو الإسلامية | نور الهدى</title>
+<meta name="description" content="مكتبة إسلامية تضم محتوى منتقى من القرآن والتفسير والسيرة والحديث والتجويد والأخلاق وتعليم الأطفال والشباب.">
+<meta name="theme-color" content="#12664a">
+<link rel="canonical" href="./">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="نور الهدى · بوابة النور">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:title" content="مكتبة الفيديو الإسلامية | نور الهدى">
+<meta property="og:description" content="قنوات إسلامية موثّقة على يوتيوب، منظّمة حسب العمر واللغة والتخصص، للقرآن والسيرة والعلم والأخلاق وتربية الأبناء.">
+<meta property="og:url" content="./">
+<meta property="og:image" content="../icons/icon-512.png">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="مكتبة الفيديو الإسلامية | نور الهدى">
+<meta name="twitter:description" content="قنوات إسلامية موثّقة على يوتيوب، منظّمة حسب العمر واللغة والتخصص.">
+<meta name="twitter:image" content="../icons/icon-512.png">
+<link rel="icon" href="../icons/icon-192.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<link rel="stylesheet" href="../fonts.css">
+<link rel="stylesheet" href="../tools.css">
+<link rel="stylesheet" href="../library.css">
+<link rel="stylesheet" href="./videos.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "CollectionPage",
+  "name": "مكتبة الفيديو الإسلامية",
+  "description": "مكتبة إسلامية تضم محتوى منتقى من القرآن والتفسير والسيرة والحديث والتجويد والأخلاق وتعليم الأطفال والشباب.",
+  "inLanguage": "ar",
+  "isPartOf": { "@type": "WebSite", "name": "نور الهدى · بوابة النور" },
+  "breadcrumb": {
+    "@type": "BreadcrumbList",
+    "itemListElement": [
+      { "@type": "ListItem", "position": 1, "name": "الرئيسية", "item": "../index.html" },
+      { "@type": "ListItem", "position": 2, "name": "مكتبة الفيديو الإسلامية", "item": "./" }
+    ]
+  }
+}
+</script>
+</head>
+<body>
+<a class="skip-link" href="#browseSection">تخطَّ إلى تصفّح القنوات</a>
+<a class="back-link" href="../index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
+
+<div class="vlib">
+  <nav class="vcrumb" aria-label="مسار التصفّح">
+    <a href="../index.html">الرئيسية</a>
+    <span aria-hidden="true">←</span>
+    <span aria-current="page">مكتبة الفيديو الإسلامية</span>
+  </nav>
+
+  <header class="vhero">
+    <p class="vhero__badge">🎬 مكتبة منتقاة</p>
+    <h1>مكتبة الفيديو الإسلامية</h1>
+    <p>مجموعة منتقاة من المحتوى الإسلامي المفيد للقرآن والسيرة والعلم والأخلاق وتربية الأبناء، لجميع الأعمار.</p>
+    <div class="vhero__stats" id="heroStats"></div>
+    <div class="vhero__acts">
+      <button class="vbtn vbtn--go" type="button" id="sharePage" aria-label="مشاركة رابط مكتبة الفيديو">↗ مشاركة المكتبة</button>
+      <a class="vbtn" href="./favorites/">⭐ المفضلة</a>
+    </div>
+  </header>
+
+  <noscript>
+    <p class="vnote">هذه المكتبة تبحث وتصفّي في القنوات داخل جهازك، فتحتاج تفعيل الجافاسكربت. كل قناة منها لها رابطها على يوتيوب، وبإمكانك فتح يوتيوب مباشرة.</p>
+  </noscript>
+
+  <section class="vsec" aria-labelledby="startTitle">
+    <h2 id="startTitle">🎯 ماذا تريد أن تتعلم اليوم؟</h2>
+    <p class="vsec__sub">اختر ما يناسبك، فيُطبَّق الفلتر فورًا على المكتبة كلها.</p>
+    <div class="vstart__grid" id="startGrid"></div>
+  </section>
+
+  <section class="vsec" aria-labelledby="nowTitle">
+    <div class="vsec__head">
+      <div>
+        <h2 id="nowTitle">🎬 ماذا أشاهد الآن؟</h2>
+        <p class="vsec__sub">اقتراح واحد من القنوات الموصى بها والموثّقة.</p>
+      </div>
+      <button class="vbtn" type="button" id="reroll" aria-label="اقتراح آخر">🔄 اقتراح آخر</button>
+    </div>
+    <div id="spotlight"></div>
+  </section>
+
+  <section class="vsec" aria-labelledby="featuredTitle">
+    <h2 id="featuredTitle">⭐ مختارات نور الهدى</h2>
+    <p class="vsec__sub">قنوات موثّقة التزمنت الرسمية، نختارها لوضوحها وفائدتها. هذه مختاراتنا لا حكمٌ على غيرها.</p>
+    <div class="vrail" id="featured"></div>
+  </section>
+
+  <section class="vsec" id="kidsSection" aria-labelledby="kidsTitle">
+    <div class="vsec__head">
+      <div>
+        <h2 id="kidsTitle">🛡️ محتوى مختار للأطفال</h2>
+        <p class="vsec__sub">محتوى اخترناه لأعمار محددة، عنايةً لأهله — راجع ما يناسب ابنك وابنتك.</p>
+      </div>
+    </div>
+    <div class="vchips" id="kidsChips" role="group" aria-label="تصفية محتوى الأطفال بالعمر"></div>
+    <div class="vrail" id="kidsRail"></div>
+  </section>
+
+  <section class="vsec" id="learnSection" aria-labelledby="learnTitle" hidden>
+    <h2 id="learnTitle">🎯 شاهد وتعلم</h2>
+    <p class="vsec__sub" id="learnSub"></p>
+    <div class="vgrid" id="learnGrid"></div>
+  </section>
+
+  <section class="vsec" id="recentSection" aria-labelledby="recentTitle" hidden>
+    <div class="vsec__head">
+      <div>
+        <h2 id="recentTitle">🕘 آخر ما شاهدت</h2>
+        <p class="vsec__sub">محفوظ في جهازك وحدك: اسم القناة ووقت فتحها فقط.</p>
+      </div>
+      <button class="vbtn" type="button" id="clearRecent">مسح السجل</button>
+    </div>
+    <div class="vrail" id="recentRail"></div>
+  </section>
+
+  <section class="vsec" id="browseSection" aria-labelledby="browseTitle">
+    <h2 id="browseTitle">📚 تصفّح القنوات</h2>
+    <div class="vtools">
+      <input class="vsearch" id="q" type="search" autocomplete="off"
+        placeholder="ابحث باسم القناة أو مجالها أو عمرها…" aria-label="ابحث في مكتبة الفيديو الإسلامية">
+
+      <div class="vfilters">
+        <div class="vfilter">
+          <label for="fAge">العمر</label>
+          <select id="fAge"><option value="all">كل الأعمار</option></select>
+        </div>
+        <div class="vfilter">
+          <label for="fLang">اللغة</label>
+          <select id="fLang"><option value="all">كل اللغات</option></select>
+        </div>
+        <div class="vfilter">
+          <label for="fTrust">مستوى التوصية</label>
+          <select id="fTrust"><option value="all">الكل</option></select>
+        </div>
+        <div class="vfilter">
+          <label for="fOnly">عرض</label>
+          <select id="fOnly">
+            <option value="all">كل القنوات</option>
+            <option value="featured">المختارات فقط</option>
+            <option value="favorites">المفضلة فقط</option>
+          </select>
+        </div>
+      </div>
+
+      <div class="vchips" id="catChips" role="group" aria-label="تصفية حسب المجال"></div>
+      <div class="vchips" id="ageChips" role="group" aria-label="تصفية حسب العمر"></div>
+    </div>
+
+    <p class="vcount" id="count" role="status" aria-live="polite"></p>
+    <div class="vgrid" id="results"></div>
+    <div class="vpager" id="pager"></div>
+  </section>
+
+  <section class="vsec" id="reviewSection" aria-labelledby="reviewTitle" hidden>
+    <h2 id="reviewTitle">🧪 قنوات بانتظار التحقق</h2>
+    <p class="vsec__sub">وضع صيانة فقط: قنوات رُشّحت ولم يثبت أنها رسمية، فلا تُعرض في المكتبة ولا تُفتح من هنا.</p>
+    <ul class="vcats" id="reviewList"></ul>
+  </section>
+
+  <p class="vnote">
+    ℹ️ هذه المكتبة فهرسٌ لمحتوى يوتيوب لا يستضيفه: كل بطاقة رابطٌ إلى قناة صاحبها على يوتيوب،
+    والوصف فيها كلامنا نحن، والصور رمز بالحرف الأول لا شعارًا منقولًا.
+    ولا تُعرَض هنا قناة إلا بعد التحقق من وجودها ورسمها، فما لم يثبت يُترك في <code>needs_review</code>
+    حتى يُراجَع. والتوصية مستوى اختيارٍ لا ادعاءُ كمال.
+  </p>
+
+  <footer class="lib-foot">
+    <p>مكتبة الفيديو الإسلامية — قسم مستقلّ داخل <a href="../index.html">نور الهدى</a>. يُحذف بحذف مجلده.</p>
+  </footer>
+</div>
+
+<script type="module">
+  import { CHANNELS, AGE_GROUPS, CATEGORIES, LANGUAGES, TRUST_LEVELS, STARTING_POINTS } from "../src/data/islamic-channels.js";
+  import {
+    buildIndex, runQuery, emptyQuery, paginate, suggestionsFor, watchNow, featuredChannels,
+    facetCounts, publishable, PAGE_SIZE,
+  } from "../src/lib/video-library.js";
+  import {
+    channelCard, spotlightCard, readFavorites, toggleFavorite,
+    readRecent, clearRecent, markWatched, shareChannel,
+  } from "../src/lib/video-library-ui.js";
+  import { toArNum } from "../src/lib/text.js";
+
+  /* وضع المراجعة: ?review=1 يعرض ما ينتظر التحقق لأصحاب المكتبة وحدهم. */
+  const reviewMode = new URLSearchParams(location.search).get("review") === "1";
+  const index = buildIndex(CHANNELS, reviewMode);
+
+  const $ = (id) => document.getElementById(id);
+  const state = { ...emptyQuery(), page: 1 };
+  let favorites = readFavorites();
+
+  /* ─────────────────────────────────────────── بناء أشرطة الفلترة */
+
+  function fillSelect(select, items, valueOf, labelOf) {
+    for (const item of items) {
+      const option = document.createElement("option");
+      option.value = valueOf(item);
+      option.textContent = labelOf(item);
+      select.appendChild(option);
+    }
+  }
+
+  fillSelect($("fAge"), AGE_GROUPS, (item) => item.id, (item) => `${item.emoji} ${item.label}`);
+  fillSelect($("fLang"), LANGUAGES, (item) => item.id, (item) => `${item.emoji} ${item.label}`);
+  fillSelect($("fTrust"), TRUST_LEVELS, (item) => item.id, (item) => `${item.emoji} ${item.label}`);
+
+  function chip(label, count, pressed, onClick) {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "vchip";
+    button.setAttribute("aria-pressed", pressed ? "true" : "false");
+    button.innerHTML = `${label}${count === null ? "" : `<span class="n">${toArNum(count)}</span>`}`;
+    button.addEventListener("click", onClick);
+    return button;
+  }
+
+  function renderChips() {
+    const counts = facetCounts(index, { ...state, text: "" }, "category");
+    const cats = $("catChips");
+    cats.replaceChildren(
+      chip("كل المجالات", runQuery(index, { ...state, category: "all" }).length, state.category === "all", () => {
+        state.category = "all";
+        state.page = 1;
+        renderChips();
+        renderResults();
+      }),
+      ...CATEGORIES.map((category) =>
+        chip(
+          `${category.emoji} ${category.label}`,
+          counts.get(category.id) ?? 0,
+          state.category === category.id,
+          () => {
+            state.category = state.category === category.id ? "all" : category.id;
+            state.page = 1;
+            syncSelects();
+            renderChips();
+            renderResults();
+          },
+        ),
+      ),
+    );
+
+    const ageCounts = facetCounts(index, { ...state, text: "" }, "age");
+    const ages = $("ageChips");
+    ages.replaceChildren(
+      chip("كل الأعمار", runQuery(index, { ...state, age: "all" }).length, state.age === "all", () => {
+        state.age = "all";
+        state.page = 1;
+        syncSelects();
+        renderChips();
+        renderResults();
+      }),
+      ...AGE_GROUPS.map((group) =>
+        chip(
+          `${group.emoji} ${group.label}`,
+          ageCounts.get(group.id) ?? 0,
+          state.age === group.id,
+          () => {
+            state.age = state.age === group.id ? "all" : group.id;
+            state.page = 1;
+            syncSelects();
+            renderChips();
+            renderResults();
+          },
+        ),
+      ),
+    );
+  }
+
+  function syncSelects() {
+    $("fAge").value = state.age;
+    $("fLang").value = state.language;
+    $("fTrust").value = state.trust;
+    $("fOnly").value = state.favoritesOnly
+      ? "favorites"
+      : state.featuredOnly
+        ? "featured"
+        : "all";
+  }
+
+  /* ─────────────────────────────────────────────── نتائج المكتبة */
+
+  function currentRows() {
+    return runQuery(index, state, new Set(favorites));
+  }
+
+  function renderResults() {
+    const rows = currentRows();
+    const page = paginate(rows, PAGE_SIZE, state.page);
+    state.page = page.page;
+    const shown = page.slice;
+
+    $("count").textContent = rows.length
+      ? `${toArNum(rows.indexOf(shown[shown.length - 1]) + 1)} من ${toArNum(rows.length)} قناة`
+      : "لا قنوات مطابقة";
+
+    const host = $("results");
+    if (!shown.length) {
+      host.innerHTML = '<p class="vempty">لا قنوات بهذه المواصفات. جرّب توسيع العمر أو المجال، أو امسح البحث.</p>';
+    } else {
+      host.innerHTML = shown.map((channel) => channelCard(channel, { favorites })).join("");
+    }
+
+    const pager = $("pager");
+    pager.replaceChildren();
+    if (page.pages > 1) {
+      const previous = document.createElement("button");
+      previous.type = "button";
+      previous.textContent = "السابق";
+      previous.disabled = page.page <= 1;
+      previous.addEventListener("click", () => {
+        state.page = Math.max(1, state.page - 1);
+        renderResults();
+        $("results").scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+
+      const current = document.createElement("span");
+      current.className = "cur";
+      current.textContent = `${toArNum(page.page)} / ${toArNum(page.pages)}`;
+
+      const next = document.createElement("button");
+      next.type = "button";
+      next.textContent = "التالي";
+      next.disabled = !page.hasMore;
+      next.addEventListener("click", () => {
+        state.page += 1;
+        renderResults();
+        $("results").scrollIntoView({ block: "start", behavior: "smooth" });
+      });
+
+      pager.append(previous, current, next);
+    }
+  }
+
+  /* ─────────────────────────────────────────── «ماذا أريد أن أتعلم» */
+
+  function renderStart() {
+    const grid = $("startGrid");
+    grid.replaceChildren(
+      ...STARTING_POINTS.map((point) => {
+        const button = document.createElement("button");
+        button.type = "button";
+        button.className = "vstart__btn";
+        button.setAttribute("aria-pressed", "false");
+        button.innerHTML = `<span aria-hidden="true">${point.emoji}</span><span>${point.label}</span>`;
+        button.addEventListener("click", () => {
+          const active = state.category === point.categories[0];
+          state.category = active ? "all" : point.categories[0];
+          if (point.age) state.age = active ? "all" : point.age;
+          state.page = 1;
+          grid.querySelectorAll(".vstart__btn").forEach((other) => other.setAttribute("aria-pressed", "false"));
+          button.setAttribute("aria-pressed", active ? "false" : "true");
+          syncSelects();
+          renderChips();
+          renderLearn();
+          renderResults();
+          $("browseSection").scrollIntoView({ block: "start", behavior: "smooth" });
+        });
+        return button;
+      }),
+    );
+  }
+
+  /* ────────────────────────────────────── «شاهد وتعلم» (٣ اقتراحات) */
+
+  function renderLearn() {
+    const section = $("learnSection");
+    const picks = suggestionsFor(index, { ...state, favoritesOnly: false }, 3);
+    if (!picks.length || (!state.category && !state.age && !state.language && !state.trust)) {
+      section.hidden = true;
+      return;
+    }
+    const names = CATEGORIES.filter((c) => state.category === c.id).map((c) => c.label);
+    const ageNames = AGE_GROUPS.filter((a) => a.id === state.age).map((a) => `${a.emoji} ${a.label}`);
+    $("learnSub").textContent = [
+      ...names,
+      ...ageNames,
+      state.language && state.language !== "all" ? LANGUAGES.find((l) => l.id === state.language)?.label : "",
+    ]
+      .filter(Boolean)
+      .join(" · ");
+    $("learnGrid").innerHTML = picks.map((channel) => channelCard(channel, { favorites })).join("");
+    section.hidden = false;
+  }
+
+  /* ──────────────────────────────── مختارات نور الهدى (المُوثّقة) */
+
+  function renderFeatured() {
+    const picks = featuredChannels(CHANNELS).slice(0, 10);
+    $("featured").innerHTML = picks.map((channel) => channelCard(channel, { favorites })).join("");
+    const arabic = publishable(CHANNELS).filter((channel) => channel.language.includes("ar")).length;
+    $("heroStats").innerHTML =
+      `<span>${toArNum(publishable(CHANNELS).length)} قناة موثّقة</span>` +
+      `<span>${toArNum(arabic)} بالعربية</span>` +
+      `<span>${toArNum(publishable(CHANNELS).length - arabic)} بالإنجليزية</span>`;
+  }
+
+  /* ─────────────────────────────────────────── «ماذا أشاهد الآن؟» */
+
+  let shownNow = [];
+  function renderSpotlight() {
+    if (!shownNow.length) {
+      shownNow = watchNow(index, 1);
+    } else {
+      shownNow = watchNow(index, 1, Math.random, shownNow.map((channel) => channel.id));
+    }
+    $("spotlight").innerHTML = spotlightCard(shownNow[0] ?? null);
+  }
+
+  /* ───────────────────────────────────────── محتوى الأطفال بالعمر */
+
+  function renderKids() {
+    const chips = $("kidsChips");
+    const options = AGE_GROUPS.filter((group) => group.id.startsWith("kids"));
+    let active = state.kidsAge ?? "all";
+    chips.replaceChildren(
+      chip("كل الأعمار", null, active === "all", () => {
+        active = "all";
+        renderKids();
+      }),
+      ...options.map((group) =>
+        chip(
+          `${group.emoji} ${group.label}`,
+          null,
+          active === group.id,
+          () => {
+            active = group.id;
+            renderKids();
+          },
+        ),
+      ),
+    );
+    const rows = runQuery(index, {
+      ...emptyQuery(),
+      age: active === "all" ? "everyone" : active,
+    }).filter((channel) => channel.ageGroups.some((group) => group.startsWith("kids")));
+    $("kidsRail").innerHTML = rows
+      .slice(0, 10)
+      .map((channel) => channelCard(channel, { favorites }))
+      .join("");
+  }
+
+  /* ────────────────────────────────────────── آخر ما شوهد */
+
+  function renderRecent() {
+    const section = $("recentSection");
+    const recent = readRecent();
+    if (!recent.length) {
+      section.hidden = true;
+      return;
+    }
+    const byId = new Map(publishable(CHANNELS).map((channel) => [channel.id, channel]));
+    const rows = recent.map((item) => byId.get(item.id)).filter(Boolean).slice(0, 8);
+    if (!rows.length) {
+      section.hidden = true;
+      return;
+    }
+    $("recentRail").innerHTML = rows.map((channel) => channelCard(channel, { favorites })).join("");
+    section.hidden = false;
+  }
+
+  /* ───────────────────────────────────────── وضع المراجعة فقط */
+
+  function renderReview() {
+    const section = $("reviewSection");
+    if (!reviewMode) return;
+    const pending = CHANNELS.filter((channel) => channel.needsReview || channel.youtubeUrl === "");
+    $("reviewList").innerHTML = pending
+      .map(
+        (channel) =>
+          `<li class="vtag">${channel.nameAr} — ${channel.candidateUrl ? "رابط مرشّح" : "لا رابط"}</li>`,
+      )
+      .join("");
+    section.hidden = false;
+  }
+
+  /* ──────────────────────────────────────────── الأحداث العامة */
+
+  let searchTimer = 0;
+  $("q").addEventListener("input", (event) => {
+    clearTimeout(searchTimer);
+    const value = event.target.value;
+    searchTimer = setTimeout(() => {
+      state.text = value;
+      state.page = 1;
+      renderLearn();
+      renderResults();
+    }, 120);
+  });
+
+  $("fAge").addEventListener("change", (event) => {
+    state.age = event.target.value;
+    state.page = 1;
+    renderChips();
+    renderLearn();
+    renderResults();
+  });
+  $("fLang").addEventListener("change", (event) => {
+    state.language = event.target.value;
+    state.page = 1;
+    renderLearn();
+    renderResults();
+  });
+  $("fTrust").addEventListener("change", (event) => {
+    state.trust = event.target.value;
+    state.page = 1;
+    renderLearn();
+    renderResults();
+  });
+  $("fOnly").addEventListener("change", (event) => {
+    state.favoritesOnly = event.target.value === "favorites";
+    state.featuredOnly = event.target.value === "featured";
+    state.page = 1;
+    renderLearn();
+    renderResults();
+  });
+
+  $("reroll").addEventListener("click", () => {
+    shownNow = [];
+    renderSpotlight();
+  });
+
+  $("clearRecent").addEventListener("click", () => {
+    clearRecent();
+    renderRecent();
+  });
+
+  $("sharePage").addEventListener("click", async () => {
+    const { shareOrCopy } = await import("../src/lib/share.js");
+    const outcome = await shareOrCopy({
+      title: "مكتبة الفيديو الإسلامية · نور الهدى",
+      text: "قنوات إسلامية موثّقة على يوتيوب، منظّمة حسب العمر واللغة والتخصص.",
+      url: location.href,
+    });
+    const button = $("sharePage");
+    button.textContent = outcome === "copied" ? "✔ نُسخ الرابط" : outcome === "shared" ? "✔تمت المشاركة" : "↗ مشاركة المكتبة";
+    setTimeout(() => {
+      button.textContent = "↗ مشاركة المكتبة";
+    }, 2200);
+  });
+
+  /* النجمة: تبديل المفضلة في كل مكان ظهرت فيه البطاقة. */
+  document.addEventListener("click", (event) => {
+    const star = event.target.closest("[data-fav]");
+    if (star) {
+      const id = star.dataset.fav;
+      const on = toggleFavorite(id);
+      favorites = readFavorites();
+      document.querySelectorAll(`[data-fav="${CSS.escape(id)}"]`).forEach((button) => {
+        button.classList.toggle("is-on", on);
+        button.setAttribute("aria-pressed", on ? "true" : "false");
+      });
+      if (state.favoritesOnly) renderResults();
+      return;
+    }
+
+    const watch = event.target.closest("[data-watch]");
+    if (watch) {
+      const channel = CHANNELS.find((item) => item.id === watch.dataset.watch);
+      if (channel) {
+        markWatched(channel);
+        renderRecent();
+      }
+      return;
+    }
+
+    const share = event.target.closest("[data-share]");
+    if (share) {
+      const channel = CHANNELS.find((item) => item.id === share.dataset.share);
+      if (channel) shareChannel(channel);
+    }
+  });
+
+  /* ─────────────────────────────────────────────────── التشغيل */
+
+  renderStart();
+  renderFeatured();
+  renderSpotlight();
+  renderKids();
+  renderRecent();
+  renderReview();
+  renderChips();
+  renderLearn();
+  renderResults();
+</script>
+</body>
+</html>

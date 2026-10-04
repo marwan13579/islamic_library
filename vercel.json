@@ -3,6 +3,26 @@
   "buildCommand": "npm run build:pages",
   "outputDirectory": "dist",
   "installCommand": "npm ci",
+  "redirects": [
+    { "source": "/quran", "destination": "/30-quran-full.html", "permanent": true },
+    { "source": "/azkar", "destination": "/25-azkar-shamila.html", "permanent": true },
+    { "source": "/azkar/morning", "destination": "/25-azkar-shamila.html#sabah", "permanent": true },
+    { "source": "/azkar/evening", "destination": "/25-azkar-shamila.html#masaa", "permanent": true },
+    { "source": "/azkar/sleep", "destination": "/25-azkar-shamila.html#nawm", "permanent": true },
+    { "source": "/azkar/after-prayer", "destination": "/25-azkar-shamila.html", "permanent": true },
+    { "source": "/dua", "destination": "/25-azkar-shamila.html", "permanent": true },
+    { "source": "/hadith", "destination": "/27-hadith.html", "permanent": true },
+    { "source": "/tasbeeh", "destination": "/15-tasbeeh-jamai.html", "permanent": true },
+    { "source": "/qibla", "destination": "/22-qibla.html", "permanent": true },
+    { "source": "/prayer-times", "destination": "/29-prayer-times.html", "permanent": true },
+    { "source": "/zakat", "destination": "/10-zakat.html", "permanent": true },
+    { "source": "/hijri", "destination": "/28-hijri.html", "permanent": true },
+    { "source": "/quran-khatma", "destination": "/17-wird.html", "permanent": true },
+    { "source": "/wird", "destination": "/17-wird.html", "permanent": true },
+    { "source": "/library", "destination": "/23-search.html", "permanent": true },
+    { "source": "/islamic-library", "destination": "/", "permanent": true },
+    { "source": "/today", "destination": "/", "permanent": true }
+  ],
   "headers": [
     {
       "source": "/(.*)",

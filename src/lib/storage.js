@@ -217,6 +217,14 @@ export const KEYS = {
   hubLastUsed: "hub-lastused",
   hubRamadanLoc: "hub-ramadan-loc",
   nourProgress: "nour-progress",
+  /* مكتبة الفيديو الإسلامية: المفضلة وآخر ما شوهد — لا غير */
+  videoFavorites: "video_favorites",
+  videoRecent: "video_recent",
+  /* رفيق النور — نظام التذكير الإيماني */
+  noorSettings: "noor-settings",
+  noorShown: "noor-shown",
+  noorStats: "noor-stats",
+  noorActions: "noor-actions",
 };
 
 /**
@@ -275,6 +283,13 @@ export const IMPORT_TYPES = {
   "gtasbeeh-goal": "number",
   "gtasbeeh-people": "array",
   "nour-progress": "object",
+  video_favorites: "array",
+  video_recent: "array",
+  // رفيق النور: إعدادات، وسجلّ عرض (منع التكرار)، وإحصاءات، وأعمال اليوم.
+  "noor-settings": "object",
+  "noor-shown": "object",
+  "noor-stats": "object",
+  "noor-actions": "object",
   "lib-quiz-level": "string",
   "lib-quiz-history": "array",
   /* صفحات قديمة: الأنواع مستنبطة من قراءتها في الصفحة نفسها */

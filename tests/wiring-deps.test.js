@@ -155,6 +155,17 @@ test("لا تصدير بلا مستهلك في وحدات المشروع", () =>
     ...["src/site", "src/app"].flatMap((d) =>
       fs.readdirSync(path.join(ROOT, d)).map((f) => path.join(ROOT, d, f)),
     ),
+    // صفحات القسم في مجلدها، فهي مستهلكة كما هي صفحات الجذر.
+    ...fs
+      .readdirSync(path.join(ROOT, "islamic-videos"), { withFileTypes: true })
+      .flatMap((entry) =>
+        entry.isDirectory()
+          ? fs
+              .readdirSync(path.join(ROOT, "islamic-videos", entry.name))
+              .map((f) => path.join(ROOT, "islamic-videos", entry.name, f))
+          : [path.join(ROOT, "islamic-videos", entry.name)],
+      )
+      .filter((f) => f.endsWith(".html")),
     ...fs.readdirSync(path.join(ROOT, "tests")).map((f) => path.join(ROOT, "tests", f)),
     ...fs.readdirSync(path.join(ROOT, "scripts")).map((f) => path.join(ROOT, "scripts", f)),
     ...fs.readdirSync(path.join(ROOT, "scripts/extract")).map((f) =>

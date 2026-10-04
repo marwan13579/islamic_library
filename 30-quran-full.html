@@ -9,6 +9,7 @@
 <title>القرآن الكريم</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
+<script src="noor-companion.js" defer></script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -342,7 +343,7 @@ function saveNotes(){ try{ localStorage.setItem("quran-notes", JSON.stringify(no
 
 let lastPos=null;
 try{ lastPos = JSON.parse(localStorage.getItem("quran-lastpos")||"null"); }catch(e){ lastPos=null; }
-function saveLastPos(surah,ayah){ lastPos={surah,ayah,ts:Date.now()}; try{ localStorage.setItem("quran-lastpos", JSON.stringify(lastPos)); }catch(e){} renderContinueBar(); }
+function saveLastPos(surah,ayah){ lastPos={surah,ayah,ts:Date.now()}; try{ localStorage.setItem("quran-lastpos", JSON.stringify(lastPos)); }catch(e){} renderContinueBar(); try{ if(window.NoorCompanion) window.NoorCompanion.observeReading({surah:surah, ayah:ayah}); }catch(e){} }
 
 function renderContinueBar(){
   const box=document.getElementById("continueBar");

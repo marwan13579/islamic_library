@@ -1,0 +1,575 @@
+/*
+ * واجهة الرفيق اليومي — daily-companion.css
+ * ------------------------------------------------------------------
+ * تبني على متغيّرات index.html نفسها (--paper · --gold · --green · --ink)
+ * فلا تضيف نظام ألوان جديدًا ولا تتعارض مع الوضع الداكن.
+ *
+ * كل المقاسات بخصائص منطقية (inline-start/end) فيصحّ التخطيط في
+ * RTL و LTR معًا، وكل زرٍّ كبيرٌ بما يكفي للإصبع على الجوال.
+ */
+
+.dc-scope {
+  --dc-radius: 18px;
+  --dc-gap: 14px;
+}
+
+/* ============ ١) التحية والاختصارات ============ */
+
+.dc-hero {
+  margin: 22px 0 4px;
+  padding: 22px 18px 20px;
+  border-radius: calc(var(--dc-radius) + 6px);
+  border: 1px solid var(--line);
+  background:
+    radial-gradient(120% 140% at 100% 0%, var(--green-soft) 0%, transparent 62%),
+    var(--card);
+  text-align: center;
+}
+
+.dc-greet {
+  font-family: "Amiri", serif;
+  font-size: clamp(1.25rem, 4.4vw, 1.7rem);
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink);
+}
+
+.dc-ask {
+  font-family: "Amiri", serif;
+  font-size: clamp(1rem, 3.4vw, 1.2rem);
+  color: var(--green);
+  margin: 6px 0 0;
+}
+
+.dc-ask .dc-theme-toggle {
+  font-family: "Cairo", sans-serif;
+}
+
+.dc-quick {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(92px, 1fr));
+  gap: 8px;
+  margin-top: 16px;
+}
+
+.dc-quick a {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  min-height: 68px;
+  padding: 10px 6px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: "Cairo", sans-serif;
+  font-size: .8rem;
+  font-weight: 600;
+  text-align: center;
+}
+
+.dc-quick a .dc-emoji { font-size: 1.45rem; line-height: 1; }
+.dc-quick a:hover { background: var(--green-soft); }
+.dc-quick a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ============ ٢) بطاقات اليوم ============ */
+
+.dc-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--dc-gap);
+  margin: var(--dc-gap) 0;
+}
+
+.dc-card {
+  border: 1px solid var(--line);
+  border-radius: var(--dc-radius);
+  background: var(--card);
+  padding: 16px 16px 14px;
+}
+
+.dc-card > h3 {
+  font-family: "Amiri", serif;
+  font-size: 1.08rem;
+  margin: 0 0 10px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-card > h3 .dc-hint {
+  margin-inline-start: auto;
+  font-family: "Cairo", sans-serif;
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.dc-sub { margin: 0; font-size: .78rem; color: var(--ink-soft); }
+
+/* ============ ٣) الصلاة القادمة ============ */
+
+.dc-prayer-now {
+  font-size: .76rem;
+  color: var(--ink-soft);
+  margin: 0 0 4px;
+}
+
+.dc-prayer-next {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.dc-prayer-name {
+  font-family: "Amiri", serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--green);
+}
+
+.dc-prayer-time {
+  font-size: .95rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+}
+
+.dc-count {
+  font-variant-numeric: tabular-nums;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--gold);
+  font-family: "Cairo", sans-serif;
+  margin: 6px 0 2px;
+}
+
+.dc-count-label { font-size: .74rem; color: var(--ink-soft); margin: 0 0 10px; }
+
+.dc-times {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 6px;
+  margin: 10px 0 12px;
+}
+
+.dc-time {
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--paper);
+  padding: 6px 4px;
+  text-align: center;
+}
+
+.dc-time.is-next { border-color: var(--gold); background: var(--green-soft); }
+.dc-time .l { display: block; font-size: .68rem; color: var(--ink-soft); }
+.dc-time .v { display: block; font-size: .82rem; font-weight: 700; }
+
+/* ============ ٤) الورد اليومي ============ */
+
+.dc-wird-line {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: .85rem;
+}
+
+.dc-wird-nums { font-weight: 700; }
+
+.dc-bar {
+  height: 9px;
+  border-radius: 999px;
+  background: var(--paper-2);
+  border: 1px solid var(--line);
+  overflow: hidden;
+  margin: 8px 0 6px;
+}
+
+.dc-bar > i {
+  display: block;
+  height: 100%;
+  background: linear-gradient(90deg, var(--green), var(--gold));
+  border-radius: 999px;
+  transition: width .35s ease;
+}
+
+.dc-bar.is-done > i { background: var(--green); }
+
+.dc-wird-meta {
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: .74rem;
+  color: var(--ink-soft);
+}
+
+.dc-streak {
+  margin-top: 10px;
+  padding: 8px 12px;
+  border-radius: 12px;
+  background: var(--green-soft);
+  color: var(--ink);
+  font-size: .82rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* أزرار عامة */
+
+.dc-btns {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.dc-btn {
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  font-size: .84rem;
+  min-height: 44px;
+  padding: 10px 16px;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  text-decoration: none;
+}
+
+.dc-btn:hover { background: var(--paper-2); }
+.dc-btn:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.dc-btn.primary { background: var(--green); border-color: var(--green); color: #fff; }
+.dc-btn.primary:hover { filter: brightness(1.08); }
+.dc-btn.ghost { background: none; }
+.dc-btn[aria-pressed="true"] { background: var(--green-soft); border-color: var(--green); }
+.dc-btn:disabled { opacity: .55; cursor: not-allowed; }
+
+/* عدّاد الورد */
+
+.dc-stepper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  flex-wrap: wrap;
+}
+
+.dc-stepper input {
+  width: 74px;
+  min-height: 44px;
+  text-align: center;
+  font-family: "Cairo", sans-serif;
+  font-size: .95rem;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+}
+
+/* ============ ٥) المحتوى اليومي (آية · ذكر) ============ */
+
+.dc-verse {
+  font-family: "Amiri", serif;
+  font-size: clamp(1.1rem, 3.9vw, 1.4rem);
+  line-height: 2;
+  text-align: center;
+  margin: 6px 0 4px;
+  color: var(--ink);
+}
+
+.dc-ref {
+  font-size: .76rem;
+  color: var(--gold);
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 10px;
+}
+
+.dc-dhikr {
+  font-family: "Amiri", serif;
+  font-size: 1.12rem;
+  line-height: 1.95;
+  margin: 6px 0 4px;
+}
+
+.dc-tap {
+  font-size: .74rem;
+  color: var(--ink-soft);
+  margin: 0 0 10px;
+}
+
+.dc-tap .n {
+  font-weight: 700;
+  color: var(--green);
+  font-size: 1rem;
+}
+
+/* ============ ٦) «ماذا تريد أن تفعل الآن؟» ============ */
+
+.dc-now {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.dc-now a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  min-height: 56px;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--paper);
+  color: var(--ink);
+  text-decoration: none;
+  font-family: "Cairo", sans-serif;
+  font-weight: 600;
+  font-size: .9rem;
+}
+
+.dc-now a:hover { background: var(--green-soft); }
+.dc-now a:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+.dc-now a .dc-emoji { font-size: 1.3rem; }
+
+/* ============ ٧) التذكيرات ============ */
+
+.dc-remind-list {
+  display: grid;
+  gap: 10px;
+  margin-top: 12px;
+}
+
+.dc-remind-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 10px 12px;
+  background: var(--paper);
+}
+
+.dc-remind-row label {
+  font-size: .86rem;
+  font-weight: 600;
+  font-family: "Cairo", sans-serif;
+  flex: 1 1 auto;
+  min-width: 130px;
+}
+
+.dc-remind-row input[type="time"] {
+  font-family: "Cairo", sans-serif;
+  font-size: .84rem;
+  min-height: 40px;
+  padding: 6px 10px;
+  border-radius: 10px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+}
+
+.dc-remind-row input[type="checkbox"] {
+  width: 22px;
+  height: 22px;
+  accent-color: var(--green);
+  flex: none;
+}
+
+.dc-note {
+  font-size: .74rem;
+  color: var(--ink-soft);
+  margin: 10px 0 0;
+}
+
+/* ============ ٨) خطة الورد (نافذة) ============ */
+
+.dc-modal {
+  border: 0;
+  padding: 0;
+  border-radius: var(--dc-radius);
+  background: var(--card);
+  color: var(--ink);
+  max-width: 560px;
+  width: calc(100% - 28px);
+  max-height: 86vh;
+  overflow: auto;
+  box-shadow: 0 18px 50px rgba(0, 0, 0, .28);
+}
+
+.dc-modal::backdrop { background: rgba(6, 24, 20, .55); }
+
+.dc-modal-in { padding: 20px 20px 18px; }
+
+.dc-modal-in > h2 {
+  font-family: "Amiri", serif;
+  font-size: 1.3rem;
+  margin: 0 0 6px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dc-plans {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 8px;
+  margin: 14px 0;
+}
+
+.dc-plan {
+  text-align: start;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  background: var(--paper);
+  color: var(--ink);
+  padding: 10px 12px;
+  cursor: pointer;
+  font-family: "Cairo", sans-serif;
+  min-height: 60px;
+}
+
+.dc-plan:hover { background: var(--green-soft); }
+.dc-plan[aria-pressed="true"] { border-color: var(--green); background: var(--green-soft); }
+.dc-plan .n { display: block; font-weight: 700; font-size: .9rem; }
+.dc-plan .d { display: block; font-size: .72rem; color: var(--ink-soft); }
+
+/* ============ ٩) شاشة إتمام الورد ============ */
+
+.dc-done {
+  text-align: center;
+}
+
+.dc-done .dc-mashallah {
+  font-family: "Amiri", serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0 0 4px;
+}
+
+.dc-done-kind {
+  display: inline-block;
+  font-size: .74rem;
+  font-weight: 700;
+  color: var(--gold);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 3px 12px;
+  margin-bottom: 10px;
+}
+
+.dc-done-text {
+  font-family: "Amiri", serif;
+  font-size: 1.22rem;
+  line-height: 2.05;
+  margin: 4px 0;
+}
+
+.dc-done-ref {
+  font-size: .76rem;
+  color: var(--ink-soft);
+  margin: 0 0 14px;
+}
+
+.dc-done .dc-btns { justify-content: center; }
+
+/* ============ ١٠) زر الوضع الليلي ============ */
+
+.dc-theme-toggle {
+  font-family: "Cairo", sans-serif;
+  font-size: .74rem;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--card);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 12px;
+  cursor: pointer;
+  min-height: 34px;
+}
+
+.dc-theme-toggle:hover { background: var(--paper-2); }
+.dc-theme-toggle:focus-visible { outline: 2px solid var(--gold); outline-offset: 2px; }
+
+/* ============ ١١) زر «شارك الأجر» ============ */
+
+.dc-share-cta {
+  margin: 26px 0 6px;
+  padding: 16px;
+  border-radius: var(--dc-radius);
+  border: 1px dashed var(--line);
+  background: var(--card);
+  text-align: center;
+}
+
+.dc-share-cta p { margin: 0 0 10px; font-size: .86rem; color: var(--ink-soft); }
+
+/* ============ ١٢) الخلفية الناعمة ============ */
+
+.dc-veil {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: grid;
+  place-items: end center;
+  padding: 14px;
+  background: rgba(6, 24, 20, .5);
+}
+
+.dc-veil[hidden] { display: none; }
+
+.dc-toast {
+  width: min(520px, 100%);
+  border-radius: 14px;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink);
+  padding: 12px 16px;
+  font-family: "Cairo", sans-serif;
+  font-size: .86rem;
+  box-shadow: 0 12px 34px rgba(0, 0, 0, .25);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.dc-toast .dc-btn { margin-inline-start: auto; }
+
+/* ============ ١٣) الهاتف ============ */
+
+@media (max-width: 480px) {
+  .dc-hero { padding: 18px 12px 16px; }
+  .dc-quick { grid-template-columns: repeat(auto-fit, minmax(78px, 1fr)); }
+  .dc-cards { grid-template-columns: 1fr; }
+  .dc-times { grid-template-columns: repeat(2, 1fr); }
+  .dc-btn { flex: 1 1 auto; justify-content: center; }
+  .dc-verse { line-height: 1.95; }
+}
+
+/* ============ ١٤) تقليل الحركة والطباعة ============ */
+
+@media (prefers-reduced-motion: reduce) {
+  .dc-bar > i { transition: none; }
+  .dc-quick a,
+  .dc-btn,
+  .dc-now a { transition: none; }
+}
+
+@media print {
+  .dc-hero,
+  .dc-share-cta,
+  .dc-remind-list { display: none; }
+}

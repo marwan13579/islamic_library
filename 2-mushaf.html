@@ -7,6 +7,7 @@
 <title>مصحفي — تتبّع حفظ القرآن الكريم</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
+<script src="noor-companion.js" defer></script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -453,6 +454,7 @@ function renderList(){
       if(state[num]) reviewDates[num]=today; else delete reviewDates[num];
       saveAll(); noteActivityToday();
       renderStats(); renderToday(); renderList(); renderJuzGrid(); renderReview();
+      try{ if(state[num] && window.NoorCompanion) window.NoorCompanion.markSurahDone(num); }catch(e){}
     };
     el.addEventListener("click",toggle);
     el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();toggle();}});
