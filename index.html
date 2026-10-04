@@ -976,6 +976,13 @@ document.getElementById("backupFile").addEventListener("change",async event=>{
 </script>
 
 <script src="daily-home.js" defer></script>
+<script type="module">
+/* الإشعارات تشتغل وحدها: تُطلَب عند أوّل لمسة من المستخدم، لا بزرّ،
+   ويُرحَّب بإشعار في كل فتح، ويتجدّد جدول الأذان لدى المتصفّح. */
+import("./src/lib/auto-notify.js")
+  .then(function (m) { return m.boot({ url: "./" }); })
+  .catch(function () {});
+</script>
 <script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script>
 <script>
 (function(){
