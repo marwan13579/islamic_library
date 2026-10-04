@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="service-messages.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>اتجاه القبلة</title>
@@ -33,36 +34,45 @@
   .card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px;margin:18px 0}
   .locbtn{display:block;width:100%;font-family:"Cairo";font-weight:700;background:var(--ink);color:var(--paper);
     border:0;padding:12px;border-radius:999px;cursor:pointer;font-size:.95rem}
-  .locmsg{font-size:.82rem;color:var(--ink-soft);text-align:center;margin-top:10px}
+  .locbtn.ghost{background:var(--card);color:var(--ink);border:1px solid var(--line);margin-top:8px}
+  .locbtn[disabled]{opacity:.55;cursor:default}
+  .locmsg{font-size:.82rem;color:var(--ink-soft);text-align:center;margin:10px 0 0}
 
   .compassWrap{display:flex;justify-content:center;margin:28px 0}
   .compass{position:relative;width:min(75vw,280px);height:min(75vw,280px)}
   .ring{width:100%;height:100%;border-radius:50%;border:3px solid var(--gold-soft);
     background:var(--card);position:relative;transition:transform .15s linear}
-  .ring::before{content:"N";position:absolute;top:8px;left:50%;transform:translateX(-50%);
+  .ring::before{content:"ش";position:absolute;top:6px;left:50%;transform:translateX(-50%);
     font-family:"Cairo";font-weight:700;color:var(--ink-soft);font-size:.85rem}
+  .ring::after{content:"";position:absolute;inset:9%;border-radius:50%;
+    border:1px dashed var(--line);pointer-events:none}
   .needle{
     position:absolute;top:50%;left:50%;width:6px;height:42%;background:var(--gold);
     transform-origin:bottom center;transform:translate(-50%,-100%) rotate(0deg);
     border-radius:6px 6px 0 0;transition:transform .3s ease;
   }
   .needle::after{content:"🕋";position:absolute;top:-14px;left:50%;transform:translateX(-50%);font-size:1.3rem}
+  /* قبل تحديد الموقع لا معنى لسهم يشير شمالًا، فيُخفَّف حتى تُحسم الزاوية */
+  .compass.pending .needle{opacity:.25}
   .center{position:absolute;top:50%;left:50%;width:10px;height:10px;background:var(--ink);
     border-radius:50%;transform:translate(-50%,-50%)}
 
   .degbox{text-align:center;margin:10px 0 20px}
   .degbox .n{font-family:"Amiri",serif;font-size:2rem;color:var(--gold);margin:0}
-  .degbox .l{font-size:.82rem;color:var(--ink-soft)}
+  .degbox .l{font-size:.82rem;color:var(--ink-soft);margin:.2rem 0 0}
+  .degbox .d{font-size:.78rem;color:var(--ink-soft);opacity:.9;margin:.1rem 0 0}
 
   .manual{margin-top:16px}
   .manual label{display:block;font-size:.85rem;color:var(--ink-soft);margin-bottom:5px}
   .row2{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .row2 input{width:100%;padding:9px 12px;border-radius:10px;border:1px solid var(--line);
     background:var(--paper);color:var(--ink);font-family:"Cairo";font-size:.9rem}
+  .row2 input.bad{border-color:#c0392b}
   .calcbtn{margin-top:10px;font-family:"Cairo";font-weight:600;background:var(--paper-2);color:var(--ink);
     border:1px solid var(--line);padding:8px 18px;border-radius:999px;cursor:pointer;font-size:.85rem}
 
   .note{font-size:.8rem;color:var(--ink-soft);background:var(--paper-2);border-radius:10px;padding:12px 14px;margin-top:16px}
+  .note b{color:var(--gold)}
   footer{margin-top:30px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
 </style>
 <style>
@@ -142,12 +152,12 @@ header{
 <div class="card">
   <button class="locbtn" id="locBtn" type="button">📍 استخدام موقعي الحالي</button>
   <p class="locmsg" id="locMsg">لم يتم تحديد الموقع بعد</p>
-  <button class="locbtn" id="compassBtn" type="button" style="margin-top:8px;background:var(--card);color:var(--ink);border:1px solid var(--line)">🧭 تفعيل البوصلة الحية (يدوّر مع هاتفك)</button>
-  <p class="locmsg" id="compassMsg"></p>
+  <button class="locbtn ghost" id="compassBtn" type="button" disabled>🧭 تفعيل البوصلة الحيّة (يدوّر مع هاتفك)</button>
+  <p class="locmsg" id="compassMsg">حدّد موقعك أولًا، ثم فعّل البوصلة الحيّة.</p>
 </div>
 
 <div class="compassWrap">
-  <div class="compass">
+  <div class="compass pending" id="dial">
     <div class="ring">
       <div class="needle" id="needle"></div>
       <div class="center"></div>
@@ -156,105 +166,218 @@ header{
 </div>
 
 <div class="degbox">
-  <p class="n" id="degText">—</p>
-  <p class="l">درجة من الشمال، مع اتجاه عقارب الساعة</p>
+  <p class="n" id="degText" aria-live="polite">—</p>
+  <p class="l" id="dirText">اتجاه القبلة من الشمال الحقيقي، مع عقارب الساعة</p>
+  <p class="d" id="decText"></p>
 </div>
 
 <div class="card manual">
   <p style="margin:0 0 10px;font-size:.9rem">أو أدخل إحداثياتك يدويًا</p>
   <div class="row2">
-    <div><label for="lat">خط العرض (Latitude)</label><input id="lat" type="number" step="any" placeholder="مثال: 30.04"></div>
-    <div><label for="lon">خط الطول (Longitude)</label><input id="lon" type="number" step="any" placeholder="مثال: 31.24"></div>
+    <div><label for="lat">خط العرض (Latitude)</label><input id="lat" type="number" step="any" inputmode="decimal" placeholder="مثال: 30.04"></div>
+    <div><label for="lon">خط الطول (Longitude)</label><input id="lon" type="number" step="any" inputmode="decimal" placeholder="مثال: 31.24"></div>
   </div>
   <button class="calcbtn" id="calcBtn" type="button">احسب</button>
 </div>
 
 <div class="note">
-البوصلة أعلاه تعرض زاوية القبلة بالنسبة للشمال الجغرافي، وليست بوصلة حقيقية تتحرك مع دوران جهازك. للمحاذاة الفعلية، استخدم تطبيق بوصلة على جهازك لتحديد اتجاه الشمال أولًا، ثم أدر نفسك بمقدار الدرجة الظاهرة هنا باتجاه عقارب الساعة.
+  <b>كيف تقرأ البوصلة:</b> الزاوية أعلاه من الشمال الحقيقي، والبوصلة الحيّة تصحّح
+  انحرافَ الشمال المغناطيسي عن الحقيقي (نحو ٥ درجات شرقًا في مصر)، فيشير السهم إلى
+  الكعبة لا إلى الشمال. لكنّ حسّاسات الهاتف تخطئ بضع درجات، فإن التبس عليك السهم
+  فاعتمد محراب مسجدك المعتاد وعينيك عند التحرّي.
 </div>
 
 <footer>وَمِنْ حَيْثُ خَرَجْتَ فَوَلِّ وَجْهَكَ شَطْرَ الْمَسْجِدِ الْحَرَامِ</footer>
 </div>
 
-<script>
-const KAABA_LAT=21.4225, KAABA_LON=39.8262;
-function rad(x){return x*Math.PI/180}
-function deg(x){return x*180/Math.PI}
+<script type="module">
+  import { calcQibla, compassName, isValidCoords, LAT_LIMIT, LNG_LIMIT } from "./src/lib/islamic.js";
+  import { magneticDeclination, trueHeading, relativeBearing } from "./src/lib/magnetic.js";
+  import { requestLocation, locationError } from "./src/lib/api.js";
+  import { read, write, KEYS } from "./src/lib/storage.js";
 
-function qiblaBearing(lat,lon){
-  const phi1=rad(lat), phi2=rad(KAABA_LAT), dLon=rad(KAABA_LON-lon);
-  const y=Math.sin(dLon)*Math.cos(phi2);
-  const x=Math.cos(phi1)*Math.sin(phi2)-Math.sin(phi1)*Math.cos(phi2)*Math.cos(dLon);
-  let brng=deg(Math.atan2(y,x));
-  return (brng+360)%360;
-}
+  const byId = (id) => document.getElementById(id);
+  const dial = byId("dial");
+  const needle = byId("needle");
+  const degText = byId("degText");
+  const dirText = byId("dirText");
+  const decText = byId("decText");
+  const locMsg = byId("locMsg");
+  const compassMsg = byId("compassMsg");
+  const locBtn = byId("locBtn");
+  const compassBtn = byId("compassBtn");
+  const latInput = byId("lat");
+  const lonInput = byId("lon");
 
-function updateUI(lat,lon){
-  const b=qiblaBearing(lat,lon);
-  lastBearing=b;
-  if(!compassActive){
-    document.getElementById("needle").style.transform="translate(-50%,-100%) rotate("+b+"deg)";
+  /** @type {number | null} زاوية القبلة من الشمال الحقيقي */
+  let bearing = null;
+  /** @type {number} الانحراف المغناطيسي عند الموقع، موجبًا إلى الشرق */
+  let declination = 0;
+  /** @type {number | null} آخر زاوية مرسّمة على السهم في وضع البوصلة الحيّة */
+  let shown = null;
+  let compassActive = false;
+  /** ثابت الترشيح الزمني بالمللي ثانية: كلّما صغر كان السهم أسرع استجابةً */
+  const SMOOTHING_MS = 220;
+  /** @type {number} وقت آخر قراءة، فيستقلّ الترشيح عن سرعة الجهاز */
+  let lastRead = 0;
+
+  /** يُرسم السهم على زاوية معيّنة بالدرجات. */
+  function draw(angle) {
+    shown = angle;
+    needle.style.transform = `translate(-50%,-100%) rotate(${angle}deg)`;
   }
-  document.getElementById("degText").textContent=b.toFixed(1)+"°";
-}
 
-let compassActive=false;
-let lastBearing=0;
-function handleOrientation(e){
-  let heading = e.webkitCompassHeading!==undefined ? e.webkitCompassHeading : (e.alpha!==null ? (360-e.alpha) : null);
-  if(heading===null) return;
-  const needleAngle = (lastBearing - heading + 360) % 360;
-  const needle=document.getElementById("needle");
-  needle.style.transform="translate(-50%,-100%) rotate("+needleAngle+"deg)";
-}
-document.getElementById("compassBtn").addEventListener("click", async ()=>{
-  const msg=document.getElementById("compassMsg");
-  if(compassActive){
-    window.removeEventListener("deviceorientationabsolute", handleOrientation);
-    window.removeEventListener("deviceorientation", handleOrientation);
-    compassActive=false;
-    document.getElementById("needle").style.transition="transform .3s ease";
-    updateUI(document.getElementById("lat").value||30.0444, document.getElementById("lon").value||31.2357);
-    msg.textContent="تم إيقاف البوصلة الحية.";
-    return;
+  /** يكتب الزاوية والاسم والانحراف في الصفحة. */
+  function paint() {
+    if (bearing === null) return;
+    degText.textContent = `${bearing.toFixed(1)}°`;
+    dirText.textContent = `اتجاه القبلة من الشمال الحقيقي نحو ${compassName(bearing)}`;
+    decText.textContent = `الانحراف المغناطيسي عند موقعك: ${Math.abs(declination).toFixed(1)}° ${declination >= 0 ? "شرقًا" : "غربًا"}`;
   }
-  if(typeof DeviceOrientationEvent!=="undefined" && typeof DeviceOrientationEvent.requestPermission==="function"){
-    try{
-      const perm = await DeviceOrientationEvent.requestPermission();
-      if(perm!=="granted"){ msg.textContent="لم يُسمح بالوصول لحساسات الحركة."; return; }
-    }catch(err){ msg.textContent="تعذّر طلب إذن الحساسات."; return; }
-  }
-  compassActive=true;
-  document.getElementById("needle").style.transition="none";
-  window.addEventListener("deviceorientationabsolute", handleOrientation, true);
-  window.addEventListener("deviceorientation", handleOrientation, true);
-  msg.textContent="البوصلة الحية مفعّلة — أدر هاتفك، والسهم سيبقى مشيرًا لاتجاه القبلة. أمسك الهاتف مسطحًا كالبوصلة العادية للحصول على أفضل دقة.";
-});
 
-document.getElementById("locBtn").addEventListener("click",()=>{
-  if(!navigator.geolocation){
-    document.getElementById("locMsg").textContent="متصفحك لا يدعم تحديد الموقع.";
-    return;
+  /**
+   * يعتمد الموقع ويحسب الزاوية، فإن كانت الإحداثيات خارج المدى لم يغيّر شيئًا.
+   * @param {number} lat
+   * @param {number} lng
+   * @returns {boolean} هل قُبلت الإحداثيات؟
+   */
+  function setCoords(lat, lng) {
+    const angle = calcQibla(lat, lng);
+    if (angle === null) return false;
+    bearing = angle;
+    declination = magneticDeclination(lat, lng);
+    latInput.value = lat.toFixed(4);
+    lonInput.value = lng.toFixed(4);
+    latInput.classList.remove("bad");
+    lonInput.classList.remove("bad");
+    dial.classList.remove("pending");
+    compassBtn.disabled = false;
+    write(KEYS.prayerCoords, { lat, lng });
+    paint();
+    if (!compassActive) draw(bearing);
+    return true;
   }
-  document.getElementById("locMsg").textContent="جارٍ تحديد الموقع...";
-  navigator.geolocation.getCurrentPosition(pos=>{
-    const {latitude,longitude}=pos.coords;
-    document.getElementById("lat").value=latitude.toFixed(4);
-    document.getElementById("lon").value=longitude.toFixed(4);
-    document.getElementById("locMsg").textContent="تم تحديد الموقع محليًا ("+latitude.toFixed(2)+", "+longitude.toFixed(2)+") — لم يُرسل لأي خادم.";
-    updateUI(latitude,longitude);
-  },error=>{
-    document.getElementById("locMsg").textContent=IslamicServiceMessages.locationError(error);
-  },{enableHighAccuracy:true,timeout:12000,maximumAge:60000});
-});
 
-document.getElementById("calcBtn").addEventListener("click",()=>{
-  const lat=parseFloat(document.getElementById("lat").value);
-  const lon=parseFloat(document.getElementById("lon").value);
-  if(isNaN(lat)||isNaN(lon)){ document.getElementById("locMsg").textContent="أدخل خطي العرض والطول بشكل صحيح."; return; }
-  document.getElementById("locMsg").textContent="تم الحساب يدويًا من الإحداثيات المُدخلة.";
-  updateUI(lat,lon);
-});
+  /**
+   * اتجاه الجهاز نسبةً إلى الشمال المغناطيسي، من الحدث كما يرد من المتصفح.
+   * @param {DeviceOrientationEvent} event
+   * @returns {number | null} `null` إن لم يرد في الحدث اتجاه
+   */
+  function magneticHeadingOf(event) {
+    if (typeof event.webkitCompassHeading === "number" && Number.isFinite(event.webkitCompassHeading)) {
+      return (event.webkitCompassHeading + 360) % 360;
+    }
+    if (typeof event.alpha === "number" && Number.isFinite(event.alpha)) {
+      /* زاوية الجهاز المعروضة في المتصفح تُقاس عكس عقارب الساعة من الشمال */
+      return (360 - event.alpha) % 360;
+    }
+    return null;
+  }
+
+  /** يرسم السهم على bearing - heading، ويُرشِّح الحركة فلا يرقص مع كل اهتزاز */
+  function onOrientation(event) {
+    if (bearing === null) return;
+    const magnetic = magneticHeadingOf(event);
+    if (magnetic === null) return;
+    const heading = trueHeading(magnetic, declination);
+    const target = relativeBearing(bearing, heading);
+    const now = performance.now();
+    if (shown === null) {
+      draw(target);
+      lastRead = now;
+      return;
+    }
+    /* الفارق يُقتصَر على ‑١٨٠..+١٨٠ درجة، فلا يقفز السهم عند اللفّ من ٣٦٠ إلى صفر */
+    const step = ((target - shown + 540) % 360) - 180;
+    const alpha = 1 - Math.exp(-Math.max(now - lastRead, 8) / SMOOTHING_MS);
+    lastRead = now;
+    draw(((shown + step * alpha) % 360 + 360) % 360);
+  }
+
+  /** يوقف البوصلة الحيّة ويعيد السهم إلى زاوية الشمال الحقيقي. */
+  function stopCompass(message) {
+    window.removeEventListener("deviceorientationabsolute", onOrientation, true);
+    window.removeEventListener("deviceorientation", onOrientation, true);
+    compassActive = false;
+    needle.style.transition = "transform .3s ease";
+    compassBtn.textContent = "🧭 تفعيل البوصلة الحيّة (يدوّر مع هاتفك)";
+    compassMsg.textContent = message;
+    draw(bearing === null ? 0 : bearing);
+  }
+
+  compassBtn.addEventListener("click", async () => {
+    if (compassActive) {
+      stopCompass("تم إيقاف البوصلة الحيّة.");
+      return;
+    }
+    if (bearing === null) {
+      compassMsg.textContent = "حدّد موقعك أولًا، فالبوصلة الحيّة تحتاج زاوية القبلة.";
+      return;
+    }
+    if (typeof DeviceOrientationEvent === "undefined") {
+      compassMsg.textContent = "متصفحك لا يوفّر حسّاس الاتجاه، فاعتمد الزاوية أعلاه.";
+      return;
+    }
+    if (typeof DeviceOrientationEvent.requestPermission === "function") {
+      try {
+        const granted = await DeviceOrientationEvent.requestPermission();
+        if (granted !== "granted") {
+          compassMsg.textContent = "لم يُسمح بالوصول إلى حسّاس الاتجاه من إعدادات المتصفح.";
+          return;
+        }
+      } catch {
+        compassMsg.textContent = "تعذّر طلب إذن حسّاس الاتجاه.";
+        return;
+      }
+    }
+    compassActive = true;
+    shown = null;
+    needle.style.transition = "none";
+    compassBtn.textContent = "🧭 إيقاف البوصلة الحيّة";
+    window.addEventListener("deviceorientationabsolute", onOrientation, true);
+    window.addEventListener("deviceorientation", onOrientation, true);
+    compassMsg.textContent =
+      "البوصلة الحيّة مفعّلة — أدر هاتفك مسطّحًا كالبوصلة العادية، والسهم يشير إلى الكعبة.";
+  });
+
+  locBtn.addEventListener("click", async () => {
+    locBtn.disabled = true;
+    locMsg.textContent = "جارٍ تحديد الموقع...";
+    try {
+      const found = await requestLocation();
+      if (!setCoords(found.lat, found.lng)) {
+        locMsg.textContent = "أعاد المتصفح إحداثيات خارج المدى — أدخلها يدويًا.";
+        return;
+      }
+      locMsg.textContent =
+        `تم تحديد الموقع محليًا (${found.lat.toFixed(2)}, ${found.lng.toFixed(2)}) — لم يُرسل لأي خادم.`;
+    } catch (error) {
+      locMsg.textContent = error?.message ?? locationError(error);
+    } finally {
+      locBtn.disabled = false;
+    }
+  });
+
+  calcBtn.addEventListener("click", () => {
+    const lat = Number.parseFloat(latInput.value);
+    const lng = Number.parseFloat(lonInput.value);
+    latInput.classList.toggle("bad", !isValidCoords(lat, lng) || latInput.value.trim() === "");
+    lonInput.classList.toggle("bad", !isValidCoords(lat, lng) || lonInput.value.trim() === "");
+    if (!isValidCoords(lat, lng)) {
+      stopCompass(
+        `أدخل خط عرض بين ‑${LAT_LIMIT} و+${LAT_LIMIT} وخط طول بين ‑${LNG_LIMIT} و+${LNG_LIMIT} (مثال: القاهرة 30.04 و31.24).`,
+      );
+      return;
+    }
+    setCoords(lat, lng);
+    locMsg.textContent = "تم الحساب من الإحداثيات المُدخلة.";
+  });
+
+  /* استعادة الموقع المحفوظ من زيارة سابقة، كما تفعل بقية أدوات المكتبة */
+  const saved = read(KEYS.prayerCoords, null);
+  if (saved && setCoords(saved.lat, saved.lng)) {
+    locMsg.textContent = "استُعيد موقعك المحفوظ — حدّده من جديد إن انتقلت.";
+  }
 </script>
 <button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
 <script>
@@ -274,6 +397,10 @@ document.getElementById("calcBtn").addEventListener("click",()=>{
     });
   }
 })();
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

@@ -13,6 +13,7 @@ import {
   renderVerses, renderWordByWord, renderTafsir, ayahWithRef,
 } from "./quran-read.js";
 import { registerServiceWorker, setupInstallButton, setupUpdatePrompt, notify } from "../lib/pwa.js";
+import * as autoNotify from "../lib/auto-notify.js";
 import { calendarLabel, dateKey, updateStreak } from "../lib/dates.js";
 import { read, write, remove, keys as storageKeys, KEYS, importKnownKeys } from "../lib/storage.js";
 import { calcQibla, compassName, tasbihStep, tasbihPercent, calculateZakat, calculateMetalZakat, calculateLivestockZakat } from "../lib/islamic.js";
@@ -69,6 +70,9 @@ async function boot() {
   registerServiceWorker();
   setupInstallButton($("installBtn"));
   setupUpdatePrompt($("updateBtn"));
+
+  // الإشعارات تشتغل وحدها: إذنٌ عند أوّل لمسة، وترحيبٌ في كل فتح.
+  autoNotify.boot({ url: location.href }).catch(() => {});
 }
 
 function renderNav() {
@@ -989,8 +993,12 @@ function nextPrayer(timings) {
 async function locateApp() {
   try {
     const coords = await requestLocation();
-    write(KEYS.prayerCoords, coords);
     const angle = calcQibla(coords.lat, coords.lng);
+    if (angle === null) {
+      showToast("أعاد جهازك إحداثيات خارج المدى — لم تُحسب القبلة.");
+      return;
+    }
+    write(KEYS.prayerCoords, coords);
     showToast(`اتجاه القبلة من موقعك: ${toArNum(Math.round(angle))}° — ${compassName(angle)}`);
     loadTimes();
   } catch (error) {
@@ -1006,8 +1014,26 @@ function playAthan() {
   state.audio = audio;
 }
 
+/**
+ * جرس الإشعارات. الإذن يُطلب تلقائيًّا عند أوّل لمسة، فبقي للزرّ
+ * عملان: التأكد من وصول الإشعار، وجدولة الأذان بعد إغفائه.
+ */
 async function requestNotifications() {
   if (!("Notification" in window)) return showToast("متصفحك لا يدعم الإشعارات.");
+
+  if (Notification.permission === "granted") {
+    write(KEYS.notifEnabled, true);
+    scheduleNotifications();
+    await autoNotify.pushPrayerSchedule();
+    const shown = await autoNotify.test({ url: location.href });
+    showToast(shown ? "جرّب الإشعار الذي ظهر 🔔" : "تعذّر عرض الإشعار — تأكّد من إعدادات الموقع.");
+    return;
+  }
+
+  if (Notification.permission === "denied") {
+    return showToast("المتصفّح يمنع إشعارات هذا الموقع — فعّلها من إعداداته.", false, 5000);
+  }
+
   const permission = await Notification.requestPermission();
   write(KEYS.notifEnabled, permission === "granted");
   showToast(permission === "granted" ? "تم تفعيل الإشعارات 🔔" : "لم يُمنح إذن الإشعارات.");

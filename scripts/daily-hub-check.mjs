@@ -32,14 +32,27 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const EXECUTABLE = process.env.CHROMIUM_PATH
   || path.join(process.env.HOME, ".cache/ms-playwright/chromium-1243/chrome-linux64/chrome");
 const browser = await chromium.launch({ executablePath: EXECUTABLE, args: ["--no-sandbox"] });
+/** انتظارٌ واحد لكل تحميلات الفهرس، فالفحوص كلّها تفحص نفس الصفحة. */
+const waitUntilReady = { waitUntil: "networkidle" };
 
 const problems = [];
 const note = (message) => { problems.push(message); console.log("  ✘ " + message); };
 const ok = (message) => console.log("  ✔ " + message);
 
+/**
+ * جولةُ التعريف تحجب الصفحة أوّل فتح، وهذه الفحوص تفحص ما تحتها.
+ * فنزرع مفتاح "رأيتُها" قبل التحميل، إلا في قسم الجولة نفسه.
+ */
+async function skipIntro(page) {
+  await page.addInitScript(() => {
+    try { localStorage.setItem("hub-intro-seen", "1"); } catch {}
+  });
+  return page;
+}
+
 /* ---------- ١) سطح المكتب: الصفحة تُبنى بلا أخطاء ---------- */
 {
-  const page = await browser.newPage({ viewport: { width: 1280, height: 900 } });
+  const page = await skipIntro(await browser.newPage({ viewport: { width: 1280, height: 900 } }));
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
@@ -125,7 +138,7 @@ const ok = (message) => console.log("  ✔ " + message);
 
 /* ---------- ٦)الهاتف: لا تمرير أفقي، وأهداف اللمس كبيرة ---------- */
 {
-  const page = await browser.newPage({ viewport: { width: 360, height: 720 }, isMobile: true, hasTouch: true });
+  const page = await skipIntro(await browser.newPage({ viewport: { width: 360, height: 720 }, isMobile: true, hasTouch: true }));
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.goto(`${base}/index.html`, { waitUntil: "networkidle" });
@@ -142,7 +155,7 @@ const ok = (message) => console.log("  ✔ " + message);
 
 /* ---------- ٧)الوضع الليلي ---------- */
 {
-  const page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
+  const page = await skipIntro(await browser.newPage({ viewport: { width: 1024, height: 800 } }));
   await page.goto(`${base}/index.html`, { waitUntil: "networkidle" });
   await page.locator("#dcRoot .dc-theme-toggle").click();
   await page.waitForTimeout(150);
@@ -164,7 +177,7 @@ const ok = (message) => console.log("  ✔ " + message);
 
 /* ---------- ٩)تخطّي المحرّك: لا انهيار ---------- */
 {
-  const page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
+  const page = await skipIntro(await browser.newPage({ viewport: { width: 1024, height: 800 } }));
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   // نحجب الملف فنمنع تعريف المحرّك، وهو أسوأ حالة ممكنة.
@@ -182,7 +195,7 @@ const ok = (message) => console.log("  ✔ " + message);
 
 /* ---------- ١٠)تخطّي المحتوى: لا نصّ مخترع ---------- */
 {
-  const page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
+  const page = await skipIntro(await browser.newPage({ viewport: { width: 1024, height: 800 } }));
   const errors = [];
   page.on("pageerror", (e) => errors.push(String(e)));
   await page.route("**/daily-content.js", (route) => route.abort());
@@ -192,6 +205,101 @@ const ok = (message) => console.log("  ✔ " + message);
   const dhikr = await page.evaluate(() => document.querySelector("#dcRoot .dc-dhikr")?.textContent?.trim() || "");
   dhikr === "" ? ok("بلا مصدر: لا ذكر مخترع") : note("ظهر ذكر بلا مصدر: " + dhikr);
   errors.length === 0 ? ok("بلا استثناءات عند غياب المحتوى") : errors.forEach(note);
+  await page.close();
+}
+
+/* ---------- ١١) دليل المكتبة: تعريفٌ واحد للزائر الجديد ---------- */
+{
+  // صفحةٌ بلا ذاكرة من جولةٍ سابقة: هكذا يُعرَّف الزائر أوّل مرّة.
+  const page = await browser.newPage({ viewport: { width: 1024, height: 800 } });
+  const errors = [];
+  page.on("pageerror", (e) => errors.push(String(e)));
+  page.on("console", (m) => { if (m.type() === "error") errors.push(m.text()); });
+  await page.goto(`${base}/index.html`, waitUntilReady);
+  // الجولة تظهر بعد لحظةٍ من التحميل، فننتظرها لا أن نفترضها.
+  await page.waitForSelector("dialog#itModal[open]", { timeout: 4000 }).catch(() => {});
+
+  const first = await page.evaluate(() => {
+    const dialog = document.getElementById("itModal");
+    return {
+      open: Boolean(dialog?.open),
+      title: document.getElementById("itTitle")?.textContent?.trim() || "",
+      kicker: document.getElementById("itKicker")?.textContent?.trim() || "",
+      categories: document.querySelectorAll("#cats [data-cat]").length,
+      named: [...document.querySelectorAll("#itModal button, #itModal a")]
+        .every((el) => (el.textContent || el.getAttribute("aria-label") || "").trim().length > 0),
+    };
+  });
+  first.open ? ok("الجولة ظهرت للزائر الجديد") : note("الجولة لم تظهر");
+  first.title.length > 3 ? ok("الخطوة الأولى: " + first.title) : note("بلا عنوان: " + first.title);
+  first.kicker.includes("١") ? ok("عدّاد الخطوة: " + first.kicker) : note("عدّاد غريب: " + first.kicker);
+  first.named ? ok("كل عناصر الجولة مُسمّاة") : note("عنصر بلا اسم في الجولة");
+
+  // الخطوة التالية، ثم خطوةُ الأقسام: يجب أن تطابق الفهرس لا تختلق أقسامًا.
+  await page.locator("#itNext").click();
+  await page.waitForTimeout(120);
+  const moved = await page.evaluate(() => document.getElementById("itKicker")?.textContent?.trim() || "");
+  moved.includes("٢") ? ok("«التالي» ينقل الخطوة") : note("التالي لم ينقل: " + moved);
+  await page.locator("#itNext").click();
+  await page.waitForTimeout(120);
+  const listed = await page.evaluate(() => ({
+    sections: document.querySelectorAll("#itBody .it-sec").length,
+    categories: document.querySelectorAll("#cats [data-cat]").length,
+    anchors: [...document.querySelectorAll("#itBody .it-sec")].every((el) =>
+      document.getElementById((el.getAttribute("href") || "").slice(1)) !== null),
+  }));
+  listed.sections === listed.categories && listed.sections > 0
+    ? ok(`أقسام الجولة ${listed.sections} = أقسام الفهرس`)
+    : note(`أقسام الجولة ${listed.sections} بدل ${listed.categories}`);
+  listed.anchors ? ok("كل قسمٍ في الجولة رابطٌ إلى قسمٍ موجود") : note("رابط قسمٍ ميّت");
+
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(120);
+  const closed = await page.evaluate(() => ({
+    open: Boolean(document.getElementById("itModal")?.open),
+    seen: localStorage.getItem("hub-intro-seen"),
+  }));
+  !closed.open && closed.seen ? ok("Escape أغلقها وحُفظ أنها رُئيت") : note(`بعد Escape: ${JSON.stringify(closed)}`);
+
+  // لا تتكرّر، ويظلّ الزرّ في الترويسة يفتحها.
+  await page.reload(waitUntilReady);
+  await page.waitForTimeout(900);
+  const again = await page.evaluate(() => Boolean(document.getElementById("itModal")?.open));
+  !again ? ok("لا تتكرّر على من رأها") : note("تكرّرت على من رأها");
+  await page.locator("#introBtn").click();
+  await page.waitForTimeout(150);
+  const reopened = await page.evaluate(() => Boolean(document.getElementById("itModal")?.open));
+  reopened ? ok("زرّ الترويسة يعيد فتحها") : note("الزرّ لم يفتح الجولة");
+
+  // الهاتف: بلا تمريرٍ أفقي وهي مفتوحة.
+  await page.setViewportSize({ width: 360, height: 720 });
+  await page.waitForTimeout(200);
+  const overflow = await page.evaluate(
+    () => document.documentElement.scrollWidth - document.documentElement.clientWidth,
+  );
+  overflow <= 1 ? ok("الجولة مفتوحة بلا تمرير أفقي على ٣٦٠ بكسل") : note(`تمرير أفقي ${overflow}px`);
+
+  // الإنجليزية: النافذة المفتوحة تتبع لغة الفهرس.
+  await page.evaluate(() => {
+    document.querySelector('#langMenu button:nth-child(2)')?.click();
+  });
+  await page.waitForTimeout(200);
+  const english = await page.evaluate(() => {
+    const titles = Object.values(window.SiteIntro.STR.en.steps).map((step) => step.title);
+    const title = document.getElementById("itTitle")?.textContent?.trim() || "";
+    return {
+      title,
+      known: titles.includes(title),
+      kicker: document.getElementById("itKicker")?.textContent?.trim() || "",
+      dir: document.documentElement.dir,
+      open: Boolean(document.getElementById("itModal")?.open),
+    };
+  });
+  english.open && english.known && english.dir === "ltr" && english.kicker.startsWith("Step")
+    ? ok("الدليل المفتوح يتبع اللغة: " + english.title)
+    : note(`الدليل لم يتبدّل لغته: ${JSON.stringify(english)}`);
+
+  errors.length === 0 ? ok("بلا أخطاء في الطرفية") : errors.forEach(note);
   await page.close();
 }
 

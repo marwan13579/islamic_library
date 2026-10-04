@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>حاسبة المواريث المبسّطة</title>
@@ -259,6 +260,10 @@ renderSpouseField();
     });
   }
 })();
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

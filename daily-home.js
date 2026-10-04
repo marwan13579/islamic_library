@@ -893,20 +893,19 @@
     var box = el("section", { class: "dc-share-cta" });
     box.appendChild(el("p", { text: t("shareCta") }));
     var targets = DC.shareTargets("المكتبة الإسلامية — رفيق المسلم اليومي");
-    var row = el("div", { class: "dc-btns" });
-    row.style.justifyContent = "center";
+    var row = el("div", { class: "dc-btns dc-share-row" });
     [
-      ["واتساب", targets.whatsapp],
-      ["تليجرام", targets.telegram],
-      ["X", targets.x],
-      ["فيسبوك", targets.facebook],
+      ["واتساب", "🟢", targets.whatsapp],
+      ["تليجرام", "✈️", targets.telegram],
+      ["X", "✖️", targets.x],
+      ["فيسبوك", "📘", targets.facebook],
     ].forEach(function (pair) {
       row.appendChild(el("a", {
         class: "dc-btn ghost",
-        href: pair[1],
+        href: pair[2],
         target: "_blank",
         rel: "noopener noreferrer",
-        text: pair[0],
+        text: pair[1] + " " + pair[0],
       }));
     });
     row.appendChild(el("button", {

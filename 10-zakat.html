@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>حاسبة الزكاة</title>
@@ -243,6 +244,10 @@ function calcFitr(){
   box.textContent = (p>0&&a>0) ? "إجمالي زكاة الفطر: "+total.toLocaleString(undefined,{maximumFractionDigits:2}) : "";
 }
 ["fitrPersons","fitrAmount"].forEach(id=>document.getElementById(id).addEventListener("input",calcFitr));
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

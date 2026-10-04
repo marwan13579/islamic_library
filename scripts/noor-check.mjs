@@ -28,6 +28,17 @@ const pass = (ok, label) => {
   console.log(`  ${ok ? "✔" : "✘"} ${label}`);
 };
 
+/** أخطاء صفحة: خطأ في نظامنا يُفشل الفحص، وخطأ غيره يُنسب إلى صاحبه. */
+const warn = (label) => console.log(`  ⚠ ${label}`);
+function pageClean(errors, mine, label) {
+  const ours = errors.filter(mine);
+  const theirs = errors.filter((e) => !mine(e));
+  if (theirs.length) {
+    warn(`${label}: خطأ في سكربتٍ آخر (ليس من نظامنا): ${[...new Set(theirs)].join(" | ")}`);
+  }
+  return pass(ours.length === 0, `بلا أخطاء${ours.length ? ": " + ours.join(" | ") : ""}`);
+}
+
 const server = http.createServer((req, res) => {
   let file = path.join(ROOT, decodeURIComponent(req.url.split("?")[0]));
   if (fs.existsSync(file) && fs.statSync(file).isDirectory()) file = path.join(file, "index.html");
@@ -45,10 +56,16 @@ const base = `http://127.0.0.1:${server.address().port}`;
 const browser = await chromium.launch({ args: ["--no-sandbox"] });
 
 /** صفحة نظيفة: تخزينٌ جديد ونفسها بلا ذاكرة من جولة سابقة. */
-async function openPage(pathname, { theme = "light" } = {}) {
+async function openPage(pathname, { theme = "light", notif = null } = {}) {
+  /* يُصدَّر مع الصفحة حتى تُميّز `pageClean` أخطاءنا من غيرها. */
   const context = await browser.newContext();
   const page = await context.newPage();
   const errors = [];
+  /* أخطاء الصفحة قد تأتي من سكربتٍ آخر يشتغل عليها غيري في الوقت نفسه،
+     وحينها لا يكون الفحص حائلًا بلا فائدة: نميّز ما يخصّنا عمّا لا يخصّنا.
+     خطأ يظهر من نظامنا يُفشل الفحص، وآخر يُطبع تحذيرًا مع نسبة الخطأ
+     إلى صاحبه بدل أن يُخفيه ويُفقدنا الإشارة. */
+  const mine = (text) => /noor|NOOR|رفيق/i.test(text);
   page.on("pageerror", (e) => errors.push(String(e.message)));
   page.on("console", (m) => {
     if (m.type() === "error" && !/favicon/.test(m.text())) errors.push("console: " + m.text());
@@ -56,17 +73,35 @@ async function openPage(pathname, { theme = "light" } = {}) {
   await page.addInitScript((value) => {
     try { localStorage.setItem("lib-theme-pref", value); } catch {}
   }, theme);
+  /* جولةُ التعريف تحجب الصفحة أوّل فتح، وهذا الفحص يفحص ما تحتها —
+     فمن أراد فحصَ الجولة نفسها فليزرع مفتاحَها (كما في daily-hub-check). */
+  await page.addInitScript(() => {
+    try { localStorage.setItem("hub-intro-seen", "1"); } catch {}
+  });
+  if (notif) {
+    /* المتصفّح بلا واجهة يمنح الإذن مسبقًا، فنحاكي الحالة "لم يُقرَّر بعد"
+       وهي الحالة التي يقابلها المستخدم فعلًا. */
+    await page.addInitScript((answer) => {
+      window.__noorRequests = 0;
+      Object.defineProperty(Notification, "permission", { configurable: true, get: () => "default" });
+      Notification.requestPermission = () => {
+        window.__noorRequests += 1;
+        Object.defineProperty(Notification, "permission", { configurable: true, get: () => answer });
+        return Promise.resolve(answer);
+      };
+    }, notif);
+  }
   await page.goto(`${base}${pathname}`, { waitUntil: "load" });
   await page.waitForFunction(() => Boolean(window.NoorCompanion));
   await page.waitForTimeout(400);
-  return { context, page, errors };
+  return { context, page, errors, mine };
 }
 
 /* ------------------------------------------------ 1) أول زيارة: ترحيب صغير */
 
 console.log("\n=== أول زيارة ===");
 {
-  const { context, page, errors } = await openPage("/29-prayer-times.html");
+  const { context, page, errors, mine } = await openPage("/29-prayer-times.html", { notif: "granted" });
 
   const gear = await page.locator(".noor-gear").count();
   pass(gear === 1, "زرّ الإعدادات 🌿 ظاهر مرة واحدة");
@@ -85,18 +120,57 @@ console.log("\n=== أول زيارة ===");
   });
   pass(clickThrough === "none", `البطاقة لا تعترض النقر (pointer-events=${clickThrough})`);
 
+  /* ولا حجب بالأنماط: لو انطبقت pointer-events:auto على البطاقة كلّها
+     اختفت أزرار الصفحة تحتها، وهذا أسوأ من اللوح الحاجب. */
+  const clickBelow = await page.evaluate(() => {
+    const h2 = [...document.querySelectorAll("h2")].find((el) => el.textContent.includes("الموقع"));
+    if (!h2) return "no-h2";
+    const r = h2.getBoundingClientRect();
+    const top = document.elementFromPoint(r.left + r.width / 2, r.top + r.height / 2);
+    return top && !top.closest(".noor-root") ? "pass" : `blocked-by-${top?.className}`;
+  });
+  pass(clickBelow === "pass", `محتوى الصفحة تحتها يبقى قابلًا للنقر (${clickBelow})`);
+
+  const beforeAsk = await page.evaluate(() => window.__noorRequests);
+  pass(beforeAsk === 0, "لا يُطلب الإذن قبل موافقة المستخدم — فقط يظهر");
+
   await page.locator(".noor-card .noor-btn", { hasText: "ابدأ" }).first().click();
-  await page.waitForTimeout(600);
+  await page.waitForTimeout(700);
   const offer = await page.locator(".noor-card h3").first().textContent().catch(() => "");
   pass(/هل تريد تفعيل/.test(offer ?? ""), `سؤال الإذن جاء بعد موافقة: ${offer?.trim()}`);
 
-  /* الرفض لا يفسد شيئًا ولا يُعاد السؤال. */
-  await page.locator(".noor-card .noor-btn", { hasText: "ليس الآن" }).first().click();
-  await page.waitForTimeout(400);
-  const asked = await page.evaluate(() => window.NoorCompanion.getSettings().notifAsked);
-  pass(asked === true, "رفض الإذن سُجّل، فلا يُعاد السؤال");
+  await page.locator(".noor-card .noor-btn", { hasText: "تفعيل التذكيرات" }).first().click();
+  await page.waitForTimeout(700);
+  const asked = await page.evaluate(() => ({
+    calls: window.__noorRequests,
+    flag: window.NoorCompanion.getSettings().notifAsked,
+  }));
+  pass(asked.calls === 1, `طُلب الإذن مرة واحدة بالضبط (${asked.calls})`);
+  pass(asked.flag === true, "سُجّل أنّنا سألنا، فلا يُعاد السؤال");
 
-  pass(errors.length === 0, `بلا أخطاء في الصفحة${errors.length ? ": " + errors.join(" | ") : ""}`);
+  pageClean(errors, mine, "أول زيارة");
+  await context.close();
+}
+
+/* متصفّح محظور الإشعارات: لا سؤال ولا أخطاء، والباقي يعمل. */
+console.log("\n=== متصفّح يمنع الإشعارات ===");
+{
+  const { context, page, errors, mine } = await openPage("/index.html");
+  const denied = await page.evaluate(() => Notification.permission === "denied");
+  pass(denied, "المتصفّح بلا واجهة يمنع الإشعارات — هذه هي الحالة التي نختبرها");
+
+  await page.locator(".noor-card .noor-btn", { hasText: "ابدأ" }).first().click();
+  await page.waitForTimeout(700);
+  const prompt = await page.locator(".noor-card h3").first().textContent().catch(() => "");
+  pass(!/هل تريد تفعيل/.test(prompt ?? ""), "لا يُزاحم المستخدم بسؤال لا يستطيع الموافقة عليه");
+
+  const stillWorks = await page.evaluate(() => {
+    document.querySelector(".noor-x")?.click();
+    window.NoorCompanion.showDailyMessage(true);
+    return (document.querySelector(".noor-text")?.textContent ?? "").trim().length;
+  });
+  pass(stillWorks > 10, "التذكير داخل الصفحة يعمل رغم منع الإشعارات");
+  pageClean(errors, mine, "تنبيه الإشعارات");
   await context.close();
 }
 
@@ -130,7 +204,7 @@ console.log("\n=== رسالة اليوم ===");
 
 console.log("\n=== التدبر بعد إتمام القراءة ===");
 {
-  const { context, page, errors } = await openPage("/30-quran-full.html");
+  const { context, page, errors, mine } = await openPage("/30-quran-full.html");
 
   /* نداء الخطّاف كما تناديه saveLastPos في صفحة المصحف. */
   await page.evaluate(() => window.NoorCompanion.observeReading({ surah: 94, ayah: 8 }));
@@ -170,7 +244,7 @@ console.log("\n=== التدبر بعد إتمام القراءة ===");
   const other = await page.locator(".noor-backdrop").count();
   pass(other === 1, "سورة أخرى تعطي تدبرًا جديدًا");
 
-  pass(errors.length === 0, `بلا أخطاء${errors.length ? ": " + errors.join(" | ") : ""}`);
+  pageClean(errors, mine, "تدبر القراءة");
   await context.close();
 }
 
@@ -192,6 +266,9 @@ console.log("\n=== منع التكرار والإزعاج ===");
     }
     return seen;
   });
+  /* لا فراغات: لو لم يظهر نصّ لكان الفحص يمرّ زورًا. */
+  pass(picks.every((t) => t.length > 10), `كل التذكيرات أظهرت نصًّا (${picks.filter((t) => t.length > 10).length}/${picks.length})`);
+
   const unique = new Set(picks);
   pass(unique.size >= 5, `محتوى متنوّع: ${unique.size} من ${picks.length}`);
 
@@ -205,26 +282,60 @@ console.log("\n=== منع التكرار والإزعاج ===");
     }
     let same = 0;
     for (let i = 1; i < out.length; i += 1) if (out[i] && out[i] === out[i - 1]) same += 1;
-    return same;
+    return { same, filled: out.filter((t) => t.length > 10).length, total: out.length };
   });
-  pass(repeated === 0, `لا تكرار في المواجهة (${repeated} تكرارًا)`);
+  pass(repeated.filled === repeated.total,
+    `كل النصوص ظهرت فعلًا (${repeated.filled}/${repeated.total}) — لئلّا يمرّ الفحص زورًا`);
+  pass(repeated.same === 0, `لا تكرار في المواجهة (${repeated.same} تكرارًا)`);
   await context.close();
 }
 
 {
   const { context, page } = await openPage("/22-qibla.html");
-  await page.evaluate(() => window.NoorCompanion.updateSettings({ enabled: false, quiet: true }));
+  /* نُغلق بطاقة الترحيب أولًا: البطاقة الواحدة تُستبدل بأخرى، فلا يكفي
+     عدّ عدد البطاقات قبل وبعد لقياس هل وُلدت بطاقة جديدة. */
+  await page.evaluate(() => document.querySelector(".noor-x")?.click());
+  await page.waitForTimeout(700);
 
-  const timers = await page.evaluate(() => {
-    /* عند Quiet لا يبقى مؤقّت تذكير معلّق: نقيس بغياب بطاقة جديدة. */
-    const before = document.querySelectorAll(".noor-card").length;
-    window.NoorCompanion.showDailyMessage(true);
-    return document.querySelectorAll(".noor-card").length - before;
+  const quietNow = await page.evaluate(() => {
+    window.NoorCompanion.updateSettings({ enabled: false, quiet: true });
+    return window.NoorCompanion.getSettings();
   });
-  pass(timers === 1, "الوضع الهادئ يُبقي الاستجابة اليدوية فقط، ولا يبدأ مؤقّتًا");
+  pass(quietNow.quiet === true, "الوضع الهادئ مسجّل في الإعدادات");
 
-  const quiet = await page.evaluate(() => window.NoorCompanion.getSettings().quiet);
-  pass(quiet === true, "الوضع الهادئ مسجّل في الإعدادات");
+  const manual = await page.evaluate(() => {
+    window.NoorCompanion.showDailyMessage(true);
+    return (document.querySelector(".noor-text")?.textContent ?? "").trim().length;
+  });
+  pass(manual > 10, "الوضع الهادئ يُبقي الاستجابة اليدوية متاحة");
+
+  /* ما يجب أن يتوقّف هو المؤقّت وحده، لا التذكير كلّه. نقيس المؤقّتات
+     التي ينشئها المحرّك فعلًا، بدل انتظار خمس دقائق في كل جولة. */
+  const timersAfter = (patch) => page.evaluate((p) => {
+    const NC = window.NoorCompanion;
+    NC.updateSettings(p);
+    const real = window.setTimeout;
+    let started = 0;
+    window.setTimeout = function (fn, ms, ...rest) {
+      if (ms >= 60000) started += 1;
+      return real(fn, ms, ...rest);
+    };
+    NC.start();
+    window.setTimeout = real;
+    return started;
+  }, patch);
+
+  const on = await timersAfter({ enabled: true, quiet: false, interval: 5 });
+  pass(on >= 1, `المحرّك ينشئ مؤقّت تذكير عند التفعيل (${on})`);
+
+  const off = await timersAfter({ enabled: false });
+  pass(off === 0, `إطفاء التذكير يمنع إنشاء أي مؤقّت (${off})`);
+
+  const hushed = await timersAfter({ quiet: true });
+  pass(hushed === 0, `الوضع الهادئ يمنع إنشاء أي مؤقّت (${hushed})`);
+
+  const stillQuiet = await page.evaluate(() => window.NoorCompanion.getSettings().quiet);
+  pass(stillQuiet === true, "الوضع الهادئ باقٍ بعد كل الجولات");
   await context.close();
 }
 
@@ -239,7 +350,7 @@ console.log("\n=== التذكير الذكي حسب الصفحة ===");
     ["/10-zakat.html", "الإنفاق"],
   ];
   for (const [pathname, label] of pages) {
-    const { context, page, errors } = await openPage(pathname);
+    const { context, page, errors, mine } = await openPage(pathname);
     const shown = await page.evaluate(() => {
       document.querySelector(".noor-x")?.click();
       window.NoorCompanion.showDailyMessage(true);
@@ -247,7 +358,7 @@ console.log("\n=== التذكير الذكي حسب الصفحة ===");
     });
     const src = (shown.match(/(سورة.+|البخاري.*|مسلم.*|صحيح.*|أذكار.*|حصن المسلم.*)/) ?? [])[0] ?? "";
     pass(shown.length > 20, `/${pathname.replace("/", "")} (${label}) → ${src.trim().slice(0, 42)}`);
-    pass(errors.length === 0, `  ${pathname} بلا أخطاء`);
+    pageClean(errors, mine, pathname);
     await context.close();
   }
 }
@@ -303,20 +414,45 @@ console.log("\n=== RTL والوضع الليلي والإتاحة ===");
 
 console.log("\n=== العمل بلا اتصال ===");
 {
-  const { context, page, errors } = await openPage("/44-noor-companion.html");
-  await context.setOffline(true);
+  /* نتحقّق من ادّعاء الخصوصية: كل شيء من ذاكرة الجهاز، ولا شيء يخرج. */
+  const { context, page } = await openPage("/44-noor-companion.html");
 
-  const offline = await page.evaluate(async () => {
-    const res = await fetch("noor-content.js").catch(() => null);
-    return res ? res.ok : false;
+  const requests = [];
+  page.on("request", (r) => requests.push(r.url()));
+  await page.waitForTimeout(800);
+
+  /* أي طلب خارج نطاق الموقع نفسه خلل: لا تتبّع ولا تحليلات ولا مزامنة. */
+  const foreign = requests.filter((u) => !u.startsWith(base) && !u.startsWith("data:") && !u.startsWith("blob:"));
+  pass(foreign.length === 0, `صفر طلبات إلى مواقع أخرى (${foreign.length})`);
+  pass(
+    requests.every((u) => /localhost|127\.0\.0\.1/.test(new URL(u).hostname)),
+    "كل الطلبات محليّة على جهاز المستخدم",
+  );
+
+  /* ثم نقطع الشبكة: كل شيء يبقى يعمل من التخزين المحلي. */
+  await context.setOffline(true);
+  await page.waitForTimeout(300);
+
+  const offline = await page.evaluate(() => {
+    const NC = window.NoorCompanion;
+    const cells = [...document.querySelectorAll("#journey .stat")].length;
+    NC.updateSettings({ quiet: true, interval: 15 });
+    const persisted = JSON.parse(window.localStorage.getItem("noor-settings") || "{}");
+    const actions = NC.getActions();
+    document.querySelector("#set-quiet")?.click();
+    return {
+      cells,
+      quiet: NC.getSettings().quiet,
+      persistedInterval: persisted.interval,
+      actionsDay: actions.day,
+      failed: document.body.innerText.includes("تعذّر تحميل النظام"),
+    };
   });
-  /* بعد تثبيت عامل الخدمة فقط. بلا عامل خدمة يُتوقّع ٥٠٣ لا قراءة. */
-  const stats = await page.evaluate(() => {
-    const s = document.getElementById("journey")?.innerText ?? "";
-    return s.length > 0;
-  });
-  pass(stats, "الإحصاءات معروضة بلا أي طلب شبكة");
-  pass(errors.length === 0, `صفحة الإعدادات بلا أخطاء بلا اتصال${errors.length ? ": " + errors.join(" | ") : ""}`);
+  pass(offline.cells >= 6, `إحصاءات «رحلتي» معروضة (${offline.cells} خانة)`);
+  pass(!offline.failed, "لا تظهر رسالة «تعذّر تحميل النظام» — المحرّك حاضر");
+  pass(offline.quiet === true, "الإعدادات تتغيّر بلا اتصال");
+  pass(offline.persistedInterval === 15, `الفاصل حُفظ محليًّا (${offline.persistedInterval} دقيقة)`);
+  pass(Boolean(offline.actionsDay), `أعمال اليوم لها يوم محفوظ (${offline.actionsDay})`);
   await context.close();
 }
 

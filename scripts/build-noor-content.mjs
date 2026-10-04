@@ -184,6 +184,29 @@ const DUA_CAT_TOPICS = {
   general: ["dua"],
 };
 
+/* أسماء أعلام كتب الحديث التي تُنسب إليها الأدعية. */
+const HADITH_BOOKS = /^(البخاري|مسلم|أبو داود|الترمذي|ابن ماجه|أحمد|الحاكم|البيهقي|أبو بكر الشافعي)$/;
+
+/**
+ * يُظهر أن النصّ مروى لا مصنَّف.
+ *
+ * `app-duas.js` يلمدنا بمرجع مجرّد — «البخاري» — لأنّ ذلك حقل
+ * `ref` محايد يصلح لكل مستهلك. لكنّا نعرضه تحت نصٍّ منسوب إلى
+ * دعاءٍ عامّ، فيقرأه المستخدم كلامَ البخاري نفسه. فنضيف
+ * «رواه» فينفصل من الفاعل، ويصير مقروءًا: هذا دعاءٌ رواه
+ * فلان، لا كلامُه.
+ *
+ * ومراجع القرآن تُترك كما هي، فـ«البقرة: ٢٠١» ليست اسمًا راويًا.
+ */
+function duaSource(ref) {
+  const value = (ref ?? "").trim();
+  if (!value) return "";
+  if (/^\S+\s*:\s*\d+$/.test(value)) return value;
+  if (/^\d+/.test(value)) return `حديث رقم ${value}`;
+  if (HADITH_BOOKS.test(value)) return `رواه ${value}`;
+  return value;
+}
+
 for (const [index, dua] of APP_DUAS.entries()) {
   add({
     id: `du_a${index + 1}`,
@@ -191,7 +214,7 @@ for (const [index, dua] of APP_DUAS.entries()) {
     origin: "dua",
     title: dua.title,
     text: dua.text,
-    source: dua.ref,
+    source: duaSource(dua.ref),
     ref: dua.ref,
     topics: DUA_CAT_TOPICS[dua.cat] ?? ["dua"],
   });

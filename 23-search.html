@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>بحث شامل في المكتبة</title>
@@ -133,8 +134,8 @@ header{
 </div>
 
 <script type="module">
-import { search } from "./src/lib/search.js";
-import { escapeHtml, normalizeAr } from "./src/lib/text.js";
+  import { searchAll } from "./src/lib/unified-search.js";
+  import { escapeHtml, normalizeAr } from "./src/lib/text.js";
 
 const R=(cat,text,src,link,linkLabel)=>({cat,text,src,link,linkLabel});
 
@@ -270,9 +271,9 @@ async function render(){
     let grand=0;
     let truncated=false;
     try{
-      const res=await search(q,{limit:40,type:activeType||null});
+      const res=await searchAll(q,{limit:40, category:activeType||null});
       if(mine!==seq) return;
-      hits=res.results; grand=res.total; truncated=Boolean(res.more);
+      hits=res.results; grand=res.total; truncated=hits.length>=40;
     }catch(e){
       if(mine!==seq) return;
     }

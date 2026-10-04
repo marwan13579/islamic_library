@@ -11,7 +11,7 @@ fs.rmSync(OUTPUT, { recursive: true, force: true });
 fs.mkdirSync(OUTPUT, { recursive: true });
 
 for (const entry of fs.readdirSync(ROOT, { withFileTypes: true })) {
-  if (entry.isFile() && (ROOT_ASSET.test(entry.name) || entry.name === "_headers" || entry.name === "_redirects" || entry.name === "manifest.webmanifest")) {
+  if (entry.isFile() && (ROOT_ASSET.test(entry.name) || entry.name === "manifest.webmanifest")) {
     fs.copyFileSync(path.join(ROOT, entry.name), path.join(OUTPUT, entry.name));
   }
 }
@@ -36,14 +36,12 @@ if (missing.length) {
 /* ---------------------------------------------------------------------------
  * robots.txt و sitemap.xml
  *
- * المشروع يُنشر على ثلاث مضيئات (Cloudflare Pages · Vercel · Netlify) فاسم
- * النطاق يختلف بينها، ولا يصحّ أن نكتب نطاقًا واحدًا في الملف وتكون
- * البقية على sitemap خاطئة. فنولّدهما هنا من SITE_ORIGIN، والفصل
- * الافتراضي هو نطاق مشروع Cloudflare Pages — تحقّق منه بـ:
- * `wrangler pages project list` (الحقل "Project Domains").
- * ------------------------------------------------------------------------- */
+  * المشروع يُنشر على Vercel فقط، والنطاق ثابت إلا إذا
+  * تم تغييره عبر المتغيّر SITE_ORIGIN. القيمة الافتراضية
+  * نطاق مشروع Vercel (https://islamic-library-green.vercel.app).
+  * ------------------------------------------------------------------------- */
 
-const ORIGIN = (process.env.SITE_ORIGIN || "https://islamic-library-2mx.pages.dev").replace(/\/+$/, "");
+const ORIGIN = (process.env.SITE_ORIGIN || "https://islamic-library-green.vercel.app").replace(/\/+$/, "");
 
 const SITE_PAGES = [
   ["", "رفيق المسلم اليومي — الصلاة والورد وآية اليوم والأذكار"],
@@ -106,5 +104,5 @@ const robots = [
 fs.writeFileSync(path.join(OUTPUT, "sitemap.xml"), sitemap, "utf8");
 fs.writeFileSync(path.join(OUTPUT, "robots.txt"), robots, "utf8");
 
-console.log(`Prepared Cloudflare Pages output in dist/ (${missing.length === 0 ? "service-worker assets verified" : "failed"}).`);
+console.log(`Prepared Vercel output in dist/ (${missing.length === 0 ? "service-worker assets verified" : "failed"}).`);
 console.log(`Sitemap and robots.txt written for ${ORIGIN} (${SITE_PAGES.length} pages). Override with SITE_ORIGIN.`);

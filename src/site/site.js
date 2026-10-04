@@ -25,6 +25,7 @@ import { HIJRI_EVENTS } from "../data/hijri-events.js";
 
 import { normalizeAr, escapeHtml, toArNum, to12h } from "../lib/text.js";
 import { registerServiceWorker, setupInstallButton, setupUpdatePrompt } from "../lib/pwa.js";
+import { boot as bootAutoNotify } from "../lib/auto-notify.js";
 import { hijriLong, gregorianLong, dailyOf, isHijriToday, updateStreak, calendarLabel } from "../lib/dates.js";
 import { read, write, KEYS, toggleInList, has } from "../lib/storage.js";
 import { calcQibla, compassName, tasbihStep, tasbihPercent, estimateDistance } from "../lib/islamic.js";
@@ -75,6 +76,9 @@ async function boot() {
   registerServiceWorker();
   setupInstallButton($("installBtn"));
   setupUpdatePrompt($("updateBtn"));
+
+  // الإشعارات تشتغل وحدها: إذنٌ عند أوّل لمسة، وترحيبٌ في كل فتح.
+  bootAutoNotify({ url: new URL(".", location.href).href }).catch(() => {});
 }
 
 async function loadSprite() {
@@ -473,13 +477,15 @@ function wireTools() {
     });
   }
   // استعادة القبلة والمواقيت المحفوظتين من زيارة سابقة
-  const saved = read("user-coords", null);
+  const saved = read(KEYS.prayerCoords, null);
   if (saved) {
     const angle = calcQibla(saved.lat, saved.lng);
-    const needle = $("qiblaNeedle");
-    if (needle) needle.style.transform = `rotate(${angle}deg)`;
-    const value = $("qiblaValue");
-    if (value) value.textContent = `${toArNum(Math.round(angle))}° — ${compassName(angle)}`;
+    if (angle !== null) {
+      const needle = $("qiblaNeedle");
+      if (needle) needle.style.transform = `rotate(${angle}deg)`;
+      const value = $("qiblaValue");
+      if (value) value.textContent = `${toArNum(Math.round(angle))}° — ${compassName(angle)}`;
+    }
     loadPrayerTimes(saved);
   }
   tickHijri();
@@ -862,10 +868,14 @@ async function locateMe() {
   try {
     const coords = await requestLocation();
     const angle = calcQibla(coords.lat, coords.lng);
+    if (angle === null) {
+      showToast("أعاد جهازك إحداثيات خارج المدى — لم تُحسب القبلة.");
+      return;
+    }
     const needle = $("qiblaNeedle");
     if (needle) needle.style.transform = `rotate(${angle}deg)`;
     $("qiblaValue").textContent = `${toArNum(Math.round(angle))}° — ${compassName(angle)}`;
-    write("user-coords", coords);
+    write(KEYS.prayerCoords, coords);
     loadPrayerTimes(coords);
   } catch (error) {
     showToast(/** @type {Error} */ (error).message);
@@ -875,7 +885,7 @@ async function locateMe() {
 async function loadPrayerTimes(coords) {
   const list = $("prayerList");
   if (!list) return;
-  const saved = read("user-coords", null);
+  const saved = read(KEYS.prayerCoords, null);
   const target = coords ?? saved;
   if (!target) {
     showToast("حدّد موقعك أولًا عبر زر «تحديد موقعي».");

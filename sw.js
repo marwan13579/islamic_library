@@ -8,12 +8,13 @@
  *      أو صفحة offline.html.
  *   4) طلبات خارج النطاق (مصادر خارجية: المصحف، المواقيت، الإذاعة):
  *      الشبكة فقط — لا تُخزَّن ردود القرآن دائمًا (مسؤولية قانونية/شرعية).
- *   5) الإشعارات تُعرض من هنا لتعمل عند إغلاق الصفحة (أندرويد).
+ *   5) الإشعارات تُعرض من هنا لا من الصفحة: فيعمل ترحيبُ كل فتح
+ *      وأذانُ وقته بعد إغلاق الصفحة، وفيعمّ كل صفحات الموقع.
  *
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v39";
+const CACHE_VERSION = "islamic-library-v41";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -40,6 +41,7 @@ const SHELL = [
   "./icons/favicon-32.png",
   "./icons/favicon-16.png",
   "./storage-fallback.js",
+  "./notify-boot.js",
   "./hub-return.js",
   "./calculations.js",
   "./backup-core.js",
@@ -49,6 +51,8 @@ const SHELL = [
   "./daily-companion.js",
   "./daily-home.js",
   "./daily-companion.css",
+  // دليل المكتبة: منطق الجولة التعريفية وتنسيقها.
+  "./intro-tour.js", "./intro-tour.css",
   "./fonts.css",
   "./vendor/quran-arabic.json",
   "./vendor/fontawesome/css/all.min.css",
@@ -91,6 +95,8 @@ const SHELL = [
   "./islamic-videos/index.html", "./islamic-videos/favorites/index.html", "./islamic-videos/videos.css",
   "./src/data/islamic-channels.js", "./src/lib/video-library.js", "./src/lib/video-library-ui.js",
   "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
+  "./src/lib/search-aliases.js", "./src/lib/search-registry.js", "./src/lib/unified-search.js",
+  "./src/lib/search-content.js", "./src/components/search-modal.js",
   "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
   // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.
   "./content/manifest.json",
@@ -103,6 +109,7 @@ const SHELL = [
   "./src/lib/text.js", "./src/lib/storage.js", "./src/lib/dates.js", "./src/lib/islamic.js",
   "./src/lib/api.js", "./src/lib/share.js", "./src/lib/b64.js", "./src/lib/idb.js",
   "./src/lib/pwa.js",
+  "./src/lib/auto-notify.js",
   "./src/components/theme.js", "./src/components/modal.js", "./src/components/toast.js",
   "./src/components/blocks.js", "./src/components/certificate.js", "./src/components/quiz.js",
   "./src/components/reader-tools.js",
@@ -134,6 +141,9 @@ const absolute = (url) => new URL(url, SCOPE).href;
 
 /* أقصى مدّة يقبلها setTimeout: أسبوع واحد، وما فوقها يُجدول تكرارًا. */
 const MAX_TIMEOUT = 2147483647;
+
+/* نافذة التعويض: أذانٌ فات من هذه المدّة يُعلن عند الاستيقاظ، وما فوقها يُهمَل. */
+const CATCHUP_GRACE = 20 * 60 * 1000;
 
 /* ------------------------------ التثبيت ------------------------------ */
 
@@ -175,6 +185,10 @@ self.addEventListener("message", (event) => {
   if (event.data && event.data.type === "notify") {
     event.waitUntil(showNotification(event.data));
   }
+  if (event.data && event.data.type === "greet") {
+    // الصفحة تطلب الترحيب في أوّل زيارة لا يتحكّم فيها العامل بعد.
+    event.waitUntil(greetOnOpen(event.data.url).catch(() => false));
+  }
   if (event.data && event.data.type === "schedule-athan") {
     /* waitUntil من الحدث لا من النطاق: self.waitUntil غير موجودة أصلًا،
        والنداء منها يرمي TypeError داخل العامل. */
@@ -201,51 +215,108 @@ const ATHAN_TIMERS = new Map();
 /** مخزن الجدول الصامد: العامل يُقتل بعد خمول قصير فيفقد ذاكرته. */
 const SCHEDULE_STORE = "athan-schedule";
 
-/** @returns {Promise<import("./sw.js").AthanEntry[]>} الجدول المحفوظ */
-async function readStoredSchedule() {
+/** مخزن حالة الإشعارات: متى رحّبنا، وأي صلاة أعلنّاها، فلا يتكرّر شيء. */
+const STATE_STORE = "notify-state";
+
+/** رابطا المخزنين داخل نطاقه. */
+const SCHEDULE_URL = new URL("./__athan", SCOPE).href;
+const STATE_URL = new URL("./__notify-state", SCOPE).href;
+
+/**
+ * @typedef {{key: string, name: string, at: number, href: string}} AthanEntry
+ */
+
+/** @returns {Promise<any>} ما في مخزن، أو null إن لم يوجد أو تعذّر. */
+async function readStore(store, url) {
   try {
-    const cache = await caches.open(SCHEDULE_STORE);
-    const response = await cache.match(new URL("./__athan", SCOPE).href);
-    if (!response) return [];
-    const data = await response.json();
-    return Array.isArray(data) ? data : [];
+    const cache = await caches.open(store);
+    const response = await cache.match(url);
+    return response ? await response.json() : null;
   } catch {
-    return [];
+    return null;
   }
 }
 
-/** @param {{key: string, name: string, at: number, href: string}[]} schedule */
-async function writeStoredSchedule(schedule) {
+/** @param {string} url @param {any} data */
+async function writeStore(store, url, data) {
   try {
-    const cache = await caches.open(SCHEDULE_STORE);
-    await cache.put(
-      new URL("./__athan", SCOPE).href,
-      new Response(JSON.stringify(schedule), { headers: { "content-type": "application/json" } }),
-    );
+    const cache = await caches.open(store);
+    await cache.put(url, new Response(JSON.stringify(data), { headers: { "content-type": "application/json" } }));
   } catch {
-    /* التخزين ممتلئ أو محظور: الجدول يبقى في الذاكرة لهذه الجلسة */
+    /* التخزين ممتلئ أو محظور: يبقى في الذاكرة لهذه الجلسة */
   }
+}
+
+/** @returns {Promise<AthanEntry[]>} الجدول المحفوظ */
+async function readStoredSchedule() {
+  const data = await readStore(SCHEDULE_STORE, SCHEDULE_URL);
+  return Array.isArray(data) ? data : [];
+}
+
+/** @param {AthanEntry[]} schedule */
+async function writeStoredSchedule(schedule) {
+  await writeStore(SCHEDULE_STORE, SCHEDULE_URL, schedule);
+}
+
+/* ------------------------------ حالة الإشعارات ------------------------------ */
+
+/** @typedef {{ greetAt: number, announced: Record<string, number> }} NotifyState */
+
+/** @type {Promise<NotifyState> | null} تُقرأ مرّة ثم يبقى في الذاكرة */
+let statePromise = null;
+
+/** @type {Promise<any>} طابور التعديلات: تعديلان متزامنان لا يضيع أحدهما */
+let stateQueue = Promise.resolve();
+
+/** @returns {Promise<NotifyState>} */
+function readState() {
+  statePromise ||= readStore(STATE_STORE, STATE_URL).then((data) => ({
+    greetAt: Number(data && data.greetAt) || 0,
+    announced: data && data.announced && typeof data.announced === "object" ? data.announced : {},
+  }));
+  return statePromise;
+}
+
+/**
+ * يغيّر حالة الإشعارات ويحفظها.
+ * @param {(current: NotifyState) => NotifyState} change
+ * @returns {Promise<NotifyState>}
+ */
+function patchState(change) {
+  const next = stateQueue.then(async () => {
+    const current = await readState();
+    const value = change(current);
+    statePromise = Promise.resolve(value);
+    await writeStore(STATE_STORE, STATE_URL, value);
+    return value;
+  });
+  stateQueue = next.catch(() => {});
+  return next;
 }
 
 /**
  * يجدول إشعارًا لكل صلاة في اليوم، ويلغي ما سبق جدولته.
- * @param {{key: string, name: string, at: number, href: string}[]} schedule
+ * @param {AthanEntry[]} schedule
  * @returns {Promise<number>} كم مؤقّتًا قائمًا
  */
 async function scheduleAthan(schedule) {
   await clearTimers();
   await writeStoredSchedule(schedule);
-  return armAthan(schedule);
+  const armed = armAthan(schedule);
+  await catchUpAthan(schedule);
+  return armed;
 }
 
 /**
  * يشدّ المؤقّتات من جدول، متجاوزًا الأوقات التي فاتت.
- * @param {{key: string, name: string, at: number, href: string}[]} schedule
- * @returns {Promise<number>} كم مؤقّتًا قائمًا
+ * @param {AthanEntry[]} schedule
+ * @returns {number} كم مؤقّتًا قائمًا
  */
-async function armAthan(schedule) {
+function armAthan(schedule) {
   for (const entry of schedule) {
-    const delay = entry.at - Date.now();
+    const at = Number(entry && entry.at);
+    if (!Number.isFinite(at)) continue;
+    const delay = at - Date.now();
     if (delay <= 0 || delay > MAX_TIMEOUT) continue;
     ATHAN_TIMERS.set(
       entry.key,
@@ -253,13 +324,30 @@ async function armAthan(schedule) {
         ATHAN_TIMERS.delete(entry.key);
         /* الجهاز قد ينام فلا يُطلق المؤقّت في موعده، فيستيقظ متأخرًا.
            نفحص الفارق: أذان فات بيوم لا يُنبَه، وأذان تأخّر دقيقة يُنبَه. */
-        const late = Date.now() - entry.at;
+        const late = Date.now() - at;
         if (late > 10 * 60 * 1000) return;
-        announceAthan(entry).catch(() => {});
+        fireAthan(entry).catch(() => {});
       }, delay),
     );
   }
   return ATHAN_TIMERS.size;
+}
+
+/**
+ * يؤخّر مواعيد اليوم الغد: لولاه لسقط الجدول بعد آخر صلاة، وبقي
+ * الموقع مغلقًا أيامًا فلا أذان ولا تنبيه. وما هو قادم يُبقى على حاله.
+ * @param {AthanEntry[]} schedule
+ * @returns {AthanEntry[]} جدولٌ جديد، وما لم يتغيّر فيه يبقى نفسه
+ */
+function rollover(schedule) {
+  const now = Date.now();
+  return schedule.map((entry) => {
+    const at = Number(entry && entry.at);
+    if (!Number.isFinite(at) || at > now) return entry;
+    const next = new Date(at);
+    next.setDate(next.getDate() + 1);
+    return { ...entry, at: next.getTime() };
+  });
 }
 
 /** يفرّغ المؤقّتات من الذاكرة فقط، بلا مساس بالمحفوظ. */
@@ -274,12 +362,52 @@ async function cancelAthan() {
   await writeStoredSchedule([]);
 }
 
-/* العامل يُقتل ويُبعث: نُعيد شدّ المؤقّتات من المحفوظ قبل أن ينام. */
-self.addEventListener("activate", (event) => {
-  event.waitUntil(
-    readStoredSchedule().then((schedule) => armAthan(schedule)).catch(() => {}),
-  );
-});
+/**
+ * يُعلن أذانًا فات ونام الجهاز أو أُغلق الموقع: فإن استيقظ العامل
+ * والصلاة ما زالت في نافذتها يُنبَه عنها، ولا يُعلَن إلا مرّة واحدة.
+ * @param {AthanEntry[]} schedule
+ * @returns {Promise<boolean>} هل أُعلن أذانٌ فات؟
+ */
+async function catchUpAthan(schedule) {
+  const now = Date.now();
+  const pending = [];
+  const announced = (await readState()).announced;
+  for (const entry of schedule) {
+    const at = Number(entry && entry.at);
+    if (!Number.isFinite(at) || at > now || now - at > CATCHUP_GRACE) continue;
+    if (Number(announced[entry.key]) === at) continue;
+    pending.push(entry);
+  }
+  for (const entry of pending) await fireAthan(entry);
+  return pending.length > 0;
+}
+
+/**
+ * يُبقي الجدول قائمًا ما دام الموقع مغلقًا: يؤخّر ما فات، ويشدّ
+ * المؤقّتات على الباقي، ويُعلن ما فات وهو في نافذته.
+ * @param {AthanEntry[]} schedule
+ * @returns {Promise<number>} كم مؤقّتًا قائمًا
+ */
+async function keepScheduleFresh(schedule) {
+  // الإلغاء 먼저: كل فتحٍ يُعيد الجدولة، لولا الإلغاء لبقي المؤقّت
+  // القديم حيًّا ينبّه عن الصلاة مرّتين.
+  await clearTimers();
+  const rolled = rollover(schedule);
+  if (rolled.some((entry, index) => entry !== schedule[index])) await writeStoredSchedule(rolled);
+  const armed = armAthan(rolled);
+  await catchUpAthan(rolled);
+  return armed;
+}
+
+/**
+ * يُعلن الأذان ويكتب في الحالة أنه أعلن، لئلّا يُعلَن مرّتين.
+ * @param {AthanEntry} entry
+ * @returns {Promise<void>}
+ */
+async function fireAthan(entry) {
+  await announceAthan(entry);
+  await patchState((state) => ({ ...state, announced: { ...state.announced, [entry.key]: entry.at } }));
+}
 
 /**
  * يُعلن الأذان: إشعار لكل الأصوات، ورسالة للصفحة المفتوحة فتشغّل الصوت.
@@ -298,10 +426,79 @@ async function announceAthan(entry) {
   }
 }
 
+/* العامل يُقتل ويُبعث: نُعيد شدّ المؤقّتات من المحفوظ قبل أن ينام. */
+self.addEventListener("activate", (event) => {
+  event.waitUntil(
+    readStoredSchedule().then((schedule) => keepScheduleFresh(schedule)).catch(() => {}),
+  );
+});
+
+/* استيقاظٌ مجدول بلا فتحٍ للصفحة: يُعلَن ما فات ولم يُعلَن. */
+self.addEventListener("periodicsync", (event) => {
+  if (event.tag !== "athan-check") return;
+  event.waitUntil(readStoredSchedule().then((schedule) => catchUpAthan(schedule)).catch(() => {}));
+});
+
 /* ------------------------------ الإشعارات ------------------------------ */
 
+/** أقل فاصل بين ترحيبَين: فتحان متجاوران لا يصنعان إشعارين. */
+const GREET_DEDUPE = 10 * 1000;
+
+/** نقرُ المستخدم على الإشعار فتحَ صفحة: لا نرحّب به على هذا الفتح. */
+const CLICK_GRACE = 60 * 1000;
+
+/** @type {number} متى فتح آخر إشعار صفحةً */
+let openedFromClickAt = 0;
+
+/**
+ * ترحيبٌ يليق بوقت اليوم — نصوصُ الصفحة نفسها، فنفس اللغة في كل مكان.
+ * @param {number} hour
+ * @returns {string}
+ */
+function greetingBody(hour) {
+  if (hour < 4) return "ليلة مباركة — طلبة الليل هم السادة أولياء الله.";
+  if (hour < 11) return "صباح الخير — وردك اليومي وذكر الصباح في انتظارك.";
+  if (hour < 15) return "السلام عليكم — لا تنسَ صلاة الضحى والاستغفار.";
+  if (hour < 19) return "أهلًا بك — آية اليوم وذكر المساء بانتظارك.";
+  if (hour < 23) return "مساء الخير — الأذكار ووردك الليلي في انتظارك.";
+  return "ليلة مباركة — لا تهجر القرآن.";
+}
+
+/**
+ * ترحيبٌ عند كل فتح للموقع: يفتحه المستخدم فيخرج له الإشعار وحده،
+ * ولو كانت الصفحة نائمة. وعرضُه من هنا فيعمّ كل الصفحات — حتى التي
+ * لا تحمل منها سطرًا واحدًا — ويعمل بعد إغفائها.
+ * @param {string} [url] الصفحة التي فُتحت، فيفتحها النقر عليها
+ * @returns {Promise<boolean>} هل عُرض الترحيب؟
+ */
+async function greetOnOpen(url) {
+  const now = Date.now();
+  // نقرُه على الإشعار فتحُ للموقع، والجواب معروف: لا ترحيبًا ثانيًا.
+  if (now - openedFromClickAt < CLICK_GRACE) return false;
+  /* الفاصل يُحسم في الطابور لا بعده: ففتحان في اللحظة نفسها لا
+     يتساويان في الوقت فيمرّان كلاهما. */
+  let allowed = false;
+  await patchState((current) => {
+    if (current.greetAt && now - current.greetAt < GREET_DEDUPE) return current;
+    allowed = true;
+    return { ...current, greetAt: now };
+  });
+  if (!allowed) return false;
+  return showNotification({
+    title: "🕌 المكتبة الإسلامية",
+    body: greetingBody(new Date(now).getHours()),
+    tag: "noor-greet",
+    url: url || absolute("index.html"),
+  });
+}
+
+/**
+ * @param {{title: string, body: string, tag?: string, url?: string}} payload
+ * @returns {Promise<boolean>} هل عُرض الإشعار؟ فرفضُ الإذن لا يُعطِّل شيئًا.
+ */
 async function showNotification({ title, body, tag, url }) {
-  if (self.registration.showNotification) {
+  if (!self.registration.showNotification) return false;
+  try {
     await self.registration.showNotification(title, {
       body,
       tag,
@@ -313,12 +510,17 @@ async function showNotification({ title, body, tag, url }) {
       requireInteraction: false,
       data: { url: absolute(url || "src/app/app.html#tab/prayer") },
     });
+    return true;
+  } catch {
+    // الإذن لم يُمنح بعد: الصفحة لا تتعطّل، وتُجرّب في فتحٍ قادم.
+    return false;
   }
 }
 
 self.addEventListener("notificationclick", (event) => {
   event.notification.close();
   const target = (event.notification.data && event.notification.data.url) || absolute("src/app/app.html#tab/prayer");
+  openedFromClickAt = Date.now();
   event.waitUntil(
     self.clients.matchAll({ type: "window", includeUncontrolled: true }).then((clients) => {
       const open = clients.find((client) => "focus" in client);
@@ -351,6 +553,12 @@ self.addEventListener("fetch", (event) => {
 
   // 2) التنقّل بين الصفحات: شبكة أولًا ثم الكاش ثم صفحة عدم الاتصال.
   if (request.mode === "navigate") {
+    /* فتحُ صفحةٍ هو فتحُ الموقع: من هنا يخرج الترحيب في كل مرة، بلا
+       أن تحمل الصفحات سطرًا واحدًا، ويبقى بعد إغفاء الصفحة. */
+    event.waitUntil(greetOnOpen(url.href).catch(() => false));
+    /* ومن استيقظ على جدولٍ قديم (الموقع مغلقٌ منذ يوم) جدّده قبل أن
+       يفوته أذان: يؤخّر ما فات، ويعلَن ما فات في نافذته. */
+    event.waitUntil(readStoredSchedule().then((schedule) => keepScheduleFresh(schedule)).catch(() => 0));
     event.respondWith(
       fetch(request)
         .then((response) => {

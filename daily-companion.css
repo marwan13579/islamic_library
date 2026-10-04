@@ -517,6 +517,23 @@
 
 .dc-share-cta p { margin: 0 0 10px; font-size: .86rem; color: var(--ink-soft); }
 
+.dc-share-row {
+  justify-content: center;
+  margin-top: 0;
+}
+
+.dc-share-row .dc-btn {
+  background: var(--paper);
+  justify-content: center;
+}
+
+.dc-share-row .dc-btn:hover { background: var(--paper-2); }
+
+@media (max-width: 480px) {
+  .dc-share-row .dc-btn { flex: 1 1 44%; }
+  .dc-share-row .dc-btn:last-child { flex-basis: 100%; }
+}
+
 /* ============ ١٢) الخلفية الناعمة ============ */
 
 .dc-veil {

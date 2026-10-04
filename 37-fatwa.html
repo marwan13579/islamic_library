@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>الفتاوى · المكتبة الإسلامية</title>
@@ -52,5 +53,9 @@
   برخصة GPL-3.0، من كتب أهل العلم. راجع المصدر لكليّة النصّ.
 </footer>
 
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
+</script>
 </body>
 </html>

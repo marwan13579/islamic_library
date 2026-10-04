@@ -216,6 +216,8 @@ export const KEYS = {
   hubNotes: "hub-notes",
   hubLastUsed: "hub-lastused",
   hubRamadanLoc: "hub-ramadan-loc",
+  hubIntroSeen: "hub-intro-seen",
+  hubIntroStep: "hub-intro-step",
   nourProgress: "nour-progress",
   /* مكتبة الفيديو الإسلامية: المفضلة وآخر ما شوهد — لا غير */
   videoFavorites: "video_favorites",
@@ -326,6 +328,8 @@ export const IMPORT_TYPES = {
   "hub-notes": "object",
   "hub-lastused": "object",
   "hub-ramadan-loc": "string",
+  "hub-intro-seen": "string",
+  "hub-intro-step": "string",
   athan_timings: "object",
   athan_coords: "object",
   athan_method: "number",

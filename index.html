@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <script src="backup-core.js"></script>
 <script src="daily-content.js"></script>
@@ -42,7 +43,9 @@
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="daily-companion.css">
+<link rel="stylesheet" href="intro-tour.css">
 <script src="noor-companion.js" defer></script>
+<script src="intro-tour.js" defer></script>
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -95,6 +98,8 @@
   }
 
   .langbar{display:flex;justify-content:center;margin-top:14px;position:relative}
+  .introbar{display:flex;justify-content:center;margin-top:10px;position:relative}
+  .introbar .sortbtn{font-weight:700;color:var(--gold);border-color:var(--gold-soft)}
   .langbtn{font-family:"Cairo";font-weight:600;font-size:.8rem;background:var(--card);border:1px solid var(--line);
     color:var(--ink);padding:7px 16px;border-radius:999px;cursor:pointer;display:flex;align-items:center;gap:6px}
   .langmenu{position:absolute;top:calc(100% + 6px);background:var(--card);border:1px solid var(--line);
@@ -269,10 +274,13 @@ header{
     <button class="sortbtn" id="installBtn" type="button">📲 تثبيت التطبيق</button>
   </div>
   <p id="siteSubtitle">كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.</p>
-  <input class="search" id="search" type="search" placeholder="ابحث عن أداة..." aria-label="ابحث عن أداة">
+  <input class="search" id="search" type="search" placeholder="ماذا تبحث عنه أو ماذا تحتاج؟" aria-label="البحث الشامل في الموقع">
   <div class="langbar">
     <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
     <div class="langmenu" id="langMenu"></div>
+  </div>
+  <div class="introbar">
+    <button class="sortbtn" id="introBtn" type="button">🧭 دليل المكتبة</button>
   </div>
   <div class="sortrow">
     <button class="sortbtn" id="sortDefault" type="button" aria-pressed="true">الترتيب الافتراضي</button>
@@ -342,8 +350,17 @@ const I18N = {
     openAll:"فتح الكل",
     booksNote:"هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
     langLabel:"العربية",
+    introBtn:"🧭 دليل المكتبة",
     partialNote:"محتوى الأدوات نفسها بالعربية الأصلية للحفاظ على دقة النصوص الدينية.",
     cats:{all:"الكل", dhikr:"أذكار وأدعية", quran:"القرآن والحديث", learn:"تعلّم", stories:"قصص", calc:"حاسبات", books:"كتب وصوتيات"},
+    catBlurb:{
+      dhikr:"أذكارٌ وأدعية وأوقات الإجابة",
+      quran:"المصحف والحديث وتلاوة القرآن",
+      learn:"دروسٌ واختباراتٌ وحجٌّ وآداب",
+      stories:"قصصُ الأنبياء والسيرة وآداب الأطفال",
+      calc:"مواقيت الصلاة والقبلة والزكاة والتقويم",
+      books:"كتبٌ وفتاوى وتفسيرٌ ومكتبة فيديو"
+    },
     tools:{} // Arabic names/descs already in TOOLS array itself; empty = use original
   },
   en: {
@@ -364,8 +381,17 @@ const I18N = {
     openAll:"Open all",
     booksNote:"These are links to your own files on Google Drive — \"Open all\" opens multiple tabs, and your browser may ask permission to allow pop-ups.",
     langLabel:"English",
+    introBtn:"🧭 Site guide",
     partialNote:"The content inside each tool stays in its original Arabic, to keep the religious texts accurate.",
     cats:{all:"All", dhikr:"Adhkar & Duas", quran:"Qur'an & Hadith", learn:"Learn", stories:"Stories", calc:"Calculators", books:"Books & Audio"},
+    catBlurb:{
+      dhikr:"Adhkar, duas, and blessed times",
+      quran:"The mushaf, hadith, and recitation",
+      learn:"Lessons, quizzes, Hajj, and manners",
+      stories:"Prophets' stories, the seerah, and children's stories",
+      calc:"Prayer times, qibla, zakat, and the calendar",
+      books:"Books, fatwas, tafsir, and a video library"
+    },
     tools:{
       academy:["Islamic Learning Academy","Lessons, interactive quizzes, and completion certificates"],
       groupkhatma:["Group Qur'an Completion","Distribute juz among participants and track progress together"],
@@ -450,6 +476,7 @@ function applyLanguage(){
   document.getElementById("siteFooter").textContent = dict.footer;
   document.getElementById("catalogLabel").textContent = dict.catalogLink;
   document.getElementById("langBtnLabel").textContent = dict.langLabel;
+  document.getElementById("introBtn").textContent = dict.introBtn;
   try{ localStorage.setItem("hub-lang", currentLang); }catch(e){}
   if(typeof renderCatsNav === "function") renderCatsNav();
   renderAll();
@@ -458,6 +485,7 @@ function applyLanguage(){
 function tName(t){ const dict=I18N[currentLang]; return (dict.tools[t.id] && dict.tools[t.id][0]) || t.name; }
 function tDesc(t){ const dict=I18N[currentLang]; return (dict.tools[t.id] && dict.tools[t.id][1]) || t.desc; }
 function tCat(id){ const dict=I18N[currentLang]; return (dict.cats && dict.cats[id]) || id; }
+function tCatBlurb(id){ const dict=I18N[currentLang]; return (dict.catBlurb && dict.catBlurb[id]) || ""; }
 
 const langMenu=document.getElementById("langMenu");
 LANGS.forEach(([code,label])=>{
@@ -561,7 +589,7 @@ const TOOLS = [
   {id:"hijri", emoji:"🌙", name:"التقويم الهجري", desc:"تحويل هجري ↔ ميلادي، المناسبات، والصيام المستحب", cat:"calc",
    url:"28-hijri.html"},
 
-  {id:"qibla", emoji:"🧭", name:"اتجاه القبلة", desc:"احسب زاوية القبلة من موقعك", cat:"calc",
+  {id:"qibla", emoji:"🧭", name:"اتجاه القبلة", desc:"زاوية القبلة من موقعك، وبوصلة حيّة تصحّح انحراف الشمال المغناطيسي", cat:"calc",
    url:"22-qibla.html"},
 
   {id:"sitesdir", emoji:"🗂️", name:"دليل المواقع الإسلامية", desc:"١٨ موقع مرجعي بشرح أقسام كل موقع", cat:"books",
@@ -749,6 +777,9 @@ function renderSections(){
     const block=document.createElement("div");
     block.className="section-block";
     block.id="sec-"+catId;
+    /* يقرأ دليلُ المكتبة هذه البيانات ليعرّف بالأقسام بلا تكرارها فيه. */
+    block.setAttribute("data-section",catId);
+    block.setAttribute("data-blurb",tCatBlurb(catId));
     const h=document.createElement("h2");
     h.className="h";
     h.innerHTML = tCat(catId)+' <span class="section-count">'+list.length+'</span>';
@@ -801,6 +832,7 @@ function renderCatsNav(){
   CATS.filter(([id])=>id!=="all").forEach(([id])=>{
     const b=document.createElement("button");
     b.className="cat"; b.type="button"; b.textContent=tCat(id);
+    b.dataset.cat=id;
     b.addEventListener("click",()=>{
       const target=document.getElementById("sec-"+id);
       if(target) target.scrollIntoView({behavior:"smooth", block:"start"});
@@ -813,6 +845,9 @@ renderCatsNav();
 document.getElementById("search").addEventListener("input",e=>{
   query = e.target.value.trim();
   renderAll();
+});
+document.getElementById("search").addEventListener("focus",()=>{
+  if(typeof openSearchModal === "function") openSearchModal();
 });
 
 applyLanguage();
@@ -980,6 +1015,8 @@ document.getElementById("backupFile").addEventListener("change",async event=>{
 </script>
 
 <script src="daily-home.js" defer></script>
+<script>/* عامل الخدمة: يخزّن الصدفة فيعمل الموقع بلا إنترنت ويفتح الدليل بلا شبكة. */
+if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script>
 <script type="module">
 /* الإشعارات تشتغل وحدها: تُطلَب عند أوّل لمسة من المستخدم، لا بزرّ،
    ويُرحَّب بإشعار في كل فتح، ويتجدّد جدول الأذان لدى المتصفّح. */
@@ -987,7 +1024,188 @@ import("./src/lib/auto-notify.js")
   .then(function (m) { return m.boot({ url: "./" }); })
   .catch(function () {});
 </script>
-<script>if("serviceWorker" in navigator){navigator.serviceWorker.register("./sw.js").catch(function(){});}</script>
+<script type="module">
+  import { createSearchModal, addToHistory } from "./src/components/search-modal.js";
+  import { registerArraySource, registerDataSources } from "./src/lib/search-content.js";
+  import { HADITHS } from "./src/data/hadiths.js";
+  import { ADHKAR, ADHKAR_KEYS } from "./src/data/adhkar.js";
+  import { DUAS, DUAS_KEYS } from "./src/data/duas.js";
+  import { SCHOLARS } from "./src/data/scholars.js";
+  import { PROPHETS } from "./src/data/prophets.js";
+  import { NAMES99 } from "./src/data/names99.js";
+  import { SEERAH } from "./src/data/seerah.js";
+  import { LESSONS } from "./src/data/lessons.js";
+  import { MANHAJ_LESSONS } from "./src/data/manhaj-lessons.js";
+
+  // Register Hadiths
+  registerArraySource(
+    "hadiths", "hadith", "حديث", "📕", "الأحاديث", "الأحاديث النبوية الشريفة",
+    HADITHS,
+    (h) => h.title,
+    (h) => `${h.text} ${h.ref || ""}`,
+    (h) => String(h.id),
+    (h) => `27-hadith.html#hadith-${h.id}`
+  );
+
+  // Register Adhkar
+  registerArraySource(
+    "adhkar", "dhikr", "أذكار", "🤲", "الأذكار", "الأذكار والأدعية",
+    ADHKAR_KEYS.flatMap(key => ADHKAR[key]?.items?.map((item, idx) => ({
+      ...item,
+      category: ADHKAR[key].title,
+      id: `${key}-${idx}`
+    })) || []),
+    (item) => item.txt || "",
+    (item) => item.src || "",
+    (item) => item.id || String(Math.random()),
+    (item) => "25-azkar-shamila.html"
+  );
+
+  // Register Duas
+  registerArraySource(
+    "duas", "dua", "أدعية", "🤲", "الأدعية", "أدعية المناسبات",
+    DUAS_KEYS.flatMap(key => DUAS[key]?.items?.map((item, idx) => ({
+      ...item,
+      category: DUAS[key].title,
+      id: `${key}-${idx}`
+    })) || []),
+    (item) => item.txt || "",
+    (item) => item.src || "",
+    (item) => item.id || String(Math.random()),
+    (item) => "6-munasabat.html"
+  );
+
+  // Register Scholars
+  registerArraySource(
+    "scholars", "scholar", "علماء", "👤", "أعلام السلف", "علماء وأعلام السلف",
+    SCHOLARS,
+    (s) => s.name,
+    (s) => `${s.bio} ${s.tag || ""} ${s.era || ""}`,
+    (s) => String(s.name),
+    (s) => "src/site/noor.html#scholars"
+  );
+
+  // Register Prophets
+  registerArraySource(
+    "prophets", "prophet", "قصص", "🌟", "قصص الأنبياء", "قصص الأنبياء والرسل",
+    PROPHETS,
+    (p) => p.title,
+    (p) => `${p.desc} ${p.story || ""}`,
+    (p) => p.title,
+    (p) => "8-qasas-anbiya.html"
+  );
+
+  // Register Names of Allah
+  registerArraySource(
+    "names", "name", "أسماء الله", "ﷲ", "أسماء الله الحسنى", "الأسماء الحسنى ومعانيها",
+    NAMES99,
+    (n) => n.n,
+    (n) => n.m,
+    (n) => n.n,
+    (n) => "5-asmaulhusna.html"
+  );
+
+  // Register Seerah
+  registerArraySource(
+    "seerah", "seerah", "سيرة", "🕌", "السيرة النبوية", "محطات من حياة النبي ﷺ",
+    SEERAH,
+    (s) => s.title,
+    (s) => `${s.desc} ${s.year || ""}`,
+    (s) => s.title,
+    (s) => "9-seerah.html"
+  );
+
+  // Register Lessons
+  registerArraySource(
+    "lessons", "lesson", "تعليم", "📚", "الدروس الفقهية", "دروس فقهية وتعليمية",
+    LESSONS,
+    (l) => l.title,
+    (l) => `${l.desc || ""} ${l.cat || ""}`,
+    (l) => l.id,
+    (l) => `src/site/noor.html#lesson/${l.id}`
+  );
+
+  // Register Manhaj Lessons
+  registerArraySource(
+    "manhaj", "lesson", "منهج", "📖", "منهج سلف الأمة", "دروس منهجية",
+    MANHAJ_LESSONS,
+    (l) => l.title,
+    (l) => `${l.desc || ""} ${l.cat || ""}`,
+    (l) => l.id,
+    (l) => `src/site/noor.html#lesson/${l.id}`
+  );
+
+  // Register Quran Surahs
+  registerArraySource(
+    "surahs", "quran", "قرآن", "📖", "سور القرآن", "سور القرآن الكريم",
+    [],
+    () => "",
+    () => "",
+    () => "",
+    () => "#"
+  );
+
+  // Load surahs asynchronously
+  try {
+    const surahs = await fetch("content/surahs.json").then(r => r.json()).catch(() => []);
+    const surahSource = registry.get("surahs");
+    if (surahSource && surahs.length) {
+      surahSource.search = async (query, normalizedQuery, options = {}) => {
+        const q = normalizedQuery || normalizeAr(query);
+        if (!q) return surahs.slice(0, 20).map(s => ({
+          id: `surah-${s.no}`,
+          type: "surah",
+          category: "قرآن",
+          icon: "📖",
+          title: s.name,
+          description: `${s.verses} آية`,
+          route: `30-quran-full.html#surah-${s.no}`,
+          score: 0,
+          matchType: "content",
+          sourceId: "surahs"
+        }));
+        
+        return surahs
+          .filter(s => {
+            const name = normalizeAr(s.name);
+            const nameEn = normalizeAr(s.nameEn || "");
+            return name.includes(q) || nameEn.includes(q) || String(s.no).includes(q);
+          })
+          .map(s => {
+            const name = normalizeAr(s.name);
+            let score = 0;
+            if (name === q) score = 100;
+            else if (name.startsWith(q)) score = 80;
+            else if (name.includes(q)) score = 60;
+            else score = 30;
+            
+            return {
+              id: `surah-${s.no}`,
+              type: "surah",
+              category: "قرآن",
+              icon: "📖",
+              title: s.name,
+              description: `سورة ${s.name} — ${s.verses} آية`,
+              route: `30-quran-full.html#surah-${s.no}`,
+              score,
+              matchType: name === q ? "exact" : "title",
+              sourceId: "surahs"
+            };
+          })
+          .sort((a, b) => b.score - a.score)
+          .slice(0, options.limit || 20);
+      };
+    }
+  } catch (e) {
+    // surahs not available
+  }
+
+  // Create and expose search modal
+  createSearchModal();
+  window.openSearchModal = openSearchModal;
+  window.closeSearchModal = closeSearchModal;
+  window.addToSearchHistory = addToHistory;
+</script>
 <script>
 (function(){
   var isStandalone = window.matchMedia && window.matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;

@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <!-- حارس التشغيل المحلي: يمنع ظهور الصفحة فارغة عند الفتح من القرص -->
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
@@ -705,6 +706,10 @@ function select(id){
 }
 
 loadLiveData().then(()=>{ if(dataMode==="live") renderAll(); });
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

@@ -618,13 +618,21 @@
     return parts.join("\n");
   }
 
-  function shareTargets(text) {
-    const link = absoluteUrl(currentPath());
+  /** يضيف الرابط للنصّ إن لم يكن فيه — فالمشاركة بلا رابط لا تنفع. */
+  function withLink(text, link) {
+    const body = String(text || "");
+    if (!link || body.includes(link)) return body;
+    return (body ? body + "\n" : "") + link;
+  }
+
+  function shareTargets(text, url) {
+    const link = absoluteUrl(url || currentPath());
+    const full = withLink(text, link);
     return {
-      whatsapp: "https://wa.me/?text=" + encodeURIComponent(text),
-      telegram: "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(text),
-      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link),
-      x: "https://twitter.com/intent/tweet?text=" + encodeURIComponent(text),
+      whatsapp: "https://wa.me/?text=" + encodeURIComponent(full),
+      telegram: "https://t.me/share/url?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(full),
+      facebook: "https://www.facebook.com/sharer/sharer.php?u=" + encodeURIComponent(link) + "&quote=" + encodeURIComponent(full),
+      x: "https://twitter.com/intent/tweet?url=" + encodeURIComponent(link) + "&text=" + encodeURIComponent(full),
     };
   }
 

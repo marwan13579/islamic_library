@@ -161,7 +161,7 @@ test("☐ البحث: الفهرس قائم وكل نوع نتيجة يوصل إ
 
   /* وأنواع البحث تغطّي ما في الفهرس. */
   const search = read("23-search.html");
-  assert.match(search, /from "\.\/src\/lib\/search\.js"/, "البحث لا يستعمل محرك البحث الموحّد");
+  assert.match(search, /from "\.\/src\/lib\/(search|unified-search)\.js"/, "البحث لا يستعمل محرك البحث الموحّد");
 });
 
 /* --------------------------------------------------- الأذكار */
@@ -208,7 +208,13 @@ test("☐ القبلة: الاتجاه محسوب ورفض الإذن معالَ
   assert.ok(north > 100 && north < 170, `اتجاه القبلة من إسطنبول ${north}`);
   assert.ok(south > 240 && south < 300, `اتجاه القبلة من مدينة جنوبية ${south}`);
   assert.ok(Math.abs(calcQibla(KAABA.lat, KAABA.lng)) < 1, "الاتجاه من الكعبة نفسها ليس صفرًا");
-  assert.match(read("22-qibla.html"), /locationError|رُفض|تعذّر|denied/i, "لا نصّ لرفض إذن الموقع");
+  const page = read("22-qibla.html");
+  assert.match(page, /locationError|رُفض|تعذّر|denied/i, "لا نصّ لرفض إذن الموقع");
+  /* الصفحة تأخذ الحساب من المكتبة المشتركة، فلا تختلف عن باقي الواجهات */
+  assert.match(page, /from "\.\/src\/lib\/islamic\.js"/, "الصفحة لا تستعمل حساب القبلة المشترك");
+  assert.doesNotMatch(page, /atan2|qiblaBearing/, "في الصفحة حسابٌ خاصّ للقبلة ينحرف عن المشترك");
+  assert.match(page, /magneticDeclination/, "البوصلة الحيّة بلا تصحيح الانحراف المغناطيسي");
+  assert.doesNotMatch(page, /30\.0444|31\.2357/, "في الصفحة إحداثيات افتراضية تظهر كأنها موقعك");
 });
 
 /* --------------------------------------------------- الأدوات */

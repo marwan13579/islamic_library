@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <script src="khatma-core.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#13322c">
@@ -190,5 +191,9 @@ document.getElementById("shareButton").addEventListener("click",async()=>{
 render();
 </script>
 <script src="hub-return.js"></script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
+</script>
 </body>
 </html>

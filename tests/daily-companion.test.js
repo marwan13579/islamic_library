@@ -241,6 +241,14 @@ test("نصّ المشاركة يحوي النصّ والمصدر واسم الم
   assert.match(targets.telegram, /^https:\/\/t\.me\/share\/url\?url=/);
   assert.match(targets.facebook, /^https:\/\/www\.facebook\.com\/sharer/);
   assert.match(targets.x, /^https:\/\/twitter\.com\/intent\/tweet/);
+
+  const link = "https://example.com/index.html";
+  const all = Object.values(dc.shareTargets("نص"));
+  assert.equal(all.length, 4);
+  all.forEach((href) => assert.ok(href.includes(encodeURIComponent(link)), `رابط الموقع ناقص: ${href}`));
+
+  const ready = dc.shareTargets("نص " + link);
+  assert.ok(ready.whatsapp.includes(encodeURIComponent(link)));
 });
 
 test("المحفوظات تُضاف وتُزال بالمفتاح نفسه", () => {
@@ -373,24 +381,14 @@ test("عامل الخدمة يسجّل أصول اللوحة الجديدة", ()
   }
 });
 
-test("الروابط المختصرة لا تحجب ملفًا قائمًا ولا تشير إلى صفحة مفقودة", () => {
-  const redirects = fs.readFileSync(path.join(ROOT, "_redirects"), "utf8");
+test("الروابط المختصرة في vercel.json لا تحجب ملفًا قائمًا ولا تشير إلى صفحة مفقودة", () => {
   const vercel = JSON.parse(fs.readFileSync(path.join(ROOT, "vercel.json"), "utf8"));
-
-  const rules = redirects
-    .split("\n")
-    .map((line) => line.trim())
-    .filter((line) => line && !line.startsWith("#"))
-    .map((line) => {
-      const [source, destination, status] = line.split(/\s+/);
-      return { source, destination, status };
-    });
+  const rules = vercel.redirects;
 
   assert.ok(rules.length >= 10, `قواعد قليلة: ${rules.length}`);
 
-  const vercelSources = vercel.redirects.map((r) => r.source);
   for (const rule of rules) {
-    assert.equal(rule.status, "301", `${rule.source}: يجب أن يكون التحويل 301`);
+    assert.equal(rule.permanent, true, `${rule.source}: تحويل دائم فقط`);
 
     // لا يجوز أن يحجب مسارٌ ملفًا موجودًا فعلًا.
     assert.ok(!fs.existsSync(path.join(ROOT, rule.source.replace(/^\//, ""))),
@@ -400,15 +398,6 @@ test("الروابط المختصرة لا تحجب ملفًا قائمًا ول
     if (file === "/") continue;
     assert.ok(fs.existsSync(path.join(ROOT, file.replace(/^\//, ""))),
       `${rule.source} يشير إلى صفحة مفقودة: ${file}`);
-
-    assert.ok(vercelSources.includes(rule.source),
-      `${rule.source} موجود في _redirects وفيه يعمل، لكنه ناقص من vercel.json`);
-  }
-
-  for (const entry of vercel.redirects) {
-    assert.ok(rules.some((rule) => rule.source === entry.source),
-      `${entry.source} في vercel.json وغير موجود في _redirects`);
-    assert.ok(entry.permanent === true, `${entry.source}: تحويل دائم فقط`);
   }
 });
 
@@ -429,7 +418,7 @@ test("robots و sitemap يُولَّدان في مخرجات النشر", () => 
   assert.match(prepare, /SITE_ORIGIN/, "النطاق قابل للضبط");
   assert.match(prepare, /sitemap\.xml/);
   assert.match(prepare, /robots\.txt/);
-  assert.match(prepare, /entry\.name === "_redirects"/, "_redirects يُنسخ إلى dist");
+  assert.match(prepare, /entry\.name === "manifest\.webmanifest"/, "manifest يُنسخ إلى dist");
 });
 
 test("بعد آخر صلاة لا تفرغ «القادمة»: تصير فجر الغد", () => {

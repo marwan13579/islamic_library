@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>مصحفي — تتبّع حفظ القرآن الكريم</title>
 <link rel="stylesheet" href="fonts.css">
@@ -568,6 +569,10 @@ renderPlan(); renderStats(); renderToday(); renderJuzGrid(); renderReview();
     });
   }
 })();
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

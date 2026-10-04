@@ -333,8 +333,12 @@ export const PAGE_ROUTES = [
     page: "azkar", feature: "dhikr", topics: ["dhikr"] },
   { match: ["4-salah", "26-daily-system", "18-qada", "42-athan", "24-ibadat"],
     page: "prayer", feature: "salah", topics: ["salah"] },
-  { match: ["29-prayer-times", "28-hijri", "22-qibla"],
+  { match: ["29-prayer-times", "28-hijri"],
     page: "prayer", feature: "times", topics: ["salah", "time"] },
+  /* القبلة مسألة اتجاهٍ في الصلاة لا مسألة وقت، فبقيت مع الصلاة وحدها.
+     كان ربطها مع مواقيت الصلاة فيعطي آيةً واحدة للصفحتين دائمًا. */
+  { match: ["22-qibla"],
+    page: "prayer", feature: "qibla", topics: ["salah"] },
   { match: ["10-zakat"],
     page: "zakat", feature: "zakah", topics: ["charity", "khutbah"] },
   { match: ["3-arbaeen", "12-mustajab", "44-noor-companion"],

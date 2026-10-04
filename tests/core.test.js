@@ -221,7 +221,7 @@ test("service worker refreshes known assets and bypasses dynamic requests",async
   assert.ok(installedRequests.every(request=>request.cache==="reload"));
   assert.ok(installedRequests.some(request=>request.url===scope+"vendor/quran-arabic.json"));
   function dispatch(request){
-    const event={request,respondWith(promise){this.response=promise;}};
+    const event={request,respondWith(promise){this.response=promise;},waitUntil(){}};
     handlers.fetch(event);
     return event;
   }

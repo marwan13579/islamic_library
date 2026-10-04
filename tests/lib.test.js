@@ -42,14 +42,108 @@ test("humanTime and clock helpers read naturally in Arabic", async () => {
   assert.match(humanTime(2.25 * 3600 * 1000), /ساعتين|ساعة و/);
 });
 
+/**
+ * زوايا القبلة من مدن معلومة، مقارنةً بالقيم المنشورة في تقاويم القبلة.
+ * السماحية نصف درجة: خطأ «ناقص cos φ₂» يمرّ في تحمّل درجتين ولا يمرّ هنا.
+ */
 test("qibla points at the Kaaba from known cities", async () => {
   const { calcQibla, KAABA } = await load("lib/islamic.js");
   const near = calcQibla(KAABA.lat, KAABA.lng);
   assert.ok(near < 1 || near > 359, `expected ~0, got ${near}`);
-  const cairo = calcQibla(30.0444, 31.2357);
-  assert.ok(Math.abs(cairo - 136) < 2, `Cairo expected ≈136, got ${cairo}`);
-  const jakarta = calcQibla(-6.2088, 106.8456);
-  assert.ok(Math.abs(jakarta - 295) < 2, `Jakarta expected ≈295, got ${jakarta}`);
+  const cities = [
+    ["Cairo", 30.0444, 31.2357, 136.14],
+    ["Jakarta", -6.2088, 106.8456, 295.15],
+    ["Istanbul", 41.0082, 28.9784, 151.62],
+    ["Sydney", -33.8688, 151.2093, 277.5],
+    ["New York", 40.7128, -74.006, 58.48],
+    ["London", 51.5074, -0.1278, 118.99],
+    ["Los Angeles", 34.0522, -118.2437, 23.86],
+    ["Kuala Lumpur", 3.139, 101.6869, 292.54],
+    ["Buenos Aires", -34.6037, -58.3816, 76.27],
+    ["Johannesburg", -26.2041, 28.0473, 14.59],
+  ];
+  for (const [name, lat, lng, expected] of cities) {
+    const got = calcQibla(lat, lng);
+    assert.ok(
+      Math.abs(got - expected) < 0.5,
+      `${name}: expected ${expected}±0.5, got ${got.toFixed(3)}`,
+    );
+  }
+});
+
+test("qibla rejects coordinates outside the world", async () => {
+  const { calcQibla, isValidCoords } = await load("lib/islamic.js");
+  assert.equal(calcQibla(90.1, 0), null, "خط عرض خارج القطبين");
+  assert.equal(calcQibla(0, 180.5), null, "خط طول خارج الظلّين");
+  assert.equal(calcQibla(Number.NaN, 0), null, "إحداثية غير رقمية");
+  assert.equal(calcQibla(30, "31"), null, "نصّ بدل رقم");
+  assert.equal(isValidCoords(-90, -180), true, "طرفاه ضمن المدى");
+  assert.equal(isValidCoords(21.4225, 39.8262), true, "الكعبة ضمن المدى");
+});
+
+test("magnetic declination matches the official model values", async () => {
+  const { magneticDeclination } = await load("lib/magnetic.js");
+  /*
+   * قيم NOAA الرسمية (WMM2025 test values و IAGA IGRF-14 test values) لسنة ٢٠٢٥.
+   * النموذج هنا WMM2020 مستقرًّا إلى سنة ٢٠٢٥، فالسماحية نصف درجة.
+   */
+  const official = [
+    ["80N 0E", 80, 0, 1.28],
+    ["0N 120E", 0, 120, -0.16],
+    ["80S 120W", -80, -120, 68.78],
+    ["0N 90W", 0, -90, 2.39],
+    ["70S 90E", -70, 90, -94.17],
+    ["45N 135E", 45, 135, -11.25],
+  ];
+  for (const [name, lat, lng, expected] of official) {
+    const got = magneticDeclination(lat, lng, 2025);
+    assert.ok(
+      Math.abs(got - expected) < 0.5,
+      `${name} 2025: expected ${expected}±0.5, got ${got.toFixed(3)}`,
+    );
+  }
+  /* مواضع معروفة الانحراف، والفارق المقبول هنا درجة ونصف */
+  const places = [
+    ["Cairo", 30.0444, 31.2357, 5, 1.5],
+    ["New York", 40.7128, -74.006, -12.5, 1.5],
+    ["Cape Town", -33.9249, 18.4241, -26.2, 1.5],
+    ["Sydney", -33.8688, 151.2093, 12.9, 1.5],
+  ];
+  for (const [name, lat, lng, expected, tolerance] of places) {
+    const got = magneticDeclination(lat, lng, 2026.8);
+    assert.ok(
+      Math.abs(got - expected) < tolerance,
+      `${name}: expected ${expected}±${tolerance}, got ${got.toFixed(3)}`,
+    );
+  }
+  assert.equal(magneticDeclination(Number.NaN, 0), 0, "إحداثية غير رقمية");
+  /* الاستقراء مقصور على مدى النموذج، فلا يبتعد خارجَه */
+  assert.equal(
+    magneticDeclination(30.0444, 31.2357, 1990),
+    magneticDeclination(30.0444, 31.2357, 2020),
+    "سنة أقدم من النموذج",
+  );
+  assert.equal(
+    magneticDeclination(30.0444, 31.2357, 2099),
+    magneticDeclination(30.0444, 31.2357, 2030),
+    "سنة أحدث من النموذج",
+  );
+  assert.notEqual(
+    magneticDeclination(30.0444, 31.2357, 2020),
+    magneticDeclination(30.0444, 31.2357, 2030),
+    "الانحراف يتحرّك مع السنين",
+  );
+});
+
+test("headings combine magnetic readings with declination", async () => {
+  const { trueHeading, relativeBearing, decimalYear } = await load("lib/magnetic.js");
+  /* في مصر الانحراف شرقي، فالجهاز الذي يشير شمالًا يشير فعليًا شمالًا شرقيًا */
+  assert.equal(Math.round(trueHeading(0, 5.05)), 5, "شمال مغناطيسي + انحراف");
+  assert.equal(Math.round(trueHeading(350, -12.5) * 10) / 10, 337.5, "الالتفاف عند الصفر");
+  assert.ok(Math.abs(relativeBearing(136.14, 100) - 36.14) < 1e-9, "الكعبة يمين المقدّمة بست وثلاثين درجة");
+  assert.equal(relativeBearing(10, 350), 20, "الالتفاف عند ٣٦٠");
+  const year = decimalYear(new Date("2026-07-01T12:00:00Z"));
+  assert.ok(year > 2026.4 && year < 2026.6, `decimal year ${year}`);
 });
 
 test("zakat respects the nisab boundary", async () => {

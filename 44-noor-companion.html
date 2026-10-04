@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>إعدادات رفيق النور — المكتبة الإسلامية</title>
 <meta name="description" content="إعدادات التذكيرات الإيمانية: الفاصل الزمني، وأنواع المحتوى، والوضع الهادئ، وإشعارات المتصفح، ورحلة قراءتك. كل شيء محفوظ على جهازك وحده.">
@@ -229,9 +230,13 @@
 </div>
 
 <script>
-(function () {
-  "use strict";
-  var NC = window.NoorCompanion;
+/* هذا السكربت مؤجَّل، فيُنفَّذ بعد `noor-companion.js` وقبل إقلاعه:
+   سكربت `defer` ينفَّذ قبل حدث DOMContentLoaded، فنضمن هنا وجود
+   `window.NoorCompanion` بدل أن نجد الصفحة صامتةً بسبب سباق بسيط. */
+document.addEventListener("DOMContentLoaded", function () {
+  (function () {
+    "use strict";
+    var NC = window.NoorCompanion;
   var AR = "٠١٢٣٤٥٦٧٨٩";
   function arNum(v) { return String(v).replace(/\d/g, function (d) { return AR[Number(d)]; }); }
   var status = document.getElementById("notifState");
@@ -359,16 +364,21 @@
   }
 
   /* ---------- التركيب ---------- */
-  function renderAll() { applySettingsToForm(); renderJourney(); renderActions(); }
-  if (NC) { renderAll(); NC.on("settings", renderJourney); NC.on("actions", renderActions); NC.on("ready", renderAll); }
-  else {
-    /* السكربت لم يُحمَّل: نخبر المستخدم بدل ترك الصفحة صامتة. */
-    var missing = document.createElement("p");
-    missing.className = "note";
-    missing.textContent = "تعذّر تحميل النظام في هذه الجلسة. حدّث الصفحة، وإن استمرّ فالنظام يعمل بلا اتصال.";
-    document.body.insertBefore(missing, document.body.firstChild);
-  }
-})();
+    function renderAll() { applySettingsToForm(); renderJourney(); renderActions(); }
+    if (NC) { renderAll(); NC.on("settings", renderJourney); NC.on("actions", renderActions); NC.on("ready", renderAll); }
+    else {
+      /* السكربت لم يُحمَّل: نخبر المستخدم بدل ترك الصفحة صامتة. */
+      var missing = document.createElement("p");
+      missing.className = "note";
+      missing.textContent = "تعذّر تحميل النظام في هذه الجلسة. حدّث الصفحة، وإن استمرّ فالنظام يعمل بلا اتصال.";
+      document.body.insertBefore(missing, document.body.firstChild);
+    }
+  })();
+});
+</script>
+<script type="module">
+  import { createSearchModal } from "./src/components/search-modal.js";
+  createSearchModal();
 </script>
 </body>
 </html>

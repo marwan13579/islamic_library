@@ -25,6 +25,10 @@ const path = require("node:path");
 const ROOT = path.resolve(__dirname, "..");
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
 
+/** اسم راوٍ إن كان الوسم اسم كتاب حديث. */
+const hasNarrator = (source) =>
+  /البخاري|مسلم|أبو داود|الترمذي|ابن ماجه|أحمد|الحاكم|البيهقي/.test(source);
+
 /* ------------------------------------------------------- مخزن وهمي للمتصفح */
 
 function fakeStorage() {
@@ -334,11 +338,82 @@ test("🎨 أنماط وقت التشغيل سليمة: لا قاعدة داخل
   );
 });
 
+test("📖 توثيق الأدعية يوافق ما في صفحات الأذكار بالموقع", () => {
+  /* ليس هذا حكمًا مني على العلماء، بل واجب اتّساق:
+     دعاءٌ يختلف وصفه بين صفحة الأذكار وبين الرفيق تناقضًا يُحسّه
+     المستخدم، وهذا الفحص هو ما يمنعها. */
+  const content = require(path.join(ROOT, "noor-content.js"));
+  const azkar = read("25-azkar-shamila.html");
+
+  const duas = content.items.filter((i) => i.type === "dua");
+  assert.ok(duas.length >= 10, "الأدعية قليلة؟");
+
+  /* نطبّع الشكلين: نُسقط التشكيل والهمزات من النصّين معًا، وإلّا لم
+     يلتقط البحثُ شيئًا أصلًا لأنّ المواضع تختلف في كتابة الحركات. */
+  const strip = (s) => s
+    .replace(/[ً-ْٰـ]/g, "")
+    .replace(/[أإآٱ]/g, "ا")
+    .replace(/ى/g, "ي")
+    .replace(/ؤ/g, "و")
+    .replace(/ئ/g, "ي");
+  const flatAzkar = strip(azkar);
+
+  let checked = 0;
+  for (const dua of duas) {
+    const probe = strip(dua.text).slice(0, 30);
+    if (!probe || !flatAzkar.includes(probe)) continue;
+
+    /* الوسم نلتقطه من الأصل كما هو مكتوب، لا من النصّ المطبَّع. */
+    const rawProbe = dua.text.slice(0, 20);
+    const at = rawProbe ? azkar.indexOf(rawProbe) : -1;
+    if (at < 0) continue;
+    const label = azkar.slice(at, at + rawProbe.length + 160).match(/رواه\s*([^"<]+)/);
+    if (!label) continue;
+
+    /* نقارن الاسم لا الصياغة: "البخاري" في الموقع، و"رواه البخاري" عندنا. */
+    const expected = label[1].trim();
+    const mine = (dua.source ?? "").replace(/^رواه\s*/, "");
+    assert.ok(
+      mine.includes(expected.split(/[—\s-]/)[0]) || expected.includes(mine),
+      `نصّ واحد بوصفين مختلفين:\n    عندنا: ${mine}\n    الموقع: ${expected}\n    (${dua.id})`,
+    );
+    checked += 1;
+  }
+  assert.ok(checked >= 3, `لم يُقارَن إلا ${checked} نصًّا — المقارنة ضعيفة`);
+});
+
+test("🔗 التوثيق يميّز الأدعية عن الأحاديث في المصدر", () => {
+  const content = require(path.join(ROOT, "noor-content.js"));
+  /* اسم كتاب الحديث وحده تحت نصّ الدعاء يُقرأ كلامًا للراوي، لا روايةً
+     عنه. فكلّ اسم راوٍ لا بدّ أن يسبقه «رواه»، وهذا ما نحرسه هنا. */
+  const duas = content.items.filter((i) => i.type === "dua");
+  assert.ok(duas.length >= 10, "الأدعية قليلة؟");
+
+  const offenders = duas.filter((i) => {
+    const source = i.source ?? "";
+    return hasNarrator(source) && !source.startsWith("رواه");
+  });
+  assert.deepEqual(
+    offenders.map((i) => ({ id: i.id, source: i.source })),
+    [],
+    "دعاء منسوب إلى كتاب حديث بلا بيان أنّه مروى",
+  );
+
+  /* ومراجع القرآن لا تُلبَس بـ«رواه»: القرآن لا يروى عن راوٍ. */
+  const quranRefs = duas.filter((i) => /^\S+\s*:\s*\d+$/.test(i.source ?? ""));
+  assert.ok(quranRefs.length > 0, "لا أدعية قرآنية؟");
+  for (const item of quranRefs) {
+    assert.ok(!item.source.startsWith("رواه"), `مرجع قرآني لبسوه الرواية: ${item.id}`);
+  }
+});
+
 test("🔗 سطر واحد فقط في كل صفحة، ولا سكربت في صفحة الخطأ", () => {
   const pages = fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"));
   let injected = 0;
   for (const page of pages) {
-    const hits = (read(page).match(/noor-companion\.js/g) ?? []).length;
+    /* نعدّ وسوم الحقن فقط، لا كل ذكر للاسم: الإشارة إليه في شرحٍ أو
+       تعليق جملةٌ عاديّة، وتكرار الحقن هو الخلل الذي نحرسه. */
+    const hits = (read(page).match(/<script[^>]+noor-companion\.js/g) ?? []).length;
     if (hits > 1) assert.fail(`${page}: تكرار الحقن (${hits})`);
     if (hits === 1) injected += 1;
     if (page === "offline.html") assert.equal(hits, 0, "صفحة الخطأ لا تُحمَّل");
@@ -385,15 +460,20 @@ test("🏗️ الناتج مطابق لما يولّده البناء", () => {
 });
 
 test("🧹 الإزالة ممكنة بحذف سطرين لا غير", () => {
-  /* لا شيء في صفحات الموقع يتحدّث عن النظام إلا وسم السكربت نفسه. */
+  /* لا شيء في صفحات الموقع يتعلّق بالنظام إلا وسم سكربت واحد سطره. */
   const html = fs.readdirSync(ROOT).filter((f) => f.endsWith(".html"));
+  let tags = 0;
   for (const page of html) {
-    const text = read(page);
-    if (!text.includes("noor-companion.js")) continue;
-    const lines = text.split("\n").filter((l) => l.includes("noor-companion.js"));
+    const lines = read(page).split("\n").filter((l) => /<script[^>]+noor-companion\.js/.test(l));
+    tags += lines.length;
     for (const line of lines) {
-      assert.match(line, /^<script src="[^"]*noor-companion\.js" defer><\/script>$/,
-        `${page}: سطر الحقن يحمل أكثر من 태г واحد: ${line.trim()}`);
+      assert.match(line, /^\s*<script src="[^"]*noor-companion\.js" defer><\/script>\s*$/,
+        `${page}: سطر الحقن يحمل أكثر من وسم واحد: ${line.trim()}`);
     }
   }
+  assert.ok(tags >= 40, `وسوم الحقن: ${tags}`);
+
+  /* وحذفه لا يترك أثرًا في بنية الصفحة: لا لوحة، ولا CSS، ولا معالج. */
+  const engine = read("noor-companion.js");
+  assert.ok(engine.length > 1000, "المحرّك لا بدّ أن يكون مكتوبًا في وسم واحد");
 });

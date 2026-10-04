@@ -18,6 +18,7 @@
     "quran_font_size","focus_mode","quran_bookmarks","quran_ward","athkar_progress","athkar_streak",
     "prayer_tracker","notif_enabled","notif_before","reciter","radio_volume","sadaka_cards","card_state",
     "lib-theme-pref","hub-lang","hub-favorites","hub-notes","hub-lastused","hub-ramadan-loc",
+    "hub-intro-seen","hub-intro-step",
     "nour-progress","gtasbeeh-custom","gtasbeeh-phrase","gtasbeeh-goal","gtasbeeh-people",
     "current_surah","tasbeeh_target","tasbih_index","prayer_timings","sleep_minutes","total_all_tasbeeh","sadaka_archived",
     "tadabbur-entries","wird-goal","wird-log","qada-owed","qada-done","mushaf-progress",

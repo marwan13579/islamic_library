@@ -82,14 +82,17 @@ test("app pages ship a PWA manifest and security headers", () => {
   assert.match(sw, /src\/app\/app\.html/);
   assert.match(sw, /src\/data\/question-bank\.js/);
 
-  const headers = fs.readFileSync(path.join(root, "_headers"), "utf8");
+  const vercel = JSON.parse(fs.readFileSync(path.join(root, "vercel.json"), "utf8"));
+  const allHeaders = vercel.headers
+    .flatMap((entry) => entry.headers)
+    .map((h) => h.key);
   for (const header of [
     "X-Content-Type-Options",
     "X-Frame-Options",
     "Referrer-Policy",
     "Permissions-Policy",
   ]) {
-    assert.match(headers, new RegExp(header));
+    assert.ok(allHeaders.includes(header), `رأس مفقود في vercel.json: ${header}`);
   }
 });
 
