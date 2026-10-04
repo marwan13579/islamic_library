@@ -597,6 +597,8 @@ export function closeSearchModal() {
  * Perform search with current query and filter.
  */
 async function performSearch() {
+  if (!document.getElementById("searchModal")) return;
+  
   const input = document.getElementById("searchModalInput");
   const query = input.value.trim();
   

@@ -138,8 +138,14 @@ async function skipIntro(page) {
   streak?.includes("🔥") ? ok("الأيام المتتالية ظهرت: " + streak.trim()) : note("سلسلة الأيام لم تظهر");
 
   /* ---------- ٥)التذكيرات لا تُطلب بلا إذن ---------- */
-  const asked = await page.evaluate(() => window.Notification?.permission === "default");
-  asked ? ok("الإذن لم يُطلب تلقائيًا (الإذن ما زال default)") : note("permission: " + asked);
+  /* المقصود ألّا تمنح الصفحة نفسها الإذن من تلقاء نفسها. والحكم على
+   * `default` وحده يفشل في كل متصفحٍ يرفض الإذن افتراضيًّا — وهو حال
+   * Chromium بلا واجهة، إذ يردّ `denied` حتى في صفحة فارغة. فالمرفوض
+   * مقبول هنا؛ المرفوض وحده يعني أن الصفحة لم تطلب شيئًا لنفسها. */
+  const permission = await page.evaluate(() => window.Notification?.permission);
+  permission !== "granted"
+    ? ok(`الإذن لم يُمنح تلقائيًّا (permission: ${permission})`)
+    : note("permission: granted — الصفحة منحت نفسها الإذن بلا سؤال");
   const rows = await page.locator("#dcRoot .dc-remind-list .dc-remind-row").count();
   rows === 0 ? ok("التذكيرات مطفيّة فلا صفوف تذكير قبل التفعيل") : note(`صفوف تذكير ظاهرة بلا تفعيل: ${rows}`);
 
