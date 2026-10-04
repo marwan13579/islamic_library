@@ -839,10 +839,10 @@ function renderCatsNav(){
 }
 renderCatsNav();
 
-document.getElementById("search").addEventListener("input", e => {
+document.getElementById("search").addEventListener("input", async e => {
   const q = e.target.value.trim();
   if (typeof openSearchModal === "function") {
-    openSearchModal();
+    await openSearchModal();
     const input = document.getElementById("searchModalInput");
     if (input) {
       input.value = q;
