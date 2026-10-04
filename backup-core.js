@@ -33,6 +33,8 @@
     "video_favorites","video_recent",
     // رفيق النور: إعدادات التذكير، وسجلّ ما عُرض، والإحصاءات، وأعمال اليوم.
     "noor-settings","noor-shown","noor-stats","noor-actions",
+    // طبقة التفاعل: النقاط والأوسمة وأيام المتتالية وما علّمه المستخدم من عناصر.
+    "engage-v1",
   ]);
 
   function createBackup(storage,createdAt=new Date()){

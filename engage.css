@@ -1,0 +1,610 @@
+/**
+ * تنسيق طبقة التفاعل — Engagement Layer
+ * =============================================================================
+ * رفيقٌ لـ`engage.js`. يستعمل متغيّرات التصميم الموجودة في كل صفحة
+ * (`--paper`, `--ink`, `--gold`, `--card`, `--line`, `--green`) فلا يكسر
+ * الوضع الليلي ولا الهادئ ولا RTL. والصفحات التي لا تُعرّف لونًا تحصل
+ * على القيمة الاحتياطية هنا، فتبقى الطبقة ظاهرةً في كل مكان.
+ *
+ * كل شيء داخل بادئة `eg-`، فلا يختلط بصنفٍ من صفحة.
+ */
+
+.eg-pill,
+.eg-panel,
+.eg-card,
+.eg-toast,
+.eg-confetti,
+.eg-readbar,
+.eg-mark {
+  box-sizing: border-box;
+}
+
+/* ------------------------------------------------------- متغيّرات مشتركة */
+
+.eg-pill,
+.eg-card,
+.eg-panel,
+.eg-readbar,
+.eg-toast {
+  --eg-paper: var(--paper, #f6efdf);
+  --eg-ink: var(--ink, #13322c);
+  --eg-soft: var(--ink-soft, #3d5b53);
+  --eg-gold: var(--gold, #9c7420);
+  --eg-line: var(--line, rgba(19, 50, 44, 0.14));
+  --eg-card: var(--card, #fffaf0);
+  --eg-green: var(--green, #2f6b4f);
+  --eg-green-soft: var(--green-soft, #dceae0);
+}
+
+/* ------------------------------------------------------------ حلقة التقدّم */
+
+.eg-ring {
+  transform: rotate(-90deg);
+  flex: 0 0 auto;
+}
+
+.eg-ring-bg,
+.eg-ring-fg {
+  fill: none;
+  stroke-width: 3.4;
+}
+
+.eg-ring-bg {
+  stroke: var(--eg-line, var(--line, rgba(19, 50, 44, 0.14)));
+}
+
+.eg-ring-fg {
+  stroke: var(--eg-gold, var(--gold, #9c7420));
+  stroke-linecap: round;
+  transition: stroke-dashoffset 0.45s ease;
+}
+
+/* --------------------------------------------------------- الشارة العائمة */
+
+.eg-pill {
+  position: fixed;
+  inset-inline-end: 14px;
+  bottom: calc(14px + env(safe-area-inset-bottom, 0px));
+  z-index: 45;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 7px 11px 7px 8px;
+  border: 1px solid var(--eg-line);
+  border-radius: 999px;
+  background: var(--eg-card);
+  color: var(--eg-ink);
+  font-family: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+  box-shadow: 0 3px 14px rgba(0, 0, 0, 0.16);
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.eg-pill:hover,
+.eg-pill:focus-visible {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.22);
+}
+
+.eg-pill-fx {
+  display: inline-flex;
+  align-items: center;
+  gap: 2px;
+  line-height: 1;
+}
+
+.eg-pill-fx b {
+  font-variant-numeric: tabular-nums;
+  font-size: 0.8rem;
+}
+
+.eg-pill-streak {
+  color: var(--eg-gold);
+}
+
+/* الصفحة فيها مشغّل ثابت أسفلها، فالشارة تصعد فوقه. */
+body:has(.lib-player:not([hidden])) .eg-pill {
+  bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+}
+
+/* --------------------------------------------------------- بطاقة الفهرس */
+
+.eg-card {
+  margin: 16px 0 4px;
+  padding: 16px 18px;
+  border: 1px solid var(--eg-line);
+  border-radius: 16px;
+  background: var(--eg-card);
+}
+
+.eg-card-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 10px;
+}
+
+.eg-card-title {
+  margin: 0;
+  font-size: 1.02rem;
+  color: var(--eg-ink);
+}
+
+.eg-card-body {
+  display: grid;
+  gap: 12px;
+}
+
+/* ------------------------------------------------------------ تحدّي اليوم */
+
+.eg-challenge {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border: 1px dashed var(--eg-gold);
+  border-radius: 14px;
+  background: var(--eg-paper);
+  background: color-mix(in srgb, var(--eg-gold) 8%, var(--eg-card));
+}
+
+.eg-challenge.done {
+  border-style: solid;
+  border-color: var(--eg-green);
+  background: var(--eg-green-soft);
+}
+
+.eg-ch-top {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  min-width: 0;
+}
+
+.eg-ch-mark {
+  font-size: 1.3rem;
+  line-height: 1.3;
+}
+
+.eg-ch-title {
+  margin: 0;
+  font-size: 0.94rem;
+  font-weight: 700;
+  color: var(--eg-ink);
+}
+
+.eg-ch-hint {
+  margin: 2px 0 0;
+  font-size: 0.78rem;
+  color: var(--eg-soft);
+}
+
+.eg-ch-count {
+  font-variant-numeric: tabular-nums;
+  font-weight: 700;
+  color: var(--eg-gold);
+}
+
+.eg-ch-go {
+  flex: 0 0 auto;
+  padding: 7px 14px;
+  border-radius: 999px;
+  background: var(--eg-green);
+  color: #fffaf0;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.eg-ch-go:hover {
+  filter: brightness(1.08);
+}
+
+/* ----------------------------------------------------------- أرقام سريعة */
+
+.eg-stats {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 8px;
+}
+
+.eg-stat {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1px;
+  padding: 9px 4px;
+  border: 1px solid var(--eg-line);
+  border-radius: 12px;
+  background: var(--eg-paper);
+}
+
+.eg-stat b {
+  font-size: 1.15rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--eg-gold);
+}
+
+.eg-stat span {
+  font-size: 0.72rem;
+  color: var(--eg-soft);
+}
+
+.eg-mini {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.78rem;
+  color: var(--eg-soft);
+}
+
+.eg-mini-badge {
+  font-size: 1rem;
+  opacity: 0.45;
+}
+
+/* ---------------------------------------------------------------- الأوسمة */
+
+.eg-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(112px, 1fr));
+  gap: 8px;
+}
+
+.eg-badge {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border: 1px solid var(--eg-line);
+  border-radius: 12px;
+  background: var(--eg-paper);
+  text-align: center;
+}
+
+.eg-badge-emoji {
+  font-size: 1.4rem;
+}
+
+.eg-badge b {
+  font-size: 0.76rem;
+  color: var(--eg-ink);
+}
+
+.eg-badge span:last-child {
+  font-size: 0.68rem;
+  color: var(--eg-soft);
+}
+
+.eg-badge:not(.open) {
+  opacity: 0.5;
+}
+
+.eg-badge.open.bronze {
+  border-color: #b07a4a;
+}
+
+.eg-badge.open.silver {
+  border-color: #9aa7ab;
+}
+
+.eg-badge.open.gold {
+  border-color: var(--eg-gold);
+  background: var(--eg-paper);
+  background: color-mix(in srgb, var(--eg-gold) 12%, var(--eg-paper));
+}
+
+/* ------------------------------------------------------------ سجلّ اليوم */
+
+.eg-log {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.eg-log li {
+  padding: 4px 10px;
+  border-radius: 999px;
+  background: var(--eg-green-soft);
+  font-size: 0.76rem;
+  color: var(--eg-ink);
+}
+
+.eg-empty {
+  margin: 0;
+  font-size: 0.82rem;
+  color: var(--eg-soft);
+}
+
+/* ----------------------------------------------------------------- الأزرار */
+
+.eg-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 13px;
+  border: 1px solid var(--eg-line);
+  border-radius: 999px;
+  background: var(--eg-card);
+  color: var(--eg-ink);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.eg-btn:hover {
+  border-color: var(--eg-gold);
+}
+
+.eg-btn-ghost {
+  padding: 6px 12px;
+  background: transparent;
+}
+
+.eg-btn-quiet {
+  background: transparent;
+  color: var(--eg-soft);
+}
+
+/* ------------------------------------------------------------------ اللوحة */
+
+.eg-panel {
+  width: min(560px, calc(100vw - 28px));
+  max-height: min(84vh, 760px);
+  padding: 20px 20px 16px;
+  border: 1px solid var(--eg-line);
+  border-radius: 18px;
+  background: var(--eg-card);
+  color: var(--eg-ink);
+  overflow-y: auto;
+}
+
+.eg-panel::backdrop {
+  background: rgba(6, 20, 17, 0.55);
+}
+
+.eg-panel-close {
+  position: sticky;
+  top: -20px;
+  float: inline-end;
+  margin: -4px -4px 0 0;
+}
+
+.eg-panel-close button {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--eg-line);
+  border-radius: 50%;
+  background: var(--eg-paper);
+  color: var(--eg-ink);
+  font-size: 0.9rem;
+  cursor: pointer;
+}
+
+.eg-panel-title {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+}
+
+.eg-panel-note {
+  margin: 0 0 14px;
+  font-size: 0.78rem;
+  line-height: 1.7;
+  color: var(--eg-soft);
+}
+
+.eg-panel-ring {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+}
+
+.eg-panel-ring-text {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1.2;
+}
+
+.eg-panel-ring-text b {
+  font-size: 1.5rem;
+  font-variant-numeric: tabular-nums;
+  color: var(--eg-gold);
+}
+
+.eg-panel-ring-text span {
+  font-size: 0.7rem;
+  color: var(--eg-soft);
+}
+
+.eg-panel-h {
+  margin: 18px 0 8px;
+  font-size: 0.9rem;
+}
+
+.eg-panel-foot {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid var(--eg-line);
+}
+
+/* ------------------------------------------------------- تنبيه الاحتفال */
+
+.eg-toast {
+  position: fixed;
+  inset-inline: 0;
+  bottom: calc(76px + env(safe-area-inset-bottom, 0px));
+  z-index: 120;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  width: max-content;
+  max-width: min(92vw, 420px);
+  margin: 0 auto;
+  padding: 11px 18px;
+  border: 1px solid var(--eg-gold);
+  border-radius: 14px;
+  background: var(--eg-card);
+  color: var(--eg-ink);
+  text-align: center;
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.24);
+  opacity: 0;
+  transform: translateY(14px);
+  pointer-events: none;
+  transition: opacity 0.28s ease, transform 0.28s ease;
+}
+
+.eg-toast.show {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.eg-toast strong {
+  font-size: 0.9rem;
+}
+
+.eg-toast span {
+  font-size: 0.76rem;
+  color: var(--eg-soft);
+}
+
+/* ------------------------------------------------------------- القصاصات */
+
+.eg-confetti {
+  position: fixed;
+  inset: 0;
+  z-index: 115;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* ----------------------------------------------- صفحات القراءة النصّية */
+
+.eg-readbar {
+  position: sticky;
+  top: 58px;
+  z-index: 30;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  margin: 12px 0;
+  padding: 10px 12px;
+  border: 1px solid var(--eg-line);
+  border-radius: 14px;
+  background: var(--eg-card);
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.07);
+}
+
+.eg-readsearch {
+  flex: 1 1 150px;
+  min-width: 0;
+  padding: 8px 12px;
+  border: 1px solid var(--eg-line);
+  border-radius: 999px;
+  background: var(--eg-paper);
+  color: var(--eg-ink);
+  font-family: inherit;
+  font-size: 16px;
+}
+
+.eg-readsearch:focus-visible {
+  outline: 2px solid var(--eg-gold);
+  outline-offset: 1px;
+}
+
+.eg-readcount {
+  font-size: 0.8rem;
+  font-weight: 700;
+  color: var(--eg-gold);
+  white-space: nowrap;
+}
+
+/* العنصر المقروء يحتاج مكانًا للعلامة، فلا يركب عليه النصّ. */
+.eg-item {
+  position: relative;
+  padding-inline-end: 38px;
+}
+
+.eg-mark {
+  position: absolute;
+  inset-inline-end: 8px;
+  inset-block-start: 8px;
+  z-index: 1;
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: 1px solid var(--eg-line);
+  border-radius: 50%;
+  background: var(--eg-paper);
+  color: var(--eg-green);
+  font-family: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  line-height: 1;
+  cursor: pointer;
+  transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+}
+
+.eg-mark:hover {
+  border-color: var(--eg-green);
+}
+
+.eg-mark[aria-pressed="true"] {
+  background: var(--eg-green);
+  border-color: var(--eg-green);
+  color: var(--eg-paper);
+}
+
+/* ---------------------------------------------------------- تكيّف وتراعي */
+
+@media (max-width: 420px) {
+  .eg-pill {
+    gap: 6px;
+    padding: 6px 9px 6px 6px;
+    font-size: 0.76rem;
+  }
+
+  .eg-stats {
+    gap: 6px;
+  }
+
+  .eg-stat b {
+    font-size: 1rem;
+  }
+
+  .eg-grid {
+    grid-template-columns: repeat(auto-fill, minmax(96px, 1fr));
+  }
+}
+
+/* reduced motion: بلا انزلاق، والشرارة تبقى ساكنة. */
+@media (prefers-reduced-motion: reduce) {
+  .eg-pill,
+  .eg-toast,
+  .eg-ring-fg,
+  .eg-mark {
+    transition: none;
+  }
+
+  .eg-pill:hover {
+    transform: none;
+  }
+}

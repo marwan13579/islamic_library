@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<link rel="stylesheet" href="engage.css">
+<script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>دليل الحج والعمرة</title>
@@ -245,5 +247,15 @@ function select(id){
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+<!-- بحث داخل الصفحة وتعليم ما قُرئ — من طبقة التفاعل المشتركة. -->
+<script>
+(function(){
+  function init(){
+    if(!window.Engagement) return setTimeout(init, 60);
+    Engagement.enhanceReadPage({ items: ".step", label: "خطوة" });
+  }
+  if(document.readyState==="loading") document.addEventListener("DOMContentLoaded", init);
+  else init();
+})();
+</script>
 </body>
-</html>

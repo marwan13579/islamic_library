@@ -3,6 +3,8 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<link rel="stylesheet" href="engage.css">
+<script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <script src="backup-core.js"></script>
@@ -308,6 +310,8 @@ header{
     <p class="stext" id="sincText">كل عدّاد وكل خط تقدّم هنا وسيلة تنظّمك، مش غاية ولا مقياس تتفاخر أو تُقارن بيه نفسك بحد. بياناتك محفوظة على جهازك وحدك، محدش شايفها غيرك. الأصل النية الخالصة لله، والأجر عنده وحده سبحانه، سواء علِم بعملك أحد أو لم يعلم.</p>
   </div>
   <div id="dashboard"></div>
+  <!-- تحدّي اليوم وأوسمة المكتبة: تبنيها `engage.js` في هذا الموضع. -->
+  <div id="engageRoot"></div>
 </div>
 
 <nav class="cats" id="cats" aria-label="أقسام الأدوات"></nav>
@@ -1029,7 +1033,7 @@ import("./src/lib/auto-notify.js")
   .catch(function () {});
 </script>
 <script type="module">
-  import { createSearchModal, addToHistory } from "./src/components/search-modal.js";
+  import { createSearchModal, addToHistory, openSearchModal, closeSearchModal } from "./src/components/search-modal.js";
   import { registerArraySource, registerDataSources } from "./src/lib/search-content.js";
   import { HADITHS } from "./src/data/hadiths.js";
   import { ADHKAR, ADHKAR_KEYS } from "./src/data/adhkar.js";

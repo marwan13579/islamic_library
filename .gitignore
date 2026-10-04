@@ -7,5 +7,8 @@ dist/
 # Python bytecode
 __pycache__/
 
+# بيئة توليد الكتالوج (scripts/catalog.sh)
+.catalog-venv/
+
 # Kilo worktrees — copies of the repo for agent sessions, not project files
 .kilo/

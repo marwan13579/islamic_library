@@ -14,7 +14,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v41";
+const CACHE_VERSION = "islamic-library-v42";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -51,6 +51,8 @@ const SHELL = [
   "./daily-companion.js",
   "./daily-home.js",
   "./daily-companion.css",
+  "./engage.js",
+  "./engage.css",
   // دليل المكتبة: منطق الجولة التعريفية وتنسيقها.
   "./intro-tour.js", "./intro-tour.css",
   "./fonts.css",

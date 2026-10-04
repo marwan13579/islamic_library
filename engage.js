@@ -118,6 +118,8 @@
       challenges: {},/* "YYYY-MM-DD": معرّف التحدّي المنجَز فيه */
       seen: 0,       /* كم مرّة فُتح الموقع */
       muted: false,  /* كتم النغمة */
+      tools: {},     /* "صفحة.html": آخر يوم فُتحت فيه، فلا تُحسب مرّتين */
+      life: {},      /* نوع العمل: مجموعه منذ البداية، وهو ما تفحصه الأوسمة */
       seeded: {},    /* آخر قيمة حُصدت لكل مؤشّر، فلا يُنقاط التقدّم مرّتين */
     };
   }
@@ -147,6 +149,17 @@
     }
     if (raw.challenges && typeof raw.challenges === "object") {
       Object.keys(raw.challenges).forEach(function (key) { out.challenges[key] = String(raw.challenges[key]); });
+    }
+    if (raw.tools && typeof raw.tools === "object") {
+      Object.keys(raw.tools).slice(0, 200).forEach(function (key) {
+        out.tools[key] = String(raw.tools[key]);
+      });
+    }
+    if (raw.life && typeof raw.life === "object") {
+      Object.keys(raw.life).forEach(function (key) {
+        var n = Number(raw.life[key]);
+        if (isFinite(n) && n > 0) out.life[key] = Math.round(n);
+      });
     }
     out.seen = Math.max(0, Number(raw.seen) || 0);
     out.muted = !!raw.muted;
@@ -349,20 +362,23 @@
         s.seeded[metric.act] = { v: Math.max(wasV, value), d: String(got.d || wasD || "") };
       }
       if (delta <= 0) return;
-      /* يمنع تكدّس مؤشّرٍ واحد في يوم واحد: نُنسب إلى يوم القراءة لا
-       * يوم الحصاد، فما يعتمد على الفارق إلا ما جرى اليوم. */
-      byAct[metric.act] = Math.min(delta, 100000);
+      byAct[metric.act] = Math.min(delta, 10000);
       earned += delta * POINTS[metric.act];
     });
     var added = Math.round(earned);
-    if (added > 0) {
-      s.points += added;
-      credit(added, byAct);
-    }
+    if (added > 0) credit(added, byAct);
     return { added: added, byAct: byAct };
   }
 
-  /** يضيف عملًا إلى سجلّ اليوم. */
+  /**
+   * един مصدر النقاط: يزيد الرصيد التراكمي، ويقيّد سجلّ اليوم، ويسجّل
+   * المجموع منذ البداية لكل نوع عمل — وهو ما تفحصه الأوسمة.
+   *
+   *Harvest والدعوة المباشرة (`record`) يمرّان من هنا، فيبقى العدّاد
+   * واحدًا ولا ينحرف. والفارق وحده يُغذّي `life`، فلا يُحسب التقدّم مرّتين.
+   *
+   * @returns {number} ما أُضيف فعلًا
+   */
   function credit(points, byAct) {
     var s = load();
     var key = today();
@@ -372,21 +388,26 @@
       var amount = Math.max(0, Number(byAct[act]) || 0);
       if (!amount) return;
       day.k[act] = Math.max(0, (Number(day.k[act]) || 0) + amount);
+      s.life[act] = Math.max(0, (Number(s.life[act]) || 0) + amount);
       acts[act] = amount;
     });
-    day.p += Math.max(0, Math.round(points) || 0);
+    var gained = Math.max(0, Math.round(points) || 0);
+    day.p += gained;
     day.a += Object.keys(acts).length;
     s.days[key] = day;
+    s.points += gained;
     pruneDays(s.days);
+    return gained;
   }
 
   /** لقطة واحدة تجمع كل ما تحتاجه الأوسمة والواجهة. */
   function snapshot() {
     var s = load();
     var totals = {};
-    METRICS.forEach(function (metric) {
-      var prev = s.seeded[metric.act];
-      totals[metric.act] = prev && typeof prev === "object" ? Number(prev.v) || 0 : 0;
+    /* كل أنواع العمل، لا المؤشّرات وحدها: `study` و`tool` لا مصدرَ لهما
+     * في الأدوات، فهما يُسجّلان مباشرةً من الواجهة. */
+    Object.keys(POINTS).forEach(function (act) {
+      totals[act] = Math.max(0, Number(s.life[act]) || 0);
     });
     var day = s.days[today()] || { p: 0, a: 0, k: {} };
     var reads = 0;
@@ -565,11 +586,19 @@
       hint: "من لوحة اليوم", url: "index.html#dcRoot" },
   ];
 
+  /**
+   * تجزئة FNV-1a لثلاثين بتًا.
+   *
+   * `Math.imul` لا `*`: حاصل الضرب في FNV يبلغ ٥٦ بتًا، والنقطة العائمة
+   * تقف عند ٥٣، فتضيع البتّات الدنيا ويتكرّر تجزئةُ التواريخ. جرّب:
+   * `h * 16777619` يعطي ستّ نتائجٍ فقط في ستّين يومًا، و`imul` يعطيها
+   * اثنتين وعشرين.
+   */
   function hash(text) {
     var h = 2166136261;
     for (var i = 0; i < text.length; i++) {
       h ^= text.charCodeAt(i);
-      h = (h * 16777619) >>> 0;
+      h = Math.imul(h, 16777619) >>> 0;
     }
     return h >>> 0;
   }
@@ -631,9 +660,9 @@
     document.body.appendChild(canvas);
     var ctx = canvas.getContext && canvas.getContext("2d");
     if (!ctx) { canvas.remove(); return; }
-    var ratio = Math.min(2, global.devicePixelRatio || 1);
-    var w = canvas.clientWidth || global.innerWidth || 320;
-    var h = canvas.clientHeight || global.innerHeight || 480;
+    var ratio = Math.min(2, GLOBAL.devicePixelRatio || 1);
+    var w = canvas.clientWidth || GLOBAL.innerWidth || 320;
+    var h = canvas.clientHeight || GLOBAL.innerHeight || 480;
     canvas.width = Math.round(w * ratio);
     canvas.height = Math.round(h * ratio);
     ctx.scale(ratio, ratio);
@@ -685,7 +714,7 @@
     var s = load();
     if (s.muted || reducedMotion()) return;
     try {
-      var Ctx = global.AudioContext || global.webkitAudioContext;
+      var Ctx = GLOBAL.AudioContext || GLOBAL.webkitAudioContext;
       if (!Ctx) return;
       if (!audioCtx) audioCtx = new Ctx();
       if (audioCtx.state === "suspended" && audioCtx.resume) audioCtx.resume();
@@ -729,8 +758,8 @@
       node.appendChild(detail);
     }
     node.classList.add("show");
-    global.clearTimeout(node.egTimer);
-    node.egTimer = global.setTimeout(function () { node.classList.remove("show"); }, 4200);
+    GLOBAL.clearTimeout(node.egTimer);
+    node.egTimer = GLOBAL.setTimeout(function () { node.classList.remove("show"); }, 4200);
   }
 
   /** احتفال كامل: نغمة وقصاصات وتنبيه بكل وسام فُتح. */
@@ -861,7 +890,7 @@
         render();
         toast(s.muted ? "كُتمت النغمة" : "عادت النغمة");
       } else if (button.dataset.eg === "reset") {
-        if (global.confirm("سيُصفّر تقدّمك في هذه الطبقة فقط: النقاط والأوسمة " +
+        if (GLOBAL.confirm("سيُصفّر تقدّمك في هذه الطبقة فقط: النقاط والأوسمة " +
           "وأيام المتتالية وما علّمته من عناصر. لن يمسّ数据和 الأدوات. أتممت؟")) {
           reset();
           toast("صُفِّر تقدّمك");
@@ -1145,6 +1174,28 @@
 
   /* ====================================================== 10) الإقلاع */
 
+  /**
+   * فتحُ الأداة نفسها مرّة واحدة في اليوم يُحسب عملًا واحدًا.
+   * يُستثنى الفهرس نفسه، فهو لا عمل.
+   */
+  function noteVisit() {
+    var page = currentPage();
+    if (page === "index.html" || !page || page === "offline.html") return;
+    var s = load();
+    var day = today();
+    if (!s.tools || typeof s.tools !== "object") s.tools = {};
+    if (s.tools[page] === day) return;
+    s.tools[page] = day;
+    var keys = Object.keys(s.tools);
+    if (keys.length > 200) {
+      keys.sort(function (a, b) { return s.tools[a] < s.tools[b] ? -1 : 1; })
+        .slice(0, keys.length - 200)
+        .forEach(function (key) { delete s.tools[key]; });
+    }
+    save();
+    record("tool", 1, { silent: true });
+  }
+
   function boot() {
     if (!hasDom()) return;
     try {
@@ -1152,28 +1203,30 @@
       s.seen = (Number(s.seen) || 0) + 1;
       save();
       harvest();
-      var opened = unlockBadges();
+      /* الأوسمة التي تُفتح من عملٍ سابقٍ لا تُحتفَل بها في صمت عند الإقلاع،
+       * فالمستخدم لم يفعّل شيئًا الآن. تُحتفَل عند أول عمل جديد. */
+      unlockBadges();
       save();
-      render();
+      /* الشارة والبطاقة تُبنى أوّلًا ثم تُرسَم: الرسم قبل البناء لا يجد
+       * ما يرسمه، فتبقى الشارة بلا اسمٍ لقارئ الشاشة ولا حلقةَ تقدّم. */
       buildPill();
-      /* فتحُ وسامٍ جديدٍ بعد عملٍ سابقٍ لا يحتفل في صمت، ولا يحتاج أن
-       * يرى المستخدم ما فات. فالقسم الثاني يُعلَم عند أول فتحٍ للوحة. */
-      if (opened.length) opened = opened;
       mountIfPresent();
+      noteVisit();
+      render();
 
       /* بعد كل نقرة يتغيّر شيء في أداة، فنعيد الحصاد. أسهل من تعديل
        * أربعين صفحة لتُنادي `record`، وأخفّ من مراقب تغييرات. */
       var pending = null;
       function onTouch() {
         if (pending) return;
-        pending = global.setTimeout(function () { pending = null; refresh(); }, 400);
+        pending = GLOBAL.setTimeout(function () { pending = null; refresh(); }, 400);
       }
       document.addEventListener("click", onTouch, true);
       document.addEventListener("keydown", onTouch, true);
       document.addEventListener("visibilitychange", function () {
         if (!document.hidden) refresh();
       });
-      global.addEventListener("focus", refresh);
+      GLOBAL.addEventListener("focus", refresh);
     } catch (e) { /* صامت: المكتبة تعمل بلا هذه الطبقة */ }
   }
 
