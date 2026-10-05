@@ -29,9 +29,6 @@ jobs:
       - run: npm run check:order
       - run: npm run check:content
       - run: npm run check:noor
-      # المدوّدة البحثية (`content/corpora/`) مُولّدة ولا تُستَند كضروريّة
-      # للـrepo، فتُبنى أولًا ثم تُفحص لبنائها غير المتكرّسة وملفاتها الزائدة.
-      - run: npm run build:corpora
       - run: npm run check:corpora
       - run: npm run verify:content
       - run: npm run review:ci
