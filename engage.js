@@ -356,11 +356,13 @@
       var prev = s.seeded[metric.act];
       var wasV = prev && typeof prev === "object" ? Number(prev.v) || 0 : 0;
       var wasD = prev && typeof prev === "object" ? String(prev.d || "") : "";
-      /* مصدر يومي: تغيّر يومه يعني أن العدّاد بدأ من جديد، فالفارق كله. */
-      var delta = metric.daily && got.d && got.d !== wasD ? value : value - wasV;
-      if (!metric.daily || got.d) {
-        s.seeded[metric.act] = { v: Math.max(wasV, value), d: String(got.d || wasD || "") };
-      }
+      /* مصدر يومي: تغيّر يومه يعني أن العدّاد بدأ من جديد، فالفارق كله.
+       * ولو غاب ختمُ اليوم (بيانات ناقصة) فالفارق هو الفارق وحده. */
+      var restarted = metric.daily && got.d && got.d !== wasD;
+      var delta = restarted ? value : value - wasV;
+      /* المؤشّر يُكتب دائمًا، ولو بلا يوم. غيرُ ذلك لبقي المؤشّر صفرًا
+       * وبقي الفارق كاملًا في كل حصاد، فتضخّمت النقاط بلا حدّ. */
+      s.seeded[metric.act] = { v: Math.max(wasV, value), d: String(got.d || wasD || "") };
       if (delta <= 0) return;
       byAct[metric.act] = Math.min(delta, 10000);
       earned += delta * POINTS[metric.act];
@@ -371,11 +373,11 @@
   }
 
   /**
-   * един مصدر النقاط: يزيد الرصيد التراكمي، ويقيّد سجلّ اليوم، ويسجّل
-   * المجموع منذ البداية لكل نوع عمل — وهو ما تفحصه الأوسمة.
+   * وحيدةٌ في حساب النقاط: تزيد الرصيد التراكمي، وتقيّد سجلّ اليوم،
+   * وتسجّل المجموع منذ البداية لكل نوع عمل — وهو ما تفحصه الأوسمة.
    *
-   *Harvest والدعوة المباشرة (`record`) يمرّان من هنا، فيبقى العدّاد
-   * واحدًا ولا ينحرف. والفارق وحده يُغذّي `life`، فلا يُحسب التقدّم مرّتين.
+   * الحصاد والدعوة المباشرة (`record`) يمرّان من هنا، فيبقى العدّاد واحدًا
+   * ولا ينحرف. والفارق وحده يُغذّي `life`، فلا يُحسب التقدّم مرّتين.
    *
    * @returns {number} ما أُضيف فعلًا
    */

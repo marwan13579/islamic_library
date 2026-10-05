@@ -132,41 +132,10 @@ export async function searchAll(query, options = {}) {
     }
   }
   
-  // Also search with raw query for content that might have special chars
-  for (const source of registry.getAll()) {
-    if (!source.searchable) continue;
-    if (typeFilter && source.type !== typeFilter) continue;
-    
-    try {
-      const results = await source.search(raw, raw, { limit: MAX_PER_SOURCE });
-      for (const r of results) {
-        const key = `${r.sourceId}-${r.id || r.title}`;
-        if (seen.has(key)) continue;
-        seen.add(key);
-        
-        // Filter by result category
-        if (categoryFilter && r.category !== categoryFilter) continue;
-        
-        let score = (r.score || 0) * 0.5; // Lower priority for raw match
-        allResults.push({
-          ...r,
-          score
-        });
-      }
-    } catch (e) {
-      // Skip
-    }
-  }
-  
-  // Sort by score
-  allResults.sort((a, b) => b.score - a.score);
-  
-  // Group by category
-  const categories = [...new Set(allResults.map(r => r.category))];
-  
+  const sorted = allResults.sort((a, b) => b.score - a.score);
   return {
-    results: allResults.slice(0, limit),
-    categories,
+    results: sorted.slice(0, limit),
+    categories: [...new Set(sorted.map(r => r.category))],
     intent
   };
 }

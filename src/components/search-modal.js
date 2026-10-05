@@ -610,18 +610,28 @@ async function performSearch() {
   showLoading();
   
   const category = activeFilter === "all" ? null : activeFilter;
-  const { results, categories, intent } = await searchAll(query, { 
-    limit: 50,
-    category
-  });
-  
-  currentResults = results;
-  selectedIndex = -1;
-  
-  if (results.length === 0) {
+  try {
+    const timeoutPromise = new Promise((_, reject) =>
+      setTimeout(() => reject(new Error("timeout")), 5000)
+    );
+    const { results, categories, intent } = await Promise.race([
+      searchAll(query, { limit: 50, category }),
+      timeoutPromise
+    ]);
+    
+    currentResults = results;
+    selectedIndex = -1;
+    
+    if (results.length === 0) {
+      showNoResults(query);
+    } else {
+      renderResults(results, categories, intent);
+    }
+  } catch (error) {
+    if (error.message !== "timeout") {
+      console.error("Search error:", error);
+    }
     showNoResults(query);
-  } else {
-    renderResults(results, categories, intent);
   }
 }
 
