@@ -5,6 +5,7 @@
  */
 
 import { searchAll, quickSearch, getSmartSuggestions, processQuery } from "../lib/unified-search.js";
+import { registerDataSources } from "../lib/search-content.js";
 import { HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE } from "../lib/search.js";
 
 const FILTERS = [
@@ -20,12 +21,26 @@ const FILTERS = [
   { id: "صوتيات", label: "الصوتيات", icon: "🎧" },
   { id: "فيديو", label: "الفيديو", icon: "🎬" },
   { id: "أدوات", label: "الأدوات", icon: "🛠️" },
+  { id: "حاسبات", label: "الحاسبات", icon: "🧮" },
   { id: "عبادات", label: "العبادات", icon: "🕌" },
   { id: "فقه", label: "الفقه", icon: "⚖️" },
   { id: "عقيدة", label: "العقيدة", icon: "💡" },
   { id: "أخلاق", label: "الأخلاق", icon: "❤️" },
   { id: "تاريخ", label: "التاريخ", icon: "🏛️" },
   { id: "فتاوى", label: "الفتاوى", icon: "📜" },
+  { id: "خطب", label: "الخطب", icon: "🗣️" },
+  { id: "حصن المسلم", label: "حصن المسلم", icon: "🛡️" },
+  { id: "اختبارات", label: "الاختبارات", icon: "🧠" },
+  { id: "علماء", label: "العلماء", icon: "👤" },
+  { id: "أسماء الله", label: "أسماء الله", icon: "ﷲ" },
+  { id: "سيرة", label: "السيرة", icon: "🕌" },
+  { id: "تعليم", label: "الدروس", icon: "📚" },
+  { id: "منهج", label: "المنهج", icon: "📖" },
+  { id: "أطفال", label: "الأطفال", icon: "🧒" },
+  { id: "أسئلة", label: "أسئلة", icon: "❓" },
+  { id: "أقوال", label: "أقوال", icon: "❝" },
+  { id: "قرّاء", label: "القرّاء", icon: "🎙️" },
+  { id: "إذاعة", label: "الإذاعة", icon: "📻" },
   { id: "صفحات", label: "الصفحات", icon: "📄" },
 ];
 
@@ -94,6 +109,32 @@ export function createSearchModal() {
   setupSearchModalEvents();
   renderFilters();
   loadHistory();
+  mountSearchTrigger();
+}
+
+/**
+ * زرٌّ يفتح البحث، للصفحات التي لا تملك حقلًا في ترويستها.
+ *
+ * كان الفهرس وحده يملك حقل بحث، فصارت بقية الصفحات تُركّب النافذة بلا مدخل:
+ * الاختصار على لوحة المفاتيح موجود، لكن لا زرّ يراه أحد. والصفحة التي تملك حقلًا
+ * ظاهرًا أصلًا (كـ `#search` في الفهرس) لا يُزرع لها زرّ ثانٍ.
+ *
+ * @returns {void}
+ */
+function mountSearchTrigger() {
+  if (!document.body) return;
+  if (document.getElementById("searchFab")) return;
+  if (document.getElementById("search") || document.querySelector("[data-search-trigger]")) return;
+
+  const button = document.createElement("button");
+  button.id = "searchFab";
+  button.type = "button";
+  button.className = "search-fab";
+  button.setAttribute("aria-label", "البحث الشامل");
+  button.title = "البحث الشامل — Ctrl+K";
+  button.innerHTML = "🔍";
+  button.addEventListener("click", () => openSearchModal());
+  document.body.appendChild(button);
 }
 
 /**
@@ -192,6 +233,37 @@ function getSearchModalStyles() {
     }
     .search-modal-clear:hover {
       background: var(--line, rgba(19,50,44,.14));
+    }
+    .search-fab {
+      position: fixed;
+      inset-inline-start: 16px;
+      bottom: calc(16px + env(safe-area-inset-bottom, 0px));
+      z-index: 46;
+      width: 46px;
+      height: 46px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      border: 1px solid var(--line, rgba(19,50,44,.14));
+      background: var(--card, #FFFAF0);
+      color: var(--ink, #13322C);
+      font-size: 1.1rem;
+      line-height: 1;
+      cursor: pointer;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, .18);
+      transition: transform .15s ease, background .15s ease;
+    }
+    .search-fab:hover {
+      transform: scale(1.06);
+      background: var(--paper-2, #EFE5CF);
+    }
+    .search-fab:focus-visible {
+      outline: 2px solid var(--gold, #9C7420);
+      outline-offset: 2px;
+    }
+    /* صفحة فيها مشغّل ثابت أسفلها: الزر يصعد فوقه ولا يستقرّ تحته. */
+    body:has(.lib-player:not([hidden])) .search-fab {
+      bottom: calc(84px + env(safe-area-inset-bottom, 0px));
     }
     .search-modal-filters {
       display: flex;
@@ -424,6 +496,7 @@ function getSearchModalStyles() {
         .search-modal-input-wrap,
         .search-modal-filter,
         .search-modal-item,
+        .search-fab,
         .search-modal-history-item {
           background: var(--card, #122E28);
           border-color: var(--line, rgba(239,227,201,.16));
@@ -436,6 +509,7 @@ function getSearchModalStyles() {
           color: var(--ink-soft, #A9BDB4);
         }
         .search-modal-item:hover,
+        .search-fab:hover,
         .search-modal-item.selected {
           background: var(--paper-2, #102A25);
         }
@@ -450,6 +524,7 @@ function getSearchModalStyles() {
       .search-modal-input-wrap,
       .search-modal-filter,
       .search-modal-item,
+      .search-fab,
       .search-modal-history-item {
         background: var(--card, #122E28);
         border-color: var(--line, rgba(239,227,201,.16));
@@ -462,6 +537,7 @@ function getSearchModalStyles() {
         color: var(--ink-soft, #A9BDB4);
       }
       .search-modal-item:hover,
+      .search-fab:hover,
       .search-modal-item.selected {
         background: var(--paper-2, #102A25);
       }
@@ -570,12 +646,23 @@ function isTyping(event) {
  * Open the search modal.
  */
 export async function openSearchModal() {
-  const modal = document.getElementById("searchModal");
-  if (!modal) {
+  if (!document.getElementById("searchModal")) {
     createSearchModal();
   }
-  
+  // النافذة تُقرأ بعد الإنشاء لا قبله: `createSearchModal` قد لا تفعل شيئًا إن
+  // كانت النافذة موجودة، وقد تنشئها الآن، فالقراءة الأولى كانت تُبقي `modal`
+  // فارغًا ثم `modal.classList` يُسقط الفتح كلّه.
+  const modal = document.getElementById("searchModal");
+  if (!modal) return;
   const input = document.getElementById("searchModalInput");
+  if (!input) return;
+
+  // المصادر تُحمَّل الآن في الخلفية، لا عند أوّل حرف: تفتح النافذة فالبحث
+  // يجد كل المحتوى جاهزًا. والمهمّة نفسها تتوقّع في `performSearch` أيضًا،
+  // فمن يفتح النافذة ويكتب فورًا لا ينتظر شيئًا. ورفضُها هنا يُتجاهل عمدًا:
+  // فتح النافذة لا يجوز أن يقع بسبب مصدرٍ واحد.
+  registerDataSources().catch(() => {});
+
   modal.classList.add("open");
   isOpen = true;
   input.value = "";
@@ -615,8 +702,11 @@ async function performSearch() {
   }
   
   showLoading();
-  
+
   const category = activeFilter === "all" ? null : activeFilter;
+  // مصدرٌ واحد يفشل تحميله لا يُسقط البحث: ما سُجّل يُبحث فيه، وما لم يُسجَّل
+  // يُبحث عنه في المحاولة التالية.
+  await registerDataSources().catch(() => {});
   try {
     const timeoutPromise = new Promise((_, reject) =>
       setTimeout(() => reject(new Error("timeout")), 5000)
@@ -813,7 +903,7 @@ function renderResults(results, categories, intent) {
           <span class="search-modal-item-icon">${escapeHtml(r.icon || "📄")}</span>
           <div class="search-modal-item-content">
             <p class="search-modal-item-title">${withHighlight(escapeHtml(r.title))}</p>
-            <p class="search-modal-item-desc">${withHighlight(escapeHtml(r.description || ""))}</p>
+            ${r.description ? `<p class="search-modal-item-desc">${withHighlight(escapeHtml(r.description))}</p>` : ""}
             ${r.matchType ? `<span class="search-modal-item-meta">${getMatchLabel(r.matchType)}</span>` : ""}
           </div>
           <span class="search-modal-item-action">فتح</span>

@@ -5,7 +5,7 @@
  */
 
 import { normalizeAr } from "./text.js";
-import { registry, createSource } from "./search-registry.js";
+import { registry, createSource, scoreItem } from "./search-registry.js";
 
 // ===================== TOOLS / PAGES =====================
 
@@ -64,7 +64,7 @@ const toolCategoryMap = {
   dhikr: "أذكار",
   stories: "قصص",
   calc: "حاسبات",
-  books: "كتب وصوتيات"
+  books: "كتب"
 };
 
 registry.register({
@@ -236,13 +236,20 @@ export function registerArraySource(id, type, category, icon, title, description
     priority: 5,
     async search(query, normalizedQuery, options = {}) {
       const q = normalizedQuery || normalizeAr(query);
+      const describe = (item) => {
+        const body = getDesc ? getDesc(item) : "";
+        // اسم المجموعة جزءٌ من وصف العنصر: به يُطابَق «أذكار الصباح» على ذكرٍّ
+        // نصّه لا يذكر الصباح، وبه يعرف المستخدم أين وقع.
+        const group = [item?.category, item?.cat].find((v) => typeof v === "string" && v.trim());
+        return group ? `${body ? `${body} — ` : ""}${group}` : body;
+      };
       if (!q) return items.slice(0, 20).map((item, idx) => ({
         id: getId ? getId(item) : String(idx),
         type,
         category,
         icon,
         title: getTitle ? getTitle(item) : String(item),
-        description: getDesc ? getDesc(item) : "",
+        description: describe(item),
         route: getRoute ? getRoute(item) : "#",
         score: 0,
         matchType: "content",
@@ -251,30 +258,22 @@ export function registerArraySource(id, type, category, icon, title, description
       
       const results = [];
       for (const item of items) {
-        const title = normalizeAr(getTitle ? getTitle(item) : String(item));
-        const desc = normalizeAr(getDesc ? getDesc(item) : "");
-        const allText = `${title} ${desc}`;
-        
-        if (allText.includes(q)) {
-          let score = 0;
-          if (title === q) score = 100;
-          else if (title.startsWith(q)) score = 80;
-          else if (title.includes(q)) score = 60;
-          else score = 40;
-          
-          results.push({
-            id: getId ? getId(item) : String(item),
-            type,
-            category,
-            icon,
-            title: getTitle ? getTitle(item) : String(item),
-            description: getDesc ? getDesc(item) : "",
-            route: getRoute ? getRoute(item) : "#",
-            score,
-            matchType: title === q ? "exact" : title.includes(q) ? "title" : "content",
-            sourceId: id
-          });
-        }
+        const title = getTitle ? getTitle(item) : String(item);
+        const description = describe(item);
+        const hit = scoreItem({ title, description }, q);
+        if (!hit) continue;
+        results.push({
+          id: getId ? getId(item) : String(item),
+          type,
+          category,
+          icon,
+          title,
+          description,
+          route: getRoute ? getRoute(item) : "#",
+          score: hit.score,
+          matchType: hit.matchType,
+          sourceId: id
+        });
       }
       return results.sort((a, b) => b.score - a.score).slice(0, options.limit || 20);
     }
@@ -283,12 +282,417 @@ export function registerArraySource(id, type, category, icon, title, description
 
 // ===================== REGISTER DATA SOURCES =====================
 
-// This function should be called after data modules are loaded.
-// It will be called from the page scripts that have access to the data.
+/** @type {Promise<void>|null} */
+let dataSourcesReady = null;
 
-export async function registerDataSources() {
-  // Tools and pages are already registered above.
-  // Additional data sources will be registered here when their modules are loaded.
+/**
+ * Import one data module, or hand back an empty value if it will not load.
+ * @param {string} path مسار الوحدة نسبةً إلى هذا الملف
+ * @param {string} key اسم التصدير المطلوب
+ * @returns {Promise<any>}
+ */
+async function loadData(path, key) {
+  try {
+    const mod = await import(/* @vite-ignore */ path);
+    const value = mod[key];
+    return Array.isArray(value) || (value && typeof value === "object") ? value : [];
+  } catch {
+    return [];
+  }
+}
+
+/**
+ * The data sources every page can search, registered once per page.
+ *
+ * They used to live in `index.html`, so the other 44 pages that mount the search
+ * modal only had three sources (tools, pages, library) and searching an adhkar,
+ * a dua or a scholar name there returned nothing. Registration lives here now,
+ * behind a cached promise that the modal awaits on its first search, so coverage
+ * no longer depends on which page opened it.
+ *
+ * @returns {Promise<void>}
+ */
+export function registerDataSources() {
+  if (dataSourcesReady) return dataSourcesReady;
+
+  dataSourcesReady = (async () => {
+    // كل وحدة مستقلة: ملفٌ واحد مفقود أو معطوب يُسقط مصدره وحده، لا البحث
+    // كلّه. والوعد يُخزَّن بعد نجاحه، فإن أخفق يُحاول البحث التالي من جديد.
+    const [hadiths, adhkar, duas, appDuas, scholars, prophets, names99, seerah,
+      lessons, extraLessons, manhaj, kids, qa, sayings, channels] = await Promise.all([
+      loadData("../data/hadiths.js", "HADITHS"),
+      loadData("../data/adhkar.js", "ADHKAR"),
+      loadData("../data/duas.js", "DUAS"),
+      loadData("../data/app-duas.js", "APP_DUAS"),
+      loadData("../data/scholars.js", "SCHOLARS"),
+      loadData("../data/prophets.js", "PROPHETS"),
+      loadData("../data/names99.js", "NAMES99"),
+      loadData("../data/seerah.js", "SEERAH"),
+      loadData("../data/lessons.js", "LESSONS"),
+      loadData("../data/lessons-extra.js", "EXTRA_LESSONS"),
+      loadData("../data/manhaj-lessons.js", "MANHAJ_LESSONS"),
+      loadData("../data/kids.js", "KIDS"),
+      loadData("../data/qa.js", "QA"),
+      loadData("../data/sayings.js", "SAYINGS"),
+      loadData("../data/islamic-channels.js", "CHANNELS"),
+    ]);
+
+    // المفاتيح تُؤخذ من الكائن نفسه لا من ثوابت مصاحبة، فلا يحتاج هذا الملف
+    // استيرادًا إضافيًّا لكل مجموعة.
+    const adhkarItems = Object.entries(adhkar).flatMap(([key, group]) =>
+      (group?.items || []).map((item, idx) => ({
+        ...item,
+        category: group?.title || "",
+        id: `${key}-${idx}`,
+      })));
+    const duaItems = Object.entries(duas).flatMap(([key, group]) =>
+      (group?.items || []).map((item, idx) => ({
+        ...item,
+        category: group?.title || "",
+        id: `${key}-${idx}`,
+      })));
+
+    registerArraySource(
+      "hadiths", "hadith", "حديث", "📕", "الأحاديث", "الأحاديث النبوية الشريفة",
+      hadiths,
+      (h) => h.title,
+      (h) => `${h.text} ${h.ref || ""}`,
+      (h) => String(h.id),
+      (h) => `27-hadith.html#hadith-${h.id}`,
+    );
+
+    registerArraySource(
+      "adhkar", "dhikr", "أذكار", "🤲", "الأذكار", "الأذكار والأدعية",
+      adhkarItems,
+      (item) => item.txt || "",
+      (item) => `${item.src || ""} ${item.count ? `(${item.count}×)` : ""}`,
+      (item) => item.id,
+      () => "25-azkar-shamila.html",
+    );
+
+    registerArraySource(
+      "duas", "dua", "أدعية", "🤲", "أدعية المناسبات", "دعاء السفر والمرض والهمّ والطعام",
+      duaItems,
+      (item) => item.txt || "",
+      (item) => `${item.src || ""} ${item.category || ""}`,
+      (item) => item.id,
+      () => "6-munasabat.html",
+    );
+
+    registerArraySource(
+      "appduas", "dua", "أدعية", "🤲", "أدعية التطبيق", "أدعية صلاة الاستخارة والهمّ والحج",
+      appDuas,
+      (item) => item.title || "",
+      (item) => `${item.text || ""} ${item.ref || ""}`,
+      (item) => String(item.title || item.cat || "").slice(0, 40),
+      () => "src/app/app.html#dua",
+    );
+
+    registerArraySource(
+      "scholars", "scholar", "علماء", "👤", "أعلام السلف", "علماء وأعلام السلف",
+      scholars,
+      (s) => s.name,
+      (s) => `${s.bio || ""} ${s.tag || ""} ${s.era || ""}`,
+      (s) => String(s.name),
+      () => "src/site/noor.html#scholars",
+    );
+
+    registerArraySource(
+      "prophets", "prophet", "قصص", "🌟", "قصص الأنبياء", "قصص الأنبياء والرسل",
+      prophets,
+      (p) => p.title,
+      (p) => `${p.desc || ""} ${p.story || ""}`,
+      (p) => String(p.title),
+      () => "8-qasas-anbiya.html",
+    );
+
+    registerArraySource(
+      "names", "name", "أسماء الله", "ﷲ", "أسماء الله الحسنى", "الأسماء الحسنى ومعانيها",
+      names99,
+      (n) => n.n,
+      (n) => n.m,
+      (n) => String(n.n),
+      () => "5-asmaulhusna.html",
+    );
+
+    registerArraySource(
+      "seerah", "seerah", "سيرة", "🕌", "السيرة النبوية", "محطات من حياة النبي ﷺ",
+      seerah,
+      (s) => s.title,
+      (s) => `${s.desc || ""} ${s.year || ""}`,
+      (s) => String(s.title),
+      () => "9-seerah.html",
+    );
+
+    registerArraySource(
+      "lessons", "lesson", "تعليم", "📚", "الدروس الفقهية", "دروس الطهارة والأحكام والآداب",
+      [...lessons, ...extraLessons],
+      (l) => l.title,
+      (l) => `${l.desc || ""} ${l.cat || ""}`,
+      (l) => String(l.id ?? l.title),
+      (l) => `src/site/noor.html#lesson/${l.id}`,
+    );
+
+    registerArraySource(
+      "manhaj", "lesson", "منهج", "📖", "منهج سلف الأمة", "دروس منهجية في العقيدة والأصول",
+      manhaj,
+      (l) => l.title,
+      (l) => `${l.desc || ""} ${l.cat || ""}`,
+      (l) => l.id,
+      (l) => `src/site/noor.html#lesson/${l.id}`,
+    );
+
+    registerArraySource(
+      "kids", "kids", "أطفال", "🧒", "ركن الأطفال", "دروس وقصص مبسطة للصغار",
+      kids,
+      (k) => `${k.emoji || ""} ${k.title}`,
+      (k) => `${k.desc || ""} ${k.age || ""}`,
+      (k) => String(k.title),
+      () => "src/site/noor.html#kids",
+    );
+
+    registerArraySource(
+      "qa", "qa", "أسئلة", "❓", "أسئلة وأجوبة", "أسئلة شائعة عن المنهج والمحتوى",
+      qa,
+      (item) => item.q,
+      (item) => item.a,
+      (item) => String(item.q).slice(0, 40),
+      () => "src/site/noor.html#qa",
+    );
+
+    registerArraySource(
+      "sayings", "saying", "أقوال", "❝", "أقوال السلف", "أقوال مختارة لعلماء السلف",
+      sayings,
+      (s) => s.txt,
+      (s) => `${s.author || ""} ${s.src || ""}`,
+      (s) => String(s.txt).slice(0, 40),
+      () => "src/site/noor.html#sayings",
+    );
+
+    registerArraySource(
+      "channels", "channel", "فيديو", "🎬", "قنوات مصنّفة", "قنوات يوتيوب موثّقة ومعتمدة",
+      channels,
+      (c) => c.nameAr || c.nameEn || "",
+      (c) => `${c.descriptionAr || c.descriptionEn || ""} ${(c.keywords || []).join(" ")}`,
+      (c) => String(c.id),
+      () => "islamic-videos/index.html",
+    );
+
+    await registerJsonSources();
+  })();
+
+  return dataSourcesReady;
+}
+
+/**
+ * Sources that live in JSON on disk rather than in a data module: the 114 surah
+ * names, the reciters, and the radio stations. A missing or slow file only
+ * removes its own source, never the others.
+ *
+ * @returns {Promise<void>}
+ */
+async function registerJsonSources() {
+  const files = [
+    ["content/surahs.json", "surahs", "quran", "قرآن", "📖", "سور القرآن", "سور القرآن الكريم", "30-quran-full.html", (s) => `${s.verses} آية`, 12],
+    ["content/reciters.json", "reciters", "reciter", "قرّاء", "🎙️", "القرّاء", "قرّاء القرآن وتلاواتهم", "40-reciters.html", (r) => `${r.riwaya || ""} ${r.letter || ""}`.trim(), 4, (r) => r.riwaya || ""],
+    ["content/radio.json", "radio", "radio", "إذاعة", "📻", "الإذاعات", "إذاعات إسلامية مباشرة", "32-radio-hub.html", (r) => r.category || "", 4],
+  ];
+
+  await Promise.all([
+    ...files.map((file) => registerJsonSource(...file)),
+    registerAzkarShamila(),
+  ]);
+}
+
+/**
+ * A JSON file registered as a flat searchable list.
+ * @returns {Promise<void>}
+ */
+async function registerJsonSource(file, id, type, category, icon, title, description, page, describe, priority = 4, label = null) {
+  if (registry.get(id)) return;
+  let rows = [];
+  try {
+    const response = await fetch(file);
+    if (!response.ok) return;
+    const json = await response.json();
+    rows = Array.isArray(json) ? json : (json[id] || json.reciters || json.stations || []);
+  } catch {
+    return;
+  }
+  if (!rows.length) return;
+
+  // قارئٌ واحد له رواياتٌ عدّة فيُكرَّر اسمه في الملف، فتظهر النتائج cinco
+  // مرّات بالاسم نفسه. يُضاف الرواية إلى العنوان عند التكرار، ويُترك
+  // الوصف فارغًا فيه بدل أن يقول مرّتين ما قاله العنوان.
+  const nameCounts = new Map();
+  for (const row of rows) {
+    const name = row.name || row.nameAr || "";
+    nameCounts.set(name, (nameCounts.get(name) || 0) + 1);
+  }
+
+  registry.register({
+    id,
+    type,
+    category,
+    icon,
+    title,
+    description,
+    keywords: [category, title],
+    priority,
+    async search(query, normalizedQuery, options = {}) {
+      const q = normalizedQuery || normalizeAr(query);
+      if (!q) return [];
+      const limit = options.limit || 20;
+      const results = [];
+      for (const row of rows) {
+        const name = row.name || row.nameAr || "";
+        const detail = (describe(row) || "").trim();
+        const suffix = (label ? (label(row) || "") : detail).trim();
+        const repeated = nameCounts.get(name) > 1 && Boolean(suffix);
+        const item = {
+          id: String(row.no ?? row.id ?? name),
+          type: type === "quran" ? "surah" : type,
+          category,
+          icon,
+          // السورة تُعرض باسمها مع «سورة» وتُطابَق باسمها المجرّد أيضًا:
+          // «سورة الملك» و«الملك» اسمان لها، والأول أدقّ في البحث.
+          title: type === "quran" ? `سورة ${name}` : repeated ? `${name} — ${suffix}` : name,
+          aliases: type === "quran" ? [name] : [],
+          description: repeated ? "" : detail,
+          route: type === "quran" ? `${page}#surah-${row.no}` : page,
+        };
+        const hit = scoreItem(item, q);
+        if (!hit) continue;
+        if (type === "quran" && normalizeAr(row.nameEn || "").includes(q)) {
+          item.title = `سورة ${name} — ${row.nameEn}`;
+        }
+        // أفضلية المصدر تُضاف هنا كما في `registerArraySource`: كانت معرَّفة
+        // لهذه المصادر ولا يُقرأ منها شيء.
+        results.push({
+          ...item,
+          score: hit.score + priority,
+          matchType: hit.matchType,
+          sourceId: id
+        });
+      }
+      return results.sort((a, b) => b.score - a.score).slice(0, limit);
+    },
+  });
+}
+
+/**
+ * The comprehensive adhkar of `content/azkar.json`: six groups of dhikr whose
+ * titles carry the group name ("أذكار الصباح - …"), so the group words match
+ * even when the dhikr text itself never says them.
+ *
+ * Each group also produces one section result, because searching a section name
+ * should land on that section and not on one arbitrary dhikr inside it.
+ *
+ * @returns {Promise<void>}
+ */
+async function registerAzkarShamila() {
+  if (registry.get("azkarShamila")) return;
+  let groups = [];
+  try {
+    const response = await fetch("content/azkar.json");
+    if (!response.ok) return;
+    groups = await response.json();
+  } catch {
+    return;
+  }
+  if (!Array.isArray(groups)) return;
+
+  const PAGE = "25-azkar-shamila.html";
+  // The page opens a section from the hash, but under its own ids, not the keys
+  // of this file. Only the groups the page names get a deep link.
+  const HASHES = {
+    morning: "sabah",
+    evening: "masaa",
+    sleeping: "nawm",
+    food: "taam",
+    prayer: "salah_ba3d",
+  };
+
+  const sections = groups.map((group) => ({
+    id: `section-${group.key || ""}`,
+    label: group.category || group.key || "",
+    count: (group.array || []).length,
+    route: `${PAGE}${HASHES[group.key] ? `#${HASHES[group.key]}` : ""}`,
+  })).filter((section) => section.label);
+
+  const rows = groups.flatMap((group) => {
+    const route = `${PAGE}${HASHES[group.key] ? `#${HASHES[group.key]}` : ""}`;
+    return (group.array || []).map((item, idx) => ({
+      id: `${group.key || ""}-${item.id ?? idx}`,
+      group: group.category || group.key || "",
+      title: item.title || "",
+      text: item.adhkar || "",
+      note: item.description || "",
+      route,
+    }));
+  });
+  if (!rows.length) return;
+
+  const count = (n) => new Intl.NumberFormat("ar-EG").format(n);
+
+  registry.register({
+    id: "azkarShamila",
+    type: "dhikr",
+    category: "أذكار",
+    icon: "🤲",
+    title: "الأذكار الشاملة",
+    description: "الصباح والمساء والنوم والطعام وبعد الصلاة والتسابيح",
+    keywords: ["أذكار", "ذكر", "تسبيح", "تسابيح", "أدعية"],
+    priority: 8,
+    async search(query, normalizedQuery, options = {}) {
+      const q = normalizedQuery || normalizeAr(query);
+      if (!q) return [];
+      const limit = options.limit || 20;
+      const results = [];
+      for (const section of sections) {
+        const item = {
+          id: section.id,
+          type: "dhikr",
+          category: "أذكار",
+          icon: "🤲",
+          title: section.label,
+          description: `${count(section.count)} ذكرًا في الأذكار الشاملة`,
+          route: section.route,
+        };
+        const hit = scoreItem(item, q);
+        if (!hit) continue;
+        results.push({
+          ...item,
+          score: hit.score + 8,
+          matchType: hit.matchType,
+          sourceId: "azkarShamila",
+        });
+      }
+      for (const row of rows) {
+        const item = {
+          id: row.id,
+          type: "dhikr",
+          category: "أذكار",
+          icon: "🤲",
+          title: row.title,
+          // اسم المجموعة في نصّ المطابقة لا في الوصف المعروض: هو ما يجعل
+          // «أذكار الصباح» تصل إلى ذكرٍّ لا يذكر الصباح.
+          description: `${row.text} ${row.note} ${row.group}`.trim(),
+          route: row.route,
+        };
+        const hit = scoreItem(item, q);
+        if (!hit) continue;
+        results.push({
+          ...item,
+          description: `${row.group}${row.note ? ` — ${row.note}` : ""}`,
+          score: hit.score,
+          matchType: hit.matchType,
+          sourceId: "azkarShamila",
+        });
+      }
+      return results.sort((a, b) => b.score - a.score).slice(0, limit);
+    },
+  });
 }
 
 // ===================== LIBRARY CONTENT =====================
@@ -336,7 +740,20 @@ try {
       if (!q) return [];
       try {
         const res = await librarySearch(q, { limit: options.limit || 20 });
-        return res.results.map(r => {
+        // درجات محرّك المكتبة بمقياسه (بالآلاف)، ودرجات بقية المصادر ٠–١٠٠.
+        // بلا تقريب كانت نتيجةٌ واحدة من المكتبة تطغى على كل ما عداها مهما
+        // كانت أضعف مطابقةً. فتسحب الدرجة إلى النطاق نفسه: ٦٠٪ من الفارق بين
+        // أول نتيجة وآخرها فوق ٦٠، ونصيبُها من أفضلية المصدر ٥ فوق ذلك.
+        const top = Math.max(1, ...res.results.map((r) => r.score || 0));
+        const seen = new Set();
+        return res.results
+          .filter((r) => {
+            const key = `${r.type}|${r.id}|${r.title}`;
+            if (seen.has(key)) return false;
+            seen.add(key);
+            return true;
+          })
+          .map((r) => {
           const label = TYPE_LABELS[r.type] || r.type;
           const icon = TYPE_ICONS[r.type] || "📄";
           const page = TYPE_PAGES[r.type];
@@ -352,12 +769,15 @@ try {
           return {
             id: r.id,
             type: r.type,
-            category: "المكتبة",
+            // الفئة من نوع النصّ نفسه لا "المكتبة" كلّها: فتبويب «الفتاوى»
+            // و«التفسير» و«التاريخ» صار له ما يُصفّي به، بدل أن يجيب "لا نتائج"
+            // مهما نصّ عليه المستخدم.
+            category: label,
             icon,
             title: r.title,
             description: r.summary || "",
             route,
-            score: r.score || 0,
+            score: 60 + 40 * ((r.score || 0) / top),
             matchType: "content",
             sourceId: "library"
           };

@@ -47,7 +47,10 @@ export function processQuery(query) {
     }
     return corrected;
   });
-  normalized = correctedWords.join(" ");
+  // التطبيع بعد التصحيح لا قبله: جدولُ الإملاء يُعيد الهمزات («اذكار» ←
+  // «أذكار»)، والمصادر تقارن الاستعلام بنصوصٍ مطبَّعة، فاستعلامٌ غير مطبَّع
+  // يُسقط مطابقةً صحيحة من مصدرٍ بعد آخر.
+  normalized = normalizeAr(correctedWords.join(" "));
   
   // Expand aliases
   const expandedAliases = [];
@@ -117,8 +120,9 @@ export async function searchAll(query, options = {}) {
         // Boost for intent match
         if (r.type === intent || r.category === intent) score += 15;
         
-        // Boost for keyword match
-        for (const kw of source.keywords) {
+        // Boost for keyword match — مصدرٌ بلا `keywords` لا يسقط نتائجه كلّها
+        // بسبب حلقةٍ فوق قيمةٍ غير موجودة.
+        for (const kw of source.keywords || []) {
           if (normalizeAr(kw).includes(normalized)) score += 10;
         }
         

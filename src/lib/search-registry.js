@@ -75,6 +75,101 @@ export class SearchRegistry {
 export const registry = new SearchRegistry();
 
 /**
+ * المصطلحات التي أدخلها المستخدم، بعد التطبيع.
+ * @param {string} normalized
+ * @returns {string[]}
+ */
+function termsOf(normalized) {
+  return [...new Set(String(normalized || "").split(" ").filter(Boolean))];
+}
+
+/**
+ * Does one term hit a text, allowing a word prefix so "سفر" finds "السفر".
+ * @param {string} text نصٌّ مطبَّع
+ * @param {string} term مصطلح مطبَّع
+ * @returns {boolean}
+ */
+function termHits(text, term) {
+  if (!text) return false;
+  if (text.includes(term)) return true;
+  if (term.length < 3) return false;
+  return text.split(" ").some((word) => word.startsWith(term));
+}
+
+/**
+ * Score one item against the query: all terms must hit, and the closer they sit
+ * to the title and to each other the higher it scores.
+ *
+ * The old rule was a single `allText.includes(query)`, which answered "الزكاة"
+ * but missed "دعاء السفر" whenever the exact phrase was absent. Requiring every
+ * term and prefix-matching each one widens recall without widening noise, since
+ * an item that misses any term is dropped.
+ *
+ * `aliases` are alternative names scored like the title itself — a surah is
+ * "الملك" but is also written "سورة الملك", and both queries should find it
+ * with the same confidence.
+ *
+ * @param {{title?: string, aliases?: string[], description?: string, keywords?: string[]}} item
+ * @param {string} query الاستعلام المطبَّع
+ * @returns {{score: number, matchType: string} | null} null عند عدم المطابقة
+ */
+export function scoreItem(item, query) {
+  const phrase = String(query || "").trim();
+  const terms = termsOf(phrase);
+  if (!terms.length) return null;
+
+  const desc = normalizeAr(item?.description || item?.desc || item?.text || "");
+  const keywords = normalizeAr((item?.keywords || []).join(" "));
+  const titles = [normalizeAr(item?.title || item?.name || "")];
+  for (const alias of item?.aliases || []) {
+    const text = normalizeAr(alias);
+    if (text) titles.push(text);
+  }
+
+  let best = null;
+  for (const title of titles) {
+    const hit = scoreAgainst(title, desc, keywords, phrase, terms);
+    if (hit && (!best || hit.score > best.score)) best = hit;
+  }
+  if (!best) return null;
+
+  // كلماتٌ أكثر = أدقّ، فتُرفع الدرجة قليلًا حتى لا تغلب نتيجة كلمتين نتيجة
+  // سؤالٍ واحد، ويبقى الفارق محسوسًا.
+  return { score: best.score + Math.min(terms.length - 1, 4), matchType: best.matchType };
+}
+
+/**
+ * Score one candidate title of an item.
+ * @param {string} title نصٌّ مطبَّع
+ * @param {string} desc
+ * @param {string} keywords
+ * @param {string} phrase
+ * @param {string[]} terms
+ * @returns {{score: number, matchType: string} | null}
+ */
+function scoreAgainst(title, desc, keywords, phrase, terms) {
+  const inTitle = terms.filter((term) => termHits(title, term)).length;
+  const inRest = terms.filter((term) => termHits(desc, term) || termHits(keywords, term)).length;
+  if (inTitle + inRest < terms.length) return null;
+
+  const joined = terms.join(" ");
+  const whole = title === phrase || title === joined;
+  let score;
+  if (whole) score = 100;
+  else if (title.startsWith(phrase)) score = 80;
+  else if (title.includes(phrase)) score = 65;
+  else if (inTitle === terms.length) score = 55;
+  else if (phrase.includes(" ") && `${title} ${desc}`.includes(phrase)) score = 45;
+  else if (inTitle > 0) score = 40;
+  else score = 25;
+
+  const matchType = whole ? "exact" : title.includes(phrase) || inTitle === terms.length
+    ? "title"
+    : "content";
+  return { score, matchType };
+}
+
+/**
  * Helper to create a search source from a simple config.
  * @param {object} config
  * @returns {SearchSource}
@@ -104,28 +199,14 @@ export function createSource(config) {
       
       const results = [];
       for (const item of items) {
-        const title = normalizeAr(item.title || item.name || "");
-        const desc = normalizeAr(item.description || item.desc || item.text || "");
-        const keywords = (item.keywords || []).map(k => normalizeAr(k)).join(" ");
-        const allText = `${title} ${desc} ${keywords}`;
-        
-        if (allText.includes(q)) {
-          let score = 0;
-          if (title === q) score = 100;
-          else if (title.startsWith(q)) score = 80;
-          else if (title.includes(q)) score = 60;
-          else if (desc.includes(q)) score = 40;
-          else score = 20;
-          
-          score += this.priority;
-          
-          results.push({
-            ...item,
-            sourceId: this.id,
-            score,
-            matchType: title === q ? "exact" : title.includes(q) ? "title" : "content"
-          });
-        }
+        const hit = scoreItem(item, q);
+        if (!hit) continue;
+        results.push({
+          ...item,
+          sourceId: this.id,
+          score: hit.score + this.priority,
+          matchType: hit.matchType
+        });
       }
       
       return results.sort((a, b) => b.score - a.score).slice(0, options.limit || 20);

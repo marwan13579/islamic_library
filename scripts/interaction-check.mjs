@@ -327,6 +327,58 @@ console.log("\n=== البحث الموحّد يعرض نتائجه ===");
   await context.close();
 }
 
+/* ---------------------- البحث في صفحةٍ ليست الفهرس ---------------------- */
+console.log("\n=== البحث يعمل في كل صفحة، لا في الفهرس وحده ===");
+for (const [page, query, expected] of [
+  ["25-azkar-shamila.html", "أذكار الصباح", /الصباح/],
+  ["39-tarikh.html", "دعاء السفر", /السفر/],
+]) {
+  const context = await browser.newContext();
+  const tab = await context.newPage();
+  const errors = [];
+  tab.on("pageerror", (error) => errors.push(error.message));
+  await tab.goto(`${base}/${page}`, { waitUntil: "load" });
+  await tab.waitForTimeout(1200);
+
+  const trigger = await tab.evaluate(() => {
+    const button = document.getElementById("searchFab");
+    if (!button) return { present: false };
+    const box = button.getBoundingClientRect();
+    return {
+      present: true,
+      visible: box.width > 0 && box.height > 0 && getComputedStyle(button).visibility !== "hidden",
+      right: box.right,
+      bottom: box.bottom,
+    };
+  });
+  pass(trigger.present && trigger.visible, `${page}: زرّ البحث ظاهر`);
+
+  await tab.click("#searchFab");
+  await tab.waitForTimeout(600);
+  const opened = await tab.evaluate(() => document.getElementById("searchModal")?.classList.contains("open"));
+  pass(Boolean(opened), `${page}: الزرّ يفتح النافذة`);
+
+  await tab.fill("#searchModalInput", query);
+  await tab.locator("#searchModalResults .search-modal-item").first().waitFor({ timeout: 15000 });
+  const results = await tab.evaluate(() =>
+    [...document.querySelectorAll("#searchModalResults .search-modal-item")].map((item) => ({
+      title: item.querySelector(".search-modal-item-title")?.textContent || "",
+      href: item.getAttribute("href") || "",
+    })),
+  );
+  pass(results.length > 0, `${page}: «${query}» يعطي ${results.length} نتيجة`);
+  pass(
+    results.some((item) => expected.test(item.title)),
+    `${page}: «${query}» يردّ بالمتوقّع`,
+  );
+  pass(
+    results.every((item) => item.href && item.href !== "#"),
+    `${page}: كل نتيجة لها رابط`,
+  );
+  pass(errors.length === 0, `${page}: بلا أخطاء وقت التشغيل${errors.length ? ": " + errors.join(" | ") : ""}`);
+  await context.close();
+}
+
 console.log("\n=== ورقة المراجعة العلمية ===");
 {
   const context = await browser.newContext();
