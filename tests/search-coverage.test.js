@@ -8,6 +8,7 @@ const test = require("node:test");
 const assert = require("node:assert/strict");
 const fs = require("node:fs");
 const path = require("node:path");
+const { spawnSync } = require("node:child_process");
 
 const ROOT = path.resolve(__dirname, "..");
 const read = (rel) => fs.readFileSync(path.join(ROOT, rel), "utf8");
@@ -16,7 +17,11 @@ const fileUrl = (rel) => `file://${path.join(ROOT, rel)}`;
 /** يقرأ ملفات JSON التي يطلبها محرّك البحث في المتصفّح. */
 function stubFetch() {
   return async (target) => {
-    const rel = String(target).replace(/^\.?\//, "");
+    // المحرّك يطلب روابطَ مطلقة (محسوبةً من وحداته)، والصفحات طلباتٍ نسبية.
+    const raw = String(target);
+    const rel = raw.startsWith("file://")
+      ? path.relative(ROOT, decodeURIComponent(new URL(raw).pathname))
+      : raw.replace(/^\.?\//, "");
     try {
       return { ok: true, json: async () => JSON.parse(read(rel)) };
     } catch {
@@ -25,18 +30,17 @@ function stubFetch() {
   };
 }
 
+// المصادر الكسولة (مدوّدة النصوص) تُحمَّل أوّلَ بحثٍ بعدها، فلا يكفي أن
+// يكون بديلُ الشبكة مركَّبًا أثناء التسجيل: يبقى بديلُ الملفات طوال الملف،
+// وإلّا خرج البحث النصّي إلى شبكةٍ حقيقية في الاختبار.
+globalThis.fetch = stubFetch();
+
 async function loadSearch() {
-  const original = globalThis.fetch;
-  globalThis.fetch = stubFetch();
-  try {
-    const content = await import(fileUrl("src/lib/search-content.js"));
-    await content.registerDataSources();
-    const registry = await import(fileUrl("src/lib/search-registry.js"));
-    const unified = await import(fileUrl("src/lib/unified-search.js"));
-    return { ...content, ...registry, ...unified };
-  } finally {
-    globalThis.fetch = original;
-  }
+  const content = await import(fileUrl("src/lib/search-content.js"));
+  await content.registerDataSources();
+  const registry = await import(fileUrl("src/lib/search-registry.js"));
+  const unified = await import(fileUrl("src/lib/unified-search.js"));
+  return { ...content, ...registry, ...unified };
 }
 
 /* ------------------------------------------------------- التسجيل المركزي */
@@ -51,7 +55,7 @@ test("☑ البحث: المصادر تُسجَّل مركزيًا لا في ا�
 
   // النافذة نفسها تستدعيه، فالصفحة التي لا تستدعيه تجد المصادر عند فتحها.
   const modal = read("src/components/search-modal.js");
-  assert.match(modal, /import \{ registerDataSources \} from "\.\.\/lib\/search-content\.js"/, "النافذة لا ترفع التسجيل");
+  assert.match(modal, /import \{[^}]*registerDataSources[^}]*\} from "\.\.\/lib\/search-content\.js"/, "النافذة لا ترفع التسجيل");
   assert.match(modal, /await registerDataSources\(\)\.catch/, "البحث لا ينتظر المصادر");
 });
 
@@ -78,6 +82,13 @@ test("☑ البحث: كل مصدر يُعطي نتيجةً ذات عنوان و
     azkarShamila: "الصباح",
     tools: "الزكاة",
     pages: "القرآن",
+    questions: "الصلاة",
+    appathkar: "الاستغفار",
+    daily: "سنتي",
+    cities: "القاهرة",
+    hijri: "عاشوراء",
+    stations: "إذاعة",
+    sections: "أعلام",
   };
 
   for (const [id, word] of Object.entries(expected)) {
@@ -93,6 +104,94 @@ test("☑ البحث: كل مصدر يُعطي نتيجةً ذات عنوان و
   }
 });
 
+/* ------------------------------------------------- نصّ القرآن والتفسير وغريبه */
+
+test("☑ المدوّدة: مبنيّةٌ من مصادرها ومطابقةٌ لها", () => {
+  const check = spawnSync(
+    process.execPath,
+    [path.join(ROOT, "scripts/build-search-corpora.cjs"), "--check"],
+    { encoding: "utf8" },
+  );
+  assert.equal(check.status, 0, `مدوّدة البحث لا تطابق مصادرها:\n${check.stderr}`);
+
+  const manifest = JSON.parse(read("content/corpora/manifest.json"));
+  assert.deepEqual(
+    Object.keys(manifest.corpora).sort(),
+    ["hisn", "quran", "siraj", "tafsir"],
+    "مدوّدات البحث تغيّرت: إمّا أُضيف مصدرٌ وإلّا سقط",
+  );
+
+  // قاعدة المشروع: لا ملفّ في `content/` يتجاوز حدّ التحميل، والمدوّدةُ
+  // أجزاء. partesُ مدوّدةٍ واحدة يجب أن تُشغّل البحث معًا، فحجمُها وحده لا يكفي.
+  for (const [name, info] of Object.entries(manifest.corpora)) {
+    assert.ok(info.files >= 1, `${name}: بلا أجزاء`);
+    assert.ok(info.rows > 0, `${name}: بلا صفوف`);
+    for (const file of fs.readdirSync(path.join(ROOT, "content/corpora", name))) {
+      const size = fs.statSync(path.join(ROOT, "content/corpora", name, file)).size;
+      assert.ok(size <= 650 * 1024, `${name}/${file} كبير: ${size}`);
+    }
+  }
+});
+
+test("☑ المدوّدة: آيات المصحف تُبحث بنصّها وتفتح موضعها", async () => {
+  const { registry } = await loadSearch();
+  const source = registry.get("corpusQuran");
+  assert.ok(source, "مصدر آيات المصحف مفقود");
+  assert.equal(source.lazy, true, "المدوّدة يجب أن تُحمَّل عند الحاجة لا مع النافذة");
+
+  // لفظٌ من آية بلفظها، بلا تشكيل.
+  const byText = await source.search("الحمد لله رب العالمين");
+  assert.ok(byText.length, "لم يجد البحثُ آيةً بلفظها");
+  assert.equal(byText[0].title, "سورة الفاتحة: ٢");
+  assert.equal(byText[0].route, "30-quran-full.html?s=1&a=2");
+
+  // «البقرة ٢٥٥»: سورةٌ برقمها ورقم آيتها، لا أي آية رقمُها ٢٥٥.
+  const byNumber = await source.search("البقرة 255");
+  assert.equal(byNumber[0].title, "سورة البقرة: ٢٥٥");
+  assert.equal(byNumber.filter((r) => r.title === "سورة البقرة: ٢٥٥").length, 1);
+
+  // موضعٌ في المصحف بسؤالٍ عن الجزء.
+  const juz = await source.search("الجزء 30");
+  assert.ok(juz.some((r) => /الجزء ٣٠/.test(r.title)), "لا نتيجة لموضع الجزء");
+});
+
+test("☑ المدوّدة: التفسير وغريب القرآن يفتحان بلفظهما", async () => {
+  const { registry } = await loadSearch();
+
+  const tafsir = await registry.get("corpusTafsir").search("الحمد لله رب العالمين");
+  assert.ok(tafsir.length, "التفسير لا يُبحث فيه بنصّه");
+  assert.match(tafsir[0].route, /^35-tafsir\.html\?s=\d+$/, "رابط التفسير بلا سورة");
+
+  const { normalizeAr } = await import(fileUrl("src/lib/text.js"));
+  const siraj = await registry.get("corpusSiraj").search("اقسط");
+  assert.ok(siraj.length, "معاني غريب القرآن لا تُبحث فيها");
+  // اللفظ معروضٌ مشكولًا كما في المصدر، فيُقارَن بعد التطبيع.
+  assert.match(normalizeAr(siraj[0].title), /قسط/, "لم يُعثر على اللفظ في معانيه");
+  assert.ok(siraj[0].description.trim().length, "معنى اللفظ فارغ");
+  assert.match(siraj[0].route, /^43-siraj\.html\?s=\d+/, "رابط الغريب بلا موضع");
+});
+
+test("☑ المدوّدة: نصوص حصن المسلم تفتح بابها", async () => {
+  const { registry } = await loadSearch();
+  const hisn = await registry.get("corpusHisn").search("عذاب القبر");
+  assert.ok(hisn.length, "نصوص حصن المسلم لا تُبحث فيها");
+  for (const result of hisn) {
+    assert.match(result.route, /^36-hisn\.html\?no=\d+$/, "ذكرٌ بلا بابه");
+  }
+});
+
+test("☑ المدوّدة: لا تُحمَّل مع فتح النافذة", async () => {
+  const { registry } = await loadSearch();
+  // كل مصادر المدوّدة كسولة: فتح النافذة لا يجلب أربعة ميغابايت.
+  for (const id of ["corpusQuran", "corpusTafsir", "corpusSiraj", "corpusHisn"]) {
+    assert.equal(registry.get(id).lazy, true, `${id}: مصدر مدوّدةٍ ليس كسولًا`);
+  }
+  assert.ok(
+    registry.getAll().some((source) => !source.lazy),
+    "لا مصدر سريع بلا مدوّدة",
+  );
+});
+
 test("☑ البحث: التسجيل لا يتكرّر ولا يُعطّل مصدرٌ واحد", async () => {
   const { registry, registerDataSources } = await loadSearch();
   const before = registry.getAll().length;
@@ -101,7 +200,7 @@ test("☑ البحث: التسجيل لا يتكرّر ولا يُعطّل مص�
   assert.equal(registry.getAll().length, before, "المصادر تتراكم عند الاستدعاء مرّتين");
 
   // ملف JSON مفقود: مصدره وحده يسقط، ولا يسقط معه شيءٌ آخر.
-  const original = globalThis.fetch;
+  const good = globalThis.fetch;
   globalThis.fetch = async () => ({ ok: false, json: async () => ({}) });
   try {
     const fresh = await import(`${fileUrl("src/lib/search-content.js")}?fresh=1`);
@@ -110,7 +209,7 @@ test("☑ البحث: التسجيل لا يتكرّر ولا يُعطّل مص�
     const { results } = await searchAll("الزكاة", { limit: 5 });
     assert.ok(results.length, "سقوط ملف JSON أسقط البحث كلّه");
   } finally {
-    globalThis.fetch = original;
+    globalThis.fetch = good;
   }
 });
 
@@ -176,6 +275,37 @@ test("☑ المطابقة: استعلام متعدّد الكلمات يجد ن
       `«${query}»: لم تظهر مطابقةٌ متوقّعة`,
     );
   }
+});
+
+test("☑ التبويبات: كل فئةٍ في الشريط تُنتج نتائج، ولا واحدة ميتة", () => {
+  return (async () => {
+    const modal = read("src/components/search-modal.js");
+    const declared = [...modal.matchAll(/\{ id: "([^"]+)", label:/g)]
+      .map((m) => m[1])
+      .filter((id) => id !== "all");
+    assert.ok(declared.length > 20, `فئات قليلة: ${declared.length}`);
+
+    const { registry, resultCategories } = await loadSearch();
+    const possible = new Set(resultCategories());
+    const dead = declared.filter((id) => !possible.has(id));
+    assert.deepEqual(dead, [], "تبويبات لفئاتٍ لا تُنتج نتائج أبدًا");
+
+    // والفئات التي تنتج نتائج لا بدّ أن يكون لها مكانٌ في الشريط، وإلّا
+    // ولا سبيل إلى تصفيتها باللمس.
+    const listed = new Set(declared);
+    const missing = [...possible].filter((id) => !listed.has(id));
+    assert.deepEqual(missing, [], "فئاتٌ تُنتج نتائج ولا يستطيع المستخدم تصفّيها");
+  })();
+});
+
+test("☑ المدوّدة: تُخدَم من ذاكرة عامل الخدمة فتعمل دون اتصال", () => {
+  const sw = read("sw.js");
+  // محتوى `content/**` له ذاكرة منفصلة تُخزَّن عند الطلب، فالمدوّدة تعمل بلا
+  // شبكةٍ بعد أول تحميل. والمهمّ ألّا تُعامل كصفحةٍ (navigation).
+  assert.match(sw, /contentStrategy/, "لا ذاكرة محتوى في عامل الخدمة");
+  assert.match(sw, /const CONTENT_DIR = "content\/";/, "مجلّد المحتوى غير مذكور");
+  // المدوّدة ٤ ميغابايت: تُخدَم من ذاكرة المحتوى عند الطلب، ولا تُحمَّل مسبقًا.
+  assert.doesNotMatch(sw, /"\.\/content\/corpora/, "المدوّدة في التحميل المسبق وهي كبيرة");
 });
 
 /* --------------------------------------------------------------- المدخل */

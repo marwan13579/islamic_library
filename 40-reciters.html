@@ -8,8 +8,8 @@
 <script src="notify-boot.js" defer></script>
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>القرّاء والتلاوة · المكتبة الإسلامية</title>
-<meta name="description" content="١٥٨ قارئًا و١٧٧ إذاعة، مع تحميل أي سورة كاملة للعمل بلا إنترنت.">
+<title>القرّاء والتلاوة والإذاعات · المكتبة الإسلامية</title>
+<meta name="description" content="القرّاء بسورهم وتلاواتهم، والإذاعات الإسلامية المباشرة، وتحميل أي سورة كاملة للعمل بلا إنترنت — في صفحة واحدة.">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
@@ -36,8 +36,11 @@
   .panelbox{background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;padding:16px;margin:14px 0}
   .panelbox h2{font-family:"Amiri",serif;font-size:1.4rem;margin:0 0 4px}
   .panelbox .sub{color:var(--ink-soft);font-size:.78rem;margin:0 0 8px}
+  .panelbox .acts{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
 
-  audio{width:100%;height:40px;margin:8px 0}
+  .note{font-size:.76rem;color:var(--ink-soft);line-height:1.9;background:var(--paper-2);
+    border:1px solid var(--line);border-radius:12px;padding:10px 12px;margin:10px 0}
+
   .stat{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:12px 14px;margin:10px 0;
     font-size:.84rem;display:flex;gap:10px;align-items:center;flex-wrap:wrap}
   .bar{height:8px;background:var(--paper-2);border-radius:999px;overflow:hidden;flex:1;min-width:120px}
@@ -48,8 +51,8 @@
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 
 <header class="lib-head">
-  <h1>القرّاء والتلاوة</h1>
-  <p>١٥٨ قارئًا و١٧٧ إذاعة، وأي سورة تُحمَّل كاملة لتُسمع بلا إنترنت.</p>
+  <h1>القرّاء والتلاوة والإذاعات</h1>
+  <p id="headline">جارٍ التحميل…</p>
 </header>
 
 <main class="lib-wrap">
@@ -63,21 +66,30 @@
   import { cacheAudio, removeAudio, listAudio, clearAudio, audioSize } from "./src/lib/audio-store.js";
   import { escapeHtml, toArNum } from "./src/lib/text.js";
   import { mountPlayer, play as playTrack, stop as stopTrack, isPlaying } from "./src/lib/player.js";
+  import { mergedStations, stationForReciter, reciterForStation, buildReciterIndex, stationName } from "./src/lib/audio-hub.js";
 
   const tabs = document.getElementById("tabs");
   const body = document.getElementById("body");
   const q = document.getElementById("q");
 
-  const [reciterData, allStations, surahs] = await Promise.all([reciters(), stations(), surahIndex()]);
+  const [reciterData, stationList, surahs] = await Promise.all([reciters(), stations(), surahIndex()]);
   const allReciters = reciterData.reciters;
   const surahByNo = new Map(surahs.map((s) => [s.no, s]));
+  /* المحطات المفحوصة أولًا، ثم ما بقي — فيصير ما ثبتَ عملُه فوق ما لم يُفحص. */
+  const allStations = mergedStations(stationList);
+  const reciterIndex = buildReciterIndex(allReciters);
+
+  document.getElementById("headline").textContent =
+    `${toArNum(allReciters.length)} قارئًا و${toArNum(allStations.length)} إذاعة، وتلاوةُ أي سورة تُحمَّل كاملةً لتُسمع بلا إنترنت.`;
 
   const VIEWS = [
-    { id: "reciters", label: "القرّاء" },
+    { id: "reciters", label: "القرّاء والتلاوة" },
     { id: "radio", label: "الإذاعات" },
     { id: "saved", label: "المحفوظات" },
   ];
-  let view = "reciters";
+  const FROM_HASH = { radio: "radio", stations: "radio", اذاعات: "radio", إذاعة: "radio",
+    reciters: "reciters", قراء: "reciters", قارئ: "reciters", saved: "saved", محفوظات: "saved" };
+  let view = FROM_HASH[decodeURIComponent(location.hash.replace(/^#/, ""))] || "reciters";
 
   function drawTabs() {
     tabs.innerHTML = "";
@@ -94,9 +106,9 @@
   }
 
   /** تشغيل مقطع في المشغّل العام، فيتابعه المستخدم من أي صفحة. */
-  function play(url, label, subtitle = "") {
+  function play(url, label, subtitle = "", live = false) {
     if (isPlaying()) stopTrack();
-    playTrack({ src: url, title: label, subtitle, page: location.pathname });
+    playTrack({ src: url, title: label, subtitle, page: location.pathname, live });
   }
 
   /* --------------------------------------------------------- القرّاء */
@@ -121,17 +133,32 @@
     body.appendChild(grid);
   }
 
-  async function openReciter(reciter) {
+  async function openReciter(reciter, from = view) {
     body.innerHTML = "";
     const box = document.createElement("div");
     box.className = "panelbox";
     box.innerHTML = `<h2>${escapeHtml(reciter.name)}</h2><p class="sub">${escapeHtml(reciter.riwaya)} · ${escapeHtml(reciter.letter)}</p>`;
+    const acts = document.createElement("div");
+    acts.className = "acts";
+
+    /* الإذاعة والتلاوة في مكان واحد: من يشغّل بثَّ الشيخ يفتح تلاواتِه، ومن
+       يفتح تلاواتِه يجد بثَّه. */
+    const station = stationForReciter(reciter, allStations);
+    if (station) {
+      const live = document.createElement("button");
+      live.type = "button";
+      live.className = "sbtn";
+      live.textContent = "🔴 بثّ حيّ";
+      live.addEventListener("click", () => play(station.link, stationName(station), "", true));
+      acts.appendChild(live);
+    }
     const back = document.createElement("button");
     back.type = "button";
     back.className = "sbtn";
-    back.textContent = "رجوع إلى القرّاء";
-    back.addEventListener("click", draw);
-    box.appendChild(back);
+    back.textContent = from === "radio" ? "رجوع إلى الإذاعات" : "رجوع إلى القرّاء";
+    back.addEventListener("click", () => { view = from; drawTabs(); draw(); });
+    acts.appendChild(back);
+    box.appendChild(acts);
     body.appendChild(box);
 
     /* ما المحفوظ؟ سؤال واحد للمخزن كله، لا سؤال لكل سورة: ١١٤ نداء
@@ -184,15 +211,20 @@
   function viewRadio() {
     const needle = q.value.trim();
     const rows = allStations.filter(
-      (s) => !needle || s.name.includes(needle) || (s.category || "").includes(needle)
+      (s) => !needle || stationName(s).includes(needle) || (s.category || "").includes(needle)
     );
     const cats = [...new Set(rows.map((s) => s.category || "أخرى"))];
 
     body.innerHTML = "";
+    const note = document.createElement("p");
+    note.className = "note";
+    note.textContent = "⚠️ روابط بثٍ مباشرة من خوادم خارجية لا نملكها، فقد تتوقف أيّها عن العمل حسب مصدرها، جرّب غيرها عندها. البثُّ الحيُّ يحتاج اتصالًا بالإنترنت دائمًا، بخلاف تلاوات المحفوظة التي تعمل بلا إنترنت.";
+    body.appendChild(note);
+
     const chips = document.createElement("div");
     chips.className = "lib-chips";
-    let active = "";
-    for (const c of ["", ...cats]) {
+    let active = needle ? "" : "مجرَّبة";
+    for (const c of ["مجرَّبة", "", ...cats.filter((cat) => cat !== "مجرَّبة")]) {
       const b = document.createElement("button");
       b.type = "button";
       b.className = "lib-chip";
@@ -208,23 +240,48 @@
     }
     body.appendChild(chips);
 
-    const shown = rows.filter((s) => !active || (s.category || "أخرى") === active);
+    const shown = rows.filter((s) => {
+      if (!active) return true;
+      if (active === "مجرَّبة") return Boolean(s.featured);
+      return (s.category || "أخرى") === active;
+    });
     const count = document.createElement("p");
     count.className = "lib-count";
-    count.textContent = `${toArNum(shown.length)} إذاعة`;
+    count.textContent = active === "مجرَّبة"
+      ? `${toArNum(shown.length)} إذاعة مفحوصة — والباقي بالتبويبات`
+      : `${toArNum(shown.length)} إذاعة`;
     body.appendChild(count);
 
     for (const s of shown) {
       const row = document.createElement("div");
       row.className = "srow";
-      row.innerHTML = `<span class="nm">${escapeHtml(s.name)}<small>${escapeHtml(s.category || "أخرى")}</small></span>`;
+      const tag = s.featured ? "مجرَّبة · " : "";
+      row.innerHTML = `<span class="nm">${escapeHtml(stationName(s))}<small>${escapeHtml(tag + (s.category || "أخرى"))}</small></span>`;
+
       const btn = document.createElement("button");
       btn.type = "button";
       btn.className = "sbtn";
       btn.textContent = "استماع";
-      btn.addEventListener("click", () => play(s.link, s.name));
+      btn.addEventListener("click", () => play(s.link, stationName(s), "", true));
+
       row.appendChild(btn);
+
+      /* ومن محطة البث إلى سور صاحبه: الإذاعة بابٌ للتلاوة لا نهايتها. */
+      const reciter = reciterForStation(s, reciterIndex);
+      if (reciter) {
+        const go = document.createElement("button");
+        go.type = "button";
+        go.className = "sbtn";
+        go.textContent = "تلاواتُه";
+        go.addEventListener("click", () => openReciter(reciter, "radio"));
+        row.appendChild(go);
+      }
+
       body.appendChild(row);
+    }
+
+    if (!shown.length) {
+      body.innerHTML += `<p class="lib-empty">لا إذاعة بهذا الاسم. جرّب كلمةً أخرى أو تبويب «الكل».</p>`;
     }
   }
 
@@ -293,6 +350,16 @@
   q.addEventListener("input", () => {
     clearTimeout(timer);
     timer = setTimeout(draw, 200);
+  });
+
+  /* الرابط العميق: الإذاعةُ القديمة تحيل إلى `#radio` هنا، فمن جاء من
+     رابطٍ قديمٍ وجد الإذاعةَ لا القرّاء. */
+  window.addEventListener("hashchange", () => {
+    const next = FROM_HASH[decodeURIComponent(location.hash.replace(/^#/, ""))];
+    if (!next || next === view) return;
+    view = next;
+    drawTabs();
+    draw();
   });
 
   mountPlayer();

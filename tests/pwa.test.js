@@ -110,6 +110,25 @@ test("the service worker precaches every shell asset and sets notification handl
   for (const asset of shell) {
     assert.ok(fs.existsSync(path.join(root, asset.replace(/^\.\//, ""))), `precached ${asset} is missing`);
   }
+
+  // وأي وحدةٍ من وحداتنا لازم تكون في التحميل المسبق، وإلا فُتح الموقع بلا
+  // اتصال فتوقّف عند أول استيرادٍ لها في الشبكة. سقط ملفّا
+  // `search-corpora.js` و`magnetic.js` من الشِلّ بهذا الفحص، بعد أن يُنسيا
+  // عند إضافة كلٍّ منهما.
+  const walk = (dir) => {
+    const out = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+      const abs = path.join(dir, entry.name);
+      if (entry.isDirectory()) out.push(...walk(abs));
+      else if (entry.name.endsWith(".js")) out.push(abs);
+    }
+    return out;
+  };
+  const precached = new Set(shell.map((asset) => asset.replace(/^\.\//, "")));
+  const missing = walk(path.join(root, "src")).map((abs) => path.relative(root, abs))
+    .filter((rel) => !precached.has(rel));
+  assert.deepEqual(missing, [], "وحدات بلا تحميل مسبق");
+
   assert.match(source, /addEventListener\("notificationclick"/);
   assert.match(source, /addEventListener\("message"/);
   assert.match(source, /CACHE_VERSION = "islamic-library-v\d+"/);

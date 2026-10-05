@@ -2,261 +2,39 @@
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8">
-<script src="storage-fallback.js"></script>
-<link rel="stylesheet" href="engage.css">
-<script src="engage.js" defer></script>
-<script src="notify-boot.js" defer></script>
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>الإذاعات الإسلامية المباشرة</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>انتقلت الإذاعات إلى القرّاء والتلاوة — المكتبة الإسلامية</title>
+<meta name="description" content="أُدمجت الإذاعات الإسلامية المباشرة في صفحة القرّاء والتلاوة: القرّاء وتلاواتهم والإذاعات والتحميل بلا إنترنت في مكان واحد.">
+<meta name="robots" content="noindex">
+<link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
-<script src="noor-companion.js" defer></script>
+<link rel="stylesheet" href="library.css">
+<link rel="canonical" href="40-reciters.html#radio">
+<meta http-equiv="refresh" content="0; url=40-reciters.html#radio">
 <style>
-  :root{
-    --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
-    --gold:#9C7420; --gold-soft:#C9A24B; --line:rgba(19,50,44,.14); --card:#FFFAF0; --green:#2F6B4F; --green-soft:#DCEAE0;
-    --warn:#8A5A1E; --warn-bg:#F3E1C4;
-    box-sizing:border-box; padding-top:env(safe-area-inset-top,0px); padding-bottom:env(safe-area-inset-bottom,0px);
-  }
-  :root:not([data-theme="light"]){ @media (prefers-color-scheme: dark){
-    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
-    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
-    --warn:#E3B366; --warn-bg:#2B2210;
-  }}
-  :root[data-theme="dark"]{
-    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
-    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16); --card:#122E28; --green:#5FA787; --green-soft:#173A30;
-    --warn:#E3B366; --warn-bg:#2B2210;
-  }
-  *,*::before,*::after{box-sizing:border-box}
-  body{margin:0;background:var(--paper);color:var(--ink);font-family:"Cairo",system-ui,sans-serif;line-height:1.7}
-  .wrap{max-width:680px;margin:0 auto;padding:0 16px 90px}
-  header{text-align:center;padding:36px 16px 18px;border-bottom:1px solid var(--line)}
-  header h1{font-family:"Amiri",serif;font-size:clamp(1.9rem,7vw,2.7rem);margin:0}
-  header p{color:var(--ink-soft);font-size:.86rem;max-width:44ch;margin:.4rem auto 0}
-
-  .warnbox{background:var(--warn-bg);border:1px solid var(--warn);border-radius:14px;padding:14px 16px;margin:18px 0;font-size:.82rem;color:var(--warn)}
-
-  h2.h{font-family:"Amiri",serif;font-size:1.15rem;margin:24px 0 10px}
-  .stationlist{display:flex;flex-direction:column;gap:8px}
-  .station{display:flex;align-items:center;gap:12px;background:var(--card);border:1px solid var(--line);
-    border-radius:14px;padding:12px 14px;cursor:pointer}
-  .station.active{border-color:var(--gold);border-width:2px}
-  .station .em{font-size:1.4rem;flex-shrink:0}
-  .station .n{flex:1;font-size:.92rem}
-  .station .st{font-size:.7rem;color:var(--ink-soft)}
-  .station .playicon{font-size:1.2rem;color:var(--gold);flex-shrink:0}
-
-  .playerbar{
-    position:fixed;bottom:0;left:0;right:0;background:var(--card);border-top:1px solid var(--line);
-    padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));z-index:40;
-    display:flex;align-items:center;gap:12px;box-shadow:0 -4px 20px rgba(0,0,0,.1);
-  }
-  .playerbar .info{flex:1;min-width:0}
-  .playerbar .name{font-size:.88rem;font-weight:700;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-  .playerbar .status{font-size:.72rem;color:var(--ink-soft)}
-  .playbtn{width:46px;height:46px;border-radius:50%;background:var(--ink);color:var(--paper);border:0;
-    font-size:1.2rem;cursor:pointer;flex-shrink:0;display:grid;place-items:center}
-  .stopbtn{background:none;border:1px solid var(--line);color:var(--ink-soft);width:36px;height:36px;border-radius:50%;
-    cursor:pointer;flex-shrink:0}
-
-  footer{margin-top:32px;padding-top:16px;border-top:1px solid var(--line);text-align:center;font-size:.85rem;color:var(--ink-soft)}
-</style>
-<style>
-/* cross-device responsiveness: phones, tablets, laptops */
-html{-webkit-text-size-adjust:100%}
-*{-webkit-tap-highlight-color:transparent}
-button,a,[role="button"],input[type="button"],input[type="submit"]{touch-action:manipulation}
-input,select,textarea{font-size:16px!important}
-button,.tab,.cat,.subtab,.fbtn,.gbtn,.pbtn,.setbtn,.sortbtn{min-height:38px}
-@media (min-width:600px){
-  input,select,textarea{font-size:.92rem!important}
-}
-@media (min-width:900px){
-  .wrap{padding-left:32px;padding-right:32px}
-  body{font-size:1.02rem}
-}
-@media (min-width:1200px){
-  .wrap{max-width:min(78vw,900px)}
-}
-@media (max-width:360px){
-  .wrap{padding-left:12px;padding-right:12px}
-}
-@media (orientation:landscape) and (max-height:500px){
-  header{padding-top:14px;padding-bottom:10px}
-}
-</style>
-<style>
-/* Emerald & Gold glassmorphism accent layer */
-:root{
-  --glass-bg: rgba(255,255,255,.55);
-  --glass-border: rgba(255,255,255,.35);
-  --glass-shadow: 0 8px 32px rgba(19,50,44,.12);
-}
-:root[data-theme="dark"], :root:not([data-theme="light"]){
-  @media (prefers-color-scheme: dark){
-    --glass-bg: rgba(18,46,40,.55);
-    --glass-border: rgba(255,255,255,.08);
-    --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
-  }
-}
-:root[data-theme="dark"]{
-  --glass-bg: rgba(18,46,40,.55);
-  --glass-border: rgba(255,255,255,.08);
-  --glass-shadow: 0 8px 32px rgba(0,0,0,.35);
-}
-body{
-  background-image:
-    radial-gradient(circle at 12% 8%, rgba(156,116,32,.10), transparent 32%),
-    radial-gradient(circle at 88% 18%, rgba(47,107,79,.12), transparent 38%),
-    radial-gradient(circle at 50% 95%, rgba(156,116,32,.06), transparent 40%);
-  background-attachment:fixed;
-}
-.card, .hcard, .dhikr, .ayah, .todaybox, .nextbox, .duabox, .fastcard, .rec, .topiccard,
-details.item, details.site, .timecard, .gcard, .item, .hadith, .tool, .catbtn, .fcard,
-.hcard, .warnbox, .continuebar{
-  backdrop-filter: blur(14px) saturate(160%);
-  -webkit-backdrop-filter: blur(14px) saturate(160%);
-  background-color: var(--glass-bg) !important;
-  border-color: var(--glass-border) !important;
-  box-shadow: var(--glass-shadow);
-}
-header{
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-}
+  .moved{max-width:640px;margin:8vh auto;padding:34px 28px;border-radius:18px;
+    background:var(--card);border:1px solid var(--line);
+    font-family:"Cairo",sans-serif;line-height:2;text-align:center}
+  .moved h1{font-size:1.5rem;margin:0 0 8px}
+  .moved .lead{opacity:.8;margin:0 0 18px}
+  .moved ul{text-align:start;display:inline-block;margin:0 0 22px;padding-inline-start:20px}
+  .moved a.btn{display:inline-block;background:var(--ink);color:var(--paper);
+    text-decoration:none;padding:11px 24px;border-radius:999px;font-weight:600}
 </style>
 </head>
 <body>
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
-
-<div class="wrap">
-<header>
-  <h1>الإذاعات الإسلامية</h1>
-  <p>بث مباشر لتلاوات كبار القراء وبرامج التفسير والفتوى — اضغط أي محطة لتشغيلها.</p>
-</header>
-
-<div class="warnbox">
-⚠️ هذه روابط بث مباشرة من خوادم خارجية لا أملكها ولا أتحكم فيها، فقد يتوقف أي رابط منها عن العمل دون سابق إنذار حسب مصدره. لو محطة معينة ما اشتغلتش، جرّب غيرها. البث الحي يحتاج اتصالًا مباشرًا بالإنترنت من جهازك دائمًا (بخلاف باقي أدوات هذه المكتبة التي تعمل أوفلاين).
+<div class="moved">
+  <h1>انتقلت الإذاعات إلى القرّاء والتلاوة</h1>
+  <p class="lead">لم تعد هناك صفحة إذاعةٍ وحدها — صار الإذاعُ والقرّاءُ والتلاوةُ في صفحة واحدة.</p>
+  <ul>
+    <li>الإذاعات الإسلامية المباشرة، والمحطات التي ثبتت عملُها مقدَّمة</li>
+    <li>لكل قارئٍ بثُّه الحيّ، ولكل إذاعةٍ سورُ صاحبها</li>
+    <li>تلاوات السور وتحميلُها كاملةً للعمل بلا إنترنت</li>
+  </ul>
+  <p>إن لم تُنتقل الصفحة تلقائيًا:</p>
+  <p><a class="btn" href="40-reciters.html#radio">افتح الإذاعات</a></p>
 </div>
-
-<div id="sections"></div>
-
-<footer>اللهم اجعل القرآن ربيع قلوبنا ونور صدورنا</footer>
-</div>
-
-<div class="playerbar" id="playerbar" hidden>
-  <button class="playbtn" id="playPauseBtn">▶</button>
-  <div class="info">
-    <div class="name" id="nowPlayingName">—</div>
-    <div class="status" id="nowPlayingStatus">جاهز</div>
-  </div>
-  <button class="stopbtn" id="stopBtn">✕</button>
-</div>
-
-<audio id="audioEl" preload="none"></audio>
-
-<script>
-const SECTIONS = [
-  ["📻 القرّاء", [
-    ["الشيخ محمد صديق المنشاوي","https://backup.qurango.net/radio/mohammed_siddiq_alminshawi"],
-    ["الشيخ محمود خليل الحصري","https://backup.qurango.net/radio/mahmoud_khalil_alhussary"],
-    ["الشيخ مصطفى إسماعيل","https://backup.qurango.net/radio/mustafa_ismail"],
-    ["الشيخ ماهر المعيقلي","https://backup.qurango.net/radio/maher_al_muaiqly"],
-    ["الشيخ سعود الشريم","https://backup.qurango.net/radio/saud_alshuraim"]
-  ]],
-  ["📚 علوم القرآن والفتوى", [
-    ["إذاعة التفسير","https://backup.qurango.net/radio/tafseer"],
-    ["إذاعة الرقية الشرعية","https://backup.qurango.net/radio/roqiah"]
-  ]],
-  ["🎙️ إذاعات خاصة", [
-    ["الشيخ محمود علي البنا","https://stream.zeno.fm/pyc8kax6f2zuv"],
-    ["الشيخ فارس عباد","https://server.emancity.com:9994/stream"]
-  ]]
-];
-
-const audio=document.getElementById("audioEl");
-const bar=document.getElementById("playerbar");
-const nameEl=document.getElementById("nowPlayingName");
-const statusEl=document.getElementById("nowPlayingStatus");
-const playPauseBtn=document.getElementById("playPauseBtn");
-let currentStationEl=null;
-
-function renderSections(){
-  const box=document.getElementById("sections");
-  box.innerHTML="";
-  SECTIONS.forEach(([title,stations])=>{
-    const h=document.createElement("h2"); h.className="h"; h.textContent=title;
-    box.appendChild(h);
-    const list=document.createElement("div"); list.className="stationlist";
-    stations.forEach(([name,url])=>{
-      const el=document.createElement("div");
-      el.className="station"; el.tabIndex=0; el.setAttribute("role","button");
-      el.innerHTML='<span class="em">📻</span><span class="n">'+name+'</span><span class="playicon">▶</span>';
-      const play=()=>playStation(name,url,el);
-      el.addEventListener("click",play);
-      el.addEventListener("keydown",e=>{if(e.key==="Enter"||e.key===" "){e.preventDefault();play();}});
-      list.appendChild(el);
-    });
-    box.appendChild(list);
-  });
-}
-
-function playStation(name,url,el){
-  if(currentStationEl) currentStationEl.classList.remove("active");
-  currentStationEl=el; el.classList.add("active");
-  bar.hidden=false;
-  nameEl.textContent=name;
-  statusEl.textContent="جارٍ الاتصال...";
-  playPauseBtn.textContent="⏸";
-  audio.src=url;
-  audio.play().then(()=>{
-    statusEl.textContent="🔴 بث مباشر";
-  }).catch(()=>{
-    statusEl.textContent="تعذّر تشغيل هذه المحطة — جرّب محطة أخرى";
-    playPauseBtn.textContent="▶";
-  });
-}
-
-audio.addEventListener("waiting",()=>{ statusEl.textContent="جارٍ التحميل..."; });
-audio.addEventListener("playing",()=>{ statusEl.textContent="🔴 بث مباشر"; playPauseBtn.textContent="⏸"; });
-audio.addEventListener("pause",()=>{ playPauseBtn.textContent="▶"; });
-audio.addEventListener("error",()=>{ statusEl.textContent="تعذّر تشغيل هذه المحطة — جرّب محطة أخرى"; playPauseBtn.textContent="▶"; });
-
-playPauseBtn.addEventListener("click",()=>{
-  if(audio.paused){ audio.play().catch(()=>{}); } else { audio.pause(); }
-});
-document.getElementById("stopBtn").addEventListener("click",()=>{
-  audio.pause(); audio.removeAttribute("src"); audio.load();
-  bar.hidden=true;
-  if(currentStationEl) currentStationEl.classList.remove("active");
-  currentStationEl=null;
-});
-
-renderSections();
-</script>
-<button id="themeToggle" type="button" aria-label="تبديل الوضع الليلي" style="position:fixed;top:calc(env(safe-area-inset-top,0px) + 10px);left:64px;z-index:50;background:var(--card,#FFFAF0);color:var(--ink,#13322C);border:1px solid var(--line,rgba(19,50,44,.14));width:38px;height:38px;border-radius:50%;cursor:pointer;font-size:1.05rem;box-shadow:0 2px 10px rgba(0,0,0,.12)">◐</button>
-<script>
-(function(){
-  var KEY="lib-theme-pref";
-  var saved=null;
-  try{ saved=localStorage.getItem(KEY); }catch(e){}
-  if(saved) document.documentElement.setAttribute("data-theme", saved);
-  var btn=document.getElementById("themeToggle");
-  if(btn){
-    btn.addEventListener("click", function(){
-      var cur=document.documentElement.getAttribute("data-theme");
-      var isDark = cur==="dark" || (!cur && window.matchMedia && window.matchMedia("(prefers-color-scheme: dark)").matches);
-      var next = isDark ? "light" : "dark";
-      document.documentElement.setAttribute("data-theme", next);
-      try{ localStorage.setItem(KEY, next); }catch(e){}
-    });
-  }
-})();
-</script>
-<script type="module">
-  import { createSearchModal } from "./src/components/search-modal.js";
-  createSearchModal();
-</script>
 </body>
 </html>

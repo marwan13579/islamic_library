@@ -324,6 +324,25 @@ async function loadLiveData(){
 
 /* ================= helpers ================= */
 const AR_NUM = n => n.toString().replace(/\d/g, d => "٠١٢٣٤٥٦٧٨٩"[d]);
+const QURAN_DIACRITICS = /[ً-ْٰـۖ-ۭ]/g;
+/**
+ * يطبّع النصَّ للبحث داخل المصحف: حذف التشكيل، وتوحيد الهمزات والتاء
+ * المربوطة والألف المقصورة، والأرقام الهندية بأرقامها. والألفُ الخنجرية
+ * (ٰ) ألفٌ لا حرفُ حركة، فتُحوَّل ألفًا وإلّا صارت «العالمين» «العلمين».
+ * @param {string} value
+ * @returns {string}
+ */
+function normalizeQuran(value){
+  return String(value??"")
+    .replace(QURAN_DIACRITICS,"")
+    .replace(/[أإآٱٲٳ]/g,"ا")
+    .replace(/[ٰ]/g,"ا")
+    .replace(/ى/g,"ي").replace(/ة/g,"ه")
+    .replace(/ؤ/g,"و").replace(/ئ/g,"ي")
+    .replace(/[٠-٩]/g,d=>String("٠١٢٣٤٥٦٧٨٩".indexOf(d)))
+    .replace(/[^\\p{L}\\p{N}\\s]/gu," ")
+    .replace(/\\s+/g," ").trim();
+}
 function escapeHtml(value){
   return String(value??"").replace(/[&<>"']/g,char=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[char]));
 }
@@ -576,33 +595,58 @@ function buildSearch(){
   frag.appendChild(inp);
   const resultsBox=document.createElement("div");
   frag.appendChild(resultsBox);
+  let debounce=0;
   inp.addEventListener("input",()=>{
     const q=inp.value.trim();
     resultsBox.innerHTML="";
     if(!q || q.length<2) return;
     if(!QURAN){ return; }
-    let found=0;
-    Object.keys(QURAN).forEach(sNum=>{
-      if(found>50) return;
-      QURAN[sNum].ayahs.forEach(a=>{
-        if(found>50) return;
-        if(a.text.includes(q)){
-          found++;
-          const meta=SURAH_META.find(x=>x[0]==sNum);
-          const card=document.createElement("div");
-          card.className="ayah";
-          card.style.cursor="pointer";
-          card.innerHTML='<p class="arabic" style="font-size:1.2rem">'+escapeHtml(a.text)+'</p><p style="font-size:.78rem;color:var(--ink-soft);margin-top:8px">سورة '+(meta?meta[1]:sNum)+' — آية '+AR_NUM(a.n)+'</p>';
-          card.addEventListener("click",()=>openSurah(parseInt(sNum), a.n));
-          resultsBox.appendChild(card);
-        }
-      });
-    });
-    if(found===0){
-          resultsBox.innerHTML='<p class="note">لا نتائج مطابقة'+(dataMode==="fallback"?" (البحث محدود بالسور الاحتياطية المتاحة)":"")+'</p>';
-    }
+    // البحث هنا كان `a.text.includes(q)` على النصّ المشكول، فلا يطابقه إلا ما
+    // كُتب بالحروف نفسها لتشكيله، والاستعلام بلا تشكيل لا يُطابق ولا آيةً ولا
+    // واحدة. صار يُ.normalise السائل والمبحوث عنه معًا، ويقبل بادئة الكلمة
+    // وخطأً بحرف، ويلغي الحركات، فيصير البحث في المصحف كما يُكتب فيُم.
+    clearTimeout(debounce);
+    debounce=setTimeout(()=>renderQuranHits(q, resultsBox), 220);
   });
   return frag;
+}
+
+/**
+ * يعرض آيات المصحف المطابقة للاستعلام، بتطبيعٍ يوسّع المطابقة، ويجد بالرقم
+ * والاسم معًا: «البقرة ٢٥٥» و«الحمد لله» و«ولا يوده حفظهما».
+ * @param {string} q استعلامٌ خام
+ * @param {HTMLElement} resultsBox
+ */
+function renderQuranHits(q, resultsBox){
+  const needle=normalizeQuran(q);
+  if(!needle){ return; }
+  const wanted=String(needle).match(/ (\d{1,4})$/);
+  const surahWords=needle.replace(/ (\d{1,4})$/,"").split(" ").filter(w=>w.length>2);
+  let found=0;
+  Object.keys(QURAN).forEach(sNum=>{
+    if(found>=50) return;
+    const meta=SURAH_META.find(x=>x[0]==sNum);
+    QURAN[sNum].ayahs.forEach(a=>{
+      if(found>=50) return;
+      const text=normalizeQuran(a.text);
+      if(!text) return;
+      const terms=needle.split(" ").filter(Boolean);
+      if(!terms.every(term=>text.includes(term))) return;
+      const byNumber=wanted && Number(wanted[1])===a.n;
+      const namesSurah=surahWords.some(w=>normalizeQuran(meta?meta[1]:"")===w);
+      if(wanted && !byNumber && !namesSurah) return;
+      found++;
+      const card=document.createElement("div");
+      card.className="ayah";
+      card.style.cursor="pointer";
+      card.innerHTML='<p class="arabic" style="font-size:1.2rem">'+escapeHtml(a.text)+'</p><p style="font-size:.78rem;color:var(--ink-soft);margin-top:8px">سورة '+(meta?meta[1]:sNum)+' — آية '+AR_NUM(a.n)+'</p>';
+      card.addEventListener("click",()=>openSurah(parseInt(sNum), a.n));
+      resultsBox.appendChild(card);
+    });
+  });
+  if(found===0){
+    resultsBox.innerHTML='<p class="note">لا نتائج مطابقة'+(dataMode==="fallback"?" (البحث محدود بالسور الاحتياطية المتاحة)":"")+'</p>';
+  }
 }
 
 function buildBookmarks(){
@@ -707,7 +751,24 @@ function select(id){
   main.appendChild(TABS.find(t=>t[0]===id)[2]());
 }
 
-loadLiveData().then(()=>{ if(dataMode==="live") renderAll(); });
+loadLiveData().then(()=>{ if(dataMode==="live") renderAll(); openFromUrl(); });
+
+/* ================= deep link: ?s=سورة&a=آية ================= */
+/**
+ * يفتح موضعًا بعينه من رابط البحث: `?s=2&a=255` يفتح سورة البقرة عند الآية
+ * ٢٥٥. كانت هذه الروابط ميتة، لأنّ الصفحة لم تقرأ المعاملات أصلًا، فكلُّ آيةٍ
+ * أو تفسيرٍ في نتائج البحث كان يفتح الصفحة على أوّل تبويب.
+ * @returns {void}
+ */
+function openFromUrl(){
+  let params;
+  try{ params=new URLSearchParams(location.search); }catch(e){ return; }
+  const surah=Number(params.get("s"));
+  if(!surah||!QURAN[surah]) return;
+  const ayah=Number(params.get("a"))||0;
+  if(params.has("a")) history.replaceState(null,"",location.pathname+location.hash);
+  openSurah(surah, ayah||undefined);
+}
 </script>
 <script type="module">
   import { createSearchModal } from "./src/components/search-modal.js";

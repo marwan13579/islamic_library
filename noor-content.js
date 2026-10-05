@@ -2,7 +2,7 @@
  * noor-content.js — محتوى «رفيق النور». مُولَّد آليًّا، لا تعدّله يدويًا.
  * المصدر: scripts/noor-curation.mjs  |  البناء: npm run build:noor
  * الآيات مستخرجة من vendor/quran-arabic.json، وسائر النصوص من src/data/.
- * عدد العناصر: 271
+ * عدد العناصر: 275
  */
 (function (root) {
   var NOOR_CONTENT = {
@@ -40,7 +40,7 @@
   },
   "counts": {
     "verse": 129,
-    "hadith": 18,
+    "hadith": 22,
     "dua": 13,
     "dhikr": 24,
     "story": 12,
@@ -2677,6 +2677,50 @@
       ]
     },
     {
+      "id": "hd_a5",
+      "type": "hadith",
+      "origin": "hadith",
+      "text": "\"مَنْ سَلَكَ طَرِيقًا يَلْتَمِسُ فِيهِ عِلْمًا سَهَّلَ اللَّهُ لَهُ طَرِيقًا إِلَى الْجَنَّةِ\"",
+      "source": "[مسلم]",
+      "ref": "[مسلم]",
+      "topics": [
+        "knowledge"
+      ]
+    },
+    {
+      "id": "hd_a6",
+      "type": "hadith",
+      "origin": "hadith",
+      "text": "\"أَحَبُّ الْأَعْمَالِ إِلَى اللَّهِ أَدْوَمُهَا وَإِنْ قَلَّ\"",
+      "source": "[البخاري ومسلم]",
+      "ref": "[البخاري ومسلم]",
+      "topics": [
+        "knowledge"
+      ]
+    },
+    {
+      "id": "hd_a7",
+      "type": "hadith",
+      "origin": "hadith",
+      "text": "\"كُلُّ بِدْعَةٍ ضَلَالَةٌ\"",
+      "source": "[مسلم]",
+      "ref": "[مسلم]",
+      "topics": [
+        "knowledge"
+      ]
+    },
+    {
+      "id": "hd_a8",
+      "type": "hadith",
+      "origin": "hadith",
+      "text": "\"الطَّهُورُ شَطْرُ الْإِيمَانِ\"",
+      "source": "[مسلم]",
+      "ref": "[مسلم]",
+      "topics": [
+        "knowledge"
+      ]
+    },
+    {
       "id": "du_a1",
       "type": "dua",
       "origin": "dua",
@@ -4340,7 +4384,11 @@
       "hd_d5",
       "hd_d6",
       "hd_d7",
-      "hd_d8"
+      "hd_d8",
+      "hd_a5",
+      "hd_a6",
+      "hd_a7",
+      "hd_a8"
     ],
     "rizq": [
       "v_11_6",

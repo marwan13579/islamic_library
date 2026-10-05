@@ -471,6 +471,12 @@ mark {
   font-variant-numeric: tabular-nums;
 }
 
+/* البثُّ الحيُّ لا موضع له: شريطُ التقدّم والوقت يوهمان بأنّ له نهاية. */
+.lib-player[data-live="1"] .pl-seek,
+.lib-player[data-live="1"] .pl-time {
+  display: none;
+}
+
 /* الصفحة التي فيها مشغّل ثابت تحتاج حشوة سفلية، وإلا غطّا آخر سطر. */
 body:has(.lib-player:not([hidden])) .lib-wrap {
   padding-bottom: 116px;

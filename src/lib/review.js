@@ -11,7 +11,7 @@
  * @module lib/review
  */
 
-import { ATHKAR_REFERENCES, FORBIDDEN_TIME_REFERENCES, normalizeAthkar, PROPHET_REFERENCES } from "../data/review-references.js";
+import { ATHKAR_REFERENCES, FORBIDDEN_TIME_REFERENCES, normalizeAthkar, PROPHET_REFERENCES, SEERAH_REFERENCES } from "../data/review-references.js";
 
 /** @typedef {"بلا تخريج"|"اسم مجموعة"|"مخرَّج"|"آية"} ReviewStatus */
 
@@ -92,7 +92,8 @@ export const ATTRIBUTED = [
     read: (mod) => mod.SEERAH,
     title: (item) => `${item.year} — ${item.title}`,
     text: (item) => item.desc,
-    ref: (item) => item.ref,
+    ref: (item) => item.ref ?? SEERAH_REFERENCES[item.title]?.ref,
+    url: (item) => SEERAH_REFERENCES[item.title]?.url,
     advisory: true,
   },
   {

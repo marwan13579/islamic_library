@@ -1,31 +1,47 @@
 "use strict";
 
 /**
- * فحص روابط البث في 32-radio-hub.html.
+ * فحص روابط البث في `src/data/radio-live.js`، وهي المحطات التي تُقدَّم في
+ * صفحة القرّاء والتلاوة.
+ *
  * المحطات الميتة تظهر كأزرار صامتة لا تُصدر أي خطأ، لذا نتحقق منها شبكيًا.
- * التشغيل:  node scripts/check-streams.cjs
+ * وبـ`--all` يُفحص ما بقي من `content/radio.json` أيضًا، وهو أطول.
+ *
+ * التشغيل:  node scripts/check-streams.cjs [--all]
  */
 
 const fs = require("fs");
 const path = require("path");
+const { pathToFileURL } = require("url");
 
 const ROOT = path.resolve(__dirname, "..");
-const FILE = path.join(ROOT, "32-radio-hub.html");
-const html = fs.readFileSync(FILE, "utf8");
-
-const streams = [...html.matchAll(/\["([^"]+)","(https?:\/\/[^"]+)"\]/g)].map((m) => ({
-  name: m[1],
-  url: m[2],
-}));
-
-if (!streams.length) {
-  console.log("✔ لا توجد روابط بث");
-  process.exit(0);
-}
+const SOURCE = path.join(ROOT, "src", "data", "radio-live.js");
+const ALL = process.argv.includes("--all");
 
 const http = require("http");
 const https = require("https");
 const { URL } = require("url");
+
+/** @returns {Promise<{name: string, url: string}[]>} المحطات المفحوصة، وما بقي إن طُلب. */
+async function collect() {
+  const { LIVE_STATIONS } = await import(pathToFileURL(SOURCE).href);
+  const rows = LIVE_STATIONS.map((s) => ({ name: s.name, url: s.link }));
+  if (!ALL) return rows;
+
+  /* المحطة الواحدة تظهر مرّتين في البيان (مضيفٌ ومضيفٌ احتياطي)،
+     فالتحقّق من رابطها مرّتين يُبطئ الفحص ولا يزيده يقينًا. */
+  const list = JSON.parse(fs.readFileSync(path.join(ROOT, "content/radio.json"), "utf8"));
+  const seen = new Set(rows.map((r) => new URL(r.url).pathname));
+  for (const station of list) {
+    const url = String(station.link || "");
+    if (!/^https:/i.test(url)) continue;
+    const key = new URL(url).pathname;
+    if (seen.has(key)) continue;
+    seen.add(key);
+    rows.push({ name: station.name, url });
+  }
+  return rows;
+}
 
 /** يقرأ ترويسات البث فقط ثم يغلق الاتصال، بلا تنزيل البث كاملًا. */
 function probe(url, redirects = 0) {
@@ -81,14 +97,18 @@ async function probeWithRetry(url, tries = 3) {
     out = await probe(url, 3);
     /* ٥٠٠ و«لاشبكة» و«انتهى الوقت» ليست موتًا، هي ازدحام أو شبكة.
        المحطة الحيّة ترد ٥٠٠ مرّة ثم ترد ٢٠٠، والحكم عليها بعد محاولة
-       واحدة يجعل الفрес يبلّغ عن محطات سليمة. */
+       واحدة يجعل الفرس يبلّغ عن محطات سليمة. */
     if (out.code !== 500 && out.code !== "ERR") break;
     if (attempt < tries) await new Promise((r) => setTimeout(r, 1200 * attempt));
   }
   return out;
 }
 
+/** @param {{code: any, type: string}} r @returns {boolean} */
+const isLive = (r) => r.code === 200 && /audio|octet-stream|mpeg/i.test(r.type);
+
 async function main(){
+  const streams = await collect();
   const DEAD = [];
   let ok = 0;
   let flaky = 0;
@@ -99,8 +119,8 @@ async function main(){
     // خادم البث يحدّ المعدّل فيرد 500 عند تتابع الطلبات
     if (!first) await sleep(900);
     first = false;
-    let r = await probeWithRetry(s.url);
-    const good = r.code === 200 && /audio|octet-stream|mpeg/i.test(r.type);
+    const r = await probeWithRetry(s.url);
+    const good = isLive(r);
     console.log(`  ${good ? "✔" : "✘"} ${r.code} ${String(r.type).padEnd(24)} ${s.name}`);
     if (good) ok++;
     else DEAD.push(`${s.name} — ${s.url}`);
@@ -114,8 +134,7 @@ async function main(){
     for (const line of DEAD) {
       const [name, url] = line.split(" — ");
       const r = await probeWithRetry(url, 3);
-      const good = r.code === 200 && /audio|octet-stream|mpeg/i.test(r.type);
-      if (good) {
+      if (isLive(r)) {
         flaky += 1;
         console.log(`  ✔ ${r.code} ${name} (تأخّر لا موت)`);
         ok += 1;

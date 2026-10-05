@@ -8,7 +8,7 @@
 
 const STATE_KEY = "lib-player-state";
 
-/** @typedef {{src: string, title: string, subtitle: string, page: string, at?: number}} Track */
+/** @typedef {{src: string, title: string, subtitle: string, page: string, live?: boolean, at?: number}} Track */
 
 /** @type {HTMLAudioElement | null} */
 let audio = null;
@@ -66,7 +66,11 @@ function wire() {
   });
 
   audio.addEventListener("timeupdate", () => {
-    if (!audio.duration) return;
+    /* البثُّ الحيُّ لا مدّة له ولا موضع، فشريطُ التقدّم والوقت فيه بلا معنى. */
+    if (!Number.isFinite(audio.duration)) {
+      markLive();
+      return;
+    }
     const pct = (audio.currentTime / audio.duration) * 100;
     const seek = root.querySelector(".pl-seek");
     if (document.activeElement !== seek) seek.value = String(pct);
@@ -88,6 +92,8 @@ function wire() {
     root.querySelector('[data-act="play"]').textContent = "▶";
   });
   audio.addEventListener("loadedmetadata", () => {
+    /* البثُّ الحيُّ يُعرف من مدّته لا من مَن طلبه: بثٌ خفيٌ يعطّل مدّته. */
+    if (!Number.isFinite(audio.duration)) markLive();
     /* الموضع المحفوظ لا يُقبل قبل أن تعرف الوسائط مدتها. */
     if (restoreSeekAt > 0 && Number.isFinite(audio.duration)) {
       const at = Math.min(restoreSeekAt, Math.max(0, audio.duration - 5));
@@ -99,6 +105,18 @@ function wire() {
   audio.addEventListener("error", () => {
     root.querySelector(".pl-sub").textContent = "تعذّر تحميل الصوت";
   });
+}
+
+/**
+ * يحوّل المشغّل إلى وضع البثّ: بلا شريط تقدّمٍ ولا وقت، وعنوانُه «بث مباشر».
+ * @returns {void}
+ */
+function markLive() {
+  if (!root || !current) return;
+  if (root.dataset.live === "1") return;
+  root.dataset.live = "1";
+  const sub = root.querySelector(".pl-sub");
+  if (!sub.textContent.trim()) sub.textContent = "🔴 بث مباشر";
 }
 
 /**
@@ -116,10 +134,13 @@ export function play(track) {
     root.querySelector(".pl-sub").textContent = "اضغط للتشغيل";
   });
   root.hidden = false;
+  /* بثٌ حيٌّ نُعرفه من المُرسِل، ومن مدّة الصوت إن لم يعلمه. */
+  root.dataset.live = track.live ? "1" : "0";
   root.querySelector(".pl-title").textContent = track.title;
-  root.querySelector(".pl-sub").textContent = track.subtitle || "";
+  root.querySelector(".pl-sub").textContent = track.live ? "🔴 بث مباشر" : track.subtitle || "";
   root.querySelector(".pl-time").textContent = stamp(0);
   root.querySelector(".pl-seek").value = "0";
+  if (track.live) markLive();
   saveState();
   document.documentElement.classList.add("has-player");
 }
@@ -194,6 +215,7 @@ function restore(track) {
   current = track;
   audio.src = track.src;
   root.hidden = false;
+  root.dataset.live = track.live ? "1" : "0";
   root.querySelector(".pl-title").textContent = track.title;
   /* لا نبدأ التشغيل تلقائيًا، لكن نضع الموضع: أوّل نقرة تكمل من حيث
      توقّف المستخدم لا من أوّل التلاوة. */
@@ -201,7 +223,10 @@ function restore(track) {
   if (at > 0 && Number.isFinite(audio.duration) && at < audio.duration - 5) {
     audio.currentTime = at;
   }
-  root.querySelector(".pl-sub").textContent = "اضغط ⏵ للمتابعة";
+  if (track.live) markLive();
+  root.querySelector(".pl-sub").textContent = track.live
+    ? "🔴 بث مباشر — اضغط ⏵"
+    : "اضغط ⏵ للمتابعة";
   root.querySelector('[data-act="play"]').textContent = "▶";
   document.documentElement.classList.add("has-player");
   restoreSeekAt = at;

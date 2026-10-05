@@ -14,7 +14,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v43";
+const CACHE_VERSION = "islamic-library-v45";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -98,8 +98,9 @@ const SHELL = [
   "./src/data/islamic-channels.js", "./src/lib/video-library.js", "./src/lib/video-library-ui.js",
   "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
   "./src/lib/search-aliases.js", "./src/lib/search-registry.js", "./src/lib/unified-search.js",
-  "./src/lib/search-content.js", "./src/components/search-modal.js",
+  "./src/lib/search-content.js", "./src/lib/search-corpora.js", "./src/components/search-modal.js",
   "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
+  "./src/lib/audio-hub.js",
   // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.
   "./content/manifest.json",
   // بنية المشروع الجديدة
@@ -110,6 +111,7 @@ const SHELL = [
   "./src/lib/review.js", "./src/data/review-references.js", "./src/data/lessons-extra.js", "./src/data/forbidden-times.js", "./src/lib/quran-audio.js", "./src/lib/serve-hint.js", "./src/site/review.html", "./src/types.js", "./tools.css",
   "./src/lib/text.js", "./src/lib/storage.js", "./src/lib/dates.js", "./src/lib/islamic.js",
   "./src/lib/api.js", "./src/lib/share.js", "./src/lib/b64.js", "./src/lib/idb.js",
+  "./src/lib/magnetic.js",
   "./src/lib/pwa.js",
   "./src/lib/auto-notify.js",
   "./src/components/theme.js", "./src/components/modal.js", "./src/components/toast.js",
@@ -119,7 +121,7 @@ const SHELL = [
   "./src/data/sayings.js", "./src/data/seerah.js", "./src/data/prophets.js", "./src/data/kids.js",
   "./src/data/qa.js", "./src/data/duas.js", "./src/data/adhkar.js", "./src/data/daily.js",
   "./src/data/names99.js", "./src/data/question-bank.js", "./src/data/app-athkar.js",
-  "./src/data/app-duas.js", "./src/data/hadiths.js", "./src/data/radio.js",
+  "./src/data/app-duas.js", "./src/data/hadiths.js", "./src/data/radio.js", "./src/data/radio-live.js",
   "./src/data/hijri-events.js", "./src/data/app-daily.js", "./src/data/cities.js",
 ];
 

@@ -246,8 +246,8 @@ test("☐ رمضان: المهام والأدعية وليالي الشهر", ()
 
 /* ------------------------------------------------- الصوتيات */
 
-test("☐ الصوتيات: الإذاعات والقرّاء والمشغّل والتخزين", () => {
-  for (const file of ["32-radio-hub.html", "40-reciters.html", "content/radio.json", "content/reciters.json"]) {
+test("☐ الصوتيات: الإذاعات والقرّاء في صفحة واحدة، والمشغّل والتخزين", () => {
+  for (const file of ["32-radio-hub.html", "40-reciters.html", "content/radio.json", "content/reciters.json", "src/data/radio-live.js"]) {
     assert.ok(has(file), `مفقود: ${file}`);
   }
   const radio = loadJson("content/radio.json");
@@ -268,7 +268,9 @@ test("☐ الصوتيات: الإذاعات والقرّاء والمشغّل �
 
   assert.match(read("src/lib/player.js"), /lib-player-state/, "لا حفظ لموضع الإذن");
   assert.match(read("src/lib/audio-store.js"), /quran-audio-v1/, "لا مخزن تلاوات");
-  assert.match(read("32-radio-hub.html"), /<audio|\.play\(/, "لا مشغّل صوت");
+  /* الإذاعات صارت في صفحة القرّاء والتلاوة، والمشغّل فيها واحد. */
+  assert.match(read("40-reciters.html"), /<audio|\.play\(|playTrack/, "لا مشغّل صوت");
+  assert.match(read("40-reciters.html"), /audio-hub\.js/, "الإذاعات غير مدمجة بالقرّاء");
 });
 
 /* ---------------------------------------------- الوضع الليلي */

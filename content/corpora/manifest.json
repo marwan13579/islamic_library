@@ -1,0 +1,26 @@
+{
+  "generatedAt": "2026-10-05",
+  "builder": "scripts/build-search-corpora.cjs",
+  "corpora": {
+    "quran": {
+      "dir": "quran",
+      "files": 4,
+      "rows": 6236
+    },
+    "hisn": {
+      "dir": "hisn",
+      "files": 1,
+      "rows": 267
+    },
+    "siraj": {
+      "dir": "siraj",
+      "files": 2,
+      "rows": 6111
+    },
+    "tafsir": {
+      "dir": "tafsir",
+      "files": 5,
+      "rows": 6236
+    }
+  }
+}

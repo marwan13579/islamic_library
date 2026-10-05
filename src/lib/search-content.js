@@ -6,6 +6,7 @@
 
 import { normalizeAr } from "./text.js";
 import { registry, createSource, scoreItem } from "./search-registry.js";
+import { registerCorporaSources } from "./search-corpora.js";
 
 // ===================== TOOLS / PAGES =====================
 
@@ -14,7 +15,6 @@ const TOOLS = [
   {id:"noorapp", emoji:"📱", name:"بوابة النور — التطبيق", desc:"مصحف وأذكار ومواقيت وإذاعة وزكاة وبطاقات — يعمل بدون إنترنت", cat:"learn", url:"src/app/app.html"},
   {id:"quizbank", emoji:"🧠", name:"الاختبارات والشهادات", desc:"بنك أسئلة بثلاثة أنواع، تحدٍّ أسبوعي، وشهادات إتمام تُرسم على canvas", cat:"learn", url:"src/site/noor.html#quiz"},
   {id:"groupkhatma", emoji:"📚", name:"الختمة الجماعية", desc:"وزّع الأجزاء بين المشاركين وتابع الإنجاز والإهداء", cat:"quran", url:"34-khatma.html"},
-  {id:"radiohub", emoji:"📻", name:"الإذاعات الإسلامية", desc:"بث مباشر لكبار القراء وبرامج التفسير والفتوى", cat:"quran", url:"32-radio-hub.html"},
   {id:"cardmaker", emoji:"🎴", name:"صانع البطاقات الدعوية", desc:"حوّل أي آية أو حديث أو ذكر لبطاقة صورة قابلة للتحميل والمشاركة", cat:"learn", url:"31-card-maker.html"},
   {id:"quranfull", emoji:"📖", name:"القرآن الكريم", desc:"المصحف كاملًا — سور، أجزاء، بحث، تلاوة، ترجمة وتفسير", cat:"quran", url:"30-quran-full.html"},
   {id:"dailysystem", emoji:"🕌", name:"نظام حياة المسلم", desc:"يومك مرتبط بالصلاة — صلاة، ذكر، وقرآن مع كل وقت", cat:"dhikr", url:"26-daily-system.html"},
@@ -52,7 +52,7 @@ const TOOLS = [
   {id:"libhisn", emoji:"🛡️", name:"حصن المسلم", desc:"أذكار الصباح والمساء والنوم والطعام — ١٣٢ بابًا مع الصوت", cat:"books", url:"36-hisn.html"},
   {id:"libkhutbah", emoji:"🗣️", name:"الخطب", desc:"خطب ودروس في العقيدة والتزكية والأخلاق", cat:"books", url:"38-khutbah.html"},
   {id:"libtarikh", emoji:"🏛️", name:"التاريخ الإسلامي", desc:"أحداث من هجرة النبي ﷺ إلى نهاية الدولة العثمانية", cat:"books", url:"39-tarikh.html"},
-  {id:"reciters", emoji:"🎙️", name:"القرّاء والتلاوة", desc:"١٥٨ قارئًا و١٧٧ إذاعة، مع تحميل السور كاملةً بلا إنترنت", cat:"quran", url:"40-reciters.html"},
+  {id:"reciters", emoji:"🎙️", name:"القرّاء والتلاوة والإذاعات", desc:"١٥٨ قارئًا بسورهم وتلاواتهم، وإذاعات مباشرة، وتحميل السور كاملةً بلا إنترنت", cat:"quran", url:"40-reciters.html"},
   {id:"islamicvideos", emoji:"🎬", name:"مكتبة الفيديو الإسلامية", desc:"تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال", cat:"books", url:"islamic-videos/"},
   {id:"libquiz", emoji:"🧠", name:"الاختبارات", desc:"٥٨٢٠ سؤالًا في التفسير والفقه والعقيدة والحديث، بتصحيح فوري", cat:"learn", url:"41-quiz.html"},
   {id:"athan", emoji:"🕌", name:"مواقيت الأذان", desc:"الصلوات الخمس بمدينتك، وتنبيه وصوت أذان عند دخول الوقت", cat:"dhikr", url:"42-athan.html"},
@@ -136,9 +136,9 @@ const PAGES = [
   { id: "qibla", title: "اتجاه القبلة", description: "زاوية القبلة من موقعك", route: "22-qibla.html", icon: "🧭" },
   { id: "zakat", title: "حاسبة الزكاة", description: "احسب زكاة مالك", route: "10-zakat.html", icon: "🧮" },
   { id: "hijri", title: "التقويم الهجري", description: "تحويل هجري ميلادي", route: "28-hijri.html", icon: "🌙" },
-  { id: "reciters", title: "القراء والتلاوة", description: "١٥٨ قارئ و١٧٧ إذاعة", route: "40-reciters.html", icon: "🎙️" },
+  { id: "reciters", title: "القرّاء والتلاوة والإذاعات", description: "١٥٨ قارئًا و١٧٩ إذاعة", route: "40-reciters.html", icon: "🎙️" },
   { id: "videos", title: "مكتبة الفيديو", description: "قنوات يوتيوب موثّقة", route: "islamic-videos/", icon: "🎬" },
-  { id: "radio", title: "الإذاعات الإسلامية", description: "بث مباشر للقراء", route: "32-radio-hub.html", icon: "📻" },
+  { id: "radio", title: "الإذاعات الإسلامية", description: "بث مباشر للقراء", route: "40-reciters.html#radio", icon: "📻" },
   { id: "tafsir", title: "التفسير الميسر", description: "تفسير كل آية من القرآن", route: "35-tafsir.html", icon: "📖" },
   { id: "hisn", title: "حصن المسلم", description: "أذكار الصباح والمساء والنوم", route: "36-hisn.html", icon: "🛡️" },
   { id: "seerah", title: "السيرة النبوية", description: "خط زمني لحياة النبي", route: "9-seerah.html", icon: "🕌" },
@@ -223,8 +223,9 @@ registry.register({
  * @param {function} [getDesc]
  * @param {function} [getId]
  * @param {function} [getRoute]
+ * @param {number} [priority] أفضلية المصدر في الترتيب النهائي
  */
-export function registerArraySource(id, type, category, icon, title, description, items, getTitle, getDesc, getId, getRoute) {
+export function registerArraySource(id, type, category, icon, title, description, items, getTitle, getDesc, getId, getRoute, priority = 5) {
   registry.register({
     id,
     type,
@@ -233,7 +234,7 @@ export function registerArraySource(id, type, category, icon, title, description
     title,
     description,
     keywords: [category, type],
-    priority: 5,
+    priority,
     async search(query, normalizedQuery, options = {}) {
       const q = normalizedQuery || normalizeAr(query);
       const describe = (item) => {
@@ -260,7 +261,7 @@ export function registerArraySource(id, type, category, icon, title, description
       for (const item of items) {
         const title = getTitle ? getTitle(item) : String(item);
         const description = describe(item);
-        const hit = scoreItem({ title, description }, q);
+        const hit = scoreItem({ title, description, aliases: item?.aliases }, q);
         if (!hit) continue;
         results.push({
           id: getId ? getId(item) : String(item),
@@ -270,7 +271,7 @@ export function registerArraySource(id, type, category, icon, title, description
           title,
           description,
           route: getRoute ? getRoute(item) : "#",
-          score: hit.score,
+          score: hit.score + priority,
           matchType: hit.matchType,
           sourceId: id
         });
@@ -281,6 +282,17 @@ export function registerArraySource(id, type, category, icon, title, description
 }
 
 // ===================== REGISTER DATA SOURCES =====================
+
+/**
+ * رابطُ ملف محتوى مطلقٌ محسوبٌ من هذه الوحدة، لا نسبةً إلى الصفحة المفتوحة:
+ * فبعض الصفحات في مجلّدات (`src/site/`)، و«content/...» هناك يعني
+ * `src/site/content/...` فلا وجود له.
+ * @param {string} rel مسارٌ داخل `content/`
+ * @returns {string}
+ */
+function contentUrl(rel) {
+  return new URL(`../../${rel}`, import.meta.url).href;
+}
 
 /** @type {Promise<void>|null} */
 let dataSourcesReady = null;
@@ -319,7 +331,9 @@ export function registerDataSources() {
     // كل وحدة مستقلة: ملفٌ واحد مفقود أو معطوب يُسقط مصدره وحده، لا البحث
     // كلّه. والوعد يُخزَّن بعد نجاحه، فإن أخفق يُحاول البحث التالي من جديد.
     const [hadiths, adhkar, duas, appDuas, scholars, prophets, names99, seerah,
-      lessons, extraLessons, manhaj, kids, qa, sayings, channels] = await Promise.all([
+      lessons, extraLessons, manhaj, kids, qa, sayings, channels, questions,
+      appAthkar, dailyVerses, dailyHadiths, appWisdom, cities, hijriEvents,
+      stations, liveRadio, sections] = await Promise.all([
       loadData("../data/hadiths.js", "HADITHS"),
       loadData("../data/adhkar.js", "ADHKAR"),
       loadData("../data/duas.js", "DUAS"),
@@ -335,6 +349,16 @@ export function registerDataSources() {
       loadData("../data/qa.js", "QA"),
       loadData("../data/sayings.js", "SAYINGS"),
       loadData("../data/islamic-channels.js", "CHANNELS"),
+      loadData("../data/question-bank.js", "QUESTION_BANK"),
+      loadData("../data/app-athkar.js", "ATHKAR_DATA"),
+      loadData("../data/daily.js", "DAILY_VERSES"),
+      loadData("../data/daily.js", "DAILY_HADITHS"),
+      loadData("../data/app-daily.js", "APP_DAILY_WISDOM"),
+      loadData("../data/cities.js", "CITY_NAMES_AR"),
+      loadData("../data/hijri-events.js", "HIJRI_EVENTS"),
+      loadData("../data/radio.js", "RADIO_STATIONS"),
+      loadData("../data/radio-live.js", "LIVE_STATIONS"),
+      loadData("../site/sections.js", "SECTIONS"),
     ]);
 
     // المفاتيح تُؤخذ من الكائن نفسه لا من ثوابت مصاحبة، فلا يحتاج هذا الملف
@@ -478,6 +502,115 @@ export function registerDataSources() {
       () => "islamic-videos/index.html",
     );
 
+    // بنك الأسئلة: أسئلةٌ في مجموعات، لا سطورًا متفرّقة.
+    const questionRows = Object.values(questions || {}).flatMap((group) =>
+      (group?.questions || []).map((item, idx) => ({
+        ...item,
+        group: group?.title || "",
+        id: `${group?.key || "q"}-${idx}`,
+      })));
+
+    registerArraySource(
+      "questions", "quiz", "اختبارات", "🧠", "بنك الأسئلة", "أسئلة الفقه والعقيدة والتاريخ واللغة",
+      questionRows,
+      (item) => item.q || item.d || "",
+      (item) => `${item.q || ""} ${(item.o || []).join(" ")} ${item.e || ""} ${item.group || ""}`,
+      (item) => item.id,
+      () => "src/site/noor.html#quiz",
+    );
+
+    // أذكار التطبيق: مجموعاتٌ بأبنائها، والذكر عنوانه نصُّه.
+    const appAthkarItems = (Array.isArray(appAthkar) ? appAthkar : []).flatMap((group, gi) =>
+      (group?.items || []).map((item, idx) => ({
+        text: item.text || item.t || "",
+        category: group?.category || "",
+        id: `${gi}-${idx}`,
+      })));
+
+    registerArraySource(
+      "appathkar", "dhikr", "أذكار", "🤲", "أذكار التطبيق", "أذكار بوابة النور",
+      appAthkarItems,
+      (item) => item.text,
+      (item) => item.category,
+      (item) => item.id,
+      () => "src/app/app.html#tab/athkar",
+    );
+
+    registerArraySource(
+      "daily", "verse", "آيات", "📅", "آيات وأحكام يومية", "آياتٌ وحديثٌ يُتلى كل يوم",
+      [
+        ...(Array.isArray(dailyVerses) ? dailyVerses : []).map((item, idx) => ({
+          text: item.ayah || "",
+          ref: item.ref || "",
+          id: `verse-${idx}`,
+        })),
+        ...(Array.isArray(dailyHadiths) ? dailyHadiths : []).map((item, idx) => ({
+          text: item.text || "",
+          ref: item.src || item.ref || "",
+          id: `hadith-${idx}`,
+        })),
+        ...(Array.isArray(appWisdom) ? appWisdom : []).map((item, idx) => ({
+          text: item.text || item.t || "",
+          ref: item.ref || item.author || "",
+          id: `wisdom-${idx}`,
+        })),
+      ],
+      (item) => item.text,
+      (item) => item.ref,
+      (item) => item.id,
+      () => "26-daily-system.html",
+    );
+
+    // المدن: اسمُها يوصل إلى مواقيت الصلاة والقبلة فيها، فالسؤال عنها سؤالٌ
+    // عن أداة لا عن نصّ.
+    registerArraySource(
+      "cities", "city", "مدن", "🏙️", "المدن", "مدنٌ مواقيتُها وقبلتُها محفوظة",
+      Object.values(cities || {}),
+      (name) => name,
+      () => "مواقيت الصلاة والقبلة",
+      (name) => String(name),
+      () => "29-prayer-times.html",
+    );
+
+    registerArraySource(
+      "hijri", "event", "مناسبات", "🌙", "المناسبات الهجرية", "أعيادٌ ومناسباتٌ وصيامٌ مستحب",
+      Array.isArray(hijriEvents) ? hijriEvents : [],
+      (item) => item.title,
+      (item) => item.date || "",
+      (item) => String(item.title),
+      () => "28-hijri.html",
+    );
+
+    registerArraySource(
+      "stations", "radio", "إذاعة", "📻", "محطات الإذاعة", "إذاعاتٌ ومحطاتٌ في صفحة القرّاء والتلاوة",
+      Array.isArray(stations) ? stations : [],
+      (item) => item.name,
+      (item) => item.cat || item.category || "",
+      (item) => String(item.name),
+      () => "40-reciters.html#radio",
+    );
+
+    /* المحطات المفحوصة تُبحث مثل غيرها، فمن كتب اسمَ شيخٍ لم يرد في بيان
+       محطات التطبيق وجد بثَّه. */
+    registerArraySource(
+      "liveradio", "radio", "إذاعة", "📻", "إذاعاتٌ مفحوصة", "محطاتٌ ثبت عملُها حيًّا",
+      Array.isArray(liveRadio) ? liveRadio : [],
+      (item) => item.name,
+      (item) => item.category || "",
+      (item) => String(item.link || item.name),
+      () => "40-reciters.html#radio",
+    );
+
+    registerArraySource(
+      "sections", "section", "أقسام", "🧭", "أقسام الموقع", "أقسامُ نور الهدى ومنهجُه",
+      Array.isArray(sections) ? sections : [],
+      (item) => item.title,
+      (item) => item.blurb || "",
+      (item) => String(item.id),
+      (item) => `src/site/noor.html#${item.id}`,
+    );
+
+    registerCorporaSources();
     await registerJsonSources();
   })();
 
@@ -495,7 +628,7 @@ async function registerJsonSources() {
   const files = [
     ["content/surahs.json", "surahs", "quran", "قرآن", "📖", "سور القرآن", "سور القرآن الكريم", "30-quran-full.html", (s) => `${s.verses} آية`, 12],
     ["content/reciters.json", "reciters", "reciter", "قرّاء", "🎙️", "القرّاء", "قرّاء القرآن وتلاواتهم", "40-reciters.html", (r) => `${r.riwaya || ""} ${r.letter || ""}`.trim(), 4, (r) => r.riwaya || ""],
-    ["content/radio.json", "radio", "radio", "إذاعة", "📻", "الإذاعات", "إذاعات إسلامية مباشرة", "32-radio-hub.html", (r) => r.category || "", 4],
+    ["content/radio.json", "radio", "radio", "إذاعة", "📻", "الإذاعات", "إذاعات إسلامية مباشرة", "40-reciters.html#radio", (r) => r.category || "", 4],
   ];
 
   await Promise.all([
@@ -503,6 +636,9 @@ async function registerJsonSources() {
     registerAzkarShamila(),
   ]);
 }
+
+/** «سورة ١٨» بأرقامها العربية والإنجليزية: المطابقة تجري على نصٍّ مطبَّع. */
+const SURAH_BY_NO = /(?:^| )(?:سوره|سورة) (\d{1,3})$/;
 
 /**
  * A JSON file registered as a flat searchable list.
@@ -512,7 +648,7 @@ async function registerJsonSource(file, id, type, category, icon, title, descrip
   if (registry.get(id)) return;
   let rows = [];
   try {
-    const response = await fetch(file);
+    const response = await fetch(contentUrl(file));
     if (!response.ok) return;
     const json = await response.json();
     rows = Array.isArray(json) ? json : (json[id] || json.reciters || json.stations || []);
@@ -561,13 +697,28 @@ async function registerJsonSource(file, id, type, category, icon, title, descrip
           description: repeated ? "" : detail,
           route: type === "quran" ? `${page}#surah-${row.no}` : page,
         };
+        // «سورة ١٨» و«سوره 18»: السورة برقمها، وهي أرقامٌ نعرفها، فلا يُترك
+        // الهاتفُ يبحث عنها باسمٍ لا يعرفه. ويُفحص قبل المطابقة لا بعدها:
+        // فالرقمُ ليس كلمةً في العنوان، فالمطابقةُ كانت تُسقطه قبل أن يُرى.
+        const byNumber = type === "quran" && SURAH_BY_NO.exec(q);
+        if (byNumber) {
+          if (Number(byNumber[1]) !== row.no) continue;
+          results.push({
+            ...item,
+            // فوق كل ما يبلغه غيرها: الموضعُ المطلوب هو الجواب لا غير.
+            score: 160,
+            matchType: "exact",
+            sourceId: id,
+            route: `${page}?s=${row.no}&a=1`
+          });
+          continue;
+        }
+
         const hit = scoreItem(item, q);
         if (!hit) continue;
         if (type === "quran" && normalizeAr(row.nameEn || "").includes(q)) {
           item.title = `سورة ${name} — ${row.nameEn}`;
         }
-        // أفضلية المصدر تُضاف هنا كما في `registerArraySource`: كانت معرَّفة
-        // لهذه المصادر ولا يُقرأ منها شيء.
         results.push({
           ...item,
           score: hit.score + priority,
@@ -594,7 +745,7 @@ async function registerAzkarShamila() {
   if (registry.get("azkarShamila")) return;
   let groups = [];
   try {
-    const response = await fetch("content/azkar.json");
+    const response = await fetch(contentUrl("content/azkar.json"));
     if (!response.ok) return;
     groups = await response.json();
   } catch {
@@ -715,6 +866,26 @@ const TYPE_ICONS = {
   quiz: "🧠",
 };
 
+/** الفئات التي تُسمّي بها المكتبةُ نتائجها، فهي فئاتٌ لا مصادر. */
+export const LIBRARY_CATEGORIES = Object.values(TYPE_LABELS);
+
+/**
+ * كل فئةٍ يمكن أن تُظهرها النتائج: فئات المصادر، وفئات المكتبة.
+ * شريطُ التبويبات في النافذة يُبنى منها، فتبويبٌ لفئةٍ لا تُنتجها نتيجةٌ أبدًا
+ * لا يمكن أن يبقى في الشريط مُعطِّلَ التصفية.
+ * @returns {string[]}
+ */
+export function resultCategories() {
+  return [...new Set([
+    // المصادر «المظلّة» تُسمّي نتائجها بنفسها (المكتبة)، فهي ليست فئةً.
+    ...registry.getAll().filter((s) => !s.umbrella).map((source) => source.category),
+    // الأدوات تُصنَّف كلٌّ منها على حدة («كتب» و«حاسبات»)، ففئتُها ليست
+    // «أدوات» وحدها، وإلّا صارت فئاتٌ ظاهرة في الشريط بلا ما يُنتجها.
+    ...Object.values(toolCategoryMap),
+    ...LIBRARY_CATEGORIES,
+  ])];
+}
+
 const TYPE_PAGES = {
   fatwa: "37-fatwa.html",
   tafsir: "35-tafsir.html",
@@ -730,6 +901,10 @@ try {
     id: "library",
     type: "library",
     category: "المكتبة",
+    // المصدر «المظلّة»: كل نتيجة من المكتبة تُسمّى بنوعها (فتاوى، تفسير، خطب)،
+    // فلا نتيجة واحدة تحمل اسم «المكتبة». فهي مظلّةٌ لا فئة، وفئاتها هي
+    //فئاتُها.
+    umbrella: true,
     icon: "📚",
     title: "المكتبة",
     description: "الفتاوى، التفسير، الخطب، التاريخ، الاختبارات، حصن المسلم، السراج",
@@ -742,9 +917,12 @@ try {
         const res = await librarySearch(q, { limit: options.limit || 20 });
         // درجات محرّك المكتبة بمقياسه (بالآلاف)، ودرجات بقية المصادر ٠–١٠٠.
         // بلا تقريب كانت نتيجةٌ واحدة من المكتبة تطغى على كل ما عداها مهما
-        // كانت أضعف مطابقةً. فتسحب الدرجة إلى النطاق نفسه: ٦٠٪ من الفارق بين
-        // أول نتيجة وآخرها فوق ٦٠، ونصيبُها من أفضلية المصدر ٥ فوق ذلك.
+        // كانت أضعف مطابقةً. فتسحب الدرجة إلى النطاق نفسه: النصيبُ يبقى بين
+        // ٢٠ و٧٠ — محتواها أغزرُ من غيرها، لكن مطابقةُ اسمٍ تامّةً في مصدرٍ
+        // صغير يجب أن تعلوها، وإلّا ابتلع الفتاوىُ سؤالَ «الزكاة» عن حاسبة
+        // الزكاة وكلَّ مَن سأل عن أي شيء.
         const top = Math.max(1, ...res.results.map((r) => r.score || 0));
+        const weak = 20;
         const seen = new Set();
         return res.results
           .filter((r) => {
@@ -777,7 +955,7 @@ try {
             title: r.title,
             description: r.summary || "",
             route,
-            score: 60 + 40 * ((r.score || 0) / top),
+            score: weak + (70 - weak) * ((r.score || 0) / top),
             matchType: "content",
             sourceId: "library"
           };

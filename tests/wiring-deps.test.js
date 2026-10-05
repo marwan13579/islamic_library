@@ -126,9 +126,10 @@ test("صفحة نور الذكر مرتبطة من الفهرس", () => {
   const files = fs
     .readdirSync(ROOT)
     .filter((f) => /^\d+-.*\.html$/.test(f))
-    // 33-academy صفحة تحويل، وlinkTesting يفحص رابطها لا بطاقتها.
-    // 23-search.html صفحة تحويل إلى الصفحة الرئيسية بعد دمج البحث الموحّد.
-    .filter((f) => !["33-academy.html", "23-search.html"].includes(f));
+// 33-academy صفحة تحويل، وlinkTesting يفحص رابطها لا بطاقتها.
+  // 23-search.html صفحة تحويل إلى الصفحة الرئيسية بعد دمج البحث الموحّد.
+  // 32-radio-hub.html صفحة تحويل بعد إدماج الإذاعات في 40-reciters.html.
+  .filter((f) => !["33-academy.html", "23-search.html", "32-radio-hub.html"].includes(f));
   const missing = files.filter((f) => !index.includes(`"${f}"`));
   assert.deepEqual(missing, [], `أدوات غير مفهرسة: ${missing.join("، ")}`);
   // والبطاقة تُعرَّف بمعرّف فريد ومن فئة معروفة.

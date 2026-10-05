@@ -433,10 +433,22 @@ const source = `${banner}(function (root) {\n` +
   '  if (typeof module === "object" && module.exports) module.exports = NOOR_CONTENT;\n' +
   "})(typeof globalThis !== \"undefined\" ? globalThis : this);\n";
 
+/**
+ * يُسقط تاريخ البناء من نصٍّ للمقارنة.
+ *
+ * `builtAt` تاريخُ يوم البناء لا غير: يتغيّر كلَّ صباحٍ ولو لم يتغيّر المصدرُ
+ * بحرف، فالمقارنةُ الحرفية تُسقط الفحصَ في الغد وتُخفي عن صاحبه أنّه بخير.
+ * وحقلُه وحيدٌ في الملف لا غير، فإسقاطُه لا يُخفي تغيّرًا في المحتوى.
+ * @param {string} text
+ * @returns {string}
+ */
+const withoutBuildDate = (text) =>
+  text.replace(/"builtAt": "\d{4}-\d{2}-\d{2}"/g, '"builtAt": "<built>"');
+
 const check = process.argv.includes("--check");
 if (check) {
   const current = fs.existsSync(OUT) ? fs.readFileSync(OUT, "utf8") : "";
-  if (current !== source) {
+  if (withoutBuildDate(current) !== withoutBuildDate(source)) {
     console.error("✗ noor-content.js لا يطابق ناتج البناء. نفّذ: npm run build:noor");
     process.exit(1);
   }

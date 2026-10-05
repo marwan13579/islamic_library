@@ -5,44 +5,67 @@
  */
 
 import { searchAll, quickSearch, getSmartSuggestions, processQuery } from "../lib/unified-search.js";
-import { registerDataSources } from "../lib/search-content.js";
+import { registerDataSources, resultCategories } from "../lib/search-content.js";
+import { prefetchCorpus } from "../lib/search-corpora.js";
 import { HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE } from "../lib/search.js";
 
+/**
+ * فئات البحث: الاسم والأيقونة لكل فئة، بالترتيب الذي يُعرض به الشريط.
+ *
+ * ولا يُبنى الشريطُ من هذه القائمة مباشرةً، بل من تقاطعها مع
+ * `resultCategories()`، فالفئةُ التي لم يعد لها مصدرٌ تختفي بدل أن تحتلّ
+ * مكانًا وتُظهر «لا نتائج» في كل ضغطة.
+ */
 const FILTERS = [
-  { id: "all", label: "الكل", icon: "🌐" },
   { id: "قرآن", label: "القرآن", icon: "📖" },
+  { id: "آيات", label: "آيات المصحف", icon: "🕌" },
   { id: "تفسير", label: "التفسير", icon: "📚" },
+  { id: "معاني", label: "معاني الكلمات", icon: "🪔" },
   { id: "حديث", label: "الحديث", icon: "📕" },
   { id: "أذكار", label: "الأذكار", icon: "🤲" },
   { id: "أدعية", label: "الأدعية", icon: "🤲" },
-  { id: "كتب", label: "الكتب", icon: "📚" },
-  { id: "مقالات", label: "المقالات", icon: "📝" },
-  { id: "قصص", label: "القصص", icon: "🌟" },
-  { id: "صوتيات", label: "الصوتيات", icon: "🎧" },
+  { id: "قرّاء", label: "القرّاء", icon: "🎙️" },
+  { id: "إذاعة", label: "الإذاعات", icon: "📻" },
   { id: "فيديو", label: "الفيديو", icon: "🎬" },
-  { id: "أدوات", label: "الأدوات", icon: "🛠️" },
-  { id: "حاسبات", label: "الحاسبات", icon: "🧮" },
-  { id: "عبادات", label: "العبادات", icon: "🕌" },
-  { id: "فقه", label: "الفقه", icon: "⚖️" },
-  { id: "عقيدة", label: "العقيدة", icon: "💡" },
-  { id: "أخلاق", label: "الأخلاق", icon: "❤️" },
-  { id: "تاريخ", label: "التاريخ", icon: "🏛️" },
+  { id: "كتب", label: "الكتب", icon: "📚" },
   { id: "فتاوى", label: "الفتاوى", icon: "📜" },
   { id: "خطب", label: "الخطب", icon: "🗣️" },
+  { id: "تاريخ", label: "التاريخ", icon: "🏛️" },
   { id: "حصن المسلم", label: "حصن المسلم", icon: "🛡️" },
   { id: "اختبارات", label: "الاختبارات", icon: "🧠" },
-  { id: "علماء", label: "العلماء", icon: "👤" },
-  { id: "أسماء الله", label: "أسماء الله", icon: "ﷲ" },
-  { id: "سيرة", label: "السيرة", icon: "🕌" },
+  { id: "أسئلة", label: "أسئلة وأجوبة", icon: "❓" },
   { id: "تعليم", label: "الدروس", icon: "📚" },
   { id: "منهج", label: "المنهج", icon: "📖" },
+  { id: "سيرة", label: "السيرة", icon: "🕌" },
+  { id: "علماء", label: "العلماء", icon: "👤" },
+  { id: "أسماء الله", label: "أسماء الله", icon: "ﷲ" },
+  { id: "أقوال", label: "أقوال السلف", icon: "❝" },
   { id: "أطفال", label: "الأطفال", icon: "🧒" },
-  { id: "أسئلة", label: "أسئلة", icon: "❓" },
-  { id: "أقوال", label: "أقوال", icon: "❝" },
-  { id: "قرّاء", label: "القرّاء", icon: "🎙️" },
-  { id: "إذاعة", label: "الإذاعة", icon: "📻" },
+  { id: "قصص", label: "القصص والأنبياء", icon: "🌟" },
+  { id: "مناسبات", label: "المناسبات", icon: "🌙" },
+  { id: "أدوات", label: "الأدوات", icon: "🛠️" },
+  { id: "حاسبات", label: "الحاسبات", icon: "🧮" },
+  { id: "مدن", label: "المدن", icon: "🏙️" },
+  { id: "أقسام", label: "الأقسام", icon: "🧭" },
   { id: "صفحات", label: "الصفحات", icon: "📄" },
 ];
+
+/**
+ * يبني الشريطَ من الفئات التي تُنتج نتائج فقط.
+ * @returns {{id: string, label: string, icon: string}[]}
+ */
+function availableFilters() {
+  let have = [];
+  try {
+    have = resultCategories();
+  } catch {
+    // قبل التسجيل: الشريطُ الافتراضيّ كاملًا حتى لا يختفي فجأة.
+    have = FILTERS.map((filter) => filter.id);
+  }
+  const known = new Set(have);
+  const list = FILTERS.filter((filter) => known.has(filter.id));
+  return [{ id: "all", label: "الكل", icon: "🌐" }, ...list];
+}
 
 const HISTORY_KEY = "search-history";
 const MAX_HISTORY = 10;
@@ -556,7 +579,7 @@ function renderFilters() {
   const container = document.getElementById("searchModalFilters");
   if (!container) return;
   
-  container.innerHTML = FILTERS.map(f => `
+  container.innerHTML = availableFilters().map(f => `
     <button class="search-modal-filter" type="button" data-filter="${f.id}" aria-pressed="${f.id === activeFilter ? "true" : "false"}">
       ${f.icon} ${f.label}
     </button>
@@ -642,6 +665,22 @@ function isTyping(event) {
   return ["INPUT", "TEXTAREA", "SELECT"].includes(target.tagName);
 }
 
+/** حُملت مدوّدة المصحف من قبل؟ فلا نُعيد جدولة التحميل. */
+let quranWarmed = false;
+
+/**
+ * يسخّن مدوّدة آيات المصحف في وقت الفراغ. مرةً واحدة في الجلسة.
+ * @returns {void}
+ */
+function warmQuranCorpus() {
+  if (quranWarmed) return;
+  quranWarmed = true;
+  const idle = typeof requestIdleCallback === "function"
+    ? requestIdleCallback
+    : (fn) => setTimeout(fn, 2500);
+  idle(() => prefetchCorpus("quran"));
+}
+
 /**
  * Open the search modal.
  */
@@ -662,6 +701,12 @@ export async function openSearchModal() {
   // فمن يفتح النافذة ويكتب فورًا لا ينتظر شيئًا. ورفضُها هنا يُتجاهل عمدًا:
   // فتح النافذة لا يجوز أن يقع بسبب مصدرٍ واحد.
   registerDataSources().catch(() => {});
+
+  // مدوّدةُ آيات المصحف وحدها تُسخَّن في وقت الفراغ: أكثرُ ما يُبحث عنه نصًّا،
+  // وأثقلُها على الشبكة. فلا ينتظر أوّلُ سؤالٍ عن آيةٍ تنزيلَها، ولا تُحمَّل
+  // إن لم تُفتح النافذة أصلًا. `requestIdleCallback` غيرُ موجودٍ في سفاري
+  // القديم، فمهلةٌ قصيرة بديلًا منه.
+  warmQuranCorpus();
 
   modal.classList.add("open");
   isOpen = true;
@@ -707,12 +752,23 @@ async function performSearch() {
   // مصدرٌ واحد يفشل تحميله لا يُسقط البحث: ما سُجّل يُبحث فيه، وما لم يُسجَّل
   // يُبحث عنه في المحاولة التالية.
   await registerDataSources().catch(() => {});
+  // الشريطُ يُبنى من فئات المصادر، فبعد أوّل تسجيلٍ يصير ما لم يعد له مصدرٌ
+  // خارجَ الشريط بدل أن يُظهر «لا نتائج» دائمًا.
+  renderFilters();
   try {
+    // النصّ العميق (آيات، تفسير، غريب) يحتاج أوّلَ تحميلٍ للمدوّدة، والسقفُ
+    // هنا أوسعُ من سَقف المصادر الصغيرة، وإلّا أنهى البحثُ قرب اكتماله.
     const timeoutPromise = new Promise((_, reject) =>
-      setTimeout(() => reject(new Error("timeout")), 5000)
+      setTimeout(() => reject(new Error("timeout")), 9000)
     );
     const { results, categories, intent } = await Promise.race([
-      searchAll(query, { limit: 50, category }),
+      searchAll(query, {
+        limit: 50,
+        category,
+        onPhase: (phase) => setLoadingText(phase === "relaxed"
+          ? "واسع البحث بكلمات الاستعلام..."
+          : "يبحث في نصوص القرآن والحديث..."),
+      }),
       timeoutPromise
     ]);
     
@@ -766,6 +822,16 @@ function showLoading() {
   loading.className = "search-modal-loading";
   loading.textContent = "جارٍ البحث...";
   document.getElementById("searchModalBody").appendChild(loading);
+}
+
+/**
+ * يبدّل نصّ الانتظار دون إعادة بناء اللوح، فيعرف المستخدم أن البحث وسعَ
+ * مداه إلى نصوص القرآن لا أنّه hung.
+ * @param {string} text
+ */
+function setLoadingText(text) {
+  const loading = document.getElementById("searchModalLoading");
+  if (loading) loading.textContent = text;
 }
 
 /**
@@ -904,7 +970,8 @@ function renderResults(results, categories, intent) {
           <div class="search-modal-item-content">
             <p class="search-modal-item-title">${withHighlight(escapeHtml(r.title))}</p>
             ${r.description ? `<p class="search-modal-item-desc">${withHighlight(escapeHtml(r.description))}</p>` : ""}
-            ${r.matchType ? `<span class="search-modal-item-meta">${getMatchLabel(r.matchType)}</span>` : ""}
+            ${r.where ? `<p class="search-modal-item-desc">${escapeHtml(r.where)}</p>` : ""}
+            ${r.matchType ? `<span class="search-modal-item-meta">${getMatchLabel(r.matchType, r)}</span>` : ""}
           </div>
           <span class="search-modal-item-action">فتح</span>
         </a>
@@ -984,15 +1051,19 @@ function selectResult() {
 /**
  * Get match type label.
  */
-function getMatchLabel(matchType) {
+function getMatchLabel(matchType, result) {
   const labels = {
     exact: "مطابقة تامة",
     title: "مطابقة العنوان",
     keyword: "مطابقة الكلمة المفتاحية",
     content: "مطابقة المحتوى",
     category: "مطابقة التصنيف",
+    // لفظٌ زائدٌ أخرجَ البحثَ إلى كلماتٍ مفردة، فيجب أن يعرف المستخدم أن
+    // الجوابَ جاء بكلمةٍ من سؤاله لا بسؤاله كلّه.
+    relaxed: "بكلمة من سؤالك",
     suggestion: "اقتراح"
   };
+  if (matchType === "relaxed" && result?.sourceId === "library") return "مطابقة في المكتبة";
   return labels[matchType] || "";
 }
 

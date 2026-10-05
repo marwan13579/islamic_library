@@ -48,6 +48,21 @@ export const FORBIDDEN_TIME_REFERENCES = Object.freeze({
   "asr-to-sunset": { ref: "صحيح مسلم 831", url: "https://sunnah.com/muslim:831" },
 });
 
+/**
+ * مراجع قرآنية لمحاور السيرة النبوية.
+ * المفتاح هو `title` كما في `src/data/seerah.js`.
+ * المرجع يُشير إلى الآية التي تُثبت الحدث أو تُلمح إليه.
+ */
+export const SEERAH_REFERENCES = Object.freeze({
+  "مولد النبي ﷺ": { ref: "الفيل: 1", url: "https://quran.com/105/1" },
+  "بدء الوحي": { ref: "العلق: 1", url: "https://quran.com/96/1" },
+  "الهجرة إلى المدينة": { ref: "التوبة: 40", url: "https://quran.com/9/40" },
+  "غزوة بدر": { ref: "الأنفال: 17", url: "https://quran.com/8/17" },
+  "فتح مكة": { ref: "الفتح: 1", url: "https://quran.com/48/1" },
+  "وفاة النبي ﷺ": { ref: "آل عمران: 144", url: "https://quran.com/3/144" },
+});
+
+
 const ATHKAR_CORRECTIONS = Object.freeze({
   "سُبْحَانَ اللَّهِ (33) الْحَمْدُ لِلَّهِ (33) اللَّهُ أَكْبَرُ (33)": {
     text: "سُبْحَانَ اللَّهِ (33) الْحَمْدُ لِلَّهِ (33) اللَّهُ أَكْبَرُ (33)، لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، لَهُ الْمُلْكُ وَلَهُ الْحَمْدُ وَهُوَ عَلَى كُلِّ شَيْءٍ قَدِيرٌ",

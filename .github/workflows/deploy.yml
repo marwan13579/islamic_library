@@ -29,6 +29,10 @@ jobs:
       - run: npm run check:order
       - run: npm run check:content
       - run: npm run check:noor
+      # المدوّدة البحثية (`content/corpora/`) مُولّدة ولا تُستَند كضروريّة
+      # للـrepo، فتُبنى أولًا ثم تُفحص لبنائها غير المتكرّسة وملفاتها الزائدة.
+      - run: npm run build:corpora
+      - run: npm run check:corpora
       - run: npm run verify:content
       - run: npm run review:ci
 
@@ -50,7 +54,9 @@ jobs:
         run: echo "CHROMIUM_PATH=$(ls -d "$HOME"/.cache/ms-playwright/chromium-*/chrome-linux*/chrome | head -1)" >> "$GITHUB_ENV"
       - run: npm run check:browser
       - run: npm run check:reader
+      - run: npm run check:audio
       - run: npm run check:interaction
+      - run: npm run check:search
       - run: npm run check:daily
       - run: npm run videos:check
 
