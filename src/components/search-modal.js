@@ -5,6 +5,7 @@
  */
 
 import { searchAll, quickSearch, getSmartSuggestions, processQuery } from "../lib/unified-search.js";
+import { HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE } from "../lib/search.js";
 
 const FILTERS = [
   { id: "all", label: "الكل", icon: "🌐" },
@@ -232,6 +233,12 @@ function getSearchModalStyles() {
       display: flex;
       flex-direction: column;
       gap: 10px;
+    }
+    /* السمة hidden وحدها لا تكفي: قاعدة display:flex أعلاه تتقدّم على قاعدة
+       المتصفح فيبقى العنصر ظاهرًا بعد إخفائه، فتتراكم النتائج القديمة. */
+    .search-modal-results[hidden],
+    .search-modal-history[hidden] {
+      display: none;
     }
     .search-modal-category {
       font-size: 0.75rem;
@@ -636,18 +643,54 @@ async function performSearch() {
 }
 
 /**
+ * Show a search field with the matched terms marked.
+ *
+ * `search.js` wraps matches in `[[H]]`/`[[/H]]` and hands back raw text, so the
+ * markup is this component's decision. Escaping happens first: the markers carry
+ * no HTML characters, so turning them into `<mark>` afterwards cannot inject
+ * anything, and nothing reaches the DOM except escaped text plus those two tags.
+ *
+ * @param {string} escaped نصٌّ مُهرَّب مسبقًا
+ * @returns {string}
+ */
+function withHighlight(escaped) {
+  return String(escaped).split(HIGHLIGHT_OPEN).join("<mark>").split(HIGHLIGHT_CLOSE).join("</mark>");
+}
+
+/**
  * Show loading state.
+ *
+ * The body holds the state panels themselves (suggestions, results, empty,
+ * history), so it must never be rewritten: doing so leaves `renderResults`
+ * with no container and the modal frozen on "جارٍ البحث..." forever.
+ * The spinner is one node appended to the body and removed by `hideLoading`.
  */
 function showLoading() {
-  const body = document.getElementById("searchModalBody");
-  if (!body) return;
-  body.innerHTML = '<div class="search-modal-loading">جارٍ البحث...</div>';
+  hideLoading();
+  for (const id of ["searchModalSuggestions", "searchModalResults", "searchModalEmpty", "searchModalHistory"]) {
+    const panel = document.getElementById(id);
+    if (panel) panel.hidden = true;
+  }
+  const loading = document.createElement("div");
+  loading.id = "searchModalLoading";
+  loading.className = "search-modal-loading";
+  loading.textContent = "جارٍ البحث...";
+  document.getElementById("searchModalBody").appendChild(loading);
+}
+
+/**
+ * Hide the loading indicator if it is showing.
+ */
+function hideLoading() {
+  const loading = document.getElementById("searchModalLoading");
+  if (loading) loading.remove();
 }
 
 /**
  * Show search history.
  */
 function showHistory() {
+  hideLoading();
   const history = getHistory();
   const container = document.getElementById("searchModalHistory");
   const suggestions = document.getElementById("searchModalSuggestions");
@@ -657,8 +700,6 @@ function showHistory() {
   if (suggestions) suggestions.hidden = true;
   if (results) results.hidden = true;
   if (empty) empty.hidden = true;
-  
-  if (!container) return;
   
   if (history.length === 0) {
     container.hidden = true;
@@ -694,6 +735,7 @@ function showHistory() {
  * Show smart suggestions.
  */
 function renderSuggestions(suggestions) {
+  hideLoading();
   const container = document.getElementById("searchModalSuggestions");
   const history = document.getElementById("searchModalHistory");
   const results = document.getElementById("searchModalResults");
@@ -702,8 +744,6 @@ function renderSuggestions(suggestions) {
   if (history) history.hidden = true;
   if (results) results.hidden = true;
   if (empty) empty.hidden = true;
-  
-  if (!container) return;
   
   if (suggestions.length === 0) {
     container.hidden = true;
@@ -717,8 +757,8 @@ function renderSuggestions(suggestions) {
       <a class="search-modal-item" href="${escapeHtml(s.route || "#")}" data-id="${escapeHtml(s.id || "")}">
         <span class="search-modal-item-icon">${escapeHtml(s.icon || "📌")}</span>
         <div class="search-modal-item-content">
-          <p class="search-modal-item-title">${escapeHtml(s.title)}</p>
-          <p class="search-modal-item-desc">${escapeHtml(s.description || "")}</p>
+          <p class="search-modal-item-title">${withHighlight(escapeHtml(s.title))}</p>
+          <p class="search-modal-item-desc">${withHighlight(escapeHtml(s.description || ""))}</p>
         </div>
         <span class="search-modal-item-action">فتح</span>
       </a>
@@ -744,6 +784,7 @@ function renderSuggestions(suggestions) {
  * Render search results.
  */
 function renderResults(results, categories, intent) {
+  hideLoading();
   const container = document.getElementById("searchModalResults");
   const suggestions = document.getElementById("searchModalSuggestions");
   const history = document.getElementById("searchModalHistory");
@@ -752,8 +793,6 @@ function renderResults(results, categories, intent) {
   if (suggestions) suggestions.hidden = true;
   if (history) history.hidden = true;
   if (empty) empty.hidden = true;
-  
-  if (!container) return;
   
   container.hidden = false;
   
@@ -773,8 +812,8 @@ function renderResults(results, categories, intent) {
         <a class="search-modal-item" href="${escapeHtml(r.route || "#")}" data-index="${r.index || 0}">
           <span class="search-modal-item-icon">${escapeHtml(r.icon || "📄")}</span>
           <div class="search-modal-item-content">
-            <p class="search-modal-item-title">${escapeHtml(r.title)}</p>
-            <p class="search-modal-item-desc">${escapeHtml(r.description || "")}</p>
+            <p class="search-modal-item-title">${withHighlight(escapeHtml(r.title))}</p>
+            <p class="search-modal-item-desc">${withHighlight(escapeHtml(r.description || ""))}</p>
             ${r.matchType ? `<span class="search-modal-item-meta">${getMatchLabel(r.matchType)}</span>` : ""}
           </div>
           <span class="search-modal-item-action">فتح</span>
@@ -801,6 +840,7 @@ function renderResults(results, categories, intent) {
  * Show no results state.
  */
 function showNoResults(query) {
+  hideLoading();
   const container = document.getElementById("searchModalResults");
   const suggestions = document.getElementById("searchModalSuggestions");
   const history = document.getElementById("searchModalHistory");
@@ -809,8 +849,6 @@ function showNoResults(query) {
   if (suggestions) suggestions.hidden = true;
   if (history) history.hidden = true;
   if (container) container.hidden = true;
-  
-  if (!empty) return;
   
   empty.hidden = false;
   empty.innerHTML = `
@@ -967,8 +1005,8 @@ function renderInlineResults(container, results, query) {
     <a class="search-modal-item" href="${escapeHtml(r.route || "#")}">
       <span class="search-modal-item-icon">${escapeHtml(r.icon || "📄")}</span>
       <div class="search-modal-item-content">
-        <p class="search-modal-item-title">${escapeHtml(r.title)}</p>
-        <p class="search-modal-item-desc">${escapeHtml(r.description || "")}</p>
+        <p class="search-modal-item-title">${withHighlight(escapeHtml(r.title))}</p>
+        <p class="search-modal-item-desc">${withHighlight(escapeHtml(r.description || ""))}</p>
       </div>
     </a>
   `).join("");

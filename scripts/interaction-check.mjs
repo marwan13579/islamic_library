@@ -243,6 +243,90 @@ console.log("\n=== تبويبات التطبيق ===");
   await context.close();
 }
 
+/* ------------------------------ البحث الموحّد ------------------------------ */
+console.log("\n=== البحث الموحّد يعرض نتائجه ===");
+{
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  const errors = [];
+  page.on("pageerror", (error) => errors.push(error.message));
+  await page.goto(`${base}/index.html`, { waitUntil: "load" });
+  await page.waitForTimeout(1500);
+  // دليل المكتبة يفتح تلقائيًّا: يُغلق أولًا وإلا اعترض كل نقرة
+  await page.keyboard.press("Escape");
+  await page.waitForTimeout(300);
+
+  // المسار الحقيقي: الكتابة في حقل البحث في الترويسة
+  await page.click("#search");
+  await page.type("#search", "الزكاة", { delay: 60 });
+  await page.locator("#searchModalResults .search-modal-item").first().waitFor({ timeout: 15000 });
+
+  const shown = await page.evaluate(() => {
+    const results = document.getElementById("searchModalResults");
+    return {
+      items: results.querySelectorAll(".search-modal-item").length,
+      loading: Boolean(document.getElementById("searchModalLoading")),
+      rawMarkers: results.innerHTML.includes("[[H]]"),
+      marks: results.querySelectorAll("mark").length,
+    };
+  });
+  pass(shown.items > 0, `النتائج تظهر: ${shown.items} عنصرًا`);
+  pass(!shown.loading, "مؤشّر البحث زال بعد وصول النتائج");
+  pass(!shown.rawMarkers, "علامات التظليل صارت وسمًا لا نصًّا");
+  pass(shown.marks > 0, `التظليل ظاهر (${shown.marks} موضعًا)`);
+
+  // تفريغ الحقل يُخفي النتائج: سمة hidden وحدها لا تكفي مع display:flex
+  await page.fill("#searchModalInput", "");
+  await page.waitForTimeout(500);
+  const cleared = await page.evaluate(
+    () => getComputedStyle(document.getElementById("searchModalResults")).display,
+  );
+  pass(cleared === "none", `تفريغ الحقل يُخفي النتائج (${cleared})`);
+
+  // نصٌّ مُهرَّب مع علامة تظليل: لا تنفيذ ولا إدخال
+  await page.evaluate(async () => {
+    const { registry } = await import("/src/lib/search-registry.js");
+    registry.register({
+      id: "interaction-probe",
+      type: "probe",
+      category: "فحص",
+      icon: "\u{1F9EA}",
+      title: "فحص",
+      keywords: [],
+      priority: 0,
+      async search(query) {
+        const text = String(query || "");
+        return text.includes("zxqprobe")
+          ? [{
+            id: "probe",
+            type: "probe",
+            category: "فحص",
+            icon: "\u{1F9EA}",
+            title: '<img id="search-xss-probe" src="/missing" onerror="window.__pwned=true">zxqprobe [[H]]zxqprobe[[/H]]',
+            description: '<svg onload="window.__pwned2=true"></svg>',
+            route: "#",
+          }]
+          : [];
+      },
+    });
+  });
+  await page.fill("#searchModalInput", "zxqprobe");
+  await page.waitForTimeout(1500);
+  const probe = await page.evaluate(() => {
+    const title = document.querySelector("#searchModalResults .search-modal-item-title");
+    return {
+      executed: Boolean(window.__pwned || window.__pwned2),
+      injected: Boolean(document.getElementById("search-xss-probe")),
+      escaped: (title?.innerHTML || "").includes("&lt;img"),
+      marked: (title?.querySelectorAll("mark").length ?? 0) > 0,
+    };
+  });
+  pass(!probe.executed && !probe.injected, "نص النتيجة المُهرَّب مع التظليل لا يُنفَّذ");
+  pass(probe.escaped && probe.marked, "التظليل يبقى بعد التهريب");
+  pass(errors.length === 0, `البحث بلا أخطاء وقت التشغيل${errors.length ? ": " + errors.join(" | ") : ""}`);
+  await context.close();
+}
+
 console.log("\n=== ورقة المراجعة العلمية ===");
 {
   const context = await browser.newContext();

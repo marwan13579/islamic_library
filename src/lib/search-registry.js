@@ -36,12 +36,16 @@ export class SearchRegistry {
    * @param {SearchSource} source
    */
   register(source) {
-    this.sources.set(source.id, source);
-    if (!this.byCategory.has(source.category)) {
-      this.byCategory.set(source.category, []);
+    // المصادر المسجَّلة باليد لا تمرّ بـ`createSource`، فلا تحمل `searchable`،
+    // و`searchAll` يتجاهل كل مصدر لا تحمل هذه العَلَم، فيصير البحث صامتًا بلا
+    // نتيجة. فالعَلَم هنا افتراض، ولا يلغيه إلا `searchable: false` صراحةً.
+    const entry = { searchable: true, ...source };
+    this.sources.set(entry.id, entry);
+    if (!this.byCategory.has(entry.category)) {
+      this.byCategory.set(entry.category, []);
     }
-    this.byCategory.get(source.category).push(source);
-    this.all.push(source);
+    this.byCategory.get(entry.category).push(entry);
+    this.all.push(entry);
   }
 
   /**
