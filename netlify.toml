@@ -1,0 +1,123 @@
+[build]
+  command = "npm run build:pages"
+  publish = "dist"
+
+[[redirects]]
+  from = "/quran"
+  to = "/30-quran-full.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azkar"
+  to = "/25-azkar-shamila.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azkar/morning"
+  to = "/25-azkar-shamila.html#sabah"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azkar/evening"
+  to = "/25-azkar-shamila.html#masaa"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azkar/sleep"
+  to = "/25-azkar-shamila.html#nawm"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/azkar/after-prayer"
+  to = "/25-azkar-shamila.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/dua"
+  to = "/25-azkar-shamila.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hadith"
+  to = "/27-hadith.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/tasbeeh"
+  to = "/15-tasbeeh-jamai.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/qibla"
+  to = "/22-qibla.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/prayer-times"
+  to = "/29-prayer-times.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/zakat"
+  to = "/10-zakat.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/hijri"
+  to = "/28-hijri.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/quran-khatma"
+  to = "/17-wird.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/wird"
+  to = "/17-wird.html"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/islamic-library"
+  to = "/"
+  status = 301
+  force = true
+
+[[redirects]]
+  from = "/today"
+  to = "/"
+  status = 301
+  force = true
+
+[[headers]]
+  for = "/*"
+  [headers.values]
+    X-Content-Type-Options = "nosniff"
+    X-Frame-Options = "SAMEORIGIN"
+    Referrer-Policy = "strict-origin-when-cross-origin"
+    Permissions-Policy = "geolocation=(self), notifications=(self), camera=(), microphone=(self)"
+
+[[headers]]
+  for = "/sw.js"
+  [headers.values]
+    Cache-Control = "no-cache"
+
+[[headers]]
+  for = "/manifest.webmanifest"
+  [headers.values]
+    Content-Type = "application/manifest+json; charset=UTF-8"
