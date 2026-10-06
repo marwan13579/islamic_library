@@ -1,0 +1,43 @@
+{
+  "navigation": {
+    "home": "Home",
+    "menu": "Menu",
+    "navigation": "Navigation",
+    "breadcrumb": "Breadcrumb",
+    "back": "Back",
+    "next": "Next",
+    "previous": "Previous",
+    "close": "Close",
+    "search": "Search",
+    "all": "All",
+    "categories": "Categories",
+    "tools": "Tools",
+    "library": "Library",
+    "settings": "Settings",
+    "help": "Help",
+    "about": "About",
+    "privacy": "Privacy Policy",
+    "terms": "Terms and Conditions",
+    "contact": "Contact Us",
+    "skipToContent": "Skip to main content",
+    "skipToNavigation": "Skip to navigation",
+    "skipToSearch": "Skip to search",
+    "language": "Language",
+    "darkMode": "Dark mode",
+    "lightMode": "Light mode",
+    "themeToggle": "Toggle theme",
+    "installApp": "Install app",
+    "guide": "Library Guide",
+    "sortDefault": "Default sort",
+    "sortRecent": "Recently used",
+    "backupExport": "Export backup",
+    "backupImport": "Import backup",
+    "catalog": "Catalog",
+    "footerText": "O Allah, make this work purely for Your Face, and benefit everyone who reads and shares it — Amen"
+  },
+  "_meta": {
+    "language": "ro",
+    "status": "needs_translation",
+    "baseLanguage": "en"
+  }
+}

@@ -8,7 +8,7 @@
     "edit": "Bearbeiten",
     "add": "Hinzufügen",
     "remove": "Entfernen",
-    "loading": "Laden...",
+    "loading": "Laden",
     "error": "Fehler",
     "success": "Erfolg",
     "warning": "Warnung",
@@ -90,7 +90,7 @@
     "clear": "Löschen",
     "filter": "Filtern",
     "sort": "Sortieren",
-    "order": "Reihenfolge",
+    "order": "Bestellung",
     "ascending": "Aufsteigend",
     "descending": "Absteigend",
     "newest": "Neueste",
@@ -127,7 +127,7 @@
     "disabled": "Deaktiviert",
     "visible": "Sichtbar",
     "hidden": "Ausgeblendet",
-    "show": "Anzeigen",
+    "show": "Sendung",
     "hide": "Ausblenden",
     "expand": "Erweitern",
     "collapse": "Einklappen",
@@ -135,7 +135,7 @@
     "reload": "Neu laden",
     "reconnect": "Neu verbinden",
     "install": "Installieren",
-    "update": "Aktualisieren",
+    "update": "Update",
     "available": "Verfügbar",
     "unavailable": "Nicht verfügbar",
     "requiredField": "Dieses Feld ist erforderlich",
@@ -234,8 +234,6 @@
     "custom": "Benutzerdefiniert",
     "auto": "Automatisch",
     "manual": "Manuell",
-    "enabled": "Aktiviert",
-    "disabled": "Deaktiviert",
     "allRightsReserved": "Alle Rechte vorbehalten",
     "madeWithLove": "Mit Liebe gemacht",
     "poweredBy": "Unterstützt von",
@@ -277,7 +275,7 @@
     "selectItem": "Element auswählen",
     "deselectItem": "Auswahl aufheben",
     "itemSelected": "Element ausgewählt",
-    "itemsSelected": "Elemente ausgewählt",
+    "itemsSelected": "{count} Element ausgewählt",
     "item": "Element",
     "items": "Elemente",
     "list": "Liste",
@@ -291,7 +289,6 @@
     "footer": "Fußzeile",
     "sidebar": "Seitenleiste",
     "navbar": "Navigationsleiste",
-    "menu": "Menü",
     "submenu": "Untermenü",
     "dropdown": "Dropdown",
     "tab": "Registerkarte",
@@ -320,11 +317,9 @@
     "field": "Feld",
     "input": "Eingabe",
     "textarea": "Textbereich",
-    "select": "Auswählen",
     "checkbox": "Checkbox",
     "radio": "Optionsfeld",
     "button": "Schaltfläche",
-    "link": "Link",
     "label": "Beschriftung",
     "placeholder": "Platzhalter",
     "value": "Wert",
@@ -398,7 +393,7 @@
     "yearly": "Jährlich",
     "recurring": "Wiederkehrend",
     "oneTime": "Einmalig",
-    "free": "Kostenlos",
+    "free": "Frei",
     "paid": "Bezahlt",
     "price": "Preis",
     "cost": "Kosten",
@@ -413,7 +408,6 @@
     "invoice": "Rechnung",
     "receipt": "Beleg",
     "transaction": "Transaktion",
-    "order": "Bestellung",
     "statusPending": "Ausstehend",
     "statusProcessing": "In Bearbeitung",
     "statusCompleted": "Abgeschlossen",
@@ -517,14 +511,12 @@
     "selectFile": "Datei auswählen",
     "selectFiles": "Dateien auswählen",
     "selectFolder": "Ordner auswählen",
-    "selectItem": "Element auswählen",
     "selectItems": "Elemente auswählen",
     "noFilesSelected": "Keine Dateien ausgewählt",
     "noFoldersSelected": "Keine Ordner ausgewählt",
     "noItemsSelected": "Keine Elemente ausgewählt",
     "filesSelected": "{count} Datei ausgewählt",
     "foldersSelected": "{count} Ordner ausgewählt",
-    "itemsSelected": "{count} Element ausgewählt",
     "totalFiles": "Dateien gesamt",
     "totalFolders": "Ordner gesamt",
     "totalItems": "Elemente gesamt",
@@ -534,10 +526,10 @@
     "createdAt": "Erstellt am",
     "modifiedAt": "Geändert am",
     "accessedAt": "Zugegriffen am",
-    "owner": "Besitzer",
+    "owner": "Eigentümer",
     "author": "Autor",
     "creator": "Ersteller",
-    "editor": "Bearbeiter",
+    "editor": "Editor",
     "contributor": "Mitwirkender",
     "lastModified": "Zuletzt geändert",
     "lastAccessed": "Letzter Zugriff",
@@ -546,7 +538,6 @@
     "modified": "Geändert",
     "accessed": "Zugegriffen",
     "updated": "Aktualisiert",
-    "deleted": "Gelöscht",
     "added": "Hinzugefügt",
     "removed": "Entfernt",
     "changed": "Geändert",
@@ -582,10 +573,8 @@
     "across": "über",
     "throughout": "während",
     "within": "innerhalb",
-    "outside": "außerhalb",
     "new": "Neu",
     "old": "Alt",
-    "recent": "Kürzlich",
     "latest": "Neueste",
     "latestVersion": "Neueste Version",
     "earliest": "Älteste",
@@ -615,7 +604,6 @@
     "premium": "Premium",
     "basic": "Basis",
     "standard": "Standard",
-    "advanced": "Erweitert",
     "professional": "Professionell",
     "enterprise": "Unternehmen",
     "personal": "Persönlich",
@@ -632,11 +620,8 @@
     "admin": "Admin",
     "user": "Benutzer",
     "member": "Mitglied",
-    "owner": "Eigentümer",
     "moderator": "Moderator",
-    "editor": "Editor",
     "viewer": "Betrachter",
-    "contributor": "Mitwirkender",
     "subscriber": "Abonnent",
     "follower": "Follower",
     "visitor": "Besucher",
@@ -655,8 +640,6 @@
     "committee": "Ausschuss",
     "department": "Abteilung",
     "division": "Bereich",
-    "unit": "Einheit",
-    "team": "Team",
     "group": "Gruppe",
     "project": "Projekt",
     "program": "Programm",
@@ -684,9 +667,8 @@
     "recommendation": "Empfehlung",
     "endorsement": "Empfehlung",
     "testimonial": "Referenz",
-    "review": "Bewertung",
+    "review": "Überprüfung",
     "rating": "Bewertung",
-    "feedback": "Feedback",
     "comment": "Kommentar",
     "reply": "Antworten",
     "thread": "Thread",
@@ -697,7 +679,7 @@
     "answer": "Antwort",
     "solution": "Lösung",
     "problem": "Problem",
-    "issue": "Problem",
+    "issue": "Ausgabe",
     "bug": "Fehler",
     "feature": "Funktion",
     "enhancement": "Erweiterung",
@@ -711,34 +693,20 @@
     "outdated": "Veraltet",
     "obsolete": "Veraltet",
     "current": "Aktuell",
-    "active": "Aktiv",
-    "inactive": "Inaktiv",
     "pending": "Ausstehend",
     "approved": "Genehmigt",
     "rejected": "Abgelehnt",
     "accepted": "Akzeptiert",
     "declined": "Abgelehnt",
-    "published": "Veröffentlicht",
     "unpublished": "Unveröffentlicht",
-    "archived": "Archiviert",
-    "deleted": "Gelöscht",
-    "restored": "Wiederhergestellt",
     "trashed": "Gelöscht",
-    "draft": "Entwurf",
     "final": "Endgültig",
     "reviewed": "Überprüft",
-    "verified": "Verifiziert",
     "confirmed": "Bestätigt",
-    "completed": "Abgeschlossen",
     "finished": "Beendet",
     "done": "Erledigt",
     "ready": "Bereit",
-    "available": "Verfügbar",
-    "unavailable": "Nicht verfügbar",
     "busy": "Beschäftigt",
-    "free": "Frei",
-    "online": "Online",
-    "offline": "Offline",
     "idle": "Leerlauf",
     "working": "Arbeitend",
     "stopped": "Gestoppt",
@@ -748,7 +716,6 @@
     "stopping": "Stoppend",
     "restarting": "Neustartend",
     "initializing": "Initialisierend",
-    "loading": "Laden",
     "processing": "Verarbeitend",
     "saving": "Speichern",
     "uploading": "Hochladen",
@@ -795,7 +762,6 @@
     "sorting": "Sortierend",
     "grouping": "Gruppierend",
     "mapping": "Zuordnend",
-    "transforming": "Transformierend",
     "connecting": "Verbinden",
     "disconnecting": "Trennen",
     "pairing": "Koppeln",
@@ -833,7 +799,6 @@
     "unbundling": "Entbündelnd",
     "packing": "Packend",
     "unpacking": "Auspackend",
-    "loading": "Laden",
     "unloading": "Entladen",
     "fetching": "Abrufend",
     "retrieving": "Abrufend",
@@ -856,9 +821,8 @@
     "alarm": "Alarm",
     "scheduler": "Planer",
     "calendar": "Kalender",
-    "event": "Ereignis",
     "appointment": "Termin",
-    "meeting": "Meeting",
+    "meeting": "Treffen",
     "conference": "Konferenz",
     "call": "Anruf",
     "webinar": "Webinar",
@@ -868,18 +832,14 @@
     "episode": "Folge",
     "season": "Staffel",
     "series": "Serie",
-    "show": "Sendung",
-    "program": "Programm",
     "channel": "Kanal",
     "station": "Station",
     "network": "Netzwerk",
     "platform": "Plattform",
     "service": "Dienst",
     "product": "Produkt",
-    "solution": "Lösung",
     "tool": "Werkzeug",
     "utility": "Dienstprogramm",
-    "feature": "Funktion",
     "function": "Funktion",
     "capability": "Fähigkeit",
     "ability": "Fähigkeit",
@@ -891,7 +851,6 @@
     "advantage": "Vorteil",
     "disadvantage": "Nachteil",
     "benefit": "Nutzen",
-    "value": "Wert",
     "impact": "Auswirkung",
     "result": "Ergebnis",
     "outcome": "Ergebnis",
@@ -925,7 +884,6 @@
     "model": "Modell",
     "schema": "Schema",
     "format": "Format",
-    "standard": "Standard",
     "specification": "Spezifikation",
     "requirement": "Anforderung",
     "constraint": "Einschränkung",
@@ -942,12 +900,9 @@
     "metric": "Metrik",
     "indicator": "Indikator",
     "signal": "Signal",
-    "alert": "Warnung",
-    "warning": "Warnung",
     "notice": "Hinweis",
     "announcement": "Ankündigung",
     "news": "Neuigkeiten",
-    "update": "Aktualisierung",
     "newsletter": "Newsletter",
     "blog": "Blog",
     "article": "Artikel",
@@ -955,14 +910,12 @@
     "entry": "Eintrag",
     "record": "Datensatz",
     "log": "Protokoll",
-    "history": "Verlauf",
     "timeline": "Zeitachse",
     "chronicle": "Chronik",
     "story": "Geschichte",
     "tale": "Märchen",
     "narrative": "Erzählung",
     "account": "Konto",
-    "report": "Bericht",
     "statement": "Aussage",
     "declaration": "Erklärung",
     "proclamation": "Proklamation",
@@ -1002,15 +955,12 @@
     "situation": "Situation",
     "condition": "Zustand",
     "state": "Zustand",
-    "status": "Status",
     "phase": "Phase",
     "stage": "Stufe",
     "step": "Schritt",
     "milestone": "Meilenstein",
     "landmark": "Wahrzeichen",
     "benchmark": "Benchmark",
-    "reference": "Referenz",
-    "standard": "Standard",
     "norm": "Norm",
     "baseline": "Basislinie",
     "foundation": "Grundlage",
@@ -1018,13 +968,11 @@
     "pillar": "Säule",
     "support": "Unterstützung",
     "assistance": "Hilfe",
-    "help": "Hilfe",
     "aid": "Hilfe",
     "guidance": "Anleitung",
     "advice": "Rat",
     "consultation": "Beratung",
     "counsel": "Beratung",
-    "recommendation": "Empfehlung",
     "suggestion": "Vorschlag",
     "proposal": "Vorschlag",
     "idea": "Idee",
@@ -1042,9 +990,7 @@
     "appraisal": "Bewertung",
     "inspection": "Inspektion",
     "audit": "Prüfung",
-    "review": "Überprüfung",
     "overview": "Überblick",
-    "summary": "Zusammenfassung",
     "abstract": "Zusammenfassung",
     "outline": "Gliederung",
     "synopsis": "Synopsis",
@@ -1069,21 +1015,17 @@
     "possession": "Besitz",
     "belonging": "Zugehörigkeit",
     "ownership": "Eigentum",
-    "title": "Titel",
     "deed": "Urkunde",
     "certificate": "Zertifikat",
     "diploma": "Diplom",
     "degree": "Abschluss",
     "qualification": "Qualifikation",
     "credential": "Berechtigungsnachweis",
-    "license": "Lizenz",
     "permit": "Genehmigung",
     "authorization": "Autorisierung",
     "approval": "Genehmigung",
-    "consent": "Zustimmung",
     "permission": "Erlaubnis",
     "access": "Zugriff",
-    "entry": "Eintrag",
     "admission": "Zulassung",
     "admittance": "Zutritt",
     "entrance": "Eingang",
@@ -1094,7 +1036,6 @@
     "return": "Rückkehr",
     "comeback": "Rückkehr",
     "reunion": "Wiedersehen",
-    "meeting": "Treffen",
     "gathering": "Zusammenkunft",
     "assembly": "Versammlung",
     "congregation": "Gemeinde",
@@ -1103,12 +1044,9 @@
     "spectator": "Zuschauer",
     "observer": "Beobachter",
     "watcher": "Beobachter",
-    "viewer": "Betrachter",
     "listener": "Zuhörer",
     "reader": "Leser",
     "writer": "Schreiber",
-    "author": "Autor",
-    "creator": "Ersteller",
     "inventor": "Erfinder",
     "pioneer": "Pionier",
     "founder": "Gründer",
@@ -1116,7 +1054,6 @@
     "source": "Quelle",
     "origin": "Ursprung",
     "beginning": "Anfang",
-    "start": "Start",
     "commencement": "Beginn",
     "inception": "Entstehung",
     "launch": "Einführung",
@@ -1124,16 +1061,301 @@
     "premiere": "Premiere",
     "release": "Veröffentlichung",
     "publication": "Veröffentlichung",
-    "issue": "Ausgabe",
     "edition": "Auflage",
-    "version": "Version",
     "revision": "Revision",
-    "update": "Update",
     "upgrade": "Upgrade",
     "downgrade": "Downgrade",
     "patch": "Patch",
     "fix": "Fix",
     "repair": "Reparatur",
-    "maintenance": "Wartung"
+    "siteTitle": "المكتبة الإسلامية",
+    "siteSubtitle": "كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.",
+    "sortDefault": "الترتيب الافتراضي",
+    "sortRecent": "الأحدث استخدامًا",
+    "backupExport": "تصدير نسخة",
+    "backupImport": "استعادة نسخة",
+    "sincTitle": "🤍 عبادتك بينك وبين الله",
+    "sincText": "كل عدّاد وكل خط تقدّم هنا وسيلة تنظّمك، مش غاية ولا مقياس تتفاخر أو تُقارن بيه نفسك بحد. بياناتك محفوظة على جهازك وحدك، محدش شايفها غيرك. الأصل النية الخالصة للله، والأجر عنده وحده سبحانه، سواء علِم بعملك أحد أو لم يعلم.",
+    "listTitleAll": "كل الأدوات",
+    "emptyMsg": "لا توجد أدوات مطابقة لبحثك.",
+    "catalogLink": "الكتالوج التعريفي (PDF)",
+    "favTitle": "★ المفضلة",
+    "openAll": "فتح الكل",
+    "booksNote": "هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
+    "langLabel": "العربية",
+    "introBtn": "🧭 دليل المكتبة",
+    "partialNote": "محتوى الأدوات نفسها بالعربية الأصلية للحفاظ على دقة النصوص الدينية.",
+    "cats": {
+      "all": "الكل",
+      "dhikr": "أذكار وأدعية",
+      "quran": "القرآن والحديث",
+      "learn": "تعلّم",
+      "stories": "قصص",
+      "calc": "حاسبات",
+      "books": "كتب وصوتيات"
+    },
+    "catBlurb": {
+      "dhikr": "أذكارٌ وأدعية وأوقات الإجابة",
+      "quran": "المصحف والحديث وتلاوة القرآن",
+      "learn": "دروسٌ واختباراتٌ وحجٌّ وآداب",
+      "stories": "قصصُ الأنبياء والسيرة وآداب الأطفال",
+      "calc": "مواقيت الصلاة والقبلة والزكاة والتقويم",
+      "books": "كتبٌ وفتاوى وتفسيرٌ ومكتبة فيديو"
+    },
+    "tools": {
+      "noor": [
+        "نور الهدى — المنهج التعليمي",
+        "١٨ قسمًا: المنهج وأعلام السلف، الدروس، السيرة، الأنبياء، الأسماء، الأذكار، الاختبارات والشهادات، وركن الأطفال"
+      ],
+      "noorapp": [
+        "بوابة النور — التطبيق",
+        "مصحف وأذكار ومواقيت وإذاعة وزكاة وبطاقات — يعمل بدون إنترنت"
+      ],
+      "quizbank": [
+        "الاختبارات والشهادات",
+        "بنك أسئلة بثلاثة أنواع، تحدٍّ أسبوعي، وشهادات إتمام تُرسم على canvas"
+      ],
+      "groupkhatma": [
+        "الختمة الجماعية",
+        "وزّع الأجزاء بين المشاركين وتابع الإنجاز والإهداء"
+      ],
+      "cardmaker": [
+        "صانع البطاقات الدعوية",
+        "حوّل أي آية أو حديث أو ذكر لبطاقة صورة قابلة للتحميل والمشاركة"
+      ],
+      "quranfull": [
+        "القرآن الكريم",
+        "المصحف كاملًا — سور، أجزاء، بحث، تلاوة، ترجمة وتفسير"
+      ],
+      "dailysystem": [
+        "نظام حياة المسلم",
+        "يومك مرتبط بالصلاة — صلاة، ذكر، وقرآن مع كل وقت"
+      ],
+      "adhkar": [
+        "الأذكار الشاملة",
+        "١٢ قسمًا: الصباح، المساء، النوم، بعد الصلاة، الوضوء، الاستغفار وغيرها"
+      ],
+      "dhikrkit": [
+        "نور الذكر",
+        "أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر"
+      ],
+      "mushaf": [
+        "مُصحَفي",
+        "تتبّع حفظ القرآن الكريم كاملًا"
+      ],
+      "hadithcol": [
+        "الحديث الشريف",
+        "مختارات من الكتب الستة، موثّقة بالراوي والدرجة"
+      ],
+      "arbaeen": [
+        "الأربعون النووية",
+        "٤٢ حديثًا جامعًا بشرح مختصر"
+      ],
+      "salah": [
+        "تعلّم الصلاة",
+        "دليل خطوة بخطوة للأطفال وحديثي الإسلام"
+      ],
+      "asma": [
+        "أسماء الله الحسنى",
+        "الأسماء التسعة والتسعون بمعانيها"
+      ],
+      "munasabat": [
+        "أذكار المناسبات",
+        "السفر، المرض، الهمّ، البيت، الطعام"
+      ],
+      "ramadan": [
+        "تقويم رمضان",
+        "دعاء ومهام كل يوم، والعشر الأواخر والعيد"
+      ],
+      "anbiya": [
+        "قصص الأنبياء",
+        "٢٥ نبيًا بقصصهم وعبرها"
+      ],
+      "seerah": [
+        "السيرة النبوية",
+        "خط زمني لحياة النبي ﷺ"
+      ],
+      "zakat": [
+        "حاسبة الزكاة",
+        "احسب زكاة مالك والنصاب تلقائيًا"
+      ],
+      "hajj": [
+        "دليل الحج والعمرة",
+        "خطوات المناسك ونصائح عملية"
+      ],
+      "mustajab": [
+        "أوقات الإجابة",
+        "أوقات مستجابة، ودعاء ختم القرآن"
+      ],
+      "kidsadab": [
+        "قصص الآداب للأطفال",
+        "سبع قصص قصيرة عن الأخلاق الجميلة"
+      ],
+      "mawarith": [
+        "حاسبة المواريث",
+        "أنصبة الورثة في الحالات الشائعة"
+      ],
+      "gtasbeeh": [
+        "تسبيح جماعي",
+        "عدّاد منفصل لكل فرد في المجلس"
+      ],
+      "tadabbur": [
+        "دفتر التدبر",
+        "اكتب خواطرك على آيات القرآن"
+      ],
+      "wird": [
+        "ورد القراءة اليومي",
+        "تابع صفحاتك اليومية من القرآن"
+      ],
+      "noorcompanion": [
+        "رفيق النور",
+        "تذكير إيماني هادئ يضبطه أنت: الفاصل الزمني ونوع المحتوى والوضع الهادئ"
+      ],
+      "qada": [
+        "متابعة صيام القضاء",
+        "سجّل الأيام الفائتة وتابع قضاءها"
+      ],
+      "visiting": [
+        "آداب الزيارة والعيادة",
+        "عيادة المريض، العزاء، والتهنئة"
+      ],
+      "voiceazkar": [
+        "سجّل صوتك بالأذكار",
+        "مسجّل شخصي لصوتك وأنت تذكر الله"
+      ],
+      "ibadat": [
+        "العبادات — دليل تعليمي",
+        "الوضوء، فرائض وسنن الصلاة، الصيام، والزكاة"
+      ],
+      "libsearch": [
+        "البحث الشامل",
+        "ابحث عن جميع الأذكار والأحاديث والأدعية من مكان واحد"
+      ],
+      "prayertimes": [
+        "مواقيت الصلاة",
+        "الفجر إلى العشاء، عدّ تنازلي، طرق حساب ومذاهب متعددة"
+      ],
+      "hijri": [
+        "التقويم الهجري",
+        "تحويل هجري ↔ ميلادي، المناسبات، والصيام المستحب"
+      ],
+      "qibla": [
+        "اتجاه القبلة",
+        "زاوية القبلة من موقعك، وبوصلة حيّة تصحّح انحراف الشمال المغناطيسي"
+      ],
+      "sitesdir": [
+        "دليل المواقع الإسلامية",
+        "١٨ موقع مرجعي بشرح أقسام كل موقع"
+      ],
+      "islamicvideos": [
+        "مكتبة الفيديو الإسلامية",
+        "تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال"
+      ],
+      "b0": [
+        "نونية القحطاني بصوت فارس عباد",
+        "تلاوة صوتية — ملفك الخاص على درايف"
+      ],
+      "b1": [
+        "البداية والنهاية",
+        "ابن كثير — ملفك الخاص على درايف"
+      ],
+      "b2": [
+        "القرآن الكريم - كلمة في صورة",
+        "ملفك الخاص على درايف"
+      ],
+      "b3": [
+        "رسائل من القرآن",
+        "ملفك الخاص على درايف"
+      ],
+      "b4": [
+        "رسائل من النبي",
+        "ملفك الخاص على درايف"
+      ],
+      "b5": [
+        "على خطى الرسول",
+        "ملفك الخاص على درايف"
+      ],
+      "b6": [
+        "رسائل من الصحابة",
+        "ملفك الخاص على درايف"
+      ],
+      "b7": [
+        "رسائل من التابعين",
+        "ملفك الخاص على درايف"
+      ],
+      "b8": [
+        "الرحيق المختوم",
+        "صفي الرحمن المباركفوري — ملفك الخاص على درايف"
+      ],
+      "b9": [
+        "كلمة",
+        "ملفك الخاص على درايف"
+      ],
+      "b10": [
+        "ما لا يسع المسلم جهله",
+        "ملفك الخاص على درايف"
+      ],
+      "b11": [
+        "100 سؤال وجواب في عقيدة التوحيد",
+        "ملفك الخاص على درايف"
+      ],
+      "b12": [
+        "التفسير الميسر",
+        "ملفك الخاص على درايف"
+      ],
+      "b13": [
+        "اليوم الآخر 2 — القيامة الكبرى",
+        "ملفك الخاص على درايف"
+      ],
+      "b14": [
+        "أصول الدعوة",
+        "عبد الكريم زيدان — ملفك الخاص على درايف"
+      ],
+      "b15": [
+        "أول مرة أتدبر القرآن",
+        "دليلك لفهم وتدبر القرآن من الفاتحة إلى الناس — ملفك الخاص"
+      ],
+      "b16": [
+        "فقه الدعوة إلى الله",
+        "فقه النصح والإرشاد والأمر بالمعروف — ملفك الخاص"
+      ],
+      "b17": [
+        "مدينة الأقوياء",
+        "ملفك الخاص على درايف"
+      ],
+      "b18": [
+        "سيف الله خالد بن الوليد",
+        "ملفك الخاص على درايف"
+      ],
+      "b19": [
+        "في الحب والحياة",
+        "د. مصطفى محمود — ملفك الخاص على درايف"
+      ],
+      "b20": [
+        "الجامع الصحيح للبخاري كاملًا",
+        "ملفك الخاص على درايف"
+      ],
+      "b21": [
+        "مائة من عظماء أمة الإسلام",
+        "غيّروا مجرى التاريخ — ملفك الخاص على درايف"
+      ]
+    },
+    "installApp": "Install App",
+    "introGuide": "Library Guide",
+    "searchAria": "Search the whole site",
+    "searchPlaceholderMain": "What are you looking for or what do you need?",
+    "placeholderNote": "Your personal note on this tool...",
+    "ariaNote": "Personal note on this tool",
+    "catalogLabel": "Catalog (PDF)",
+    "noToolsMatch": "No tools match your search.",
+    "installToast": "Use the browser menu (⋮ or ≡) then “Install” or “Add to Home Screen” to install the app",
+    "installToastIOS": "Share the page then choose “Add to Home Screen” to install the app 📱",
+    "backupExported": "Exported {count} values from the library tools.",
+    "backupCreateFailed": "Could not create the backup.",
+    "backupTooLarge": "The file is larger than the allowed limit (5 MB).",
+    "backupConfirm": "The backup is from {date} and contains {count} values. It will be merged with your current data without deleting other keys. Continue?",
+    "backupRestoredPartial": "Restored {restored} values, failed to save {failed}; the cache or storage may be full.",
+    "backupImported": "Imported and merged {restored} values. Reloading the tools.",
+    "backupReadFailed": "Could not read the backup."
   }
 }

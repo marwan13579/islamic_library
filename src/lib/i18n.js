@@ -1,10 +1,11 @@
 /**
- * نظام ترجمة مركزي للموقع.
+ * نظام ترجمة مركزي للموقع - مع دعم الملفات المعيارية (modular)
  * - يحمل اللغات المطلوبة
  * - يكتشف لغة المتصفح عند أول زيارة
  * - يحفظ اختيار المستخدم في localStorage
  * - يغيّر dir/lang تلقائيًا
  * - لا يعيد تحميل الصفحة عند تغيير اللغة
+ * - يدعم تحميل ملفات الترجمة المعيارية (navigation, quran, hadith, إلخ)
  * @module lib/i18n
  */
 
@@ -49,8 +50,29 @@ const LANG_ROUTES = {
   am: { dir: "ltr", label: "አማርኛ", name: "Amharic" },
 };
 
+// قائمة ملفات الترجمة المعيارية
+const TRANSLATION_MODULES = [
+  'common',
+  'navigation',
+  'home',
+  'quran',
+  'hadith',
+  'prayer',
+  'adhkar',
+  'library',
+  'tools',
+  'settings',
+  'accessibility',
+  'learn',
+  'stories',
+  'search',
+  'errors',
+  'forms'
+];
+
 let current = "ar";
 let messages = {};
+let moduleCache = {};
 
 function readStorage(key, fallback) {
   try {
@@ -84,6 +106,52 @@ function detectLocale() {
   return "ar";
 }
 
+function deepMerge(target, source) {
+  const result = { ...target };
+  for (const key of Object.keys(source)) {
+    if (source[key] && typeof source[key] === 'object' && !Array.isArray(source[key])) {
+      result[key] = deepMerge(target[key] || {}, source[key]);
+    } else {
+      result[key] = source[key];
+    }
+  }
+  return result;
+}
+
+async function loadTranslationModule(lang, moduleName) {
+  const cacheKey = `${lang}/${moduleName}`;
+  if (moduleCache[cacheKey]) {
+    return moduleCache[cacheKey];
+  }
+
+  const tryLoad = async (locale) => {
+    const url = new URL(`../../locales/${locale}/${moduleName}.json`, import.meta.url);
+    const res = await fetch(url.href);
+    if (!res.ok) throw new Error(`locale ${locale}/${moduleName} unavailable`);
+    return await res.json();
+  };
+
+  try {
+    const data = await tryLoad(lang);
+    moduleCache[cacheKey] = data;
+    return data;
+  } catch (e) {
+    // محاولة التحميل من العربية كافتراضي
+    if (lang !== 'ar') {
+      try {
+        const data = await tryLoad('ar');
+        moduleCache[cacheKey] = data;
+        return data;
+      } catch (e2) {
+        moduleCache[cacheKey] = {};
+        return {};
+      }
+    }
+    moduleCache[cacheKey] = {};
+    return {};
+  }
+}
+
 export async function init() {
   current = detectLocale();
   await loadLocale(current);
@@ -98,18 +166,23 @@ export async function loadLocale(lang) {
     return messages[lang];
   }
 
-  try {
-    const mod = await import(`../locales/${lang}/common.json`);
-    messages[lang] = mod.default || mod;
-  } catch {
-    try {
-      const mod = await import(`../locales/ar/common.json`);
-      messages[lang] = mod.default || mod;
-    } catch {
-      messages[lang] = {};
-    }
-  }
+  // تحميل جميع الوحدات المعيارية بالتوازي
+  const modulePromises = TRANSLATION_MODULES.map(moduleName => loadTranslationModule(lang, moduleName));
+  const moduleResults = await Promise.all(modulePromises);
 
+  // دمج جميع الوحدات في كائن واحد — كل ملفٍ ملفوفٌ باسم وحدته أصلاً
+  let mergedMessages = {};
+  moduleResults.forEach((moduleData) => {
+    if (moduleData && Object.keys(moduleData).length > 0) {
+      mergedMessages = deepMerge(mergedMessages, moduleData);
+    }
+  });
+
+  // إضافة البيانات المسطحة من common للتوافق مع الكود القديم
+  const commonData = mergedMessages.common || {};
+  mergedMessages = deepMerge({ common: commonData }, mergedMessages);
+
+  messages[lang] = mergedMessages;
   current = lang;
   writeStorage(STORAGE_KEY, lang);
   return messages[lang];
@@ -117,7 +190,12 @@ export async function loadLocale(lang) {
 
 export function t(key, vars = {}) {
   const dict = messages[current] || {};
-  let text = key.split(".").reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict);
+  const path = key.split(".");
+  let text = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict);
+  // توافق مع الاستخدام المسطّح: المفاتيح غير المسنودة إلى وحدة تُقرأ من وحدة common
+  if (text === null && dict.common && path[0] !== "common") {
+    text = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict.common);
+  }
   if (text === null) text = key;
 
   Object.entries(vars).forEach(([k, v]) => {
@@ -126,6 +204,24 @@ export function t(key, vars = {}) {
 
   return text;
 }
+
+// دوال مساعدة للوحدات المعيارية
+export function tNav(key, vars) { return t(`navigation.${key}`, vars); }
+export function tHome(key, vars) { return t(`home.${key}`, vars); }
+export function tQuran(key, vars) { return t(`quran.${key}`, vars); }
+export function tHadith(key, vars) { return t(`hadith.${key}`, vars); }
+export function tPrayer(key, vars) { return t(`prayer.${key}`, vars); }
+export function tAdhkar(key, vars) { return t(`adhkar.${key}`, vars); }
+export function tLibrary(key, vars) { return t(`library.${key}`, vars); }
+export function tTools(key, vars) { return t(`tools.${key}`, vars); }
+export function tSettings(key, vars) { return t(`settings.${key}`, vars); }
+export function tAccessibility(key, vars) { return t(`accessibility.${key}`, vars); }
+export function tLearn(key, vars) { return t(`learn.${key}`, vars); }
+export function tStories(key, vars) { return t(`stories.${key}`, vars); }
+export function tSearch(key, vars) { return t(`search.${key}`, vars); }
+export function tErrors(key, vars) { return t(`errors.${key}`, vars); }
+export function tForms(key, vars) { return t(`forms.${key}`, vars); }
+export function tCommon(key, vars) { return t(`common.${key}`, vars); }
 
 export function dir() {
   return LANG_ROUTES[current]?.dir || "rtl";
@@ -182,4 +278,22 @@ export function localeLabel() {
 
 export function localeList() {
   return Object.entries(LANG_ROUTES).map(([code, meta]) => ({ code, ...meta }));
+}
+
+// دالة لتحميل وحدة معيارية عند الطلب (lazy loading)
+export async function loadModule(moduleName) {
+  return loadTranslationModule(current, moduleName);
+}
+
+// دالة للتحقق من وجود ترجمة
+export function hasTranslation(key) {
+  const dict = messages[current] || {};
+  return key.split(".").reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict) !== null;
+}
+
+// دالة للحصول على جميع مفاتيح وحدة معينة
+export function getModuleKeys(moduleName) {
+  const moduleData = messages[current]?.[moduleName];
+  if (!moduleData) return [];
+  return Object.keys(moduleData);
 }

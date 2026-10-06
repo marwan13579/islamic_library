@@ -256,6 +256,64 @@ header{
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 }
+.accbar{display:flex;justify-content:center;margin-top:10px;position:relative}
+.accbtn{font-weight:700;color:var(--gold);border-color:var(--gold-soft)}
+.accpanel{position:absolute;top:calc(100% + 6px);right:14px;background:var(--card);border:1px solid var(--line);
+  border-radius:14px;box-shadow:0 10px 30px rgba(0,0,0,.18);z-index:30;min-width:280px;max-width:92vw;
+  padding:14px;display:none;direction:inherit}
+.accpanel.open{display:block}
+.accpanel h3{margin:0 0 4px;font-family:Amiri,serif;font-size:1.05rem;color:var(--gold)}
+.accpanel p{margin:0 0 12px;font-size:.78rem;color:var(--ink-soft)}
+.accrow{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:8px 0;border-top:1px solid var(--line)}
+.accrow:first-of-type{border-top:0}
+.accrow label{font-size:.85rem;cursor:pointer}
+.accseg{display:inline-flex;background:var(--paper-2);border-radius:999px;padding:3px;gap:2px}
+.accseg button{background:none;border:0;color:var(--ink-soft);padding:5px 12px;border-radius:999px;cursor:pointer;font-size:.78rem;font-family:inherit}
+.accseg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.accdisc{font-size:.72rem;color:var(--ink-soft);margin-top:2px}
+/* High contrast */
+html.contrast-high{--ink:#000000;--paper:#ffffff;--gold:#000000;--line:#000000;--card:#ffffff}
+html.contrast-maximum{--ink:#000000;--paper:#ffffff;--gold:#000000;--line:#000000;--card:#ffffff}
+html.contrast-inverted{--ink:#ffffff;--paper:#000000;--gold:#ffff00;--line:#ffffff;--card:#111111}
+/* Line height */
+html.leading-relaxed body{line-height:1.9}
+html.leading-loose body{line-height:2.25}
+/* Letter spacing */
+html.tracking-wide body{letter-spacing:.02em}
+html.tracking-wider body{letter-spacing:.05em}
+/* Reading modes */
+html.reading-sepia body{background:#f4ecd8!important;color:#5b4636!important}
+html.reading-dark body{background:#121212!important;color:#e8e8e8!important}
+html.reading-light body{background:#ffffff!important;color:#1a1a1a!important}
+/* Color blind support */
+html.cb-protanopia,html.cb-deuteranopia,html.cb-tritanopia,html.cb-achromatopsia{filter:none}
+html.cb-protanopia body{--green:#7a5c00}
+html.cb-deuteranopia body{--green:#5c5c00}
+/* Pause animations */
+html.pause-animations *{animation-play-state:paused!important}
+/* Font sizes */
+html.font-large body,html.font-large .accpanel,html.font-large .langmenu{font-size:1.25em}
+html.font-extra-large body,html.font-extra-large .accpanel,html.font-extra-large .langmenu{font-size:1.5em}
+html.font-huge body,html.font-huge .accpanel,html.font-huge .langmenu{font-size:2em}
+/* Reduce motion */
+html.reduce-motion *{animation-duration:.001s!important;transition-duration:.001s!important;animation-iteration-count:1!important}
+/* Simple mode */
+html.simple-mode .engage-root,html.simple-mode #dashboard,html.simple-mode #ramadanBanner{display:none}
+html.simple-mode .sincerity{display:none}
+/* Dyslexia */
+html.dyslexia-font body{font-family:"OpenDyslexic","Atkinson Hyperlegible",system-ui,sans-serif}
+/* Reading guide */
+html.reading-guide::before{content:"";position:fixed;inset:0;pointer-events:none;
+  background:linear-gradient(transparent 0,transparent 58px,rgba(0,0,0,.04) 58px,transparent 60px);
+  background-size:100% 60px;z-index:9999}
+/* Focus */
+html.focus-visible :focus{outline:3px solid var(--gold);outline-offset:2px}
+/* RTL */
+html.rtl .accpanel{right:auto;left:14px}
+/* Skip link */
+.skip-link{position:absolute;top:-100%;left:50%;transform:translateX(-50%);background:var(--ink);color:var(--paper);
+  padding:12px 24px;border-radius:0 0 8px 8px;z-index:10000;text-decoration:none;font-weight:600;transition:top .2s}
+.skip-link:focus{top:0}
 </style>
 </head>
 <body>
@@ -284,6 +342,10 @@ header{
   <div class="introbar">
     <button class="sortbtn" id="introBtn" type="button">🧭 دليل المكتبة</button>
   </div>
+  <div class="accbar">
+    <button class="sortbtn accbtn" id="accBtn" type="button">♿ <span id="accBtnLabel">إمكانية الوصول</span></button>
+  </div>
+  <div class="accpanel" id="accPanel" hidden></div>
   <div class="sortrow">
     <button class="sortbtn" id="sortDefault" type="button" aria-pressed="true">الترتيب الافتراضي</button>
     <button class="sortbtn" id="sortRecent" type="button" aria-pressed="false">الأحدث استخدامًا</button>
@@ -298,7 +360,7 @@ header{
 
 <div class="wrap" style="margin-top:20px">
   <div style="background:var(--card);border:1px solid var(--gold-soft);border-radius:20px;padding:22px;text-align:center">
-    <h2 style="font-family:Amiri,serif;font-size:1.3rem;margin:0 0 14px;color:var(--gold)">🤔 ماذا تريد أن تفعل؟</h2>
+    <h2 id="askTitle" style="font-family:Amiri,serif;font-size:1.3rem;margin:0 0 14px;color:var(--gold)">🤔 ماذا تريد أن تفعل؟</h2>
     <div class="ask-grid" id="askGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px"></div>
   </div>
 </div>
@@ -344,11 +406,143 @@ header{
 </p>
 
 <script type="module">
-  import { init, setLocale, t, lang, dir, isRtl, localeLabel, localeList, onLocaleChange } from './src/lib/i18n.js';
+  import { init, setLocale, t, tCommon, tHome, tAccessibility, lang, dir, isRtl, localeLabel, localeList, onLocaleChange } from './src/lib/i18n.js';
+  import './src/components/language-selector.js';
+  import './src/components/accessibility-widget.js';
+  import './src/lib/accessibility.js';
   await init();
-  window.__i18n = { init, setLocale, t, lang, dir, isRtl, localeLabel, localeList, onLocaleChange };
+  window.__i18n = { init, setLocale, t, tCommon, tHome, tAccessibility, lang, dir, isRtl, localeLabel, localeList, onLocaleChange };
+
+  const { onLocaleChange: onLocChange } = window.__i18n;
+
+  /* ---------- بناء لوحة إمكانية الوصول ---------- */
+  function buildAccPanel() {
+    const panel = document.getElementById('accPanel');
+    if (!panel) return;
+    const A = window.Accessibility;
+    const prefs = A ? A.getPrefs() : {};
+    const seg = (vals, cur, onChange, label) =>
+      '<div class="accseg">' + vals.map(v =>
+        `<button type="button" aria-pressed="${v===cur}" data-val="${v}">${tAccessibility('levels.'+v) || tAccessibility('modes.'+v) || v}</button>`
+      ).join('') + '</div>';
+
+    const row = (title, desc, inner) =>
+      `<div class="accrow"><div><div>${title}</div>${desc?`<div class="accdisc">${desc}</div>`:''}</div><div>${inner}</div></div>`;
+
+    const toggle = (title, desc, key, checked) =>
+      `<div class="accrow"><label style="display:flex;align-items:center;gap:8px;cursor:pointer"><input type="checkbox" ${checked?'checked':''} data-key="${key}" style="width:18px;height:18px">${title}</label></div>`;
+
+    const html = `
+      <h3>${tAccessibility('title')}</h3>
+      <p>${tAccessibility('subtitle')}</p>
+      ${row(tAccessibility('fontSize.title'), tAccessibility('fontSize.desc'),
+        seg(['normal','large','extraLarge','huge'], prefs.fontSize, null, 'levels'))}
+      ${row(tAccessibility('lineHeight.title'), tAccessibility('lineHeight.desc'),
+        seg(['normal','relaxed','loose'], prefs.lineHeight, null, 'levels'))}
+      ${row(tAccessibility('letterSpacing.title'), tAccessibility('letterSpacing.desc'),
+        seg(['normal','wide','wider'], prefs.letterSpacing, null, 'levels'))}
+      ${row(tAccessibility('contrast.title'), tAccessibility('contrast.desc'),
+        seg(['normal','high','maximum','inverted'], prefs.contrast, null, 'modes'))}
+      ${toggle(tAccessibility('accessibilityMode.title'), tAccessibility('accessibilityMode.desc'), 'accessibilityMode', false)}
+      ${toggle(tAccessibility('reduceMotion.title'), tAccessibility('reduceMotion.desc'), 'reduceMotion', prefs.reduceMotion)}
+      ${row(tAccessibility('readingMode.title'), tAccessibility('readingMode.desc'),
+        seg(['auto','sepia','dark','light'], prefs.readingMode, null, 'modes'))}
+      ${toggle(tAccessibility('simpleMode.title'), tAccessibility('simpleMode.desc'), 'simpleMode', prefs.simpleMode)}
+      ${toggle(tAccessibility('dyslexia.title'), tAccessibility('dyslexia.desc'), 'dyslexiaFont', prefs.dyslexiaFont)}
+      ${toggle(tAccessibility('readingGuide.title'), tAccessibility('readingGuide.desc'), 'readingGuide', prefs.readingGuide)}
+      ${toggle(tAccessibility('captions.title'), tAccessibility('captions.desc'), 'captions', prefs.captions)}
+      <div class="accrow"><button type="button" id="accReset" class="sortbtn" style="margin:8px 0 0 0">${tAccessibility('reset.button')}</button></div>
+    `;
+    panel.innerHTML = html;
+
+    panel.querySelectorAll('.accseg button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const group = btn.parentElement;
+        group.querySelectorAll('button').forEach(b => b.setAttribute('aria-pressed', 'false'));
+        btn.setAttribute('aria-pressed', 'true');
+        const val = btn.dataset.val;
+        const title = group.parentElement.querySelector('div').textContent;
+        if (title.includes(tAccessibility('fontSize.title')) || title === tAccessibility('fontSize.title')) A.setPref('fontSize', val);
+        else if (title.includes(tAccessibility('lineHeight.title'))) A.setPref('lineHeight', val);
+        else if (title.includes(tAccessibility('letterSpacing.title'))) A.setPref('letterSpacing', val);
+        else if (title.includes(tAccessibility('contrast.title'))) A.setPref('contrast', val);
+        else if (title.includes(tAccessibility('readingMode.title'))) A.setPref('readingMode', val);
+      });
+    });
+    panel.querySelectorAll('input[type=checkbox]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        A.setPref(cb.dataset.key, cb.checked);
+      });
+    });
+    const resetBtn = panel.querySelector('#accReset');
+    if (resetBtn) resetBtn.addEventListener('click', () => A.reset());
+  }
+
+  onLocaleChange(() => { buildAccPanel(); });
+  if (window.Accessibility && window.Accessibility.onChange) {
+    window.Accessibility.onChange(() => buildAccPanel());
+  }
+  buildAccPanel();
+
+  function tName(tool){
+    const val = t("tools."+tool.id+".name");
+    return val === "tools."+tool.id+".name" ? tool.name : val;
+  }
+  function tDesc(tool){
+    const val = t("tools."+tool.id+".desc");
+    return val === "tools."+tool.id+".desc" ? tool.desc : val;
+  }
+  function tCat(id){
+    const val = t("cats."+id);
+    return val === "cats."+id ? id : val;
+  }
+  function tCatBlurb(id){
+    const val = t("catBlurb."+id);
+    return val === "catBlurb."+id ? "" : val;
+  }
+
+  /* السكربت الكلاسيكي يعمل قبل هذا الوحدة، لذلك تُعرَض الدوال عليه
+     كي تستخدمها دوال العرض عند استدعائها بعد اكتمال init() */
+  Object.assign(window, { t, tCommon, tHome, tName, tDesc, tCat, tCatBlurb, tAccessibility: (k) => t('accessibility.' + k) });
+
+  function applyHeaderI18n(){
+    const set = (id, text) => { const el = document.getElementById(id); if (el) el.textContent = text; };
+    set("siteTitle", tHome("siteTitle"));
+    set("siteSubtitle", tHome("siteSubtitle"));
+    set("askTitle", tHome("whatDoYouWant"));
+    set("installBtn", "📲 " + t("installApp"));
+    set("introBtn", "🧭 " + t("introGuide"));
+    set("sortDefault", t("sortDefault"));
+    set("sortRecent", t("sortRecent"));
+    set("backupExport", t("backupExport"));
+    set("backupImport", t("backupImport"));
+    set("catalogLabel", t("catalogLabel"));
+    set("empty", t("noToolsMatch"));
+    set("accBtnLabel", tAccessibility("title"));
+    const search = document.getElementById("search");
+    if (search) {
+      search.placeholder = tHome("searchPlaceholder");
+      search.setAttribute("aria-label", t("searchAria"));
+    }
+    document.title = tHome("siteTitle");
+  }
+
+  function renderHome(){
+    applyHeaderI18n();
+    if (typeof renderCatsNav === "function") renderCatsNav();
+    if (typeof renderAskGrid === "function") renderAskGrid();
+    if (typeof renderDashboard === "function") renderDashboard();
+    if (typeof renderRamadanBanner === "function") renderRamadanBanner();
+    buildAccPanel();
+    renderAll();
+  }
+
+  onLocChange(renderHome);
+
+  renderHome();
 </script>
 
+<script>
 const TOOLS = [
   {id:"noor", emoji:"🕌", name:"نور الهدى — المنهج التعليمي", desc:"١٨ قسمًا: المنهج وأعلام السلف، الدروس، السيرة، الأنبياء، الأسماء، الأذكار، الاختبارات والشهادات، وركن الأطفال", cat:"learn",
    url:"src/site/noor.html"},
@@ -541,8 +735,8 @@ function toolCard(t){
   a.innerHTML =
     '<div class="top"><span class="emoji">'+t.emoji+'</span>'+
     '<span style="display:flex;gap:4px">'+
-    '<button class="notebtn'+(hasNote?' has':'')+'" type="button" aria-label="ملاحظة" data-note="'+t.id+'">📝</button>'+
-    '<button class="star'+(isFav?' on':'')+'" type="button" aria-label="مفضلة" data-id="'+t.id+'">'+(isFav?'★':'☆')+'</button>'+
+    '<button class="notebtn'+(hasNote?' has':'')+'" type="button" aria-label="'+window.t("note")+'" data-note="'+t.id+'">📝</button>'+
+    '<button class="star'+(isFav?' on':'')+'" type="button" aria-label="'+window.t("favorite")+'" data-id="'+t.id+'">'+(isFav?'★':'☆')+'</button>'+
     '</span></div>'+
     '<p class="name">'+tName(t)+'</p><p class="desc">'+tDesc(t)+(t.external?' 🔗':'')+'</p>';
   a.addEventListener("click",()=>markUsed(t.id));
@@ -553,8 +747,8 @@ function toolCard(t){
   noteBox.hidden=true;
   const ta=document.createElement("textarea");
   ta.className="noteArea";
-  ta.placeholder=currentLang==="en" ? "Your personal note on this tool..." : "ملاحظتك الخاصة على هذه الأداة...";
-  ta.setAttribute("aria-label", currentLang==="en" ? "Personal note on this tool" : "ملاحظتك الخاصة على هذه الأداة");
+  ta.placeholder = window.t("placeholderNote");
+  ta.setAttribute("aria-label", window.t("ariaNote"));
   ta.value = notes[t.id]||"";
   ta.addEventListener("input",()=>{ notes[t.id]=ta.value; saveNotes(); });
   ta.addEventListener("click",e=>e.stopPropagation());
@@ -593,7 +787,7 @@ function renderFav(){
   const favTools = sortList(TOOLS.filter(t=>favorites[t.id] && matches(t)));
   const box=document.getElementById("favSection");
   if(favTools.length===0){ box.innerHTML=""; return; }
-  box.innerHTML = '<h2 class="h">'+I18N[currentLang].favTitle+'</h2>';
+  box.innerHTML = '<h2 class="h">'+t("favTitle")+'</h2>';
   const grid=document.createElement("div");
   grid.className="grid";
   favTools.forEach(t=>grid.appendChild(toolCard(t)));
@@ -605,7 +799,6 @@ function renderSections(){
   const empty=document.getElementById("empty");
   container.innerHTML="";
   let anyVisible=false;
-  const dict=I18N[currentLang];
 
   CATS.filter(([id])=>id!=="all").forEach(([catId])=>{
     const list = sortList(TOOLS.filter(t=>t.cat===catId && matches(t)));
@@ -614,7 +807,6 @@ function renderSections(){
     const block=document.createElement("div");
     block.className="section-block";
     block.id="sec-"+catId;
-    /* يقرأ دليلُ المكتبة هذه البيانات ليعرّف بالأقسام بلا تكرارها فيه. */
     block.setAttribute("data-section",catId);
     block.setAttribute("data-blurb",tCatBlurb(catId));
     const h=document.createElement("h2");
@@ -625,8 +817,8 @@ function renderSections(){
     if(catId==="books"){
       const bar=document.createElement("div");
       bar.className="booksbar";
-      bar.innerHTML = '<p>'+dict.booksNote+'</p>'+
-        '<button class="openallbtn" id="openAllBooks" type="button">'+dict.openAll+' ('+list.length+')</button>';
+      bar.innerHTML = '<p>'+t("booksNote")+'</p>'+
+        '<button class="openallbtn" id="openAllBooks" type="button">'+t("openAll")+' ('+list.length+')</button>';
       block.appendChild(bar);
       setTimeout(()=>{
         const btn=document.getElementById("openAllBooks");
@@ -677,7 +869,6 @@ function renderCatsNav(){
     catsEl.appendChild(b);
   });
 }
-renderCatsNav();
 
 document.getElementById("search").addEventListener("input", async e => {
   const q = e.target.value.trim();
@@ -694,34 +885,34 @@ document.getElementById("search").addEventListener("focus", () => {
   if (typeof openSearchModal === "function") openSearchModal();
 });
 
-applyLanguage();
-
 const askItems = [
-  { icon: "📖", title: "أريد قراءة القرآن", url: "30-quran-full.html" },
-  { icon: "🕌", title: "أريد تعلم الصلاة", url: "24-ibadat.html" },
-  { icon: "🤲", title: "أريد أذكار الصباح", url: "25-azkar-shamila.html#sabah" },
-  { icon: "🕰️", title: "أريد معرفة مواقيت الصلاة", url: "29-prayer-times.html" },
-  { icon: "📕", title: "أريد البحث عن حديث", url: "27-hadith.html" },
-  { icon: "⚖️", title: "أريد تعلم الفقه", url: "src/site/noor.html#sections" },
-  { icon: "🕌", title: "أريد قراءة السيرة", url: "9-seerah.html" },
-  { icon: "🌟", title: "أريد قصة نبي", url: "8-qasas-anbiya.html" },
-  { icon: "🤲", title: "أريد دعاء", url: "25-azkar-shamila.html" },
-  { icon: "📖", title: "أريد معرفة معنى مصطلح إسلامي", url: "43-siraj.html" },
-  { icon: "📚", title: "أريد كتابًا", url: "41-quiz.html" },
-  { icon: "🎓", title: "أريد اختبارًا", url: "41-quiz.html" },
-  { icon: "🧮", title: "أريد حاسبة الزكاة", url: "10-zakat.html" },
-  { icon: "🧭", title: "أريد اتجاه القبلة", url: "22-qibla.html" },
-  { icon: "📿", title: "أريد السبحة الإلكترونية", url: "15-tasbeeh-jamai.html" },
-  { icon: "🧒", title: "أريد قسم الأطفال", url: "13-kids-adab.html" },
-  { icon: "🧭", title: "أريد مسار تعلم", url: "45-learning-paths.html" },
+  { icon: "📖", key: "quran", url: "30-quran-full.html" },
+  { icon: "🕌", key: "salah", url: "24-ibadat.html" },
+  { icon: "🤲", key: "morningAdhkar", url: "25-azkar-shamila.html#sabah" },
+  { icon: "🕰️", key: "prayerTimes", url: "29-prayer-times.html" },
+  { icon: "📕", key: "hadith", url: "27-hadith.html" },
+  { icon: "⚖️", key: "fiqh", url: "src/site/noor.html#sections" },
+  { icon: "🕌", key: "seerah", url: "9-seerah.html" },
+  { icon: "🌟", key: "story", url: "8-qasas-anbiya.html" },
+  { icon: "🤲", key: "dua", url: "25-azkar-shamila.html" },
+  { icon: "📖", key: "term", url: "43-siraj.html" },
+  { icon: "📚", key: "book", url: "41-quiz.html" },
+  { icon: "🎓", key: "quiz", url: "41-quiz.html" },
+  { icon: "🧮", key: "zakat", url: "10-zakat.html" },
+  { icon: "🧭", key: "qibla", url: "22-qibla.html" },
+  { icon: "📿", key: "tasbeeh", url: "15-tasbeeh-jamai.html" },
+  { icon: "🧒", key: "kids", url: "13-kids-adab.html" },
+  { icon: "🧭", key: "path", url: "45-learning-paths.html" },
 ];
-const askGrid = document.getElementById("askGrid");
-if (askGrid) {
+function renderAskGrid(){
+  const askGrid = document.getElementById("askGrid");
+  if (!askGrid) return;
+  askGrid.innerHTML="";
   askItems.forEach(item => {
     const btn = document.createElement("button");
     btn.className = "ask-chip";
     btn.type = "button";
-    btn.innerHTML = `<span style="margin-left:6px">${item.icon}</span> ${item.title}`;
+    btn.innerHTML = `<span style="margin-inline-end:6px" aria-hidden="true">${item.icon}</span> ${tHome("ask."+item.key)}`;
     btn.addEventListener("click", () => { location.href = item.url; });
     askGrid.appendChild(btn);
   });
@@ -776,21 +967,21 @@ function renderDashboard(){
 
   box.innerHTML =
     '<div class="dashboard">'+
-    '<div class="dcard"><p class="n">'+mushafDone+'</p><p class="l">سورة محفوظة</p></div>'+
-    '<div class="dcard"><p class="n">'+mushafStreak+'</p><p class="l">يوم حفظ متتالي</p></div>'+
-    '<div class="dcard"><p class="n">'+wirdTotal+'</p><p class="l">صفحة قراءة</p></div>'+
-    '<div class="dcard"><p class="n">'+wirdStreak+'</p><p class="l">يوم ورد متتالي</p></div>'+
-    '<div class="dcard"><p class="n">'+khatmaParts+'</p><p class="l">جزء في الختمة الجماعية</p></div>'+
-    '<div class="dcard"><p class="n">'+ramadanDays+'</p><p class="l">يوم رمضان مكتمل</p></div>'+
+    '<div class="dcard"><p class="n">'+mushafDone+'</p><p class="l">'+tHome("dashboard.mushafDone")+'</p></div>'+
+    '<div class="dcard"><p class="n">'+mushafStreak+'</p><p class="l">'+tHome("dashboard.mushafStreak")+'</p></div>'+
+    '<div class="dcard"><p class="n">'+wirdTotal+'</p><p class="l">'+tHome("dashboard.wirdTotal")+'</p></div>'+
+    '<div class="dcard"><p class="n">'+wirdStreak+'</p><p class="l">'+tHome("dashboard.wirdStreak")+'</p></div>'+
+    '<div class="dcard"><p class="n">'+khatmaParts+'</p><p class="l">'+tHome("dashboard.khatmaParts")+'</p></div>'+
+    '<div class="dcard"><p class="n">'+ramadanDays+'</p><p class="l">'+tHome("dashboard.ramadanDays")+'</p></div>'+
     '</div>'+
-    '  <p class="dashnote">تظهر هذه اللوحة بياناتك من مُصحَفي وورد القراءة والختمة الجماعية وتقويم رمضان تلقائيًا عند فتحها من نفس المتصفح.</p>'+
+    '  <p class="dashnote">'+tHome("dashboard.note")+'</p>'+
     '  <div style="margin-top:18px;padding:16px;background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;text-align:center">'+
-    '    <p style="margin:0 0 8px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)">📖 الموسوعة الإسلامية</p>'+
-    '    <p style="margin:0 0 12px;font-size:.85rem;color:var(--ink-soft)">تصفّح القرآن، الحديث، التفسير، الفقه، السيرة، الأذكار، الأخلاق، التاريخ، والمكتبة — كلّها مرتبطة ببعضها.</p>'+
-    '    <a class="btn btn-primary" href="encyclopedia/index.html" style="font-family:Cairo;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px">دخول الموسوعة</a>'+
+    '    <p style="margin:0 0 8px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)" id="encyTitle">'+tHome("encyclopediaTitle")+'</p>'+
+    '    <p style="margin:0 0 12px;font-size:.85rem;color:var(--ink-soft)" id="encyDesc">'+tHome("encyclopediaDesc")+'</p>'+
+    '    <a class="btn btn-primary" href="encyclopedia/index.html" style="font-family:Cairo;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px" id="encyBtn">'+tHome("enterEncyclopedia")+'</a>'+
     '  </div>';
 }
-renderDashboard();
+/* تُستدعى بعد اكتمال init() ومن عند تغيّر اللغة من سكربت الوحدة */
 
 /* ================= Ramadan mode ================= */
 function gregorianToJD(y, m, d) {
@@ -828,38 +1019,38 @@ function renderRamadanBanner(){
   const times=computeFajrMaghrib(lat,lon,new Date(),tz);
 
   const links=[
-    ["🕋","التراويح","7-ramadan.html"],
-    ["📖","ورد القرآن","17-wird.html"],
-    ["📗","ختمة رمضان","2-mushaf.html"],
-    ["🤲","أذكار وأدعية","25-azkar-shamila.html"],
-    ["🌙","متابعة الصيام","7-ramadan.html"],
-    ["💰","صدقة اليوم","7-ramadan.html"],
-    ["🌌","قيام الليل","7-ramadan.html"]
+    ["taraweeh","7-ramadan.html"],
+    ["wird","17-wird.html"],
+    ["khatma","2-mushaf.html"],
+    ["adhkar","25-azkar-shamila.html"],
+    ["fasting","7-ramadan.html"],
+    ["charity","7-ramadan.html"],
+    ["qiyam","7-ramadan.html"]
   ];
 
   box.innerHTML =
     '<div class="ramadanbox">'+
-    '<p class="rtitle">🌙 رمضان كريم</p>'+
-    '<p class="rday">اليوم '+AR_NUM(day)+' من رمضان</p>'+
+    '<p class="rtitle">'+tHome("ramadanBanner")+'</p>'+
+    '<p class="rday">'+tHome("ramadanDay", { day: AR_NUM(day) })+'</p>'+
     '<div class="rtimesrow">'+
-    '<div class="rtime"><div class="l">الإمساك / الفجر</div><div class="v">'+fmtClock(times.fajr)+'</div></div>'+
-    '<div class="rtime"><div class="l">الإفطار</div><div class="v">'+fmtClock(times.maghrib)+'</div></div>'+
+    '<div class="rtime"><div class="l">'+tHome("imsakFajr")+'</div><div class="v">'+fmtClock(times.fajr)+'</div></div>'+
+    '<div class="rtime"><div class="l">'+tHome("iftar")+'</div><div class="v">'+fmtClock(times.maghrib)+'</div></div>'+
     '</div>'+
     '<div class="rgrid">'+
-    links.map(([em,label,href])=>'<a class="rlink" href="'+href+'"><span class="em">'+em+'</span>'+label+'</a>').join('')+
+    links.map(([key,href])=>'<a class="rlink" href="'+href+'">'+tHome("ramadanLinks."+key)+'</a>').join('')+
     '</div>'+
-    '<p class="rnote" id="ramadanLocNote">الأوقات تقريبية لموقعك الافتراضي — <button id="ramadanLocBtn" style="background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font-size:inherit">استخدم موقعي الفعلي</button></p>'+
+    '<p class="rnote" id="ramadanLocNote">'+tHome("approximateTimes")+' — <button id="ramadanLocBtn" style="background:none;border:0;color:inherit;text-decoration:underline;cursor:pointer;font-size:inherit">'+tHome("useMyLocation")+'</button></p>'+
     '</div>';
 
   const locBtn=document.getElementById("ramadanLocBtn");
-  if(locBtn) locBtn.addEventListener("click",()=>{
-    navigator.geolocation?.getCurrentPosition(pos=>{
-      try{ localStorage.setItem("hub-ramadan-loc", JSON.stringify({lat:pos.coords.latitude, lon:pos.coords.longitude})); }catch(e){}
-      renderRamadanBanner();
+    if(locBtn) locBtn.addEventListener("click",()=>{
+      navigator.geolocation?.getCurrentPosition(pos=>{
+        try{ localStorage.setItem("hub-ramadan-loc", JSON.stringify({lat:pos.coords.latitude, lon:pos.coords.longitude})); }catch(e){}
+        renderRamadanBanner();
+      });
     });
-  });
 }
-renderRamadanBanner();
+/* تُستدعى بعد اكتمال init() ومن عند تغيّر اللغة من سكربت الوحدة */
 
 const backupStatus=document.getElementById("backupStatus");
 document.getElementById("backupExport").addEventListener("click",()=>{
@@ -873,23 +1064,23 @@ document.getElementById("backupExport").addEventListener("click",()=>{
     link.download="islamic-library-backup-"+new Date().toISOString().slice(0,10)+".json";
     link.click();
     setTimeout(()=>URL.revokeObjectURL(url),1000);
-    backupStatus.textContent="تم تصدير "+Object.keys(backup.data).length+" قيمة من أدوات المكتبة.";
-  }catch(error){backupStatus.textContent=error.message||"تعذر إنشاء النسخة الاحتياطية.";}
+    backupStatus.textContent=t("backupExported", { count: Object.keys(backup.data).length });
+  }catch(error){backupStatus.textContent=error.message||t("backupCreateFailed");}
 });
 document.getElementById("backupImport").addEventListener("click",()=>document.getElementById("backupFile").click());
 document.getElementById("backupFile").addEventListener("change",async event=>{
   const file=event.target.files?.[0];
   if(!file)return;
   try{
-    if(file.size>IslamicBackup.MAX_BYTES) throw new Error("الملف أكبر من الحد المسموح (5 ميجابايت). ");
+    if(file.size>IslamicBackup.MAX_BYTES) throw new Error(t("backupTooLarge"));
     const backup=IslamicBackup.parseBackup(await file.text());
-    if(!confirm("النسخة من "+backup.createdAt+" وتحتوي "+backup.entries.length+" قيمة. سيتم دمجها مع بياناتك الحالية دون حذف مفاتيح أخرى. متابعة؟"))return;
+    if(!confirm(t("backupConfirm", { date: backup.createdAt, count: backup.entries.length })))return;
     const result=IslamicBackup.restoreBackup(localStorage,backup);
     backupStatus.textContent=result.failed.length
-      ? "استُعيد "+result.restored+" قيمة، وتعذر حفظ "+result.failed.length+"؛ قد يكون التخزين المؤقت أو المساحة ممتلئة."
-      : "تم استيراد "+result.restored+" قيمة ودمجها. أُعيد تحميل الأدوات بالتحديث.";
+      ? t("backupRestoredPartial", { restored: result.restored, failed: result.failed.length })
+      : t("backupImported", { restored: result.restored });
     if(!result.failed.length)setTimeout(()=>location.reload(),250);
-  }catch(error){backupStatus.textContent=error.message||"تعذر قراءة النسخة الاحتياطية.";}
+  }catch(error){backupStatus.textContent=error.message||t("backupReadFailed");}
   finally{event.target.value="";}
 });
 </script>
@@ -947,8 +1138,8 @@ import("./src/lib/auto-notify.js")
       div.style.cssText = "position:fixed;bottom:24px;left:50%;transform:translateX(-50%);background:rgba(13,50,44,.92);color:#fff;padding:12px 20px;border-radius:12px;font-family:Cairo,sans-serif;font-size:.85rem;z-index:9999;text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.3)";
       div.style.direction = "rtl";
       div.innerHTML = isIOS
-        ? "شارك الصفحة ثم اختر «إضافة إلى الشاشة الرئيسية» لتثبيت التطبيق 📱"
-        : "استخدم قائمة المتصفح (⋮ أو ≡) ثم «تثبيت» أو «إضافة إلى الشاشة الرئيسية» لتثبيت التطبيق";
+        ? t("installToastIOS")
+        : t("installToast");
       document.body.appendChild(div);
       toast = div;
     }

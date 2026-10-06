@@ -1,0 +1,60 @@
+{
+  "hadith": {
+    "title": "Hadith",
+    "subtitle": "Selections from the Six Books, documented with narrator and grade",
+    "books": {
+      "bukhari": "Sahih al-Bukhari",
+      "muslim": "Sahih Muslim",
+      "abu-dawud": "Sunan Abu Dawud",
+      "tirmidhi": "Sunan al-Tirmidhi",
+      "nasai": "Sunan al-Nasa'i",
+      "ibn-majah": "Sunan Ibn Majah"
+    },
+    "searchPlaceholder": "Search in Hadith...",
+    "searchByText": "Search in Hadith text...",
+    "searchByNarrator": "Search by narrator...",
+    "searchByGrade": "Search by grade...",
+    "noResults": "No matching Hadith.",
+    "grade": "Grade",
+    "narrator": "Narrator",
+    "collectors": "Collectors",
+    "source": "Source",
+    "book": "Book",
+    "chapter": "Chapter",
+    "hadithNumber": "Hadith Number",
+    "text": "Text",
+    "explanation": "Explanation",
+    "favorite": "Favorite",
+    "addToFavorites": "Add to Favorites",
+    "removeFromFavorites": "Remove from Favorites",
+    "share": "Share",
+    "copy": "Copy",
+    "copied": "Copied",
+    "arbaeen": "The Forty Hadith of al-Nawawi",
+    "arbaeenDesc": "42 comprehensive Hadiths with brief explanations",
+    "hadithOfTheDay": "Hadith of the Day",
+    "randomHadith": "Random Hadith",
+    "categories": "Categories",
+    "filterByBook": "Filter by Book",
+    "filterByGrade": "Filter by Grade",
+    "filterByTopic": "Filter by Topic",
+    "grades": {
+      "sahih": "Sahih",
+      "hasan": "Hasan",
+      "daif": "Daif",
+      "mawdu": "Mawdu",
+      "mutawatir": "Mutawatir",
+      "ahad": "Ahad"
+    },
+    "relatedHadiths": "Related Hadiths",
+    "readMore": "Read More",
+    "viewSource": "View Source",
+    "download": "Download",
+    "print": "Print"
+  },
+  "_meta": {
+    "language": "no",
+    "status": "needs_translation",
+    "baseLanguage": "en"
+  }
+}

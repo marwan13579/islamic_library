@@ -8,7 +8,7 @@
     "edit": "编辑",
     "add": "添加",
     "remove": "移除",
-    "loading": "加载中...",
+    "loading": "加载中",
     "error": "错误",
     "success": "成功",
     "warning": "警告",
@@ -90,7 +90,7 @@
     "clear": "清除",
     "filter": "筛选",
     "sort": "排序",
-    "order": "顺序",
+    "order": "订单",
     "ascending": "升序",
     "descending": "降序",
     "newest": "最新",
@@ -111,7 +111,7 @@
     "markAsUnread": "标记为未读",
     "notification": "通知",
     "notifications": "通知",
-    "alert": "提醒",
+    "alert": "警报",
     "toast": "通知",
     "message": "消息",
     "messages": "消息",
@@ -127,7 +127,7 @@
     "disabled": "已禁用",
     "visible": "可见",
     "hidden": "隐藏",
-    "show": "显示",
+    "show": "节目",
     "hide": "隐藏",
     "expand": "展开",
     "collapse": "折叠",
@@ -234,13 +234,11 @@
     "custom": "自定义",
     "auto": "自动",
     "manual": "手动",
-    "enabled": "已启用",
-    "disabled": "已禁用",
     "allRightsReserved": "版权所有",
     "madeWithLove": "用心制作",
     "poweredBy": "技术支持",
     "sourceCode": "源代码",
-    "license": "许可证",
+    "license": "许可",
     "copyright": "版权",
     "openSource": "开源",
     "termsOfService": "服务条款",
@@ -277,7 +275,7 @@
     "selectItem": "选择项目",
     "deselectItem": "取消选择",
     "itemSelected": "项已选择",
-    "itemsSelected": "项已选择",
+    "itemsSelected": "已选择 {count} 项",
     "item": "项",
     "items": "项",
     "list": "列表",
@@ -291,7 +289,6 @@
     "footer": "页脚",
     "sidebar": "侧边栏",
     "navbar": "导航栏",
-    "menu": "菜单",
     "submenu": "子菜单",
     "dropdown": "下拉菜单",
     "tab": "选项卡",
@@ -320,14 +317,12 @@
     "field": "字段",
     "input": "输入",
     "textarea": "文本区",
-    "select": "选择",
     "checkbox": "复选框",
     "radio": "单选按钮",
     "button": "按钮",
-    "link": "链接",
     "label": "标签",
     "placeholder": "占位符",
-    "value": "值",
+    "value": "价值",
     "defaultValue": "默认值",
     "placeholderSearch": "搜索...",
     "placeholderName": "姓名",
@@ -398,7 +393,7 @@
     "yearly": "每年",
     "recurring": "重复",
     "oneTime": "一次性",
-    "free": "免费",
+    "free": "空闲",
     "paid": "付费",
     "price": "价格",
     "cost": "费用",
@@ -413,7 +408,6 @@
     "invoice": "发票",
     "receipt": "收据",
     "transaction": "交易",
-    "order": "订单",
     "statusPending": "待处理",
     "statusProcessing": "处理中",
     "statusCompleted": "已完成",
@@ -517,14 +511,12 @@
     "selectFile": "选择文件",
     "selectFiles": "选择文件",
     "selectFolder": "选择文件夹",
-    "selectItem": "选择项目",
     "selectItems": "选择项目",
     "noFilesSelected": "未选择文件",
     "noFoldersSelected": "未选择文件夹",
     "noItemsSelected": "未选择项目",
     "filesSelected": "已选择 {count} 个文件",
     "foldersSelected": "已选择 {count} 个文件夹",
-    "itemsSelected": "已选择 {count} 项",
     "totalFiles": "文件总数",
     "totalFolders": "文件夹总数",
     "totalItems": "项目总数",
@@ -536,8 +528,8 @@
     "accessedAt": "访问于",
     "owner": "所有者",
     "author": "作者",
-    "creator": "创建者",
-    "editor": "编辑者",
+    "creator": "创作者",
+    "editor": "编辑",
     "contributor": "贡献者",
     "lastModified": "最后修改",
     "lastAccessed": "最后访问",
@@ -546,7 +538,6 @@
     "modified": "已修改",
     "accessed": "已访问",
     "updated": "已更新",
-    "deleted": "已删除",
     "added": "已添加",
     "removed": "已移除",
     "changed": "已更改",
@@ -582,10 +573,8 @@
     "across": "跨越",
     "throughout": "贯穿",
     "within": "内部",
-    "outside": "外部",
     "new": "新",
     "old": "旧",
-    "recent": "最近",
     "latest": "最新",
     "latestVersion": "最新版本",
     "earliest": "最早",
@@ -615,7 +604,6 @@
     "premium": "高级",
     "basic": "基础",
     "standard": "标准",
-    "advanced": "高级",
     "professional": "专业",
     "enterprise": "企业",
     "personal": "个人",
@@ -632,11 +620,8 @@
     "admin": "管理员",
     "user": "用户",
     "member": "成员",
-    "owner": "所有者",
     "moderator": "版主",
-    "editor": "编辑",
-    "viewer": "查看者",
-    "contributor": "贡献者",
+    "viewer": "观众",
     "subscriber": "订阅者",
     "follower": "关注者",
     "visitor": "访客",
@@ -655,14 +640,12 @@
     "committee": "委员会",
     "department": "部门",
     "division": "部门",
-    "unit": "单位",
-    "team": "团队",
     "group": "群组",
     "project": "项目",
-    "program": "项目",
+    "program": "节目",
     "initiative": "倡议",
     "campaign": "活动",
-    "event": "活动",
+    "event": "事件",
     "activity": "活动",
     "task": "任务",
     "assignment": "分配",
@@ -680,13 +663,12 @@
     "resume": "简历",
     "cv": "简历",
     "coverLetter": "求职信",
-    "reference": "推荐人",
+    "reference": "参考",
     "recommendation": "推荐",
     "endorsement": "背书",
     "testimonial": "证明",
-    "review": "评论",
+    "review": "审查",
     "rating": "评分",
-    "feedback": "反馈",
     "comment": "评论",
     "reply": "回复",
     "thread": "帖子",
@@ -697,7 +679,7 @@
     "answer": "回答",
     "solution": "解决方案",
     "problem": "问题",
-    "issue": "问题",
+    "issue": "期号",
     "bug": "缺陷",
     "feature": "功能",
     "enhancement": "增强",
@@ -711,34 +693,20 @@
     "outdated": "过时",
     "obsolete": "已淘汰",
     "current": "当前",
-    "active": "活跃",
-    "inactive": "非活跃",
     "pending": "待处理",
     "approved": "已批准",
     "rejected": "已拒绝",
     "accepted": "已接受",
     "declined": "已拒绝",
-    "published": "已发布",
     "unpublished": "未发布",
-    "archived": "已归档",
-    "deleted": "已删除",
-    "restored": "已恢复",
     "trashed": "已删除",
-    "draft": "草稿",
     "final": "最终",
     "reviewed": "已审核",
-    "verified": "已验证",
     "confirmed": "已确认",
-    "completed": "已完成",
     "finished": "已完成",
     "done": "完成",
     "ready": "就绪",
-    "available": "可用",
-    "unavailable": "不可用",
     "busy": "忙碌",
-    "free": "空闲",
-    "online": "在线",
-    "offline": "离线",
     "idle": "闲置",
     "working": "工作中",
     "stopped": "已停止",
@@ -748,7 +716,6 @@
     "stopping": "停止中",
     "restarting": "重启中",
     "initializing": "初始化中",
-    "loading": "加载中",
     "processing": "处理中",
     "saving": "保存中",
     "uploading": "上传中",
@@ -795,7 +762,6 @@
     "sorting": "排序中",
     "grouping": "分组中",
     "mapping": "映射中",
-    "transforming": "转换中",
     "connecting": "连接中",
     "disconnecting": "断开连接中",
     "pairing": "配对中",
@@ -833,7 +799,6 @@
     "unbundling": "解捆中",
     "packing": "打包中",
     "unpacking": "拆包中",
-    "loading": "加载中",
     "unloading": "卸载中",
     "fetching": "获取中",
     "retrieving": "检索中",
@@ -856,7 +821,6 @@
     "alarm": "闹钟",
     "scheduler": "计划器",
     "calendar": "日历",
-    "event": "事件",
     "appointment": "预约",
     "meeting": "会议",
     "conference": "电话会议",
@@ -868,18 +832,14 @@
     "episode": "集",
     "season": "季",
     "series": "系列",
-    "show": "节目",
-    "program": "节目",
     "channel": "频道",
     "station": "电台",
     "network": "网络",
     "platform": "平台",
     "service": "服务",
     "product": "产品",
-    "solution": "解决方案",
     "tool": "工具",
     "utility": "实用工具",
-    "feature": "功能",
     "function": "函数",
     "capability": "能力",
     "ability": "能力",
@@ -891,7 +851,6 @@
     "advantage": "优势",
     "disadvantage": "劣势",
     "benefit": "好处",
-    "value": "价值",
     "impact": "影响",
     "result": "结果",
     "outcome": "结果",
@@ -925,7 +884,6 @@
     "model": "模型",
     "schema": "模式",
     "format": "格式",
-    "standard": "标准",
     "specification": "规范",
     "requirement": "需求",
     "constraint": "约束",
@@ -942,27 +900,22 @@
     "metric": "指标",
     "indicator": "指示器",
     "signal": "信号",
-    "alert": "警报",
-    "warning": "警告",
     "notice": "通知",
     "announcement": "公告",
     "news": "新闻",
-    "update": "更新",
     "newsletter": "新闻通讯",
     "blog": "博客",
     "article": "文章",
     "post": "帖子",
-    "entry": "条目",
+    "entry": "进入",
     "record": "记录",
     "log": "日志",
-    "history": "历史",
     "timeline": "时间线",
     "chronicle": "编年史",
     "story": "故事",
     "tale": "故事",
     "narrative": "叙述",
     "account": "账户",
-    "report": "报告",
     "statement": "声明",
     "declaration": "宣言",
     "proclamation": "公告",
@@ -1002,15 +955,12 @@
     "situation": "情况",
     "condition": "条件",
     "state": "状态",
-    "status": "状态",
     "phase": "阶段",
     "stage": "阶段",
     "step": "步骤",
     "milestone": "里程碑",
     "landmark": "里程碑",
     "benchmark": "基准",
-    "reference": "参考",
-    "standard": "标准",
     "norm": "规范",
     "baseline": "基线",
     "foundation": "基础",
@@ -1018,13 +968,11 @@
     "pillar": "支柱",
     "support": "支持",
     "assistance": "援助",
-    "help": "帮助",
     "aid": "援助",
     "guidance": "指导",
     "advice": "建议",
     "consultation": "咨询",
     "counsel": "建议",
-    "recommendation": "推荐",
     "suggestion": "建议",
     "proposal": "提案",
     "idea": "想法",
@@ -1042,9 +990,7 @@
     "appraisal": "评估",
     "inspection": "检查",
     "audit": "审计",
-    "review": "审查",
     "overview": "概述",
-    "summary": "摘要",
     "abstract": "摘要",
     "outline": "大纲",
     "synopsis": "提要",
@@ -1069,21 +1015,17 @@
     "possession": "拥有",
     "belonging": "归属",
     "ownership": "所有权",
-    "title": "标题",
     "deed": "契约",
     "certificate": "证书",
     "diploma": "文凭",
     "degree": "学位",
     "qualification": "资格",
     "credential": "凭证",
-    "license": "许可",
     "permit": "许可证",
     "authorization": "授权",
     "approval": "批准",
-    "consent": "同意",
     "permission": "许可",
     "access": "访问",
-    "entry": "进入",
     "admission": "入场",
     "admittance": "入场",
     "entrance": "入口",
@@ -1094,7 +1036,6 @@
     "return": "返回",
     "comeback": "回来",
     "reunion": "重聚",
-    "meeting": "会议",
     "gathering": "聚会",
     "assembly": "集会",
     "congregation": "集合",
@@ -1103,12 +1044,9 @@
     "spectator": "观众",
     "observer": "观察者",
     "watcher": "观察者",
-    "viewer": "观众",
     "listener": "听众",
     "reader": "读者",
     "writer": "作者",
-    "author": "作者",
-    "creator": "创作者",
     "inventor": "发明者",
     "pioneer": "先驱",
     "founder": "创始人",
@@ -1116,7 +1054,6 @@
     "source": "来源",
     "origin": "起源",
     "beginning": "开始",
-    "start": "开始",
     "commencement": "开始",
     "inception": "开始",
     "launch": "启动",
@@ -1124,16 +1061,301 @@
     "premiere": "首映",
     "release": "发布",
     "publication": "出版",
-    "issue": "期号",
     "edition": "版本",
-    "version": "版本",
     "revision": "修订",
-    "update": "更新",
     "upgrade": "升级",
     "downgrade": "降级",
     "patch": "补丁",
     "fix": "修复",
     "repair": "修理",
-    "maintenance": "维护"
+    "siteTitle": "المكتبة الإسلامية",
+    "siteSubtitle": "كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.",
+    "sortDefault": "الترتيب الافتراضي",
+    "sortRecent": "الأحدث استخدامًا",
+    "backupExport": "تصدير نسخة",
+    "backupImport": "استعادة نسخة",
+    "sincTitle": "🤍 عبادتك بينك وبين الله",
+    "sincText": "كل عدّاد وكل خط تقدّم هنا وسيلة تنظّمك، مش غاية ولا مقياس تتفاخر أو تُقارن بيه نفسك بحد. بياناتك محفوظة على جهازك وحدك، محدش شايفها غيرك. الأصل النية الخالصة للله، والأجر عنده وحده سبحانه، سواء علِم بعملك أحد أو لم يعلم.",
+    "listTitleAll": "كل الأدوات",
+    "emptyMsg": "لا توجد أدوات مطابقة لبحثك.",
+    "catalogLink": "الكتالوج التعريفي (PDF)",
+    "favTitle": "★ المفضلة",
+    "openAll": "فتح الكل",
+    "booksNote": "هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
+    "langLabel": "العربية",
+    "introBtn": "🧭 دليل المكتبة",
+    "partialNote": "محتوى الأدوات نفسها بالعربية الأصلية للحفاظ على دقة النصوص الدينية.",
+    "cats": {
+      "all": "الكل",
+      "dhikr": "أذكار وأدعية",
+      "quran": "القرآن والحديث",
+      "learn": "تعلّم",
+      "stories": "قصص",
+      "calc": "حاسبات",
+      "books": "كتب وصوتيات"
+    },
+    "catBlurb": {
+      "dhikr": "أذكارٌ وأدعية وأوقات الإجابة",
+      "quran": "المصحف والحديث وتلاوة القرآن",
+      "learn": "دروسٌ واختباراتٌ وحجٌّ وآداب",
+      "stories": "قصصُ الأنبياء والسيرة وآداب الأطفال",
+      "calc": "مواقيت الصلاة والقبلة والزكاة والتقويم",
+      "books": "كتبٌ وفتاوى وتفسيرٌ ومكتبة فيديو"
+    },
+    "tools": {
+      "noor": [
+        "نور الهدى — المنهج التعليمي",
+        "١٨ قسمًا: المنهج وأعلام السلف، الدروس، السيرة، الأنبياء، الأسماء، الأذكار، الاختبارات والشهادات، وركن الأطفال"
+      ],
+      "noorapp": [
+        "بوابة النور — التطبيق",
+        "مصحف وأذكار ومواقيت وإذاعة وزكاة وبطاقات — يعمل بدون إنترنت"
+      ],
+      "quizbank": [
+        "الاختبارات والشهادات",
+        "بنك أسئلة بثلاثة أنواع، تحدٍّ أسبوعي، وشهادات إتمام تُرسم على canvas"
+      ],
+      "groupkhatma": [
+        "الختمة الجماعية",
+        "وزّع الأجزاء بين المشاركين وتابع الإنجاز والإهداء"
+      ],
+      "cardmaker": [
+        "صانع البطاقات الدعوية",
+        "حوّل أي آية أو حديث أو ذكر لبطاقة صورة قابلة للتحميل والمشاركة"
+      ],
+      "quranfull": [
+        "القرآن الكريم",
+        "المصحف كاملًا — سور، أجزاء، بحث، تلاوة، ترجمة وتفسير"
+      ],
+      "dailysystem": [
+        "نظام حياة المسلم",
+        "يومك مرتبط بالصلاة — صلاة، ذكر، وقرآن مع كل وقت"
+      ],
+      "adhkar": [
+        "الأذكار الشاملة",
+        "١٢ قسمًا: الصباح، المساء، النوم، بعد الصلاة، الوضوء، الاستغفار وغيرها"
+      ],
+      "dhikrkit": [
+        "نور الذكر",
+        "أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر"
+      ],
+      "mushaf": [
+        "مُصحَفي",
+        "تتبّع حفظ القرآن الكريم كاملًا"
+      ],
+      "hadithcol": [
+        "الحديث الشريف",
+        "مختارات من الكتب الستة، موثّقة بالراوي والدرجة"
+      ],
+      "arbaeen": [
+        "الأربعون النووية",
+        "٤٢ حديثًا جامعًا بشرح مختصر"
+      ],
+      "salah": [
+        "تعلّم الصلاة",
+        "دليل خطوة بخطوة للأطفال وحديثي الإسلام"
+      ],
+      "asma": [
+        "أسماء الله الحسنى",
+        "الأسماء التسعة والتسعون بمعانيها"
+      ],
+      "munasabat": [
+        "أذكار المناسبات",
+        "السفر، المرض، الهمّ، البيت، الطعام"
+      ],
+      "ramadan": [
+        "تقويم رمضان",
+        "دعاء ومهام كل يوم، والعشر الأواخر والعيد"
+      ],
+      "anbiya": [
+        "قصص الأنبياء",
+        "٢٥ نبيًا بقصصهم وعبرها"
+      ],
+      "seerah": [
+        "السيرة النبوية",
+        "خط زمني لحياة النبي ﷺ"
+      ],
+      "zakat": [
+        "حاسبة الزكاة",
+        "احسب زكاة مالك والنصاب تلقائيًا"
+      ],
+      "hajj": [
+        "دليل الحج والعمرة",
+        "خطوات المناسك ونصائح عملية"
+      ],
+      "mustajab": [
+        "أوقات الإجابة",
+        "أوقات مستجابة، ودعاء ختم القرآن"
+      ],
+      "kidsadab": [
+        "قصص الآداب للأطفال",
+        "سبع قصص قصيرة عن الأخلاق الجميلة"
+      ],
+      "mawarith": [
+        "حاسبة المواريث",
+        "أنصبة الورثة في الحالات الشائعة"
+      ],
+      "gtasbeeh": [
+        "تسبيح جماعي",
+        "عدّاد منفصل لكل فرد في المجلس"
+      ],
+      "tadabbur": [
+        "دفتر التدبر",
+        "اكتب خواطرك على آيات القرآن"
+      ],
+      "wird": [
+        "ورد القراءة اليومي",
+        "تابع صفحاتك اليومية من القرآن"
+      ],
+      "noorcompanion": [
+        "رفيق النور",
+        "تذكير إيماني هادئ يضبطه أنت: الفاصل الزمني ونوع المحتوى والوضع الهادئ"
+      ],
+      "qada": [
+        "متابعة صيام القضاء",
+        "سجّل الأيام الفائتة وتابع قضاءها"
+      ],
+      "visiting": [
+        "آداب الزيارة والعيادة",
+        "عيادة المريض، العزاء، والتهنئة"
+      ],
+      "voiceazkar": [
+        "سجّل صوتك بالأذكار",
+        "مسجّل شخصي لصوتك وأنت تذكر الله"
+      ],
+      "ibadat": [
+        "العبادات — دليل تعليمي",
+        "الوضوء، فرائض وسنن الصلاة، الصيام، والزكاة"
+      ],
+      "libsearch": [
+        "البحث الشامل",
+        "ابحث عن جميع الأذكار والأحاديث والأدعية من مكان واحد"
+      ],
+      "prayertimes": [
+        "مواقيت الصلاة",
+        "الفجر إلى العشاء، عدّ تنازلي، طرق حساب ومذاهب متعددة"
+      ],
+      "hijri": [
+        "التقويم الهجري",
+        "تحويل هجري ↔ ميلادي، المناسبات، والصيام المستحب"
+      ],
+      "qibla": [
+        "اتجاه القبلة",
+        "زاوية القبلة من موقعك، وبوصلة حيّة تصحّح انحراف الشمال المغناطيسي"
+      ],
+      "sitesdir": [
+        "دليل المواقع الإسلامية",
+        "١٨ موقع مرجعي بشرح أقسام كل موقع"
+      ],
+      "islamicvideos": [
+        "مكتبة الفيديو الإسلامية",
+        "تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال"
+      ],
+      "b0": [
+        "نونية القحطاني بصوت فارس عباد",
+        "تلاوة صوتية — ملفك الخاص على درايف"
+      ],
+      "b1": [
+        "البداية والنهاية",
+        "ابن كثير — ملفك الخاص على درايف"
+      ],
+      "b2": [
+        "القرآن الكريم - كلمة في صورة",
+        "ملفك الخاص على درايف"
+      ],
+      "b3": [
+        "رسائل من القرآن",
+        "ملفك الخاص على درايف"
+      ],
+      "b4": [
+        "رسائل من النبي",
+        "ملفك الخاص على درايف"
+      ],
+      "b5": [
+        "على خطى الرسول",
+        "ملفك الخاص على درايف"
+      ],
+      "b6": [
+        "رسائل من الصحابة",
+        "ملفك الخاص على درايف"
+      ],
+      "b7": [
+        "رسائل من التابعين",
+        "ملفك الخاص على درايف"
+      ],
+      "b8": [
+        "الرحيق المختوم",
+        "صفي الرحمن المباركفوري — ملفك الخاص على درايف"
+      ],
+      "b9": [
+        "كلمة",
+        "ملفك الخاص على درايف"
+      ],
+      "b10": [
+        "ما لا يسع المسلم جهله",
+        "ملفك الخاص على درايف"
+      ],
+      "b11": [
+        "100 سؤال وجواب في عقيدة التوحيد",
+        "ملفك الخاص على درايف"
+      ],
+      "b12": [
+        "التفسير الميسر",
+        "ملفك الخاص على درايف"
+      ],
+      "b13": [
+        "اليوم الآخر 2 — القيامة الكبرى",
+        "ملفك الخاص على درايف"
+      ],
+      "b14": [
+        "أصول الدعوة",
+        "عبد الكريم زيدان — ملفك الخاص على درايف"
+      ],
+      "b15": [
+        "أول مرة أتدبر القرآن",
+        "دليلك لفهم وتدبر القرآن من الفاتحة إلى الناس — ملفك الخاص"
+      ],
+      "b16": [
+        "فقه الدعوة إلى الله",
+        "فقه النصح والإرشاد والأمر بالمعروف — ملفك الخاص"
+      ],
+      "b17": [
+        "مدينة الأقوياء",
+        "ملفك الخاص على درايف"
+      ],
+      "b18": [
+        "سيف الله خالد بن الوليد",
+        "ملفك الخاص على درايف"
+      ],
+      "b19": [
+        "في الحب والحياة",
+        "د. مصطفى محمود — ملفك الخاص على درايف"
+      ],
+      "b20": [
+        "الجامع الصحيح للبخاري كاملًا",
+        "ملفك الخاص على درايف"
+      ],
+      "b21": [
+        "مائة من عظماء أمة الإسلام",
+        "غيّروا مجرى التاريخ — ملفك الخاص على درايف"
+      ]
+    },
+    "installApp": "Install App",
+    "introGuide": "Library Guide",
+    "searchAria": "Search the whole site",
+    "searchPlaceholderMain": "What are you looking for or what do you need?",
+    "placeholderNote": "Your personal note on this tool...",
+    "ariaNote": "Personal note on this tool",
+    "catalogLabel": "Catalog (PDF)",
+    "noToolsMatch": "No tools match your search.",
+    "installToast": "Use the browser menu (⋮ or ≡) then “Install” or “Add to Home Screen” to install the app",
+    "installToastIOS": "Share the page then choose “Add to Home Screen” to install the app 📱",
+    "backupExported": "Exported {count} values from the library tools.",
+    "backupCreateFailed": "Could not create the backup.",
+    "backupTooLarge": "The file is larger than the allowed limit (5 MB).",
+    "backupConfirm": "The backup is from {date} and contains {count} values. It will be merged with your current data without deleting other keys. Continue?",
+    "backupRestoredPartial": "Restored {restored} values, failed to save {failed}; the cache or storage may be full.",
+    "backupImported": "Imported and merged {restored} values. Reloading the tools.",
+    "backupReadFailed": "Could not read the backup."
   }
 }

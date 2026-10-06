@@ -9,6 +9,69 @@ import { registerDataSources, resultCategories } from "../lib/search-content.js"
 import { prefetchCorpus } from "../lib/search-corpora.js";
 import { HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE } from "../lib/search.js";
 import { ENCYCLOPEDIA_CATEGORIES } from "../data/encyclopedia-categories.js";
+import * as i18n from "../lib/i18n.js";
+
+/**
+ * نصوص الافتراض بالعربية: الصفحات الثابتة (١–٤٩) تركّب النافذة دون
+ * تهيئة اللغة، فبدل أن تعرض أسماءَ المفاتيح تعرض العربية.
+ */
+const AR = {
+  all: "الكل",
+  clear: "مسح",
+  browseEncyclopedia: "تصفّح الموسوعة",
+  placeholderMain: "ماذا تبحث عنه أو ماذا تحتاج؟",
+  tryExample: "جرّب البحث بكلمات أخرى مثل: قرآن، أذكار، حديث، زكاة",
+  hintKeys: "Ctrl+K أو / للبحث",
+  hintEsc: "Esc للإغلاق",
+  relaxedSearch: "واسع البحث بكلمات الاستعلام...",
+  searchingCorpus: "يبحث في نصوص القرآن والحديث...",
+  open: "فتح",
+  titleMatch: "مطابقة العنوان",
+  keywordMatch: "مطابقة الكلمة المفتاحية",
+  contentMatch: "مطابقة المحتوى",
+  categoryMatch: "مطابقة التصنيف",
+  relaxedMatch: "بكلمة من سؤالك",
+  suggestionMatch: "اقتراح",
+  libraryMatch: "مطابقة في المكتبة",
+  noResultsInline: "لا نتائج مطابقة.",
+  lastSearches: "آخر عمليات البحث",
+  quran: "القرآن",
+  fVerses: "آيات المصحف",
+  tafsir: "التفسير",
+  fMeanings: "معاني الكلمات",
+  hadith: "الحديث",
+  adhkar: "الأذكار",
+  fDuas: "الأدعية",
+  reciters: "القرّاء",
+  fRadio: "الإذاعات",
+  videos: "الفيديو",
+  fBooks: "الكتب",
+  fatwa: "الفتاوى",
+  fKhutb: "الخطب",
+  history: "التاريخ",
+  fHisn: "حصن المسلم",
+  fTests: "الاختبارات",
+  fQa: "أسئلة وأجوبة",
+  fLessons: "الدروس",
+  fMethod: "المنهج",
+  seerah: "السيرة",
+  fScholars: "العلماء",
+  fNames: "أسماء الله",
+  fSalaf: "أقوال السلف",
+  fKids: "الأطفال",
+  fStories: "القصص والأنبياء",
+  fEvents: "المناسبات",
+  tools: "الأدوات",
+  fCalculators: "الحاسبات",
+  fCities: "المدن",
+  fSections: "الأقسام",
+  fPages: "الصفحات"
+};
+
+function st(key) {
+  const value = i18n.tSearch(key);
+  return value === `search.${key}` ? (AR[key] ?? key) : value;
+}
 
 /**
  * فئات البحث: الاسم والأيقونة لكل فئة، بالترتيب الذي يُعرض به الشريط.
@@ -18,37 +81,37 @@ import { ENCYCLOPEDIA_CATEGORIES } from "../data/encyclopedia-categories.js";
  * مكانًا وتُظهر «لا نتائج» في كل ضغطة.
  */
 const FILTERS = [
-  { id: "قرآن", label: "القرآن", icon: "📖" },
-  { id: "آيات", label: "آيات المصحف", icon: "🕌" },
-  { id: "تفسير", label: "التفسير", icon: "📚" },
-  { id: "معاني", label: "معاني الكلمات", icon: "🪔" },
-  { id: "حديث", label: "الحديث", icon: "📕" },
-  { id: "أذكار", label: "الأذكار", icon: "🤲" },
-  { id: "أدعية", label: "الأدعية", icon: "🤲" },
-  { id: "قرّاء", label: "القرّاء", icon: "🎙️" },
-  { id: "إذاعة", label: "الإذاعات", icon: "📻" },
-  { id: "فيديو", label: "الفيديو", icon: "🎬" },
-  { id: "كتب", label: "الكتب", icon: "📚" },
-  { id: "فتاوى", label: "الفتاوى", icon: "📜" },
-  { id: "خطب", label: "الخطب", icon: "🗣️" },
-  { id: "تاريخ", label: "التاريخ", icon: "🏛️" },
-  { id: "حصن المسلم", label: "حصن المسلم", icon: "🛡️" },
-  { id: "اختبارات", label: "الاختبارات", icon: "🧠" },
-  { id: "أسئلة", label: "أسئلة وأجوبة", icon: "❓" },
-  { id: "تعليم", label: "الدروس", icon: "📚" },
-  { id: "منهج", label: "المنهج", icon: "📖" },
-  { id: "سيرة", label: "السيرة", icon: "🕌" },
-  { id: "علماء", label: "العلماء", icon: "👤" },
-  { id: "أسماء الله", label: "أسماء الله", icon: "ﷲ" },
-  { id: "أقوال", label: "أقوال السلف", icon: "❝" },
-  { id: "أطفال", label: "الأطفال", icon: "🧒" },
-  { id: "قصص", label: "القصص والأنبياء", icon: "🌟" },
-  { id: "مناسبات", label: "المناسبات", icon: "🌙" },
-  { id: "أدوات", label: "الأدوات", icon: "🛠️" },
-  { id: "حاسبات", label: "الحاسبات", icon: "🧮" },
-  { id: "مدن", label: "المدن", icon: "🏙️" },
-  { id: "أقسام", label: "الأقسام", icon: "🧭" },
-  { id: "صفحات", label: "الصفحات", icon: "📄" },
+  { id: "قرآن", key: "quran", icon: "📖" },
+  { id: "آيات", key: "fVerses", icon: "🕌" },
+  { id: "تفسير", key: "tafsir", icon: "📚" },
+  { id: "معاني", key: "fMeanings", icon: "🪔" },
+  { id: "حديث", key: "hadith", icon: "📕" },
+  { id: "أذكار", key: "adhkar", icon: "🤲" },
+  { id: "أدعية", key: "fDuas", icon: "🤲" },
+  { id: "قرّاء", key: "reciters", icon: "🎙️" },
+  { id: "إذاعة", key: "fRadio", icon: "📻" },
+  { id: "فيديو", key: "videos", icon: "🎬" },
+  { id: "كتب", key: "fBooks", icon: "📚" },
+  { id: "فتاوى", key: "fatwa", icon: "📜" },
+  { id: "خطب", key: "fKhutb", icon: "🗣️" },
+  { id: "تاريخ", key: "history", icon: "🏛️" },
+  { id: "حصن المسلم", key: "fHisn", icon: "🛡️" },
+  { id: "اختبارات", key: "fTests", icon: "🧠" },
+  { id: "أسئلة", key: "fQa", icon: "❓" },
+  { id: "تعليم", key: "fLessons", icon: "📚" },
+  { id: "منهج", key: "fMethod", icon: "📖" },
+  { id: "سيرة", key: "seerah", icon: "🕌" },
+  { id: "علماء", key: "fScholars", icon: "👤" },
+  { id: "أسماء الله", key: "fNames", icon: "ﷲ" },
+  { id: "أقوال", key: "fSalaf", icon: "❝" },
+  { id: "أطفال", key: "fKids", icon: "🧒" },
+  { id: "قصص", key: "fStories", icon: "🌟" },
+  { id: "مناسبات", key: "fEvents", icon: "🌙" },
+  { id: "أدوات", key: "tools", icon: "🛠️" },
+  { id: "حاسبات", key: "fCalculators", icon: "🧮" },
+  { id: "مدن", key: "fCities", icon: "🏙️" },
+  { id: "أقسام", key: "fSections", icon: "🧭" },
+  { id: "صفحات", key: "fPages", icon: "📄" },
 ];
 
 /**
@@ -65,7 +128,7 @@ function availableFilters() {
   }
   const known = new Set(have);
   const list = FILTERS.filter((filter) => known.has(filter.id));
-  return [{ id: "all", label: "الكل", icon: "🌐" }, ...list];
+  return [{ id: "all", label: st("all"), icon: "🌐" }, ...list.map((filter) => ({ ...filter, label: st(filter.key) }))];
 }
 
 const HISTORY_KEY = "search-history";
@@ -88,7 +151,7 @@ export function createSearchModal() {
   modal.className = "search-modal-overlay";
   modal.setAttribute("role", "dialog");
   modal.setAttribute("aria-modal", "true");
-  modal.setAttribute("aria-label", "البحث الشامل");
+  modal.setAttribute("aria-label", st("title"));
   modal.innerHTML = `
     <div class="search-modal-backdrop"></div>
     <div class="search-modal-container">
@@ -99,25 +162,25 @@ export function createSearchModal() {
             type="search" 
             id="searchModalInput" 
             class="search-modal-input" 
-            placeholder="ماذا تبحث عنه أو ماذا تحتاج؟" 
-            aria-label="البحث الشامل"
+            placeholder="${st("placeholderMain")}" 
+            aria-label="${st("title")}"
             autocomplete="off"
           >
-          <button id="searchModalClear" class="search-modal-clear" type="button" aria-label="مسح">✕</button>
-          <button id="searchModalBrowse" class="search-modal-browse" type="button" aria-label="تصفّح الموسوعة" title="تصفّح الموسوعة">📖</button>
+          <button id="searchModalClear" class="search-modal-clear" type="button" aria-label="${st("clear")}">✕</button>
+          <button id="searchModalBrowse" class="search-modal-browse" type="button" aria-label="${st("browseEncyclopedia")}" title="${st("browseEncyclopedia")}">📖</button>
         </div>
         <div class="search-modal-filters" id="searchModalFilters"></div>
       </div>
       <div class="search-modal-body" id="searchModalBody">
         <div class="search-modal-suggestions" id="searchModalSuggestions"></div>
         <div class="search-modal-results" id="searchModalResults" hidden></div>
-        <div class="search-modal-empty" id="searchModalEmpty" hidden>لم نجد نتيجة مطابقة.</div>
+        <div class="search-modal-empty" id="searchModalEmpty" hidden>${st("noResults")}</div>
         <div class="search-modal-history" id="searchModalHistory" hidden></div>
         <div class="search-modal-browse-panel" id="searchModalBrowsePanel" hidden></div>
       </div>
       <div class="search-modal-footer">
-        <span class="search-modal-hint">Ctrl+K أو / للبحث</span>
-        <span class="search-modal-hint">Esc للإغلاق</span>
+        <span class="search-modal-hint">${st("hintKeys")}</span>
+        <span class="search-modal-hint">${st("hintEsc")}</span>
       </div>
     </div>
   `;
@@ -136,6 +199,46 @@ export function createSearchModal() {
   renderFilters();
   loadHistory();
   mountSearchTrigger();
+
+  if (i18n.onLocaleChange) {
+    i18n.onLocaleChange(updateModalTexts);
+  }
+}
+
+/**
+ * يعيد نصوص النافذة بعد تبديل اللغة: العناوين والحشوات والأزرار،
+ * والشريطُ يُعاد بناؤه لأن أسماء الفئات تترجم أيضًا.
+ * @returns {void}
+ */
+function updateModalTexts() {
+  const modal = document.getElementById("searchModal");
+  if (!modal) return;
+  modal.setAttribute("aria-label", st("title"));
+  const input = document.getElementById("searchModalInput");
+  if (input) {
+    input.placeholder = st("placeholderMain");
+    input.setAttribute("aria-label", st("title"));
+  }
+  const clearBtn = document.getElementById("searchModalClear");
+  if (clearBtn) clearBtn.setAttribute("aria-label", st("clear"));
+  const browseBtn = document.getElementById("searchModalBrowse");
+  if (browseBtn) {
+    browseBtn.setAttribute("aria-label", st("browseEncyclopedia"));
+    browseBtn.title = st("browseEncyclopedia");
+  }
+  const empty = document.getElementById("searchModalEmpty");
+  if (empty) empty.textContent = st("noResults");
+  const hints = modal.querySelectorAll(".search-modal-hint");
+  if (hints.length >= 2) {
+    hints[0].textContent = st("hintKeys");
+    hints[1].textContent = st("hintEsc");
+  }
+  const fab = document.getElementById("searchFab");
+  if (fab) {
+    fab.setAttribute("aria-label", st("title"));
+    fab.title = `${st("title")} — Ctrl+K`;
+  }
+  renderFilters();
 }
 
 /**
@@ -156,8 +259,8 @@ function mountSearchTrigger() {
   button.id = "searchFab";
   button.type = "button";
   button.className = "search-fab";
-  button.setAttribute("aria-label", "البحث الشامل");
-  button.title = "البحث الشامل — Ctrl+K";
+  button.setAttribute("aria-label", st("title"));
+  button.title = `${st("title")} — Ctrl+K`;
   button.innerHTML = "🔍";
   button.addEventListener("click", () => openSearchModal());
   document.body.appendChild(button);
@@ -837,8 +940,8 @@ async function performSearch() {
         limit: 50,
         category,
         onPhase: (phase) => setLoadingText(phase === "relaxed"
-          ? "واسع البحث بكلمات الاستعلام..."
-          : "يبحث في نصوص القرآن والحديث..."),
+          ? st("relaxedSearch")
+          : st("searchingCorpus")),
       }),
       timeoutPromise
     ]);
@@ -891,7 +994,7 @@ function showLoading() {
   const loading = document.createElement("div");
   loading.id = "searchModalLoading";
   loading.className = "search-modal-loading";
-  loading.textContent = "جارٍ البحث...";
+  loading.textContent = st("searching");
   document.getElementById("searchModalBody").appendChild(loading);
 }
 
@@ -936,8 +1039,8 @@ function showHistory() {
   container.hidden = false;
   container.innerHTML = `
     <div class="search-modal-history-title">
-      <span>🕐 آخر عمليات البحث</span>
-      <button class="search-modal-history-clear" type="button">مسح السجل</button>
+      <span>🕐 ${st("lastSearches")}</span>
+      <button class="search-modal-history-clear" type="button">${st("clearHistory")}</button>
     </div>
     ${history.map(h => `
       <div class="search-modal-history-item" data-query="${escapeHtml(h)}">
@@ -979,7 +1082,7 @@ function renderSuggestions(suggestions) {
   
   container.hidden = false;
   container.innerHTML = `
-    <div class="search-modal-category">💡 اقتراحات</div>
+    <div class="search-modal-category">💡 ${st("suggestions")}</div>
     ${suggestions.map(s => `
       <a class="search-modal-item" href="${escapeHtml(s.route || "#")}" data-id="${escapeHtml(s.id || "")}">
         <span class="search-modal-item-icon">${escapeHtml(s.icon || "📌")}</span>
@@ -987,7 +1090,7 @@ function renderSuggestions(suggestions) {
           <p class="search-modal-item-title">${withHighlight(escapeHtml(s.title))}</p>
           <p class="search-modal-item-desc">${withHighlight(escapeHtml(s.description || ""))}</p>
         </div>
-        <span class="search-modal-item-action">فتح</span>
+        <span class="search-modal-item-action">${st("open")}</span>
       </a>
     `).join("")}
   `;
@@ -1044,7 +1147,7 @@ function renderResults(results, categories, intent) {
             ${r.where ? `<p class="search-modal-item-desc">${escapeHtml(r.where)}</p>` : ""}
             ${r.matchType ? `<span class="search-modal-item-meta">${getMatchLabel(r.matchType, r)}</span>` : ""}
           </div>
-          <span class="search-modal-item-action">فتح</span>
+          <span class="search-modal-item-action">${st("open")}</span>
         </a>
       `).join("")}
     `}).join("");
@@ -1081,8 +1184,8 @@ function showNoResults(query) {
   empty.hidden = false;
   empty.innerHTML = `
     <div class="search-modal-no-results">
-      <h3>لم نجد نتيجة مطابقة.</h3>
-      <p>جرّب البحث بكلمات أخرى مثل: <strong>قرآن</strong>، <strong>أذكار</strong>، <strong>حديث</strong>، <strong>زكاة</strong></p>
+      <h3>${st("noResults")}.</h3>
+      <p>${st("tryExample")}</p>
     </div>
   `;
 }
@@ -1124,17 +1227,17 @@ function selectResult() {
  */
 function getMatchLabel(matchType, result) {
   const labels = {
-    exact: "مطابقة تامة",
-    title: "مطابقة العنوان",
-    keyword: "مطابقة الكلمة المفتاحية",
-    content: "مطابقة المحتوى",
-    category: "مطابقة التصنيف",
+    exact: st("exactMatch"),
+    title: st("titleMatch"),
+    keyword: st("keywordMatch"),
+    content: st("contentMatch"),
+    category: st("categoryMatch"),
     // لفظٌ زائدٌ أخرجَ البحثَ إلى كلماتٍ مفردة، فيجب أن يعرف المستخدم أن
     // الجوابَ جاء بكلمةٍ من سؤاله لا بسؤاله كلّه.
-    relaxed: "بكلمة من سؤالك",
-    suggestion: "اقتراح"
+    relaxed: st("relaxedMatch"),
+    suggestion: st("suggestionMatch")
   };
-  if (matchType === "relaxed" && result?.sourceId === "library") return "مطابقة في المكتبة";
+  if (matchType === "relaxed" && result?.sourceId === "library") return st("libraryMatch");
   return labels[matchType] || "";
 }
 
@@ -1283,7 +1386,7 @@ function setupInlineSearch(inputId, resultsId, options = {}) {
  */
 function renderInlineResults(container, results, query) {
   if (results.length === 0) {
-    container.innerHTML = '<div class="search-modal-empty">لا نتائج مطابقة.</div>';
+    container.innerHTML = '<div class="search-modal-empty">' + st("noResultsInline") + '</div>';
     return;
   }
   

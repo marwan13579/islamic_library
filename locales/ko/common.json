@@ -8,7 +8,7 @@
     "edit": "편집",
     "add": "추가",
     "remove": "제거",
-    "loading": "로딩 중...",
+    "loading": "로딩 중",
     "error": "오류",
     "success": "성공",
     "warning": "경고",
@@ -75,7 +75,7 @@
     "score": "점수",
     "level": "레벨",
     "progress": "진행률",
-    "completed": "완료",
+    "completed": "완료됨",
     "incomplete": "미완료",
     "start": "시작",
     "end": "종료",
@@ -90,7 +90,7 @@
     "clear": "지우기",
     "filter": "필터",
     "sort": "정렬",
-    "order": "순서",
+    "order": "주문",
     "ascending": "오름차순",
     "descending": "내림차순",
     "newest": "최신",
@@ -111,7 +111,7 @@
     "markAsUnread": "읽지 않음으로 표시",
     "notification": "알림",
     "notifications": "알림",
-    "alert": "알림",
+    "alert": "경고",
     "toast": "알림",
     "message": "메시지",
     "messages": "메시지",
@@ -127,7 +127,7 @@
     "disabled": "비활성화됨",
     "visible": "표시",
     "hidden": "숨김",
-    "show": "표시",
+    "show": "쇼",
     "hide": "숨기기",
     "expand": "펼치기",
     "collapse": "접기",
@@ -234,13 +234,11 @@
     "custom": "사용자 정의",
     "auto": "자동",
     "manual": "수동",
-    "enabled": "활성화됨",
-    "disabled": "비활성화됨",
     "allRightsReserved": "모든 권리 보유",
     "madeWithLove": "사랑으로 제작",
     "poweredBy": "제공자",
     "sourceCode": "소스 코드",
-    "license": "라이선스",
+    "license": "면허",
     "copyright": "저작권",
     "openSource": "오픈 소스",
     "termsOfService": "서비스 약관",
@@ -277,7 +275,7 @@
     "selectItem": "항목 선택",
     "deselectItem": "선택 해제",
     "itemSelected": "항목 선택됨",
-    "itemsSelected": "항목 선택됨",
+    "itemsSelected": "{count}개 항목 선택됨",
     "item": "항목",
     "items": "항목",
     "list": "목록",
@@ -291,7 +289,6 @@
     "footer": "푸터",
     "sidebar": "사이드바",
     "navbar": "내비게이션 바",
-    "menu": "메뉴",
     "submenu": "하위 메뉴",
     "dropdown": "드롭다운",
     "tab": "탭",
@@ -320,14 +317,12 @@
     "field": "필드",
     "input": "입력",
     "textarea": "텍스트 영역",
-    "select": "선택",
     "checkbox": "체크박스",
     "radio": "라디오 버튼",
     "button": "버튼",
-    "link": "링크",
     "label": "라벨",
     "placeholder": "플레이스홀더",
-    "value": "값",
+    "value": "가치",
     "defaultValue": "기본값",
     "placeholderSearch": "검색...",
     "placeholderName": "이름",
@@ -398,7 +393,7 @@
     "yearly": "매년",
     "recurring": "반복",
     "oneTime": "일회성",
-    "free": "무료",
+    "free": "여유",
     "paid": "유료",
     "price": "가격",
     "cost": "비용",
@@ -413,7 +408,6 @@
     "invoice": "청구서",
     "receipt": "영수증",
     "transaction": "거래",
-    "order": "주문",
     "statusPending": "대기 중",
     "statusProcessing": "처리 중",
     "statusCompleted": "완료됨",
@@ -517,14 +511,12 @@
     "selectFile": "파일 선택",
     "selectFiles": "파일 선택",
     "selectFolder": "폴더 선택",
-    "selectItem": "항목 선택",
     "selectItems": "항목 선택",
     "noFilesSelected": "선택된 파일 없음",
     "noFoldersSelected": "선택된 폴더 없음",
     "noItemsSelected": "선택된 항목 없음",
     "filesSelected": "{count}개 파일 선택됨",
     "foldersSelected": "{count}개 폴더 선택됨",
-    "itemsSelected": "{count}개 항목 선택됨",
     "totalFiles": "총 파일 수",
     "totalFolders": "총 폴더 수",
     "totalItems": "총 항목 수",
@@ -535,8 +527,8 @@
     "modifiedAt": "수정일",
     "accessedAt": "접근일",
     "owner": "소유자",
-    "author": "작성자",
-    "creator": "생성자",
+    "author": "저자",
+    "creator": "창작자",
     "editor": "편집자",
     "contributor": "기여자",
     "lastModified": "마지막 수정",
@@ -546,7 +538,6 @@
     "modified": "수정됨",
     "accessed": "접근됨",
     "updated": "업데이트됨",
-    "deleted": "삭제됨",
     "added": "추가됨",
     "removed": "제거됨",
     "changed": "변경됨",
@@ -582,10 +573,8 @@
     "across": "가로질러",
     "throughout": "전체에 걸쳐",
     "within": "내부",
-    "outside": "외부",
     "new": "새로운",
     "old": "오래된",
-    "recent": "최근",
     "latest": "최신",
     "latestVersion": "최신 버전",
     "earliest": "가장 오래된",
@@ -609,13 +598,12 @@
     "suggested": "제안",
     "sponsored": "스폰서",
     "promoted": "홍보",
-    "verified": "인증됨",
+    "verified": "확인됨",
     "official": "공식",
     "unofficial": "비공식",
     "premium": "프리미엄",
     "basic": "기본",
     "standard": "표준",
-    "advanced": "고급",
     "professional": "전문가",
     "enterprise": "엔터프라이즈",
     "personal": "개인",
@@ -632,11 +620,8 @@
     "admin": "관리자",
     "user": "사용자",
     "member": "회원",
-    "owner": "소유자",
     "moderator": "중재자",
-    "editor": "편집자",
-    "viewer": "뷰어",
-    "contributor": "기여자",
+    "viewer": "시청자",
     "subscriber": "구독자",
     "follower": "팔로워",
     "visitor": "방문자",
@@ -655,8 +640,6 @@
     "committee": "위원회",
     "department": "부서",
     "division": "부서",
-    "unit": "단위",
-    "team": "팀",
     "group": "그룹",
     "project": "프로젝트",
     "program": "프로그램",
@@ -680,13 +663,12 @@
     "resume": "이력서",
     "cv": "이력서",
     "coverLetter": "자기소개서",
-    "reference": "추천서",
+    "reference": "참조",
     "recommendation": "추천",
     "endorsement": "지지",
     "testimonial": "증명서",
-    "review": "리뷰",
+    "review": "검토",
     "rating": "평가",
-    "feedback": "피드백",
     "comment": "댓글",
     "reply": "답변",
     "thread": "스레드",
@@ -695,9 +677,9 @@
     "debate": "논쟁",
     "question": "질문",
     "answer": "답변",
-    "solution": "해결책",
+    "solution": "솔루션",
     "problem": "문제",
-    "issue": "문제",
+    "issue": "호",
     "bug": "버그",
     "feature": "기능",
     "enhancement": "향상",
@@ -711,34 +693,20 @@
     "outdated": "구식",
     "obsolete": "폐기",
     "current": "현재",
-    "active": "활성",
-    "inactive": "비활성",
     "pending": "대기 중",
     "approved": "승인됨",
     "rejected": "거부됨",
     "accepted": "수락됨",
     "declined": "거절됨",
-    "published": "게시됨",
     "unpublished": "미게시",
-    "archived": "보관됨",
-    "deleted": "삭제됨",
-    "restored": "복원됨",
     "trashed": "삭제됨",
-    "draft": "초안",
     "final": "최종",
     "reviewed": "검토됨",
-    "verified": "확인됨",
     "confirmed": "확인됨",
-    "completed": "완료됨",
     "finished": "종료됨",
     "done": "완료",
     "ready": "준비됨",
-    "available": "사용 가능",
-    "unavailable": "사용 불가",
     "busy": "바쁨",
-    "free": "여유",
-    "online": "온라인",
-    "offline": "오프라인",
     "idle": "유휴",
     "working": "작업 중",
     "stopped": "중지됨",
@@ -748,7 +716,6 @@
     "stopping": "중지 중",
     "restarting": "재시작 중",
     "initializing": "초기화 중",
-    "loading": "로딩 중",
     "processing": "처리 중",
     "saving": "저장 중",
     "uploading": "업로드 중",
@@ -795,7 +762,6 @@
     "sorting": "정렬 중",
     "grouping": "그룹화 중",
     "mapping": "매핑 중",
-    "transforming": "변환 중",
     "connecting": "연결 중",
     "disconnecting": "연결 해제 중",
     "pairing": "페어링 중",
@@ -833,7 +799,6 @@
     "unbundling": "번들링 해제 중",
     "packing": "패킹 중",
     "unpacking": "언패킹 중",
-    "loading": "로딩 중",
     "unloading": "언로딩 중",
     "fetching": "가져오는 중",
     "retrieving": "검색 중",
@@ -856,7 +821,6 @@
     "alarm": "알람",
     "scheduler": "스케줄러",
     "calendar": "달력",
-    "event": "이벤트",
     "appointment": "약속",
     "meeting": "회의",
     "conference": "컨퍼런스",
@@ -868,18 +832,14 @@
     "episode": "에피소드",
     "season": "시즌",
     "series": "시리즈",
-    "show": "쇼",
-    "program": "프로그램",
     "channel": "채널",
     "station": "방송국",
     "network": "네트워크",
     "platform": "플랫폼",
     "service": "서비스",
     "product": "제품",
-    "solution": "솔루션",
     "tool": "도구",
     "utility": "유틸리티",
-    "feature": "기능",
     "function": "함수",
     "capability": "능력",
     "ability": "능력",
@@ -891,7 +851,6 @@
     "advantage": "장점",
     "disadvantage": "단점",
     "benefit": "이점",
-    "value": "가치",
     "impact": "영향",
     "result": "결과",
     "outcome": "결과",
@@ -925,7 +884,6 @@
     "model": "모델",
     "schema": "스키마",
     "format": "형식",
-    "standard": "표준",
     "specification": "사양",
     "requirement": "요구사항",
     "constraint": "제약",
@@ -942,27 +900,22 @@
     "metric": "지표",
     "indicator": "지표",
     "signal": "신호",
-    "alert": "경고",
-    "warning": "경고",
     "notice": "공지",
     "announcement": "공지사항",
     "news": "뉴스",
-    "update": "업데이트",
     "newsletter": "뉴스레터",
     "blog": "블로그",
     "article": "기사",
     "post": "게시물",
-    "entry": "항목",
+    "entry": "입장",
     "record": "레코드",
     "log": "로그",
-    "history": "기록",
     "timeline": "타임라인",
     "chronicle": "연대기",
     "story": "이야기",
     "tale": "이야기",
     "narrative": "서사",
     "account": "계정",
-    "report": "보고서",
     "statement": "성명서",
     "declaration": "선언",
     "proclamation": "선언",
@@ -1002,15 +955,12 @@
     "situation": "상황",
     "condition": "조건",
     "state": "상태",
-    "status": "상태",
     "phase": "단계",
     "stage": "단계",
     "step": "단계",
     "milestone": "마일스톤",
     "landmark": "랜드마크",
     "benchmark": "벤치마크",
-    "reference": "참조",
-    "standard": "표준",
     "norm": "표준",
     "baseline": "기준선",
     "foundation": "기반",
@@ -1018,13 +968,11 @@
     "pillar": "기둥",
     "support": "지원",
     "assistance": "지원",
-    "help": "도움말",
     "aid": "지원",
     "guidance": "지침",
     "advice": "조언",
     "consultation": "상담",
     "counsel": "자문",
-    "recommendation": "추천",
     "suggestion": "제안",
     "proposal": "제안",
     "idea": "아이디어",
@@ -1042,9 +990,7 @@
     "appraisal": "평가",
     "inspection": "점검",
     "audit": "감사",
-    "review": "검토",
     "overview": "개요",
-    "summary": "요약",
     "abstract": "초록",
     "outline": "개요",
     "synopsis": "개요",
@@ -1069,21 +1015,17 @@
     "possession": "소유",
     "belonging": "소속",
     "ownership": "소유권",
-    "title": "제목",
     "deed": "증서",
     "certificate": "인증서",
     "diploma": "졸업장",
     "degree": "학위",
     "qualification": "자격",
     "credential": "자격 증명",
-    "license": "면허",
     "permit": "허가",
     "authorization": "승인",
     "approval": "승인",
-    "consent": "동의",
     "permission": "허가",
     "access": "접근",
-    "entry": "입장",
     "admission": "입장",
     "admittance": "입장",
     "entrance": "출입구",
@@ -1094,7 +1036,6 @@
     "return": "귀환",
     "comeback": "복귀",
     "reunion": "재회",
-    "meeting": "회의",
     "gathering": "집회",
     "assembly": "총회",
     "congregation": "회중",
@@ -1103,12 +1044,9 @@
     "spectator": "관중",
     "observer": "관찰자",
     "watcher": "관찰자",
-    "viewer": "시청자",
     "listener": "청취자",
     "reader": "독자",
     "writer": "필자",
-    "author": "저자",
-    "creator": "창작자",
     "inventor": "발명가",
     "pioneer": "개척자",
     "founder": "창립자",
@@ -1116,7 +1054,6 @@
     "source": "출처",
     "origin": "기원",
     "beginning": "시작",
-    "start": "시작",
     "commencement": "시작",
     "inception": "창설",
     "launch": "출시",
@@ -1124,16 +1061,301 @@
     "premiere": "시사회",
     "release": "출시",
     "publication": "출판",
-    "issue": "호",
     "edition": "판",
-    "version": "버전",
     "revision": "수정",
-    "update": "업데이트",
     "upgrade": "업그레이드",
     "downgrade": "다운그레이드",
     "patch": "패치",
     "fix": "수정",
     "repair": "수리",
-    "maintenance": "유지보수"
+    "siteTitle": "المكتبة الإسلامية",
+    "siteSubtitle": "كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.",
+    "sortDefault": "الترتيب الافتراضي",
+    "sortRecent": "الأحدث استخدامًا",
+    "backupExport": "تصدير نسخة",
+    "backupImport": "استعادة نسخة",
+    "sincTitle": "🤍 عبادتك بينك وبين الله",
+    "sincText": "كل عدّاد وكل خط تقدّم هنا وسيلة تنظّمك، مش غاية ولا مقياس تتفاخر أو تُقارن بيه نفسك بحد. بياناتك محفوظة على جهازك وحدك، محدش شايفها غيرك. الأصل النية الخالصة للله، والأجر عنده وحده سبحانه، سواء علِم بعملك أحد أو لم يعلم.",
+    "listTitleAll": "كل الأدوات",
+    "emptyMsg": "لا توجد أدوات مطابقة لبحثك.",
+    "catalogLink": "الكتالوج التعريفي (PDF)",
+    "favTitle": "★ المفضلة",
+    "openAll": "فتح الكل",
+    "booksNote": "هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
+    "langLabel": "العربية",
+    "introBtn": "🧭 دليل المكتبة",
+    "partialNote": "محتوى الأدوات نفسها بالعربية الأصلية للحفاظ على دقة النصوص الدينية.",
+    "cats": {
+      "all": "الكل",
+      "dhikr": "أذكار وأدعية",
+      "quran": "القرآن والحديث",
+      "learn": "تعلّم",
+      "stories": "قصص",
+      "calc": "حاسبات",
+      "books": "كتب وصوتيات"
+    },
+    "catBlurb": {
+      "dhikr": "أذكارٌ وأدعية وأوقات الإجابة",
+      "quran": "المصحف والحديث وتلاوة القرآن",
+      "learn": "دروسٌ واختباراتٌ وحجٌّ وآداب",
+      "stories": "قصصُ الأنبياء والسيرة وآداب الأطفال",
+      "calc": "مواقيت الصلاة والقبلة والزكاة والتقويم",
+      "books": "كتبٌ وفتاوى وتفسيرٌ ومكتبة فيديو"
+    },
+    "tools": {
+      "noor": [
+        "نور الهدى — المنهج التعليمي",
+        "١٨ قسمًا: المنهج وأعلام السلف، الدروس، السيرة، الأنبياء، الأسماء، الأذكار، الاختبارات والشهادات، وركن الأطفال"
+      ],
+      "noorapp": [
+        "بوابة النور — التطبيق",
+        "مصحف وأذكار ومواقيت وإذاعة وزكاة وبطاقات — يعمل بدون إنترنت"
+      ],
+      "quizbank": [
+        "الاختبارات والشهادات",
+        "بنك أسئلة بثلاثة أنواع، تحدٍّ أسبوعي، وشهادات إتمام تُرسم على canvas"
+      ],
+      "groupkhatma": [
+        "الختمة الجماعية",
+        "وزّع الأجزاء بين المشاركين وتابع الإنجاز والإهداء"
+      ],
+      "cardmaker": [
+        "صانع البطاقات الدعوية",
+        "حوّل أي آية أو حديث أو ذكر لبطاقة صورة قابلة للتحميل والمشاركة"
+      ],
+      "quranfull": [
+        "القرآن الكريم",
+        "المصحف كاملًا — سور، أجزاء، بحث، تلاوة، ترجمة وتفسير"
+      ],
+      "dailysystem": [
+        "نظام حياة المسلم",
+        "يومك مرتبط بالصلاة — صلاة، ذكر، وقرآن مع كل وقت"
+      ],
+      "adhkar": [
+        "الأذكار الشاملة",
+        "١٢ قسمًا: الصباح، المساء، النوم، بعد الصلاة، الوضوء، الاستغفار وغيرها"
+      ],
+      "dhikrkit": [
+        "نور الذكر",
+        "أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر"
+      ],
+      "mushaf": [
+        "مُصحَفي",
+        "تتبّع حفظ القرآن الكريم كاملًا"
+      ],
+      "hadithcol": [
+        "الحديث الشريف",
+        "مختارات من الكتب الستة، موثّقة بالراوي والدرجة"
+      ],
+      "arbaeen": [
+        "الأربعون النووية",
+        "٤٢ حديثًا جامعًا بشرح مختصر"
+      ],
+      "salah": [
+        "تعلّم الصلاة",
+        "دليل خطوة بخطوة للأطفال وحديثي الإسلام"
+      ],
+      "asma": [
+        "أسماء الله الحسنى",
+        "الأسماء التسعة والتسعون بمعانيها"
+      ],
+      "munasabat": [
+        "أذكار المناسبات",
+        "السفر، المرض، الهمّ، البيت، الطعام"
+      ],
+      "ramadan": [
+        "تقويم رمضان",
+        "دعاء ومهام كل يوم، والعشر الأواخر والعيد"
+      ],
+      "anbiya": [
+        "قصص الأنبياء",
+        "٢٥ نبيًا بقصصهم وعبرها"
+      ],
+      "seerah": [
+        "السيرة النبوية",
+        "خط زمني لحياة النبي ﷺ"
+      ],
+      "zakat": [
+        "حاسبة الزكاة",
+        "احسب زكاة مالك والنصاب تلقائيًا"
+      ],
+      "hajj": [
+        "دليل الحج والعمرة",
+        "خطوات المناسك ونصائح عملية"
+      ],
+      "mustajab": [
+        "أوقات الإجابة",
+        "أوقات مستجابة، ودعاء ختم القرآن"
+      ],
+      "kidsadab": [
+        "قصص الآداب للأطفال",
+        "سبع قصص قصيرة عن الأخلاق الجميلة"
+      ],
+      "mawarith": [
+        "حاسبة المواريث",
+        "أنصبة الورثة في الحالات الشائعة"
+      ],
+      "gtasbeeh": [
+        "تسبيح جماعي",
+        "عدّاد منفصل لكل فرد في المجلس"
+      ],
+      "tadabbur": [
+        "دفتر التدبر",
+        "اكتب خواطرك على آيات القرآن"
+      ],
+      "wird": [
+        "ورد القراءة اليومي",
+        "تابع صفحاتك اليومية من القرآن"
+      ],
+      "noorcompanion": [
+        "رفيق النور",
+        "تذكير إيماني هادئ يضبطه أنت: الفاصل الزمني ونوع المحتوى والوضع الهادئ"
+      ],
+      "qada": [
+        "متابعة صيام القضاء",
+        "سجّل الأيام الفائتة وتابع قضاءها"
+      ],
+      "visiting": [
+        "آداب الزيارة والعيادة",
+        "عيادة المريض، العزاء، والتهنئة"
+      ],
+      "voiceazkar": [
+        "سجّل صوتك بالأذكار",
+        "مسجّل شخصي لصوتك وأنت تذكر الله"
+      ],
+      "ibadat": [
+        "العبادات — دليل تعليمي",
+        "الوضوء، فرائض وسنن الصلاة، الصيام، والزكاة"
+      ],
+      "libsearch": [
+        "البحث الشامل",
+        "ابحث عن جميع الأذكار والأحاديث والأدعية من مكان واحد"
+      ],
+      "prayertimes": [
+        "مواقيت الصلاة",
+        "الفجر إلى العشاء، عدّ تنازلي، طرق حساب ومذاهب متعددة"
+      ],
+      "hijri": [
+        "التقويم الهجري",
+        "تحويل هجري ↔ ميلادي، المناسبات، والصيام المستحب"
+      ],
+      "qibla": [
+        "اتجاه القبلة",
+        "زاوية القبلة من موقعك، وبوصلة حيّة تصحّح انحراف الشمال المغناطيسي"
+      ],
+      "sitesdir": [
+        "دليل المواقع الإسلامية",
+        "١٨ موقع مرجعي بشرح أقسام كل موقع"
+      ],
+      "islamicvideos": [
+        "مكتبة الفيديو الإسلامية",
+        "تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال"
+      ],
+      "b0": [
+        "نونية القحطاني بصوت فارس عباد",
+        "تلاوة صوتية — ملفك الخاص على درايف"
+      ],
+      "b1": [
+        "البداية والنهاية",
+        "ابن كثير — ملفك الخاص على درايف"
+      ],
+      "b2": [
+        "القرآن الكريم - كلمة في صورة",
+        "ملفك الخاص على درايف"
+      ],
+      "b3": [
+        "رسائل من القرآن",
+        "ملفك الخاص على درايف"
+      ],
+      "b4": [
+        "رسائل من النبي",
+        "ملفك الخاص على درايف"
+      ],
+      "b5": [
+        "على خطى الرسول",
+        "ملفك الخاص على درايف"
+      ],
+      "b6": [
+        "رسائل من الصحابة",
+        "ملفك الخاص على درايف"
+      ],
+      "b7": [
+        "رسائل من التابعين",
+        "ملفك الخاص على درايف"
+      ],
+      "b8": [
+        "الرحيق المختوم",
+        "صفي الرحمن المباركفوري — ملفك الخاص على درايف"
+      ],
+      "b9": [
+        "كلمة",
+        "ملفك الخاص على درايف"
+      ],
+      "b10": [
+        "ما لا يسع المسلم جهله",
+        "ملفك الخاص على درايف"
+      ],
+      "b11": [
+        "100 سؤال وجواب في عقيدة التوحيد",
+        "ملفك الخاص على درايف"
+      ],
+      "b12": [
+        "التفسير الميسر",
+        "ملفك الخاص على درايف"
+      ],
+      "b13": [
+        "اليوم الآخر 2 — القيامة الكبرى",
+        "ملفك الخاص على درايف"
+      ],
+      "b14": [
+        "أصول الدعوة",
+        "عبد الكريم زيدان — ملفك الخاص على درايف"
+      ],
+      "b15": [
+        "أول مرة أتدبر القرآن",
+        "دليلك لفهم وتدبر القرآن من الفاتحة إلى الناس — ملفك الخاص"
+      ],
+      "b16": [
+        "فقه الدعوة إلى الله",
+        "فقه النصح والإرشاد والأمر بالمعروف — ملفك الخاص"
+      ],
+      "b17": [
+        "مدينة الأقوياء",
+        "ملفك الخاص على درايف"
+      ],
+      "b18": [
+        "سيف الله خالد بن الوليد",
+        "ملفك الخاص على درايف"
+      ],
+      "b19": [
+        "في الحب والحياة",
+        "د. مصطفى محمود — ملفك الخاص على درايف"
+      ],
+      "b20": [
+        "الجامع الصحيح للبخاري كاملًا",
+        "ملفك الخاص على درايف"
+      ],
+      "b21": [
+        "مائة من عظماء أمة الإسلام",
+        "غيّروا مجرى التاريخ — ملفك الخاص على درايف"
+      ]
+    },
+    "installApp": "Install App",
+    "introGuide": "Library Guide",
+    "searchAria": "Search the whole site",
+    "searchPlaceholderMain": "What are you looking for or what do you need?",
+    "placeholderNote": "Your personal note on this tool...",
+    "ariaNote": "Personal note on this tool",
+    "catalogLabel": "Catalog (PDF)",
+    "noToolsMatch": "No tools match your search.",
+    "installToast": "Use the browser menu (⋮ or ≡) then “Install” or “Add to Home Screen” to install the app",
+    "installToastIOS": "Share the page then choose “Add to Home Screen” to install the app 📱",
+    "backupExported": "Exported {count} values from the library tools.",
+    "backupCreateFailed": "Could not create the backup.",
+    "backupTooLarge": "The file is larger than the allowed limit (5 MB).",
+    "backupConfirm": "The backup is from {date} and contains {count} values. It will be merged with your current data without deleting other keys. Continue?",
+    "backupRestoredPartial": "Restored {restored} values, failed to save {failed}; the cache or storage may be full.",
+    "backupImported": "Imported and merged {restored} values. Reloading the tools.",
+    "backupReadFailed": "Could not read the backup."
   }
 }

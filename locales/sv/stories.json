@@ -1,0 +1,103 @@
+{
+  "stories": {
+    "title": "Islamic Stories",
+    "subtitle": "Prophets' Stories, Prophetic Biography, and Children's Manners",
+    "categories": {
+      "anbiya": "Prophets' Stories",
+      "seerah": "Prophetic Biography",
+      "kids": "Children's Stories",
+      "sahaba": "Companions' Stories",
+      "tabiin": "Tabi'in Stories",
+      "scholars": "Scholars' Stories"
+    },
+    "anbiya": {
+      "title": "Prophets' Stories",
+      "count": "25 Prophets",
+      "list": [
+        "Adam",
+        "Idris",
+        "Nuh",
+        "Hud",
+        "Salih",
+        "Ibrahim",
+        "Lut",
+        "Ismail",
+        "Ishaq",
+        "Yaqub",
+        "Yusuf",
+        "Ayyub",
+        "Shuaib",
+        "Musa",
+        "Harun",
+        "Dhul-Kifl",
+        "Dawud",
+        "Sulaiman",
+        "Ilyas",
+        "Al-Yasa",
+        "Yunus",
+        "Zakariya",
+        "Yahya",
+        "Isa",
+        "Muhammad ﷺ"
+      ],
+      "story": "Story",
+      "lesson": "Lesson",
+      "references": "References",
+      "quranRef": "Quran Reference",
+      "hadithRef": "Hadith Reference",
+      "read": "Read Story",
+      "audio": "Listen",
+      "illustration": "Illustrations",
+      "noImages": "No Depictions of Prophets Out of Respect"
+    },
+    "seerah": {
+      "title": "Prophetic Biography",
+      "timeline": "Timeline",
+      "periods": {
+        "beforeProphecy": "Before Prophecy",
+        "meccan": "Meccan",
+        "medinan": "Medinan",
+        "afterDeath": "After Death"
+      },
+      "events": "Events",
+      "year": "Year",
+      "age": "Age",
+      "location": "Location",
+      "significance": "Significance",
+      "relatedEvents": "Related Events",
+      "map": "Map",
+      "battles": "Battles",
+      "treaties": "Treaties",
+      "miracle": "Miracles",
+      "family": "Family",
+      "companions": "Companions"
+    },
+    "kids": {
+      "title": "Children's Manners Stories",
+      "age": "Appropriate Age",
+      "values": "Values Learned",
+      "questions": "Discussion Questions",
+      "activities": "Activities",
+      "moral": "Moral",
+      "readToChild": "Read to Your Child",
+      "audio": "Listen Together",
+      "print": "Print"
+    },
+    "reading": {
+      "title": "Reading",
+      "progress": "Progress",
+      "chapter": "Chapter",
+      "timeLeft": "Time Left",
+      "bookmark": "Bookmark",
+      "continue": "Continue",
+      "finish": "Finish",
+      "rate": "Rate Story",
+      "share": "Share"
+    }
+  },
+  "_meta": {
+    "language": "sv",
+    "status": "needs_translation",
+    "baseLanguage": "en"
+  }
+}

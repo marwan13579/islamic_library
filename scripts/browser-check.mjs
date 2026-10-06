@@ -232,8 +232,10 @@ for (const page of PAGES) {
 
   const checks = [];
   if (!facts.title) problems.push("الصفحة بلا <title>");
-  if (facts.dir !== "rtl") problems.push(`dir=${facts.dir} بدل rtl`);
-  if (!facts.lang) problems.push("lang غير معيّن");
+  // الاتجاه يجب أن يطابق اللغة: العربية والفارسية والأردية RTL وبقية اللغات LTR
+  const RTL_LANGS = ["ar", "fa", "ur"];
+  const expectedDir = RTL_LANGS.includes(String(facts.lang).split("-")[0]) ? "rtl" : "ltr";
+  if (facts.dir !== expectedDir) problems.push(`dir=${facts.dir} لا يطابق lang=${facts.lang}`);
   if (facts.replacement > 0) problems.push(`${facts.replacement} محرفًا تالفًا (�)`);
   if (facts.emptyMain === 0) problems.push("<main> فارغ — لم يُصيَّر المحتوى");
   if (facts.unnamedControls?.length) {

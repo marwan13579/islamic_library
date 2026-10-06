@@ -1,0 +1,141 @@
+{
+  "accessibility": {
+    "title": "إمكانية الوصول",
+    "subtitle": "خيارات لجعل الموقع أسهل في الاستخدام للجميع",
+    "language": {
+      "title": "🌐 اللغة",
+      "desc": "اختر لغة الواجهة"
+    },
+    "fontSize": {
+      "title": "🔤 حجم النص",
+      "desc": "ضبط حجم الخط",
+      "levels": {
+        "normal": "عادي",
+        "large": "كبير",
+        "extraLarge": "كبير جداً",
+        "huge": "ضخم"
+      }
+    },
+    "lineHeight": {
+      "title": "↕️ تباعد الأسطر",
+      "desc": "المسافة بين الأسطر",
+      "levels": {
+        "normal": "عادي",
+        "relaxed": "مريح",
+        "loose": "واسع"
+      }
+    },
+    "letterSpacing": {
+      "title": "🔠 تباعد الحروف",
+      "desc": "المسافة بين الحروف",
+      "levels": {
+        "normal": "عادي",
+        "wide": "واسع",
+        "wider": "أوسع"
+      }
+    },
+    "contrast": {
+      "title": "🎨 التباين",
+      "desc": "وضع التباين للألوان",
+      "modes": {
+        "normal": "عادي",
+        "high": "عالي",
+        "maximum": "أقصى",
+        "inverted": "معكوس"
+      }
+    },
+    "accessibilityMode": {
+      "title": "♿ وضع إمكانية الوصول",
+      "desc": "تفعيل جميع ميزات الوصولية",
+      "enabled": "مفعل",
+      "disabled": "معطل"
+    },
+    "reduceMotion": {
+      "title": "🎞️ تقليل الحركة",
+      "desc": "إيقاف الرسوم المتحركة غير الضرورية",
+      "respectSystem": "احترام إعداد النظام"
+    },
+    "readingMode": {
+      "title": "👁️ وضع القراءة",
+      "desc": "خطوط وألوان محسنة للقراءة المطولة",
+      "sepia": "سيبيا (ورق)",
+      "dark": "ليلي",
+      "light": "نهاري"
+    },
+    "simpleMode": {
+      "title": "🧠 الوضع المبسط",
+      "desc": "واجهة أبسط مع تشتيت أقل"
+    },
+    "keyboardShortcuts": {
+      "title": "⌨️ اختصارات لوحة المفاتيح",
+      "desc": "عرض وتعلم الاختصارات",
+      "showHelp": "عرض المساعدة",
+      "shortcuts": {
+        "skipToContent": "Alt + 1: تخطي إلى المحتوى",
+        "skipToNav": "Alt + 2: تخطي إلى التنقل",
+        "skipToSearch": "Alt + 3: تخطي إلى البحث",
+        "toggleMenu": "Alt + M: تبديل القائمة",
+        "toggleTheme": "Alt + T: تبديل المظهر",
+        "openSettings": "Alt + S: فتح الإعدادات",
+        "openLanguage": "Alt + L: فتح اللغات",
+        "increaseFont": "Ctrl + +: تكبير الخط",
+        "decreaseFont": "Ctrl + -: تصغير الخط",
+        "resetFont": "Ctrl + 0: إعادة تعيين الخط",
+        "toggleContrast": "Alt + C: تبديل التباين",
+        "toggleMotion": "Alt + R: تبديل تقليل الحركة",
+        "toggleSimple": "Alt + P: تبديل الوضع المبسط"
+      }
+    },
+    "screenReader": {
+      "title": "🔊 دعم قارئ الشاشة",
+      "desc": "تحسين التوافق مع برامج قراءة الشاشة",
+      "announcements": "إعلانات الحالة",
+      "liveRegions": "مناطق مباشرة",
+      "labels": "التسميات",
+      "descriptions": "الأوصاف"
+    },
+    "keyboardNavigation": {
+      "title": "⌨️ التنقل بلوحة المفاتيح",
+      "desc": "جعل جميع العناصر قابلة للوصول بالكيبورد",
+      "focusVisible": "إظهار التركيز بوضوح",
+      "focusOrder": "ترتيب التركيز المنطقي",
+      "noKeyboardTraps": "بدون فخاخ لوحة المفاتيح",
+      "tabIndex": "فهرس التبويب"
+    },
+    "captions": {
+      "title": "🎥 الترجمة والنصوص",
+      "desc": "دعم الترجمة للمحتوى الصوتي والمرئي",
+      "enabled": "مفعل",
+      "languages": "لغات الترجمة",
+      "transcripts": "النصوص الكاملة"
+    },
+    "colorBlind": {
+      "title": "🌈 دعم عمى الألوان",
+      "desc": "أنماط ألوان آمنة",
+      "protanopia": "بروتانوبيا (أحمر)",
+      "deuteranopia": "ديوتيرانوبيا (أخضر)",
+      "tritanopia": "تريتانوبيا (أزرق)",
+      "achromatopsia": "أكروماتوبسيا (أبيض/أسود)"
+    },
+    "dyslexia": {
+      "title": "📖 دعم عسر القراءة",
+      "desc": "خطوط وأدوات مساعدة",
+      "font": "خط عسر القراءة",
+      "ruler": "مسطرة القراءة",
+      "spacing": "تباعد محسن",
+      "highlight": "تظليل السطر"
+    },
+    "persistence": {
+      "title": "💾 حفظ التفضيلات",
+      "desc": "حفظ إعدادات الوصولية محلياً",
+      "autoSave": "حفظ تلقائي",
+      "sync": "مزامنة عبر الأجهزة"
+    },
+    "reset": {
+      "title": "🔄 إعادة التعيين",
+      "desc": "إعادة جميع إعدادات الوصولية للوضع الافتراضي",
+      "confirm": "تأكيد إعادة التعيين",
+      "button": "إعادة تعيين"
+    }
+  }
+}

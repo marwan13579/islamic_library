@@ -131,6 +131,7 @@ import { APP_DAILY_VERSES, APP_DAILY_HADITHS, APP_DAILY_WISDOM } from "../src/da
 import { HIJRI_EVENTS } from "../src/data/hijri-events.js";
 import { isHijriToday, hijriShort } from "../src/lib/dates.js";
 import { read, write, KEYS } from "../src/lib/storage.js";
+import { toArNum } from "../src/lib/text.js";
 
 const TASKS_KEY = "daily-guide-tasks";
 const PROGRESS_KEY = "daily-guide-progress";
@@ -308,8 +309,10 @@ function updateNextPrayer() {
     const c = n.getHours() * 60 + n.getMinutes() + n.getSeconds() / 60;
     const [h, m] = next.time.split(":").map(Number);
     const target = h * 60 + m;
-    const diff = target - c;
-    if (diff <= 0) { updateNextPrayer(); return; }
+    let diff = target - c;
+    /* تجاوز وقت الصلاة الأخيرة: العدّاد ي wrap إلى صلاة الغد
+       بدل الاستدعاء الذاتي الذي يملأ المكدس. */
+    if (diff <= 0) diff = target + 24 * 60 - c;
     const hh = Math.floor(diff / 60);
     const mm = Math.floor(diff % 60);
     countEl.textContent = `متبقي: ${hh} ساعة و ${mm} دقيقة`;

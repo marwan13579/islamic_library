@@ -16,7 +16,7 @@ for (const entry of fs.readdirSync(ROOT, { withFileTypes: true })) {
   }
 }
 
-for (const directory of ["icons", "src", "vendor", "content", "islamic-videos"]) {
+for (const directory of ["icons", "src", "vendor", "content", "islamic-videos", "locales"]) {
   const from = path.join(ROOT, directory);
   if (!fs.existsSync(from)) continue;
   fs.cpSync(from, path.join(OUTPUT, directory), { recursive: true });
