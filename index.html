@@ -296,6 +296,13 @@ header{
   <p class="backupstatus" id="backupStatus" role="status" aria-live="polite"></p>
 </header>
 
+<div class="wrap" style="margin-top:20px">
+  <div style="background:var(--card);border:1px solid var(--gold-soft);border-radius:20px;padding:22px;text-align:center">
+    <h2 style="font-family:Amiri,serif;font-size:1.3rem;margin:0 0 14px;color:var(--gold)">🤔 ماذا تريد أن تفعل؟</h2>
+    <div class="ask-grid" id="askGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px"></div>
+  </div>
+</div>
+
 <a class="skip-link" href="#sections">تخطَّ إلى الأدوات</a>
 
 <!-- الرفيق اليومي: لوحة اليوم تُبنى هنا، ولا يمسّ فهرس الأدوات أدناه. -->
@@ -312,6 +319,14 @@ header{
   <div id="dashboard"></div>
   <!-- تحدّي اليوم وأوسمة المكتبة: تبنيها `engage.js` في هذا الموضع. -->
   <div id="engageRoot"></div>
+</div>
+
+<div class="wrap" style="margin-top:8px">
+  <div style="background:var(--card);border:1px solid var(--gold-soft);border-radius:20px;padding:22px;text-align:center">
+    <p style="margin:0 0 14px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)">📖 الموسوعة الإسلامية</p>
+    <p style="margin:0 0 14px;font-size:.85rem;color:var(--ink-soft);max-width:60ch;margin-inline:auto">تصفّح القرآن، الحديث، التفسير، العقيدة، الفقه، السيرة، الأذكار، الأخلاق، التاريخ، والمكتبة — كلّها مرتبطة ببعضها.</p>
+    <a class="btn btn-primary" href="encyclopedia/index.html" style="font-family:Cairo;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px">دخول الموسوعة</a>
+  </div>
 </div>
 
 <nav class="cats" id="cats" aria-label="أقسام الأدوات"></nav>
@@ -858,6 +873,37 @@ document.getElementById("search").addEventListener("focus", () => {
 
 applyLanguage();
 
+const askItems = [
+  { icon: "📖", title: "أريد قراءة القرآن", url: "30-quran-full.html" },
+  { icon: "🕌", title: "أريد تعلم الصلاة", url: "24-ibadat.html" },
+  { icon: "🤲", title: "أريد أذكار الصباح", url: "25-azkar-shamila.html#sabah" },
+  { icon: "🕰️", title: "أريد معرفة مواقيت الصلاة", url: "29-prayer-times.html" },
+  { icon: "📕", title: "أريد البحث عن حديث", url: "27-hadith.html" },
+  { icon: "⚖️", title: "أريد تعلم الفقه", url: "src/site/noor.html#sections" },
+  { icon: "🕌", title: "أريد قراءة السيرة", url: "9-seerah.html" },
+  { icon: "🌟", title: "أريد قصة نبي", url: "8-qasas-anbiya.html" },
+  { icon: "🤲", title: "أريد دعاء", url: "25-azkar-shamila.html" },
+  { icon: "📖", title: "أريد معرفة معنى مصطلح إسلامي", url: "43-siraj.html" },
+  { icon: "📚", title: "أريد كتابًا", url: "41-quiz.html" },
+  { icon: "🎓", title: "أريد اختبارًا", url: "41-quiz.html" },
+  { icon: "🧮", title: "أريد حاسبة الزكاة", url: "10-zakat.html" },
+  { icon: "🧭", title: "أريد اتجاه القبلة", url: "22-qibla.html" },
+  { icon: "📿", title: "أريد السبحة الإلكترونية", url: "15-tasbeeh-jamai.html" },
+  { icon: "🧒", title: "أريد قسم الأطفال", url: "13-kids-adab.html" },
+  { icon: "🧭", title: "أريد مسار تعلم", url: "45-learning-paths.html" },
+];
+const askGrid = document.getElementById("askGrid");
+if (askGrid) {
+  askItems.forEach(item => {
+    const btn = document.createElement("button");
+    btn.className = "ask-chip";
+    btn.type = "button";
+    btn.innerHTML = `<span style="margin-left:6px">${item.icon}</span> ${item.title}`;
+    btn.addEventListener("click", () => { location.href = item.url; });
+    askGrid.appendChild(btn);
+  });
+}
+
 function renderDashboard(){
   const box=document.getElementById("dashboard");
   let mushafDone=0, mushafStreak=0, wirdTotal=0, wirdStreak=0, ramadanDays=0, khatmaParts=0, anyData=false;
@@ -914,7 +960,12 @@ function renderDashboard(){
     '<div class="dcard"><p class="n">'+khatmaParts+'</p><p class="l">جزء في الختمة الجماعية</p></div>'+
     '<div class="dcard"><p class="n">'+ramadanDays+'</p><p class="l">يوم رمضان مكتمل</p></div>'+
     '</div>'+
-    '<p class="dashnote">تظهر هذه اللوحة بياناتك من مُصحَفي وورد القراءة والختمة الجماعية وتقويم رمضان تلقائيًا عند فتحها من نفس المتصفح.</p>';
+    '  <p class="dashnote">تظهر هذه اللوحة بياناتك من مُصحَفي وورد القراءة والختمة الجماعية وتقويم رمضان تلقائيًا عند فتحها من نفس المتصفح.</p>'+
+    '  <div style="margin-top:18px;padding:16px;background:var(--card);border:1px solid var(--gold-soft);border-radius:16px;text-align:center">'+
+    '    <p style="margin:0 0 8px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)">📖 الموسوعة الإسلامية</p>'+
+    '    <p style="margin:0 0 12px;font-size:.85rem;color:var(--ink-soft)">تصفّح القرآن، الحديث، التفسير، الفقه، السيرة، الأذكار، الأخلاق، التاريخ، والمكتبة — كلّها مرتبطة ببعضها.</p>'+
+    '    <a class="btn btn-primary" href="encyclopedia/index.html" style="font-family:Cairo;font-weight:700;font-size:.85rem;padding:10px 22px;border-radius:999px;background:var(--green);color:#fff;text-decoration:none;display:inline-flex;align-items:center;gap:6px">دخول الموسوعة</a>'+
+    '  </div>';
 }
 renderDashboard();
 

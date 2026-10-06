@@ -40,6 +40,11 @@ export const PROPHET_REFERENCES = Object.freeze({
   "يوسف عليه السلام": { ref: "يوسف: 3", url: "https://quran.com/12/3" },
   "موسى عليه السلام": { ref: "النساء: 164", url: "https://quran.com/4/164" },
   "عيسى عليه السلام": { ref: "النساء: 171", url: "https://quran.com/4/171" },
+  "داود عليه السلام": { ref: "ص: 17", url: "https://quran.com/38/17" },
+  "سليمان عليه السلام": { ref: "النمل: 15", url: "https://quran.com/27/15" },
+  "إسماعيل عليه السلام": { ref: "إبراهيم: 49", url: "https://quran.com/14/49" },
+  "يونس عليه السلام": { ref: "يونس: 98", url: "https://quran.com/10/98" },
+  "أيوب عليه السلام": { ref: "الأنبياء: 83", url: "https://quran.com/21/83" },
 });
 
 export const FORBIDDEN_TIME_REFERENCES = Object.freeze({

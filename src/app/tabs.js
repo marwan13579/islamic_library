@@ -14,6 +14,8 @@ import { RECITERS, DEFAULT_RECITER } from "../lib/quran-audio.js";
 import { HIJRI_EVENTS } from "../data/hijri-events.js";
 import { CITY_LIST } from "../data/cities.js";
 import { ADHKAR_T } from "../data/adhkar.js";
+import { ENCYCLOPEDIA_CATEGORIES } from "../data/encyclopedia-categories.js";
+import { LEARNING_PATHS, getPathProgress, updatePathProgress, getPathOverallProgress } from "../data/learning-paths.js";
 
 import { escapeHtml, toArNum, to12h, normalizeAr, stripHtml } from "../lib/text.js";
 import { dailyOf, isHijriToday, hijriShort, weekKey, dateKey } from "../lib/dates.js";
@@ -49,17 +51,27 @@ export function homeTab() {
   const target = read("tasbeeh_target", 33);
   const today = HIJRI_EVENTS.filter((event) => isHijriToday(event.date));
   return `
-    <div class="tab-head"><div><h1>الرئيسية</h1><p>${escapeHtml(hijriShort())}</p></div></div>
+    <div class="tab-head"><div><h1>بوابة النور</h1><p>الموسوعة الإسلامية — ${escapeHtml(hijriShort())}</p></div></div>
     ${today.length ? `<div class="note-box">🎉 ${today.map((event) => escapeHtml(event.title)).join(" · ")}</div>` : ""}
+    <div style="background:var(--card);border:1px solid var(--gold-soft);border-radius:20px;padding:22px;text-align:center;margin-bottom:20px">
+      <p style="margin:0 0 14px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)">🤔 ماذا تريد أن تفعل؟</p>
+      <div class="ask-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:8px">
+        ${[
+          ["📖","قراءة القرآن","quran"],["🤲","أذكار الصباح","athkar"],["🕰️","مواقيت الصلاة","prayer"],
+          ["📕","البحث عن حديث","hadith"],["🕌","تعلم الصلاة",""],["⚖️","تعلم الفقه",""],
+          ["🌟","قصة نبي",""],["🧮","حاسبة الزكاة","zakat"],["🧭","اتجاه القبلة",""],
+          ["📿","السبحة","athkar"],["🧒","قسم الأطفال",""],["📚","اختبار",""],["🧭","مسار تعلم","learning"],["✨","اكتشف جديدًا","discover"],
+        ].map(([em,label,tab])=>`<button class="btn ${tab?"primary":"ghost"}" style="width:100%;justify-content:center" data-goto="${tab||""}" onclick="${tab?`switchTab('${tab}')`:``}">${em} ${label}</button>`).join("")}
+      </div>
+    </div>
     ${card("آية اليوم", `<p class="quran-text">${escapeHtml(verse.text)}</p><span class="ref">${escapeHtml(verse.ref)}</span>`)}
     ${card("حديث اليوم", `<p style="font-family:Amiri,serif">${escapeHtml(hadith.text)}</p><span class="ref">${escapeHtml(hadith.ref)}</span>`)}
     ${card("حكمة اليوم", `<p style="font-family:Aref Ruqaa,serif">${escapeHtml(wisdom.text)}</p><span class="ref">${escapeHtml(wisdom.ref)}</span>`)}
     ${card("السبحة", `<p>${toArNum(tasbih)} / ${target ? toArNum(target) : "بلا هدف"}</p>
       <div class="tasbih-bar"><span style="width:${tasbihPercent(tasbih, target)}%"></span></div>
       <button class="btn primary" data-role="open-tasbih">📿 افتح السبحة</button>`)}
-    ${card("أحداث هجرية", `<div class="chips">${HIJRI_EVENTS.map(
-      (event) => `<span class="chip ${isHijriToday(event.date) ? "active" : ""}">${escapeHtml(event.date)} — ${escapeHtml(event.title)}</span>`,
-    ).join("")}</div><p class="note-line">الحكم بالرؤية، والتواريخ التاريخية تختلف قليلًا بين المصادر.</p>`)}
+    ${card("الموسوعة الإسلامية", `<p>تصفّح القرآن، الحديث، التفسير، الفقه، السيرة، الأذكار، الأخلاق، التاريخ، والمكتبة — كلّها مرتبطة ببعضها.</p>
+      <button class="btn primary" data-goto="encyclopedia">📖 دخول الموسوعة</button>`)}
     ${card("اختصارات", `<div class="chips">${[
       ["quran", "📖 المصحف"], ["athkar", "🕌 الأذكار"], ["prayer", "🕰️ المواقيت"],
       ["zakat", "🧮 الزكاة"], ["hadith", "📚 الحديث"], ["dua", "🤲 الأدعية"],
@@ -597,4 +609,58 @@ export function sadakaTab() {
   `;
 }
 
+export function learningTab() {
+  return `
+    <div class="tab-head"><div><h1>🧭 مسارات التعلم</h1><p>بوابة النور — نور الهدى</p></div></div>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(260px,1fr));gap:18px">
+      ${LEARNING_PATHS.map(path => {
+        const progress = getPathOverallProgress(path.id);
+        return `<a href="../45-learning-paths.html#path-${path.id}" style="display:flex;flex-direction:column;gap:10px;padding:20px;background:var(--card);border:1px solid var(--line);border-radius:20px;text-decoration:none;color:var(--ink);transition:transform .15s ease,box-shadow .15s ease" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+          <div class="top"><span class="icon">${path.icon}</span><span class="title">${path.title}</span></div>
+          <p class="desc">${path.description}</p>
+          <div class="progress"><div class="progress-bar" style="width:${progress}%"></div></div>
+          <p style="font-size:.75rem;color:var(--ink-soft);margin:0">${progress}% مكتمل</p>
+        </a>`;
+      }).join("")}
+    </div>
+  `;
+}
+
 export { ATHAN_URLS, stripHtml, to12h, calculateZakat, calculateMetalZakat, calculateLivestockZakat, weekKey };
+
+export function encyclopediaTab() {
+  const cats = ENCYCLOPEDIA_CATEGORIES.map(cat => {
+    const url = cat.route.startsWith("http") || cat.route.startsWith("./") || cat.route.startsWith("../")
+      ? cat.route
+      : "../" + cat.route;
+    return `<a href="${url}" style="display:flex;flex-direction:column;gap:8px;padding:18px;background:var(--card);border:1px solid var(--line);border-radius:18px;text-decoration:none;color:var(--ink);transition:transform .15s ease,box-shadow .15s ease" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,.08)'" onmouseout="this.style.transform='';this.style.boxShadow=''">
+      <div style="display:flex;align-items:center;gap:10px"><span style="font-size:1.8rem">${cat.icon}</span><span style="font-family:Amiri,serif;font-size:1.15rem">${cat.title}</span></div>
+      <p style="font-size:.82rem;color:var(--muted);margin:0">${cat.description}</p>
+    </a>`;
+  }).join("");
+  return `
+    <div class="tab-head"><div><h1>📖 الموسوعة الإسلامية</h1><p>بوابة النور — نور الهدى</p></div></div>
+    <div style="background:var(--card);border:1px solid var(--gold-soft);border-radius:20px;padding:22px;text-align:center;margin-bottom:20px">
+      <p style="margin:0 0 14px;font-family:Amiri,serif;font-size:1.1rem;color:var(--gold)">🤔 ماذا تريد أن تفعل؟</p>
+      <div class="ask-grid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:8px">
+        ${[
+          ["📖","قراءة القرآن","../30-quran-full.html"],
+          ["🕌","تعلم الصلاة","../24-ibadat.html"],
+          ["🤲","أذكار الصباح","../25-azkar-shamila.html#sabah"],
+          ["📕","البحث عن حديث","../27-hadith.html"],
+          ["⚖️","تعلم الفقه","../src/site/noor.html#sections"],
+          ["🕌","قراءة السيرة","../9-seerah.html"],
+          ["🌟","قصة نبي","../8-qasas-anbiya.html"],
+          ["🧮","حاسبة الزكاة","../10-zakat.html"],
+          ["🧭","اتجاه القبلة","../22-qibla.html"],
+          ["📿","السبحة الإلكترونية","../15-tasbeeh-jamai.html"],
+          ["🧒","قسم الأطفال","../13-kids-adab.html"],
+          ["📚","الاختبارات","../41-quiz.html"],
+        ].map(([em,label,href])=>`<a href="${href}" style="display:block;padding:10px 12px;background:var(--paper);border:1px solid var(--line);border-radius:12px;text-decoration:none;color:var(--ink);font-size:.82rem;font-family:Cairo,sans-serif">${em} ${label}</a>`).join("")}
+      </div>
+    </div>
+    <div class="encyclopedia-grid">
+      ${cats}
+    </div>
+  `;
+}

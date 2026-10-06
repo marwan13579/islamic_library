@@ -69,7 +69,7 @@ test("extracted and merged content keeps the documented inventory", async () => 
 
   assert.equal(manhaj.MANHAJ_LESSONS.length, 12);
   assert.equal(lessons.LESSONS.length, 9);
-  assert.equal(scholars.SCHOLARS.length, 21);
+  assert.equal(scholars.SCHOLARS.length, 25);
   assert.equal(names.NAMES99.length, 99);
   assert.equal(bank.QUESTION_BANK_SIZE, 154);
 

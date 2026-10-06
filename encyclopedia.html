@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>الموسوعة الإسلامية — موسوعة رقمية شاملة</title>
+<meta name="description" content="الموسوعة الإسلامية الشاملة: قرآن، حديث، تفسير، عقيدة، فقه، سيرة، أذكار، أدعية، فقه، تاريخ، مكتبة، أدوات، وأكثر. مجانية، بدون إعلانات، تعمل بدون إنترنت.">
+<link rel="canonical" href="./encyclopedia.html">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ar_AR">
+<meta property="og:site_name" content="المكتبة الإسلامية">
+<meta property="og:title" content="الموسوعة الإسلامية — موسوعة رقمية شاملة">
+<meta property="og:description" content="موسوعة إسلامية رقمية متكاملة: قرآن، حديث، تفسير، عقيدة، فقه، سيرة، أذكار، تاريخ، مكتبة، أدوات. مجانية وبدون إعلانات.">
+<meta property="og:url" content="./encyclopedia.html">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#0b3d2c">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="الموسوعة الإسلامية">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="engage.css">
+<link rel="stylesheet" href="daily-companion.css">
+<link rel="stylesheet" href="encyclopedia.css">
+<script src="storage-fallback.js"></script>
+<script src="engage.js" defer></script>
+<script src="notify-boot.js" defer></script>
+<script src="calculations.js"></script>
+<script src="backup-core.js"></script>
+<script src="daily-content.js"></script>
+<script src="daily-companion.js"></script>
+<script type="module" src="src/app/encyclopedia-main.js" defer></script>
+<script>
+(function(){
+  try{
+    var saved=localStorage.getItem("lib-theme-pref");
+    if(saved==="dark"||saved==="light") document.documentElement.setAttribute("data-theme",saved);
+  }catch(e){}
+})();
+</script>
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "الموسوعة الإسلامية",
+  "alternateName": "المكتبة الإسلامية - الموسوعة الشاملة",
+  "url": "./encyclopedia.html",
+  "inLanguage": "ar",
+  "description": "موسوعة إسلامية رقمية متكاملة: قرآن، حديث، تفسير، عقيدة، فقه، سيرة، أذكار، تاريخ، مكتبة، أدوات. مجانية، بدون إعلانات، تعمل بدون إنترنت.",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": { "@type": "EntryPoint", "urlTemplate": "./encyclopedia.html?q={search_term_string}" },
+    "query-input": "required name=search_term_string"
+  }
+}
+</script>
+</head>
+<body>
+<header class="encyclopedia-header">
+  <div class="header-bg" aria-hidden="true"></div>
+  <div class="header-content">
+    <div class="header-brand">
+      <span class="brand-icon" aria-hidden="true">📚</span>
+      <div class="brand-text">
+        <h1 class="brand-title">الموسوعة الإسلامية</h1>
+        <p class="brand-subtitle">موسوعة رقمية شاملة ومتطورة</p>
+      </div>
+    </div>
+    <div class="header-actions">
+      <button class="btn-install" id="installBtn" type="button">📲 تثبيت التطبيق</button>
+      <button class="btn-theme" id="themeToggle" type="button" aria-label="تبديل الوضع">🌓</button>
+      <button class="btn-export-import" id="exportImportBtn" type="button" aria-label="تصدير واستيراد البيانات">📦</button>
+    </div>
+  </div>
+</header>
+
+<nav class="skip-links" aria-label="تخطي">
+  <a href="#mainSearch" class="skip-link">تخطي للبحث</a>
+  <a href="#encyclopediaNav" class="skip-link">تخطي للتنقل</a>
+  <a href="#mainContent" class="skip-link">تخطي للمحتوى</a>
+</nav>
+
+<main id="mainContent" class="encyclopedia-main">
+  <!-- Main Search Section -->
+  <section class="search-section" aria-labelledby="searchTitle">
+    <div class="search-container">
+      <h2 id="searchTitle" class="visually-hidden">البحث الشامل في الموسوعة</h2>
+      <div id="mainSearchBox" class="main-search-box"></div>
+      <p class="search-hint">ابحث في القرآن، الحديث، التفسير، الفقه، السيرة، الأذكار، التاريخ، المكتبة، وأكثر...</p>
+    </div>
+  </section>
+
+  <!-- Daily Content Section -->
+  <section class="daily-section" aria-labelledby="dailyTitle">
+    <div class="daily-grid">
+      <article class="daily-card daily-quran" id="dailyQuran">
+        <div class="daily-card-header">
+          <span class="daily-icon" aria-hidden="true">📖</span>
+          <h3 class="daily-title">آية اليوم</h3>
+        </div>
+        <div class="daily-card-content" id="dailyQuranContent">
+          <div class="loading-placeholder">جاري التحميل...</div>
+        </div>
+        <a href="30-quran-full.html" class="daily-link">المصحف الكامل →</a>
+      </article>
+
+      <article class="daily-card daily-hadith" id="dailyHadith">
+        <div class="daily-card-header">
+          <span class="daily-icon" aria-hidden="true">📜</span>
+          <h3 class="daily-title">حديث اليوم</h3>
+        </div>
+        <div class="daily-card-content" id="dailyHadithContent">
+          <div class="loading-placeholder">جاري التحميل...</div>
+        </div>
+        <a href="27-hadith.html" class="daily-link">الأحاديث →</a>
+      </article>
+
+      <article class="daily-card daily-dhikr" id="dailyDhikr">
+        <div class="daily-card-header">
+          <span class="daily-icon" aria-hidden="true">🤲</span>
+          <h3 class="daily-title">ذكر اليوم</h3>
+        </div>
+        <div class="daily-card-content" id="dailyDhikrContent">
+          <div class="loading-placeholder">جاري التحميل...</div>
+        </div>
+        <a href="25-azkar-shamila.html" class="daily-link">الأذكار الشاملة →</a>
+      </article>
+
+      <article class="daily-card daily-prayer" id="dailyPrayer">
+        <div class="daily-card-header">
+          <span class="daily-icon" aria-hidden="true">🕐</span>
+          <h3 class="daily-title">مواقيت الصلاة</h3>
+        </div>
+        <div class="daily-card-content" id="dailyPrayerContent">
+          <div class="loading-placeholder">جاري التحميل...</div>
+        </div>
+        <a href="29-prayer-times.html" class="daily-link">المواقيت الكاملة →</a>
+      </article>
+    </div>
+  </section>
+
+  <!-- Encyclopedia Navigation -->
+  <nav id="encyclopediaNavContainer" class="encyclopedia-nav-container" aria-label="أقسام الموسوعة الإسلامية">
+    <!-- Navigation will be injected here -->
+  </nav>
+
+  <!-- Quick Access Sections -->
+  <section class="quick-access" aria-labelledby="quickAccessTitle">
+    <h2 id="quickAccessTitle" class="section-title">الوصول السريع</h2>
+    <div class="quick-grid" id="quickAccessGrid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- Featured Content -->
+  <section class="featured-section" aria-labelledby="featuredTitle">
+    <h2 id="featuredTitle" class="section-title">محتوى مميز</h2>
+    <div class="featured-grid" id="featuredGrid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+
+  <!-- Smart Suggestions -->
+  <section class="suggestions-section" aria-labelledby="suggestionsTitle" hidden>
+    <h2 id="suggestionsTitle" class="section-title">مقترحات لك</h2>
+    <div class="suggestions-grid" id="suggestionsGrid">
+      <!-- Populated by JS -->
+    </div>
+  </section>
+</main>
+
+<footer class="encyclopedia-footer">
+  <div class="footer-content">
+    <p class="footer-dua">اللهم اجعل هذا العمل خالصًا لوجهك، وانفع به كل من يقرأه وينشره — آمين</p>
+    <div class="footer-links">
+      <a href="index.html" class="footer-link">الرفيق اليومي</a>
+      <a href="src/site/noor.html" class="footer-link">نور الهدى</a>
+      <a href="src/app/app.html" class="footer-link">بوابة النور</a>
+      <a href="catalog.pdf" class="footer-link" download>الكتالوج (PDF)</a>
+    </div>
+    <p class="footer-copyright">مشروع مفتوح المصدر • مجاني • بدون إعلانات • يعمل بدون إنترنت</p>
+  </div>
+</footer>
+
+<div id="toastContainer" class="toast-container" aria-live="polite" aria-atomic="true"></div>
+  <div id="exportImportContainer"></div>
+</body>
+</html>

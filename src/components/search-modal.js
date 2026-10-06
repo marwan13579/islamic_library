@@ -8,6 +8,7 @@ import { searchAll, quickSearch, getSmartSuggestions, processQuery } from "../li
 import { registerDataSources, resultCategories } from "../lib/search-content.js";
 import { prefetchCorpus } from "../lib/search-corpora.js";
 import { HIGHLIGHT_OPEN, HIGHLIGHT_CLOSE } from "../lib/search.js";
+import { ENCYCLOPEDIA_CATEGORIES } from "../data/encyclopedia-categories.js";
 
 /**
  * فئات البحث: الاسم والأيقونة لكل فئة، بالترتيب الذي يُعرض به الشريط.
@@ -103,6 +104,7 @@ export function createSearchModal() {
             autocomplete="off"
           >
           <button id="searchModalClear" class="search-modal-clear" type="button" aria-label="مسح">✕</button>
+          <button id="searchModalBrowse" class="search-modal-browse" type="button" aria-label="تصفّح الموسوعة" title="تصفّح الموسوعة">📖</button>
         </div>
         <div class="search-modal-filters" id="searchModalFilters"></div>
       </div>
@@ -111,6 +113,7 @@ export function createSearchModal() {
         <div class="search-modal-results" id="searchModalResults" hidden></div>
         <div class="search-modal-empty" id="searchModalEmpty" hidden>لم نجد نتيجة مطابقة.</div>
         <div class="search-modal-history" id="searchModalHistory" hidden></div>
+        <div class="search-modal-browse-panel" id="searchModalBrowsePanel" hidden></div>
       </div>
       <div class="search-modal-footer">
         <span class="search-modal-hint">Ctrl+K أو / للبحث</span>
@@ -256,6 +259,59 @@ function getSearchModalStyles() {
     }
     .search-modal-clear:hover {
       background: var(--line, rgba(19,50,44,.14));
+    }
+    .search-modal-browse {
+      border: 0;
+      background: none;
+      color: var(--ink-soft, #3D5B53);
+      cursor: pointer;
+      font-size: 1.1rem;
+      padding: 6px 10px;
+      border-radius: 8px;
+      line-height: 1;
+      flex-shrink: 0;
+    }
+    .search-modal-browse:hover {
+      background: var(--line, rgba(19,50,44,.14));
+    }
+    .search-modal-browse-panel {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+      gap: 10px;
+    }
+    .search-modal-browse-card {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      padding: 14px;
+      background: var(--paper, #F6EFDF);
+      border: 1px solid var(--line, rgba(19,50,44,.14));
+      border-radius: 14px;
+      text-decoration: none;
+      color: var(--ink, #13322C);
+      transition: background 0.15s;
+    }
+    .search-modal-browse-card:hover {
+      background: var(--paper-2, #EFE5CF);
+    }
+    .search-modal-browse-card .browse-icon {
+      font-size: 1.6rem;
+    }
+    .search-modal-browse-card .browse-title {
+      font-family: "Amiri", serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      margin: 0;
+    }
+    .search-modal-browse-card .browse-desc {
+      font-size: 0.78rem;
+      color: var(--ink-soft, #3D5B53);
+      margin: 0;
+      line-height: 1.4;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
     }
     .search-fab {
       position: fixed;
@@ -617,6 +673,20 @@ function setupSearchModalEvents() {
     showHistory();
     input.focus();
   });
+
+  // Browse button
+  const browseBtn = document.getElementById("searchModalBrowse");
+  if (browseBtn) {
+    browseBtn.addEventListener("click", () => {
+      const panel = document.getElementById("searchModalBrowsePanel");
+      if (panel && panel.hidden) {
+        renderBrowsePanel();
+        showBrowsePanel();
+      } else if (panel) {
+        hideBrowsePanel();
+      }
+    });
+  }
   
   // Input events
   input.addEventListener("input", () => {
@@ -730,6 +800,7 @@ export function closeSearchModal() {
     modal.classList.remove("open");
     isOpen = false;
   }
+  hideBrowsePanel();
 }
 
 /**
@@ -1114,6 +1185,60 @@ export function addToHistory(query) {
 function clearHistory() {
   saveHistory([]);
   showHistory();
+}
+
+/**
+ * Render the encyclopedia browse panel.
+ */
+function renderBrowsePanel() {
+  const panel = document.getElementById("searchModalBrowsePanel");
+  if (!panel) return;
+
+  panel.innerHTML = ENCYCLOPEDIA_CATEGORIES.map(cat => `
+    <a class="search-modal-browse-card" href="${escapeHtml(cat.route)}">
+      <span class="browse-icon">${escapeHtml(cat.icon)}</span>
+      <p class="browse-title">${escapeHtml(cat.title)}</p>
+      <p class="browse-desc">${escapeHtml(cat.description)}</p>
+    </a>
+  `).join("");
+
+  panel.querySelectorAll(".search-modal-browse-card").forEach(card => {
+    card.addEventListener("click", (e) => {
+      e.preventDefault();
+      closeSearchModal();
+      const href = card.getAttribute("href");
+      if (href && href !== "#") {
+        window.location.href = href;
+      }
+    });
+  });
+}
+
+/**
+ * Show the browse panel, hide others.
+ */
+function showBrowsePanel() {
+  hideLoading();
+  const panel = document.getElementById("searchModalBrowsePanel");
+  const suggestions = document.getElementById("searchModalSuggestions");
+  const results = document.getElementById("searchModalResults");
+  const empty = document.getElementById("searchModalEmpty");
+  const history = document.getElementById("searchModalHistory");
+
+  if (suggestions) suggestions.hidden = true;
+  if (results) results.hidden = true;
+  if (empty) empty.hidden = true;
+  if (history) history.hidden = true;
+
+  if (panel) panel.hidden = false;
+}
+
+/**
+ * Hide the browse panel.
+ */
+function hideBrowsePanel() {
+  const panel = document.getElementById("searchModalBrowsePanel");
+  if (panel) panel.hidden = true;
 }
 
 /**

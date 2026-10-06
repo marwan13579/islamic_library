@@ -68,6 +68,10 @@
     <label for="src">المصدر (اختياري)</label>
     <input id="src" type="text" placeholder="مثال: متفق عليه — أو سورة البقرة: 255">
   </div>
+  <div class="field">
+    <label>قوالب سريعة</label>
+    <div class="themes" id="templates" style="gap:6px"></div>
+  </div>
   <div class="row2">
     <div class="field"><label for="size">حجم الخط</label>
       <input id="size" type="range" min="36" max="90" value="60"></div>
@@ -101,6 +105,12 @@ const THEMES = [
   {name:"ليلي", bg1:"#0a1512", bg2:"#16302a", text:"#EFE3C9", accent:"#D3AE62"},
   {name:"أزرق هادئ", bg1:"#12324a", bg2:"#1d4d6e", text:"#F1F6FA", accent:"#E6C979"}
 ];
+const TEMPLATES = [
+  { label: "آية", text: "اللَّهُ لَا إِلَهَ إِلَّا هُوَ الْحَيُّ الْقَيُّومُ", src: "آية الكرسي — البقرة: 255" },
+  { label: "ذكر", text: "سُبْحَانَ اللَّهِ وَبِحَمْدِهِ سُبْحَانَ اللَّهِ الْعَظِيمِ", src: "متفق عليه" },
+  { label: "دعاء", text: "رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ", src: "البقرة: 201" },
+  { label: "حديث", text: "إِنَّمَا الأَعْمَالُ بِالنِّيَّاتِ", src: "صحيح البخاري" },
+];
 let themeIdx=0;
 const cv=document.getElementById("cv");
 const ctx=cv.getContext("2d");
@@ -118,6 +128,19 @@ THEMES.forEach((t,i)=>{
     draw();
   });
   themesBox.appendChild(b);
+});
+
+const templatesBox=document.getElementById("templates");
+TEMPLATES.forEach((tmpl)=>{
+  const b=document.createElement("button");
+  b.className="btn sec"; b.type="button"; b.textContent=tmpl.label;
+  b.style.cssText="font-size:.75rem;padding:6px 12px;border-radius:999px";
+  b.addEventListener("click",()=>{
+    document.getElementById("txt").value=tmpl.text;
+    document.getElementById("src").value=tmpl.src;
+    draw();
+  });
+  templatesBox.appendChild(b);
 });
 
 function dims(){

@@ -64,7 +64,7 @@ test("SEERAH has no duplicate event after the merge", async () => {
     assert.equal(seen.has(key), false, `محور مكرّر: ${item.year} — ${item.title}`);
     seen.set(key, item);
   }
-  assert.equal(SEERAH.length, 6);
+  assert.equal(SEERAH.length, 14);
 });
 
 /* ------------------------------------------------------------------ */

@@ -91,6 +91,8 @@ const SHELL = [
   "./library.css", "./35-tafsir.html", "./36-hisn.html", "./37-fatwa.html",
   "./38-khutbah.html", "./39-tarikh.html", "./40-reciters.html", "./41-quiz.html",
   "./42-athan.html", "./43-siraj.html", "./reader.html",
+  // الموسوعة الإسلامية
+  "./encyclopedia.html", "./encyclopedia.css",
   // رفيق النور: ملفّان فقط. المحتوى ١٥٥ ك.ب يُجلَب عند أول تذكير لا عند الدخول.
   "./noor-companion.js", "./noor-content.js", "./44-noor-companion.html",
   // مكتبة الفيديو الإسلامية: صفحتان وملف تنسيق واحد ووحدتا منطق وبيانات فقط.
@@ -110,19 +112,22 @@ const SHELL = [
   "./src/app/quran-read.js",
   "./src/lib/review.js", "./src/data/review-references.js", "./src/data/lessons-extra.js", "./src/data/forbidden-times.js", "./src/lib/quran-audio.js", "./src/lib/serve-hint.js", "./src/site/review.html", "./src/types.js", "./tools.css",
   "./src/lib/text.js", "./src/lib/storage.js", "./src/lib/dates.js", "./src/lib/islamic.js",
-  "./src/lib/api.js", "./src/lib/share.js", "./src/lib/b64.js", "./src/lib/idb.js",
-  "./src/lib/magnetic.js",
+   "./src/lib/api.js", "./src/lib/share.js", "./src/lib/b64.js", "./src/lib/idb.js",
+   "./src/lib/content-relationships.js", "./src/lib/favorites-manager.js", "./src/lib/magnetic.js",
   "./src/lib/pwa.js",
   "./src/lib/auto-notify.js",
   "./src/components/theme.js", "./src/components/modal.js", "./src/components/toast.js",
   "./src/components/blocks.js", "./src/components/certificate.js", "./src/components/quiz.js",
-  "./src/components/reader-tools.js",
+"./src/components/reader-tools.js", "./src/components/search-modal.js", "./src/components/encyclopedia-nav.js",
+  "./src/components/breadcrumbs.js", "./src/components/content-card.js", "./src/components/favorites-btn.js", "./src/components/search-box.js",
   "./src/data/manhaj-lessons.js", "./src/data/lessons.js", "./src/data/scholars.js",
   "./src/data/sayings.js", "./src/data/seerah.js", "./src/data/prophets.js", "./src/data/kids.js",
   "./src/data/qa.js", "./src/data/duas.js", "./src/data/adhkar.js", "./src/data/daily.js",
   "./src/data/names99.js", "./src/data/question-bank.js", "./src/data/app-athkar.js",
   "./src/data/app-duas.js", "./src/data/hadiths.js", "./src/data/radio.js", "./src/data/radio-live.js",
-  "./src/data/hijri-events.js", "./src/data/app-daily.js", "./src/data/cities.js",
+   "./src/data/hijri-events.js", "./src/data/app-daily.js", "./src/data/cities.js",
+"./src/data/encyclopedia-categories.js", "./src/lib/encyclopedia.js", "./src/components/related-content.js", "./src/lib/progress.js",
+    "./src/app/encyclopedia-main.js", "./src/lib/progress-tracker.js", "./src/components/export-import.js",
 ];
 
 const SCOPE = new URL(self.registration.scope);

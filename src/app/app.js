@@ -33,6 +33,7 @@ const APP_VERSION = "1.0.0";
 /** @type {Array<{ id: string, label: string, emoji: string, render: () => string }>} */
 export const TABS = [
   { id: "home", label: "الرئيسية", emoji: "🏠", render: tabs.homeTab },
+  { id: "encyclopedia", label: "الموسوعة", emoji: "📖", render: tabs.encyclopediaTab },
   { id: "quran", label: "المصحف", emoji: "📖", render: tabs.quranTab },
   { id: "khatma", label: "الختمة", emoji: "📋", render: tabs.khatmaTab },
   { id: "athkar", label: "الأذكار", emoji: "🕌", render: tabs.athkarTab },
@@ -44,6 +45,7 @@ export const TABS = [
   { id: "hadith", label: "الحديث", emoji: "📚", render: tabs.hadithTab },
   { id: "zakat", label: "الزكاة", emoji: "🧮", render: tabs.zakatTab },
   { id: "sadaka", label: "الصدقة", emoji: "💚", render: tabs.sadakaTab },
+  { id: "learning", label: "التعلم", emoji: "🧭", render: tabs.learningTab },
 ];
 
 const state = {

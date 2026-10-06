@@ -23,9 +23,10 @@
 import { postToWorker, registerServiceWorker } from "./pwa.js";
 import { showToast } from "../components/toast.js";
 import { read, write, KEYS } from "./storage.js";
+import { HIJRI_EVENTS } from "../data/hijri-events.js";
 
 /**
- * أقصر فاصل بين ترحيبَين في التحميل الواحد: الطلب يُمرَّر مرّتين في
+ * الأقصر فاصل بين ترحيبَين في التحميل الواحد: الطلب يُمرَّر مرّتين في
  * الفتح نفسه (الإقلاع، ثم أوّل لمسة تمنح الإذن) فلا يُصنع إشعاران.
  * وما عداه فترحيبٌ في كل فتح، كما يُراد.
  */
@@ -39,6 +40,16 @@ const GREET_AT = "noor-auto-greet-at";
 
 /** كم نُعيد تأكيد جدول الأذان والصفحة مفتوحة (ست ساعات). */
 const REFRESH_EVERY = 6 * 60 * 60 * 1000;
+
+/** فاصل بين إشعارات الأذكار (يوم واحد). */
+const ADHKAR_GAP = 24 * 60 * 60 * 1000;
+
+/** مفتاح تخزين آخر وقت أُظهر فيه إشعار الأذكار. */
+const ADHKAR_MORNING_AT = "noor-adhkar-morning-at";
+const ADHKAR_EVENING_AT = "noor-adhkar-evening-at";
+
+/** مفتاح تخزين آخر وقت أُظهر فيه إشعار المناسبة. */
+const OCCASION_NOTIFIED = "noor-occasion-notified";
 
 /** إيماءات المستخدم الأولى: أيّها نصنع منها إذنًا. */
 const GESTURES = ["pointerdown", "touchend", "keydown", "click"];
@@ -316,6 +327,144 @@ function clockOf(value) {
 }
 
 /* ------------------------------------------------------------------ */
+/* إشعارات الأذكار (صباح/مساء)                                         */
+/* ------------------------------------------------------------------ */
+
+/**
+ * يتحقق مما إذا كان يجب إظهار إشعار الأذكار الصباحية.
+ * @returns {Promise<boolean>}
+ */
+export async function checkMorningAdhkar() {
+  if (!granted()) return false;
+  const lastShown = read(ADHKAR_MORNING_AT, 0);
+  const now = Date.now();
+  if (now - lastShown < ADHKAR_GAP) return false;
+
+  const timings = read(KEYS.athanTimings, null) ?? read("prayer_timings", null);
+  if (!timings) return false;
+
+  const fajrTime = clockOf(timings.Fajr);
+  if (!fajrTime) return false;
+
+  const fajrToday = new Date();
+  fajrToday.setHours(fajrTime.hour, fajrTime.minute, 0, 0);
+  const fajrTimestamp = fajrToday.getTime();
+
+  // إظهار الإشعار بعد الفجر بساعة وحتى الظهر
+  const windowStart = fajrTimestamp + 60 * 60 * 1000; // ساعة بعد الفجر
+  const windowEnd = fajrTimestamp + 8 * 60 * 60 * 1000; // 8 ساعات بعد الفجر (حوالي الظهر)
+
+  if (now < windowStart || now > windowEnd) return false;
+
+  write(ADHKAR_MORNING_AT, now);
+
+  const payload = {
+    title: "☀️ أذكار الصباح",
+    body: "أصبحنا وأصبح الملك لله — لا تنسَ أذكار الصباح بعد صلاة الفجر",
+    tag: "noor-adhkar-morning",
+    url: "./25-azkar-shamila.html#sabah",
+  };
+  return (await postToWorker({ type: "notify", ...payload })) || showDirect(payload);
+}
+
+/**
+ * يتحقق مما إذا كان يجب إظهار إشعار الأذكار المسائية.
+ * @returns {Promise<boolean>}
+ */
+export async function checkEveningAdhkar() {
+  if (!granted()) return false;
+  const lastShown = read(ADHKAR_EVENING_AT, 0);
+  const now = Date.now();
+  if (now - lastShown < ADHKAR_GAP) return false;
+
+  const timings = read(KEYS.athanTimings, null) ?? read("prayer_timings", null);
+  if (!timings) return false;
+
+  const maghribTime = clockOf(timings.Maghrib);
+  if (!maghribTime) return false;
+
+  const maghribToday = new Date();
+  maghribToday.setHours(maghribTime.hour, maghribTime.minute, 0, 0);
+  const maghribTimestamp = maghribToday.getTime();
+
+  // إظهار الإشعار بعد المغرب بساعة وحتى منتصف الليل
+  const windowStart = maghribTimestamp + 60 * 60 * 1000; // ساعة بعد المغرب
+  const windowEnd = maghribTimestamp + 6 * 60 * 60 * 1000; // 6 ساعات بعد المغرب
+
+  if (now < windowStart || now > windowEnd) return false;
+
+  write(ADHKAR_EVENING_AT, now);
+
+  const payload = {
+    title: "🌙 أذكار المساء",
+    body: "أمسينا وأمسى الملك لله — وقت أذكار المساء بعد صلاة المغرب",
+    tag: "noor-adhkar-evening",
+    url: "./25-azkar-shamila.html#masaa",
+  };
+  return (await postToWorker({ type: "notify", ...payload })) || showDirect(payload);
+}
+
+/**
+ * يتحقق من المناسبات الهجرية القادمة ويعرض إشعاراتها.
+ * @returns {Promise<void>}
+ */
+export async function checkOccasions() {
+  if (!granted()) return;
+
+  // تحويل التاريخ الميلادي إلى هجري تقريبي
+  const hijriDate = getApproximateHijriDate(new Date());
+  if (!hijriDate) return;
+
+  const { day, month } = hijriDate;
+  const todayKey = `${day} ${month}`;
+
+  // التحقق مما إذا أُبلغنا عن هذه المناسبة اليوم
+  const notified = read(OCCASION_NOTIFIED, {});
+  if (notified[todayKey]) return;
+
+  const event = HIJRI_EVENTS.find(e => e.date === todayKey);
+  if (!event) return;
+
+  // إشعار المناسبة
+  const payload = {
+    title: `📅 ${event.title}`,
+    body: `اليوم ${event.title} — لا تنسَ الأذكار والأعمال المستحبة`,
+    tag: `noor-occasion-${todayKey.replace(/\s/g, '-')}`,
+    url: "./6-munasabat.html",
+  };
+
+  const shown = (await postToWorker({ type: "notify", ...payload })) || showDirect(payload);
+  if (shown) {
+    notified[todayKey] = true;
+    write(OCCASION_NOTIFIED, notified);
+  }
+}
+
+/**
+ * تحويل تقريبي من الميلادي إلى الهجري.
+ * @param {Date} date
+ * @returns {{day: number, month: string} | null}
+ */
+function getApproximateHijriDate(date) {
+  try {
+    // استخدام Intl.DateTimeFormat للتحويل
+    const formatter = new Intl.DateTimeFormat('ar-SA-u-ca-islamic', {
+      day: 'numeric',
+      month: 'long'
+    });
+    const parts = formatter.formatToParts(date);
+    const day = parts.find(p => p.type === 'day')?.value;
+    const month = parts.find(p => p.type === 'month')?.value;
+    if (day && month) {
+      return { day: parseInt(day, 10), month };
+    }
+  } catch {
+    // fallback: حساب تقريبي بسيط
+  }
+  return null;
+}
+
+/* ------------------------------------------------------------------ */
 /* ذاكرة الجلسة                                                        */
 /* ------------------------------------------------------------------ */
 
@@ -370,10 +519,17 @@ async function start(settings = {}) {
     // المواقيت تتغيّر بتغيّر اليوم، فلا بدّ من تجديد الجدول بين حين وآخر.
     refreshTimer = setInterval(() => {
       pushPrayerSchedule().catch(() => {});
+      checkMorningAdhkar().catch(() => {});
+      checkEveningAdhkar().catch(() => {});
+      checkOccasions().catch(() => {});
     }, REFRESH_EVERY);
   }
   if (!granted()) return false;
   await greet();
   await pushPrayerSchedule();
+  // التحقق من الأذكار والمناسبات عند التشغيل
+  await checkMorningAdhkar().catch(() => {});
+  await checkEveningAdhkar().catch(() => {});
+  await checkOccasions().catch(() => {});
   return true;
 }
