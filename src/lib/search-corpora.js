@@ -17,6 +17,7 @@
 
 import { normalizeAr } from "./text.js";
 import { registry, scorePrepared } from "./search-registry.js";
+import { contentUrl } from "./content-url.js";
 
 /** صفحاتُ المتون، وهي التي تقرأ معاملات الروابط التي تُبنى لها. */
 const QURAN_PAGE = "30-quran-full.html";
@@ -28,14 +29,14 @@ const SIRAJ_PAGE = "43-siraj.html";
 const loading = new Map();
 
 /**
- * رابطُ ملف المدوّدة مطلقٌ محسوبٌ من هذا الملف، لا نسبةً إلى الصفحة المفتوحة:
+ * رابطُ ملف المدوّدة على شبكة التوزيع، لا نسبةً إلى الصفحة المفتوحة:
  * فالمكتبةُ تُفتح من `src/site/noor.html` أيضًا، و«content/...» هناك يعني
  * `src/site/content/...` فلا وجود له.
  * @param {string} path مسارٌ داخل `content/corpora/`
  * @returns {string}
  */
 function corpusUrl(path) {
-  return new URL(`../../content/corpora/${path}`, import.meta.url).href;
+  return contentUrl(`corpora/${path}`);
 }
 
 /** كم جزءًا يُجلَب معًا، فالحزم الصغيرة تخدم استجابةً واحدة. */

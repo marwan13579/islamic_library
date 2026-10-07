@@ -14,7 +14,7 @@
  * ملاحظة: عند كل نشر ارفع CACHE_VERSION ليتخلّص المستخدم من الكاش القديم.
  */
 
-const CACHE_VERSION = "islamic-library-v45";
+const CACHE_VERSION = "islamic-library-v46";
 const CACHE = CACHE_VERSION;
 
 /**
@@ -22,9 +22,6 @@ const CACHE = CACHE_VERSION;
  * CACHE_VERSION لأن المحتوى يتغيّر بالنشر لا بتثبيت التطبيق.
  */
 const CONTENT_CACHE = `${CACHE_VERSION}-content`;
-
-/** مسار شجرة المحتوى نسبةً إلى الجذر. */
-const CONTENT_DIR = "content/";
 
 const SHELL = [
   "./",
@@ -99,12 +96,12 @@ const SHELL = [
   "./islamic-videos/index.html", "./islamic-videos/favorites/index.html", "./islamic-videos/videos.css",
   "./src/data/islamic-channels.js", "./src/lib/video-library.js", "./src/lib/video-library-ui.js",
   "./src/lib/shards.js", "./src/lib/library.js", "./src/lib/search.js",
+  "./src/lib/content-url.js",
   "./src/lib/search-aliases.js", "./src/lib/search-registry.js", "./src/lib/unified-search.js",
   "./src/lib/search-content.js", "./src/lib/search-corpora.js", "./src/components/search-modal.js",
   "./src/lib/content-ui.js", "./src/lib/audio-store.js", "./src/lib/player.js",
   "./src/lib/audio-hub.js",
-  // بيان المحتوى: يُقرأ أول شيء، فهو ما يوجّه بقية الطلبات.
-  "./content/manifest.json",
+  // بيان المحتوى على شبكة التوزيع (gh-pages) يُجلَب عند الطلب لا يُخزَّن هنا.
   // بنية المشروع الجديدة
   "./src/site/noor.html", "./src/site/site.css", "./src/site/site.js",
   "./src/site/render.js", "./src/site/sections.js", "./src/assets/icons.svg",
@@ -165,8 +162,6 @@ const APP_SHELL = new URL("index.html", SCOPE).href;
 const OFFLINE_PAGE = new URL("offline.html", SCOPE).href;
 const PRECACHED = new Set(SHELL.map((asset) => new URL(asset, SCOPE).href));
 
-/** بادئة المسار التي تحتها شجرة المحتوى، للمقارنة بـpathname لا بالعنوان. */
-const CONTENT_PREFIX = new URL(CONTENT_DIR, SCOPE).pathname;
 const API_HOSTS = [
   "api.aladhan.com",
   "api.alquran.cloud",
@@ -175,6 +170,9 @@ const API_HOSTS = [
   "qurango.net",
   "api.bigdatacloud.net",
 ];
+
+/** أصلُ شبكة توزيع المحتوى (فرع gh-pages). */
+const CONTENT_CDN_ORIGIN = "https://marwan13579.github.io";
 
 const absolute = (url) => new URL(url, SCOPE).href;
 
@@ -586,6 +584,10 @@ self.addEventListener("fetch", (event) => {
   if (!insideScope) {
     if (API_HOSTS.includes(url.hostname) && request.mode !== "navigate") {
       event.respondWith(fetch(request).catch(() => Response.error()));
+    } else if (url.origin === CONTENT_CDN_ORIGIN) {
+      // المحتوى على شبكة التوزيع: تخزينٌ عند الطلب بميزانيته،
+      // فيبقى قابلًا للقراءة دون اتصال بعد أول فتح.
+      event.respondWith(contentStrategy(request));
     }
     return;
   }
@@ -651,14 +653,7 @@ self.addEventListener("fetch", (event) => {
     return;
   }
 
-  // 4) شجرة المحتوى: ذاكرة تخزين عند الطلب. المحتوى لا يتغيّر بين النشرَين،
-  //    ومن يفتح صفحة قد تسبقها صفحات المحتوى فقط — فنقرأ ما طلبه.
-  if (url.pathname.startsWith(CONTENT_PREFIX)) {
-    event.respondWith(contentStrategy(request));
-    return;
-  }
-
-  // 5) أي مورد آخر داخل النطاق: يمرّ للشبكة دون تخزين.
+  // 4) أي مورد آخر داخل النطاق: يمرّ للشبكة دون تخزين.
 });
 
 /** ميزانية التخزين بايتًا. الـshell وحده نحو ٤ م.ب، والمحتوى ٢٨٣ م.ب. */

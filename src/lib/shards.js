@@ -9,8 +9,7 @@
  * @module lib/shards
  */
 
-/** جذر المحتوى على القرص/CDN. */
-export const CONTENT_ROOT = "content";
+import { contentUrl } from "./content-url.js";
 
 /**
  * @typedef {object} Summary
@@ -39,15 +38,6 @@ const usage = new Map();
 let manifestPromise = null;
 
 /**
- * يبني مسار ملف داخل جذر المحتوى.
- * @param {...string} parts
- * @returns {string}
- */
-function contentPath(...parts) {
-  return `${CONTENT_ROOT}/${parts.join("/")}`;
-}
-
-/**
  * يقرأ ملف JSON من المحتوى ويخزّنه.
  * الطلب الثاني لنفس الملف ينتظر الأول بدل أن يُنشئ طلبًا جديدًا.
  * @param {string} path مسار نسبي داخل `content/`
@@ -62,7 +52,7 @@ export function load(path) {
   const flying = pending.get(path);
   if (flying) return flying;
 
-  const request = fetch(`${CONTENT_ROOT}/${path}`, { cache: "force-cache" })
+  const request = fetch(contentUrl(path), { cache: "force-cache" })
     .then((res) => {
       if (!res.ok) throw new Error(`تعذّر تحميل ${path} (${res.status})`);
       return res.json();

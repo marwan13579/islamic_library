@@ -120,7 +120,7 @@ test("مقدّمة الكتاب وخاتمته نصٌّ محفوظ", () => {
 test("واجهة القراءة تفتح السورة وتحرس حدودها", async () => {
   const store = new Map();
   global.fetch = async (url) => {
-    const file = path.join(root, "content", String(url).replace(/^content\//, ""));
+    const file = path.join(root, "content", String(url).replace(/^.*content\//, ""));
     if (!fs.existsSync(file)) return { ok: false, status: 404 };
     return { ok: true, json: async () => JSON.parse(fs.readFileSync(file, "utf8")) };
   };

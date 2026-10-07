@@ -21,7 +21,9 @@ function stubFetch() {
     const raw = String(target);
     const rel = raw.startsWith("file://")
       ? path.relative(ROOT, decodeURIComponent(new URL(raw).pathname))
-      : raw.replace(/^\.?\//, "");
+      : raw.includes("/content/")
+        ? raw.slice(raw.indexOf("/content/") + 1)
+        : raw.replace(/^\.?\//, "");
     try {
       return { ok: true, json: async () => JSON.parse(read(rel)) };
     } catch {
@@ -300,10 +302,11 @@ test("☑ التبويبات: كل فئةٍ في الشريط تُنتج نتا�
 
 test("☑ المدوّدة: تُخدَم من ذاكرة عامل الخدمة فتعمل دون اتصال", () => {
   const sw = read("sw.js");
-  // محتوى `content/**` له ذاكرة منفصلة تُخزَّن عند الطلب، فالمدوّدة تعمل بلا
-  // شبكةٍ بعد أول تحميل. والمهمّ ألّا تُعامل كصفحةٍ (navigation).
+  // المحتوى على شبكة التوزيع (gh-pages) له ذاكرة منفصلة تُخزَّن
+  // عند الطلب، فالمدوّدة تعمل بلا شبكةٍ بعد أول تحميل. والمهمّ
+  // ألّا تُعامل كصفحةٍ (navigation).
   assert.match(sw, /contentStrategy/, "لا ذاكرة محتوى في عامل الخدمة");
-  assert.match(sw, /const CONTENT_DIR = "content\/";/, "مجلّد المحتوى غير مذكور");
+  assert.match(sw, /CONTENT_CDN_ORIGIN/, "أصل شبكة توزيع المحتوى غير مذكور");
   // المدوّدة ٤ ميغابايت: تُخدَم من ذاكرة المحتوى عند الطلب، ولا تُحمَّل مسبقًا.
   assert.doesNotMatch(sw, /"\.\/content\/corpora/, "المدوّدة في التحميل المسبق وهي كبيرة");
 });

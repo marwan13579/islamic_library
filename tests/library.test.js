@@ -21,7 +21,7 @@ const store = new Map();
 /** يقرأ `content/...` من القرص كما يقرأها المتصفح من الشبكة. */
 function installBrowser() {
   global.fetch = async (url) => {
-    const rel = String(url).replace(/^content\//, "");
+    const rel = String(url).replace(/^.*content\//, "");
     const file = path.join(root, "content", rel);
     if (!fs.existsSync(file)) return { ok: false, status: 404 };
     return { ok: true, json: async () => JSON.parse(fs.readFileSync(file, "utf8")) };

@@ -7,6 +7,7 @@
 import { normalizeAr } from "./text.js";
 import { registry, createSource, scoreItem } from "./search-registry.js";
 import { registerCorporaSources } from "./search-corpora.js";
+import { contentUrl } from "./content-url.js";
 
 // ===================== TOOLS / PAGES =====================
 
@@ -282,17 +283,6 @@ export function registerArraySource(id, type, category, icon, title, description
 }
 
 // ===================== REGISTER DATA SOURCES =====================
-
-/**
- * رابطُ ملف محتوى مطلقٌ محسوبٌ من هذه الوحدة، لا نسبةً إلى الصفحة المفتوحة:
- * فبعض الصفحات في مجلّدات (`src/site/`)، و«content/...» هناك يعني
- * `src/site/content/...` فلا وجود له.
- * @param {string} rel مسارٌ داخل `content/`
- * @returns {string}
- */
-function contentUrl(rel) {
-  return new URL(`../../${rel}`, import.meta.url).href;
-}
 
 /** @type {Promise<void>|null} */
 let dataSourcesReady = null;
