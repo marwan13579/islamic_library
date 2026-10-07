@@ -152,6 +152,7 @@ const PAGES = [
   { id: "siraj", title: "السراج في غريب القرآن", description: "معاني غريب ألفاظ القرآن", route: "43-siraj.html", icon: "🪔" },
   { id: "kids", title: "قصص الآداب للأطفال", desc: "سبع قصص عن الأخلاق", route: "13-kids-adab.html", icon: "🌙" },
   { id: "noor", title: "رفيق النور", desc: "تذكير إيماني هادئ", route: "44-noor-companion.html", icon: "🌿" },
+  { id: "jannati", title: "جنّتي — حديقة الذكر", description: "حديقة تُسقى بكل ضغطة ذكر: عدّاد تسبيح وأذكار وختمة جماعية ومتجر رمزي", route: "50-jannati.html", icon: "🏡" },
   { id: "quiz", title: "الاختبارات", desc: "٥٨٢٠ سؤالًا", route: "41-quiz.html", icon: "🧠" },
 ];
 

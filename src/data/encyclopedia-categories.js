@@ -296,6 +296,16 @@ export const ENCYCLOPEDIA_CATEGORIES = [
     related: ["quran", "hadith", "tafsir", "fiqh", "seerah", "scholars"]
   },
   {
+    id: "jannati",
+    title: "جنّتي — حديقة الذكر",
+    icon: "🏡",
+    description: "حديقة ذكرك: كل ضغطة تسبيح تُسقي الحديقة، مع عدّاد، أذكار، ختمة جماعية، متجر رمزي وشارات ورحلة مداومة",
+    color: "green",
+    route: "50-jannati.html",
+    keywords: ["ذكر", "تسبيح", "حديقة", "جنتي", "جنتي", "عداد", "ختمة", "شارات", "رحلة", "مداومة", "garden", "dhikr"],
+    related: ["adhkar", "dhikr", "khatma", "prayer"]
+  },
+  {
     id: "tools",
     title: "الأدوات الإسلامية",
     icon: "🧰",
