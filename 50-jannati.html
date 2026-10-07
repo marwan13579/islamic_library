@@ -2,7 +2,8 @@
 <title>جنّتي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Amiri:wght@400;700&family=Aref+Ruqaa:wght@400;700&family=Readex+Pro:wght@300;400;500;600&display=swap">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@300;400;500;600&display=swap">
 <style>
 /* Layout: one column garden-first app. Garden scene on top, tap console below, four tabs at the bottom. */
 :root{
@@ -469,44 +470,10 @@ function loadLocal(){try{var s=localStorage.getItem(KEY);return s?JSON.parse(s):
 var S=norm(loadLocal());
 (function prune(){var cut=dayKey(-120),cut2=dayKey(-60);Object.keys(S.days).forEach(function(k){if(k<cut)delete S.days[k];});Object.keys(S.prayers).forEach(function(k){if(k<cut2)delete S.prayers[k];});})();
 
-var saveT=null,cloudT=null;
+var saveT=null;
 function saveLocal(){try{localStorage.setItem(KEY,JSON.stringify(S));}catch(e){}}
 function markDirty(){
   clearTimeout(saveT);saveT=setTimeout(saveLocal,400);
-  if(cloud.ref){cloud.dirty=true;clearTimeout(cloudT);cloudT=setTimeout(flushCloud,5000);}
-}
-
-/* ---------- cloud (optional, private per person) ---------- */
-var cloud={ref:null,state:'checking',busy:false,dirty:false};
-function clone(o){return JSON.parse(JSON.stringify(o));}
-async function flushCloud(){
-  if(!cloud.ref||cloud.busy||!cloud.dirty)return;
-  cloud.busy=true;cloud.dirty=false;
-  try{await cloud.ref.set(clone(S));cloud.state='on';}
-  catch(e){cloud.state='error';}
-  cloud.busy=false;
-  if(el.me&&!el.me.hidden)renderMe();
-}
-async function cloudInit(){
-  try{
-    if(!window.claude||typeof window.claude.use!=='function'){cloud.state='off';renderMe();return;}
-    var db=await window.claude.use('db');
-    var user=await window.claude.use('user');
-    if(!db||!user){cloud.state='off';renderMe();return;}
-    var id=await user.id();
-    if(!id){cloud.state='off';renderMe();return;}
-    var ref=db.doc('data/users/'+id+'/state');
-    var snap=await ref.get();
-    cloud.ref=ref;cloud.state='on';
-    if(snap.exists){
-      var r=clone(snap.data());
-      if((r.total||0)>S.total){
-        S=norm(r);
-        saveLocal();lastStage=stageOf(S.progress);renderAll();
-      }else if((r.total||0)<S.total){cloud.dirty=true;flushCloud();}
-    }else if(S.total>0){cloud.dirty=true;flushCloud();}
-    renderMe();
-  }catch(e){cloud.state='off';renderMe();}
 }
 
 /* ---------- helpers ---------- */
@@ -871,79 +838,11 @@ function undoPage(){
   if((S.quran||0)<=0||(S.qlog[td]||0)<=0)return;
   S.quran--;S.qlog[td]--;renderPrayer();markDirty();
 }
-/* ---------- collective khatma (shared through db; each person writes only their own doc) ---------- */
-var kh={db:null,id:null,docs:{},busy:false,err:false};
-async function khInit(){
-  try{
-    if(!window.claude||typeof window.claude.use!=='function')return;
-    var db=await window.claude.use('db'),user=await window.claude.use('user');
-    if(!db||!user)return;
-    var id=await user.id();
-    if(!id)return;
-    kh.db=db;kh.id=id;
-    db.collection('khatma').onSnapshot(function(snap){
-      kh.docs={};kh.err=false;
-      snap.docs.forEach(function(d){kh.docs[d.id]=d.data()||{};});
-      if(curView==='prayer')renderPrayer();
-    },function(){kh.err=true;if(curView==='prayer')renderPrayer();});
-    if(curView==='prayer')renderPrayer();
-  }catch(e){}
-}
-function khState(){
-  var r=1,taken={},done={},people=0,keys=Object.keys(kh.docs).sort();
-  keys.forEach(function(k){var v=kh.docs[k].round||1;if(v>r)r=v;});
-  keys.forEach(function(k){
-    var d=kh.docs[k];if((d.round||1)!==r)return;
-    people++;
-    (d.done||[]).forEach(function(j){if(!done[j])done[j]=k;});
-    (d.claimed||[]).forEach(function(j){if(!taken[j])taken[j]=k;});
-  });
-  Object.keys(taken).forEach(function(j){if(done[j])delete taken[j];});
-  return{r:r,taken:taken,done:done,people:people};
-}
-async function khWrite(fn){
-  if(!kh.db||kh.busy)return false;
-  var st=khState(),cur=kh.docs[kh.id];
-  var doc=(cur&&(cur.round||1)===st.r)?{round:st.r,claimed:(cur.claimed||[]).slice(),done:(cur.done||[]).slice()}:{round:st.r,claimed:[],done:[]};
-  if(fn(doc,st)===false)return false;
-  kh.busy=true;
-  var ok=true;
-  try{await kh.db.doc('khatma/'+kh.id).set(doc);}
-  catch(e){ok=false;toast('تعذّر الحفظ، قد لا تملك صلاحية المشاركة في هذه الصفحة');}
-  kh.busy=false;
-  return ok;
-}
-function khTap(j){
-  if(!kh.db)return;
-  var st=khState();
-  if(st.done[j]){toast(st.done[j]===kh.id?'قرأت هذا الجزء':'هذا الجزء مقروء');return;}
-  if(st.taken[j]&&st.taken[j]!==kh.id){toast('هذا الجزء محجوز لغيرك');return;}
-  if(st.taken[j]===kh.id){
-    khWrite(function(doc){doc.claimed=doc.claimed.filter(function(x){return x!==j;});if(doc.done.indexOf(j)<0)doc.done.push(j);}).then(function(ok){
-      if(ok){S.noor+=20;toast('تقبّل الله، أتممت الجزء '+N(j)+' ونلت ٢٠ نورًا');chime('round');renderHeader();markDirty();}
-    });
-    return;
-  }
-  khWrite(function(doc){if(doc.claimed.indexOf(j)<0)doc.claimed.push(j);}).then(function(ok){if(ok)toast('حجزت الجزء '+N(j)+'، اضغط عليه بعد قراءته');});
-}
+/* ---------- collective khatma: its real home is the dedicated page ---------- */
 function khHtml(){
-  var h='<div class="kh"><h3 class="h2" style="font-size:20px">ختمة جماعية</h3>';
-  if(!kh.db)return h+'<p class="sub">وزّعوا الأجزاء الثلاثين بينكم وتابعوا الختمة معًا. تظهر الختمة عندما تفتح الصفحة بحساب Claude من رابط شاركه معك صاحبها، ومن شاركها معك كمشاهد فقط يرى التقدّم ولا يحجز.</p></div>';
-  if(kh.err)return h+'<p class="sub">تعذّر تحميل الختمة الآن، حاول لاحقًا.</p></div>';
-  var st=khState(),dn=Object.keys(st.done).length,tk=Object.keys(st.taken).length,mine=0,j;
-  for(j=1;j<=30;j++)if(st.taken[j]===kh.id)mine++;
-  h+='<p class="sub">'+N(st.people)+' مشارك · '+N(dn)+' من '+N(30)+' جزءًا مقروءة · '+N(tk)+' محجوزة</p>';
-  h+='<div class="juz" role="group" aria-label="أجزاء القرآن">';
-  for(j=1;j<=30;j++){
-    var cls='jz';
-    if(st.done[j])cls+=(st.done[j]===kh.id?' md':' od');
-    else if(st.taken[j])cls+=(st.taken[j]===kh.id?' mt':' ot');
-    h+='<button type="button" class="'+cls+'" data-act="kj" data-j="'+j+'" aria-label="الجزء '+N(j)+'">'+N(j)+'</button>';
-  }
-  h+='</div><p class="sub">اضغط على جزء فارغ لتحجزه، ثم اضغط عليه بعد قراءته. المملوء بالأخضر قرأته أنت، والمحدّد بالأخضر حجزته، والرمادي لغيرك. لا تظهر أسماء المشاركين.</p>';
-  if(mine)h+='<div class="qbtns"><button type="button" class="btn ghost" data-act="kjrel" style="min-width:0">أخلِ الأجزاء التي لم أقرأها</button></div>';
-  if(dn===30)h+='<div class="banner">ما شاء الله، اكتملت الختمة الجماعية، تقبّل الله من الجميع.</div><div class="qbtns"><button type="button" class="btn" data-act="kjnew" style="min-width:0">بدء ختمة جديدة</button></div>';
-  return h+'</div>';
+  return '<div class="kh"><h3 class="h2" style="font-size:20px">ختمة جماعية</h3>'+
+    '<p class="sub">وزّعوا الأجزاء الثلاثين بين المشاركين وتابعوا الإنجاز والإهداء، كلٌّ يضغط على الجزء بعد قراءته.</p>'+
+    '<a class="btn" href="34-khatma.html" style="justify-self:start">افتح الختمة الجماعية</a></div>';
 }
 function renderWelcome(){el.welcome.hidden=!!S.welcomed;}
 function renderRemind(){
@@ -1173,7 +1072,7 @@ function renderMe(){
     h+='<div class="badge'+(un?' un':'')+'"><svg viewBox="0 0 48 48" aria-hidden="true"><circle class="m-c" cx="24" cy="24" r="20" stroke-width="2.5"/><path class="m-s" d="M24 12l3.4 7 7.6 1-5.5 5.4 1.3 7.6-6.8-3.7-6.8 3.7 1.3-7.6L13 20l7.6-1z"/></svg><div><b>'+b.n+'</b><span>'+b.d+'</span></div></div>';
   });
   h+='</div></div>';
-  var cs=cloud.state==='on'?'محفوظ على حسابك أيضًا، فتجده على أي جهاز':(cloud.state==='error'?'تعذّر الحفظ على حسابك الآن، وتقدّمك محفوظ على هذا الجهاز':(cloud.state==='checking'?'جارٍ التحقق من الحفظ على حسابك':'محفوظ على هذا الجهاز فقط'));
+  var cs='محفوظ على هذا الجهاز فقط — انسخ نسخة احتياطية لتحفظه أو تنقله';
   h+='<div><div class="set"><div>ذكر خاص بك<small>يظهر في آخر قائمة الأذكار</small></div></div>'+
      '<div class="set" style="border-top:0;padding-top:0"><input class="inp" id="customIn" type="text" maxlength="40" placeholder="مثال: اللهم اغفر لي" aria-label="ذكر خاص" value="'+esc(S.custom||'')+'"><button type="button" class="sw" data-act="csave">حفظ</button></div>'+
      '<div class="set"><div>تعديل التاريخ الهجري<small>يوم واحد زيادة أو نقص إن اختلف عن بلدك</small></div><button type="button" class="sw" data-act="hadj">'+((S.hadj||0)>0?'+١':((S.hadj||0)<0?'-١':'٠'))+'</button></div>'+
@@ -1181,6 +1080,7 @@ function renderMe(){
      '<div class="set"><div>ورد القرآن اليومي<small>صفحات في اليوم، ومكافأته ٢٠ نورًا</small></div><button type="button" class="sw" data-act="qgoal">'+N(S.qdaily||5)+'</button></div>'+
      '<div class="set"><div>الهدف اليومي<small>عند بلوغه تنال ٣٠ نورًا مرة في اليوم</small></div><button type="button" class="sw" data-act="goal">'+N(S.goal||300)+'</button></div>'+
      '<div class="set"><div>إبقاء الشاشة مضاءة<small>أثناء الذكر، إن كان جهازك يدعم ذلك</small></div><button type="button" class="sw" data-act="wake" aria-pressed="'+!!S.wake+'">'+(S.wake?'يعمل':'متوقف')+'</button></div>'+
+     '<div class="set"><div>تنبيه الأذان<small>إشعار عند أذان الصلوات، حتى وأنت خارج الصفحة</small></div><button type="button" class="sw" data-act="athan" aria-pressed="'+!!S.flags.athan+'">'+(S.flags.athan?'يعمل':'تشغيل')+'</button></div>'+
      '<div class="set"><div>الصوت<small>نغمة هادئة مع كل ذكر</small></div><button type="button" class="sw" data-act="snd" aria-pressed="'+S.sound+'">'+(S.sound?'يعمل':'متوقف')+'</button></div>'+
      '<div class="set"><div>الاهتزاز<small>اهتزاز خفيف على الهاتف</small></div><button type="button" class="sw" data-act="vib" aria-pressed="'+S.vib+'">'+(S.vib?'يعمل':'متوقف')+'</button></div>'+
      '<div class="set"><div>الحفظ<small>'+cs+'</small></div></div>'+
@@ -1265,7 +1165,7 @@ document.addEventListener('click',function(e){
       var ta2=document.getElementById('bkArea'),parsed=null;
       try{parsed=JSON.parse((ta2&&ta2.value)||'');}catch(err2){parsed=null;}
       if(!parsed||typeof parsed!=='object'||typeof parsed.total!=='number'||parsed.total<0){toast('النسخة غير صالحة، تأكد من لصقها كاملة');}
-      else{S=norm(parsed);lastStage=stageOf(S.progress);saveLocal();if(cloud.ref){cloud.dirty=true;flushCloud();}bkOpen=false;bkMode='';bkText='';el.dhChips.dataset.sel='';el.tgt.dataset.sel='';renderAll();toast('استُعيد تقدّمك');}
+      else{S=norm(parsed);lastStage=stageOf(S.progress);saveLocal();bkOpen=false;bkMode='';bkText='';el.dhChips.dataset.sel='';el.tgt.dataset.sel='';renderAll();toast('استُعيد تقدّمك');}
     }
   }
   else if(a==='adk'){adKind=b.dataset.k;renderAdhkar();}
@@ -1276,17 +1176,23 @@ document.addEventListener('click',function(e){
   else if(a==='adfin'){
     ensureAd();var it2=AD[adKind][i];S.adhkar[adKind][i]=it2.n;checkAdSet(adKind);renderAdhkar();renderRemind();markDirty();
   }
-  else if(a==='buy')buy(b.dataset.id);
-  else if(a==='sky'){S.sky=b.dataset.id;renderGarden();renderShop();markDirty();}
-  else if(a==='scene'){S.scene=b.dataset.id;renderGarden();renderShop();markDirty();}
-  else if(a==='kj')khTap(parseInt(b.dataset.j,10));
-  else if(a==='kjrel')khWrite(function(doc){if(!doc.claimed.length)return false;doc.claimed=[];}).then(function(ok){if(ok)toast('أخليت الأجزاء التي لم تقرأها');});
-  else if(a==='kjnew')khWrite(function(doc,st){doc.round=st.r+1;doc.claimed=[];doc.done=[];}).then(function(ok){if(ok)toast('بدأت ختمة جديدة');});
+  else if(a==='athan'){
+    if(!("Notification" in window)){toast('هذا المتصفح لا يدعم الإشعارات');return;}
+    if(Notification.permission!=='granted'){
+      Notification.requestPermission().then(function(p){
+        if(p==='granted'){S.flags.athan=1;pushAthan();toast('اشتغل تنبيه الأذان');markDirty();renderMe();}
+        else toast('التنبيه مرفوض، فعّله من إعدادات المتصفح');
+      });
+      return;
+    }
+    S.flags.athan=S.flags.athan?0:1;pushAthan();renderMe();markDirty();
+    toast(S.flags.athan?'اشتغل تنبيه الأذان':'توقف تنبيه الأذان');
+  }
   else if(a==='snd'){S.sound=!S.sound;if(S.sound)chime(false);renderMe();markDirty();}
   else if(a==='vib'){S.vib=!S.vib;if(S.vib)buzz(20);renderMe();markDirty();}
   else if(a==='reset'){
     if(!resetStep){resetStep=1;renderMe();setTimeout(function(){if(resetStep){resetStep=0;if(curView==='me')renderMe();}},4000);}
-    else{resetStep=0;S=def();lastStage=0;saveLocal();cloud.dirty=!!cloud.ref;flushCloud();renderAll();toast('بدأت حديقة جديدة، بارك الله لك');}
+    else{resetStep=0;S=def();lastStage=0;saveLocal();renderAll();toast('بدأت حديقة جديدة، بارك الله لك');}
   }
 });
 document.addEventListener('keydown',function(e){
@@ -1304,12 +1210,11 @@ setInterval(function(){
   var ae=document.activeElement;
   if(curView==='prayer'&&!(ae&&ae.id==='citySel'))renderPrayer();
 },30000);
-document.addEventListener('visibilitychange',function(){if(document.hidden){saveLocal();flushCloud();wl=null;}else wakeOn();});
+document.addEventListener('visibilitychange',function(){if(document.hidden){saveLocal();wl=null;}else wakeOn();});
 
 renderAll();
 wakeOn();
-cloudInit();
-khInit();
+pushAthan();
 })();
 </script>
 <p style="font-size:.8rem;margin-top:4px;text-align:center"><a href="index.html" style="color:var(--muted)">المكتبة الإسلامية</a></p>
