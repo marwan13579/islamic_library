@@ -137,7 +137,9 @@ test("صفحة نور الذكر مرتبطة من الفهرس", () => {
   const ids = [...index.matchAll(/\{id:"([^"]+)"/g)].map((m) => m[1]);
   assert.deepEqual(ids.filter((id, i) => ids.indexOf(id) !== i), [], "معرّفات مكرّرة");
   // الاسم الإنجليزي موجود، وإلا ظهر الاسم العربي في وضع اللغة الإنجليزية.
-  assert.match(index, /dhikrkit:\["Noor al-Dhikr"/);
+  // الترجمة الإنجليزية للبطقة تُحمَّل من الملف المعياري
+  const enCommon = JSON.parse(fs.readFileSync(path.join(ROOT, "locales/en/common.json"), "utf8"));
+  assert.match(enCommon.common.tools.dhikrkit[0], /^Noor al-Dhikr/, "اسم الأداة الإنجليزي ناقص");
 });
 
 test("لا تصدير بلا مستهلك في وحدات المشروع", () => {

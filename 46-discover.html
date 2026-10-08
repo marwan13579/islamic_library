@@ -2,14 +2,14 @@
 <html lang="ar" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
-<script src="../storage-fallback.js"></script>
-<link rel="stylesheet" href="../engage.css">
-<script src="../engage.js" defer></script>
-<script src="../notify-boot.js" defer></script>
-<script src="../calculations.js"></script>
-<script src="../backup-core.js"></script>
-<script src="../daily-content.js"></script>
-<script src="../daily-companion.js"></script>
+<script src="storage-fallback.js"></script>
+<link rel="stylesheet" href="engage.css">
+<script src="engage.js" defer></script>
+<script src="notify-boot.js" defer></script>
+<script src="calculations.js"></script>
+<script src="backup-core.js"></script>
+<script src="daily-content.js"></script>
+<script src="daily-companion.js"></script>
 <script>
 (function(){
   try{
@@ -34,12 +34,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="اكتشف جديدًا">
-<link rel="manifest" href="../manifest.webmanifest">
-<link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
-<link rel="stylesheet" href="../fonts.css">
-<link rel="stylesheet" href="../encyclopedia.css">
-<script src="../noor-companion.js" defer></script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="encyclopedia.css">
+<script src="noor-companion.js" defer></script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -123,17 +123,17 @@
 
 <footer class="wrap">
   <p>المكتبة الإسلامية — بوابة النور | نور الهدى<br>موسوعة رقمية مجانية بلا إعلانات — جميع البيانات محلية على جهازك</p>
-  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="../index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="../src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
+  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
 </footer>
 
 <script type="module">
-import { APP_DAILY_VERSES, APP_DAILY_HADITHS, APP_DAILY_WISDOM } from "../src/data/app-daily.js";
-import { ATHKAR_DATA } from "../src/data/app-athkar.js";
-import { PROPHETS } from "../src/data/prophets.js";
-import { SCHOLARS } from "../src/data/scholars.js";
-import { HADITHS } from "../src/data/hadiths.js";
-import { ENCYCLOPEDIA_CATEGORIES } from "../src/data/encyclopedia-categories.js";
-import { SEERAH } from "../src/data/seerah.js";
+import { APP_DAILY_VERSES, APP_DAILY_HADITHS, APP_DAILY_WISDOM } from "src/data/app-daily.js";
+import { ATHKAR_DATA } from "src/data/app-athkar.js";
+import { PROPHETS } from "src/data/prophets.js";
+import { SCHOLARS } from "src/data/scholars.js";
+import { HADITHS } from "src/data/hadiths.js";
+import { ENCYCLOPEDIA_CATEGORIES } from "src/data/encyclopedia-categories.js";
+import { SEERAH } from "src/data/seerah.js";
 
 const STORAGE_KEY = "discover-history";
 const MAX_HISTORY = 20;
@@ -149,7 +149,7 @@ function getRandomVerse() {
     icon: "📖",
     content: verse.text,
     ref: verse.ref,
-    url: `../30-quran-full.html`,
+    url: `30-quran-full.html`,
   };
 }
 
@@ -160,7 +160,7 @@ function getRandomHadith() {
     icon: "📕",
     content: hadith.text || hadith.title,
     ref: hadith.ref || hadith.src || "",
-    url: "../27-hadith.html",
+    url: "27-hadith.html",
   };
 }
 
@@ -172,7 +172,7 @@ function getRandomDhikr() {
     icon: "🤲",
     content: item.text,
     ref: item.ref || "",
-    url: "../25-azkar-shamila.html",
+    url: "25-azkar-shamila.html",
   };
 }
 
@@ -183,7 +183,7 @@ function getRandomDua() {
     { text: "حَسْبِيَ اللَّهُ لَا إِلَهَ إِلَّا هُوَ عَلَيْهِ تَوَكَّلْتُ", ref: "التوبة: 129" },
   ];
   const dua = randomItem(duas);
-  return { type: "دعاء", icon: "🤲", content: dua.text, ref: dua.ref, url: "../25-azkar-shamila.html" };
+  return { type: "دعاء", icon: "🤲", content: dua.text, ref: dua.ref, url: "25-azkar-shamila.html" };
 }
 
 function getRandomProphet() {
@@ -193,7 +193,7 @@ function getRandomProphet() {
     icon: "🌟",
     content: prophet.story,
     ref: prophet.title,
-    url: "../8-qasas-anbiya.html",
+    url: "8-qasas-anbiya.html",
   };
 }
 
@@ -204,7 +204,7 @@ function getRandomScholar() {
     icon: "👳",
     content: scholar.bio,
     ref: scholar.name,
-    url: "../src/site/noor.html#scholars",
+    url: "src/site/noor.html#scholars",
   };
 }
 
@@ -216,13 +216,13 @@ function getRandomTerm() {
     icon: "📖",
     content: `${keyword} — ${cat.description}`,
     ref: cat.title,
-    url: `../43-siraj.html`,
+    url: `43-siraj.html`,
   };
 }
 
 function getRandomWisdom() {
   const wisdom = randomItem(APP_DAILY_WISDOM);
-  return { type: "حكمة", icon: "💡", content: wisdom.text, ref: wisdom.ref, url: "../41-quiz.html" };
+  return { type: "حكمة", icon: "💡", content: wisdom.text, ref: wisdom.ref, url: "41-quiz.html" };
 }
 
 function getRandomSeerah() {
@@ -232,7 +232,7 @@ function getRandomSeerah() {
     icon: "🕌",
     content: event.desc,
     ref: `${event.year} — ${event.title}`,
-    url: "../9-seerah.html",
+    url: "9-seerah.html",
   };
 }
 
@@ -314,15 +314,15 @@ if (typeof openSearchModal === "function") {
 }
 </script>
 <script type="module">
-  import { createSearchModal, openSearchModal } from "../src/components/search-modal.js";
-  import { registerDataSources } from "../src/lib/search-content.js";
+  import { createSearchModal, openSearchModal } from "src/components/search-modal.js";
+  import { registerDataSources } from "src/lib/search-content.js";
   registerDataSources();
   createSearchModal();
   window.openSearchModal = openSearchModal;
 </script>
-<script src="../daily-home.js" defer></script>
+<script src="daily-home.js" defer></script>
 <script>
-if("serviceWorker" in navigator){navigator.serviceWorker.register("../sw.js").catch(function(){});}
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
 </body>
 </html>

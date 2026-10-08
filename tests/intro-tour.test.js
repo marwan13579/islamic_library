@@ -200,10 +200,12 @@ test("الفهرس يربط ملفّي الدليل، وعامل الخدمة ي
 
 test("زرّ الدليل في الترويسة مُسمّى بالعربية والإنجليزية", () => {
   assert.match(index, /<button class="sortbtn" id="introBtn" type="button">/, "زرّ الدليل ناقص");
-  assert.match(index, /introBtn:"🧭 دليل المكتبة"/, "نصّ الزر العربي ناقص");
-  assert.match(index, /introBtn:"🧭 Site guide"/, "نصّ الزر الإنجليزي ناقص");
-  assert.match(index, /getElementById\("introBtn"\)\.textContent = dict\.introBtn/,
-    "تبديل اللغة لا يبدّل نصّ الزرّ");
+  // الزر يُملأ بالعربية والإنجليزية عبر نظام i18n المركزي
+  assert.match(index, /set\("introBtn",\s*"🧭 "\s*\+\s*t\("introBtn"\)\)/, "الزر لا يُملأ باللغة الحالية");
+  assert.match(index, /<button class="sortbtn" id="introBtn" type="button">🧭 دليل المكتبة/, "نصّ الزر العربي في HTML ناقص");
+  // الترجمة الإنجليزية موجودة في الملف المعياري
+  const enCommon = JSON.parse(fs.readFileSync(path.join(ROOT, "locales/en/common.json"), "utf8"));
+  assert.match(enCommon.common.introBtn, /^🧭 Site guide/, "نصّ الزر الإنجليزي ناقص");
 });
 
 test("الدليل يقرأ أقسام الفهرس من الصفحة نفسها", () => {
@@ -211,10 +213,13 @@ test("الدليل يقرأ أقسام الفهرس من الصفحة نفسها
   assert.match(index, /block\.setAttribute\("data-section",catId\)/, "لا معرّف للقسم");
   assert.match(index, /block\.setAttribute\("data-blurb",tCatBlurb\(catId\)\)/, "لا وصف للقسم");
   /* أقسام الفهرس تذكرها I18N بوصف لكلٍّ منها، فلا يكرّرها الدليل. */
-  const cats = [...index.matchAll(/\["(\w+)","([^"]+)"\]/g)].map((m) => m[1]);
+  // فقط مصفوفة الأقسام الرئيسية (dhikr, quran, learn, stories, calc, books)
+  const cats = [...index.matchAll(/\["(\w+)","([^"]+)"\]/g)].map((m) => m[1])
+    .filter((id) => ["dhikr","quran","learn","stories","calc","books"].includes(id));
   assert.ok(cats.length > 5, `أقسام قليلة: ${cats.length}`);
   for (const cat of cats.filter((id) => id !== "all")) {
-    assert.match(index, new RegExp(`${cat}:"[^"]+"`), `القسم ${cat} بلا وصف في I18N`);
+    const arCommon = JSON.parse(fs.readFileSync(path.join(ROOT, "locales/ar/common.json"), "utf8"));
+    assert.ok(arCommon.common.catBlurb && arCommon.common.catBlurb[cat], `القسم ${cat} بلا وصف في I18N (ar)`);
   }
 });
 

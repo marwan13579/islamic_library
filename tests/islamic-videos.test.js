@@ -380,7 +380,9 @@ test("☐ القسم: مُسجَّل في التحميل المسبق وفي م�
   /* والفهرس يشير إلى القسم، بالعربية والإنجليزية. */
   const index = read("index.html");
   assert.match(index, /islamic-videos\//, "بطاقة القسم غير موجودة في الفهرس");
-  assert.match(index, /islamicvideos:\["Islamic Video Library"/, "ترجمة البطاقة الإنجليزية ناقصة");
+  // الترجمة الإنجليزية للبطقة تُحمَّل من الملف المعياري
+  const enCommon = JSON.parse(fs.readFileSync(path.join(ROOT, "locales/en/common.json"), "utf8"));
+  assert.match(enCommon.common.tools.islamicvideos[0], /^Islamic Video Library/, "ترجمة البطاقة الإنجليزية ناقصة");
 });
 
 test("☐ القسم: أزرار البداية كلها تصفّي إلى نتائج", () => {

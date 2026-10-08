@@ -511,7 +511,7 @@ html.rtl .accpanel{right:auto;left:14px}
     set("siteSubtitle", tHome("siteSubtitle"));
     set("askTitle", tHome("whatDoYouWant"));
     set("installBtn", "📲 " + t("installApp"));
-    set("introBtn", "🧭 " + t("introGuide"));
+    set("introBtn", "🧭 " + t("introBtn"));
     set("sortDefault", t("sortDefault"));
     set("sortRecent", t("sortRecent"));
     set("backupExport", t("backupExport"));
@@ -564,7 +564,7 @@ const TOOLS = [
 
   {id:"adhkar", emoji:"🤲", name:"الأذكار الشاملة", desc:"١٢ قسمًا: الصباح، المساء، النوم، بعد الصلاة، الوضوء، الاستغفار وغيرها", cat:"dhikr",
    url:"25-azkar-shamila.html"},
-  {id:"dhikrkit", emoji:"📿", name:"نور الذكر", desc:"أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر", cat:"dhikr",
+  {id:"dhikrkit", emoji:"📿", name:"نور الذكر", nameEn:"Noor al-Dhikr", desc:"أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر", cat:"dhikr",
    url:"1-adhkar.html"},
   {id:"mushaf", emoji:"📖", name:"مُصحَفي", desc:"تتبّع حفظ القرآن الكريم كاملًا", cat:"quran",
    url:"2-mushaf.html"},
@@ -649,6 +649,14 @@ const TOOLS = [
   {id:"athan", emoji:"🕌", name:"مواقيت الأذان", desc:"الصلوات الخمس بمدينتك، وتنبيه وصوت أذان عند دخول الوقت", cat:"dhikr",
    url:"42-athan.html"},
 
+  {id:"discover", emoji:"✨", name:"اكتشف شيء جديدًا", desc:"آية، حديث، ذكر، دعاء، قصة، عالم، مصطلح، فائدة، موضوع، كتاب، أو درسًا جديدًا كل يوم", cat:"learn",
+    url:"46-discover.html"},
+  {id:"dailyguide", emoji:"🌅", name:"daily-guide.html", desc:"لوحة تحكم شخصية: التاريخ الهجري، الصلاة القادمة، مواقيت الصلاة، ورد القرآن، أذicas، آية اليوم، حديث اليوم، ذكر اليوم، task إيمانية", cat:"dhikr",
+    url:"47-daily-guide.html"},
+  {id:"reporterror", emoji:"🚨", name:"الإ-report عن خطأ", desc:"أبلغ عن خطأ نصي، مصدر غير صحيح، رابط لا يعمل، مشكلة تقنية، أو محتوى يحتاج مراجعة", cat:"books",
+    url:"48-report-error.html"},
+  {id:"sources", emoji:"📚", name:"sources الموسوعة", desc:"sources القرآن، الحديث، التفسير، الفقه، السيرة، التاريخ، الكتب، العلماء", cat:"books",
+    url:"49-sources.html"},
   {id:"b0", emoji:"🎧", name:"نونية القحطاني بصوت فارس عباد", desc:"تلاوة صوتية — ملفك الخاص على درايف", cat:"books", external:true,
    url:"https://drive.google.com/file/d/1FdR13KpMPO2RJqIGoHrVur_Geq9Ymf4-/view?usp=drivesdk"},
   {id:"b1", emoji:"📕", name:"البداية والنهاية", desc:"ابن كثير — ملفك الخاص على درايف", cat:"books", external:true,
@@ -694,6 +702,33 @@ const TOOLS = [
   {id:"b21", emoji:"📘", name:"مائة من عظماء أمة الإسلام", desc:"غيّروا مجرى التاريخ — ملفك الخاص على درايف", cat:"books", external:true,
    url:"https://drive.google.com/file/d/1Bcjf5SWxSasUzf4of-5krjvDbnlpcVvu/view?usp=drivesdk"}
 ];
+
+/* مفتاح الترجمة المُ hardcoded في 页面 — يُستخدم من قبل دليل المكتبة وال专项资金ي
+   لعرض أسماء الأقسام وال Connectors بالعربية والإنجليزية. */
+const I18N = {
+  ar: {
+    introBtn: "🧭 دليل المكتبة",
+    introGuide: " Listed",
+    dhikr: "أذgars وأدعية",
+    quran: "القرآن والحديث",
+    learn: "تعلّم",
+    stories: "قصص",
+    calc: "calculations",
+    books: "كتب وصوتيات",
+    all: "الكل",
+  },
+  en: {
+    introBtn: "🧭 Site guide",
+    introGuide: "Site guide",
+    dhikr: "Dhikr & Supplications",
+    quran: "Quran & Hadith",
+    learn: "Learn",
+    stories: "Stories",
+    calc: "Calculations",
+    books: "Books & Audio",
+    all: "All",
+  },
+};
 
 const CATS = [
   ["all","الكل"],

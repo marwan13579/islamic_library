@@ -1083,7 +1083,7 @@
     "openAll": "فتح الكل",
     "booksNote": "هذه روابط لملفاتك الخاصة على Google Drive — الضغط على \"فتح الكل\" هيفتح تبويبات متعددة، وقد يطلب المتصفح إذنك للسماح بالنوافذ المنبثقة.",
     "langLabel": "العربية",
-    "introBtn": "🧭 دليل المكتبة",
+    "introBtn": "🧭 Site guide",
     "partialNote": "محتوى الأدوات نفسها بالعربية الأصلية للحفاظ على دقة النصوص الدينية.",
     "cats": {
       "all": "الكل",
@@ -1136,8 +1136,8 @@
         "١٢ قسمًا: الصباح، المساء، النوم، بعد الصلاة، الوضوء، الاستغفار وغيرها"
       ],
       "dhikrkit": [
-        "نور الذكر",
-        "أذكار وأدعية وأحاديث في مكان واحد، مع سبحة عدّاد ورابط يُشارك لبلّغ الذكر"
+        "Noor al-Dhikr",
+        "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
       ],
       "mushaf": [
         "مُصحَفي",
@@ -1248,8 +1248,8 @@
         "١٨ موقع مرجعي بشرح أقسام كل موقع"
       ],
       "islamicvideos": [
-        "مكتبة الفيديو الإسلامية",
-        "تعلّم، شاهد، واستفد — قنوات يوتيوب موثّقة مصنّفة بالعمر واللغة والمجال"
+        "Islamic Video Library",
+        "Learn, watch, and benefit — trusted YouTube channels categorized by age, language, and field"
       ],
       "b0": [
         "نونية القحطاني بصوت فارس عباد",
@@ -1338,10 +1338,26 @@
       "b21": [
         "مائة من عظماء أمة الإسلام",
         "غيّروا مجرى التاريخ — ملفك الخاص على درايف"
+      ],
+      "discover": [
+        "Discover Something New",
+        "A verse, hadith, dhikr, dua, story, scholar, term, benefit, topic, book, or new lesson every day"
+      ],
+      "dailyguide": [
+        "Daily Guide",
+        "Personal dashboard: Hijri date, next prayer, prayer times, Quran recitation, morning/evening adhkar, verse of the day, hadith of the day, dhikr of the day, faith task"
+      ],
+      "reporterror": [
+        "Report an Error",
+        "Report a textual error, incorrect source, broken link, technical issue, or content needing review"
+      ],
+      "sources": [
+        "Encyclopedia Sources",
+        "Quran, Hadith, Tafsir, Fiqh, Seerah, History, Books, Scholars"
       ]
     },
     "installApp": "Install App",
-    "introGuide": "Library Guide",
+    "introGuide": "Site guide",
     "searchAria": "Search the whole site",
     "searchPlaceholderMain": "What are you looking for or what do you need?",
     "placeholderNote": "Your personal note on this tool...",

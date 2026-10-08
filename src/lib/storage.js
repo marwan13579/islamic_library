@@ -229,6 +229,8 @@ export const KEYS = {
   noorActions: "noor-actions",
   /* طبقة التفاعل — التقدّم الموحّد لكل الأدوات */
   engage: "engage-v1",
+  /* بلاغات الأخطاء: مصفوفة من التقارير المُرسَّلة من 48-report-error.html */
+  errorReports: "error-reports",
 };
 
 /**
@@ -298,6 +300,8 @@ export const IMPORT_TYPES = {
   "engage-v1": "object",
   "lib-quiz-level": "string",
   "lib-quiz-history": "array",
+  /* بلاغات الأخطاء: مصفوفة من التقارير المُرسَّلة من 48-report-error.html */
+  "error-reports": "array",
   /* صفحات قديمة: الأنواع مستنبطة من قراءتها في الصفحة نفسها */
   "tadabbur-entries": "array",
   "wird-goal": "number",

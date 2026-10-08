@@ -2,14 +2,14 @@
 <html lang="ar" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
-<script src="../storage-fallback.js"></script>
-<link rel="stylesheet" href="../engage.css">
-<script src="../engage.js" defer></script>
-<script src="../notify-boot.js" defer></script>
-<script src="../calculations.js"></script>
-<script src="../backup-core.js"></script>
-<script src="../daily-content.js"></script>
-<script src="../daily-companion.js"></script>
+<script src="storage-fallback.js"></script>
+<link rel="stylesheet" href="engage.css">
+<script src="engage.js" defer></script>
+<script src="notify-boot.js" defer></script>
+<script src="calculations.js"></script>
+<script src="backup-core.js"></script>
+<script src="daily-content.js"></script>
+<script src="daily-companion.js"></script>
 <script>
 (function(){
   try{
@@ -34,12 +34,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="مصادر الموسوعة">
-<link rel="manifest" href="../manifest.webmanifest">
-<link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
-<link rel="stylesheet" href="../fonts.css">
-<link rel="stylesheet" href="../encyclopedia.css">
-<script src="../noor-companion.js" defer></script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="encyclopedia.css">
+<script src="noor-companion.js" defer></script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -209,7 +209,7 @@
 
 <footer class="wrap">
   <p>المكتبة الإسلامية — بوابة النور | نور الهدى<br>موسوعة رقمية مجانية بلا إعلانات</p>
-  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="../index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="../src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
+  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
 </footer>
 
 <script type="module">
@@ -221,15 +221,15 @@ if (typeof openSearchModal === "function") {
 }
 </script>
 <script type="module">
-  import { createSearchModal, openSearchModal } from "../src/components/search-modal.js";
-  import { registerDataSources } from "../src/lib/search-content.js";
+  import { createSearchModal, openSearchModal } from "src/components/search-modal.js";
+  import { registerDataSources } from "src/lib/search-content.js";
   registerDataSources();
   createSearchModal();
   window.openSearchModal = openSearchModal;
 </script>
-<script src="../daily-home.js" defer></script>
+<script src="daily-home.js" defer></script>
 <script>
-if("serviceWorker" in navigator){navigator.serviceWorker.register("../sw.js").catch(function(){});}
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
 </body>
 </html>

@@ -2,14 +2,14 @@
 <html lang="ar" dir="rtl" id="htmlRoot">
 <head>
 <meta charset="utf-8">
-<script src="../storage-fallback.js"></script>
-<link rel="stylesheet" href="../engage.css">
-<script src="../engage.js" defer></script>
-<script src="../notify-boot.js" defer></script>
-<script src="../calculations.js"></script>
-<script src="../backup-core.js"></script>
-<script src="../daily-content.js"></script>
-<script src="../daily-companion.js"></script>
+<script src="storage-fallback.js"></script>
+<link rel="stylesheet" href="engage.css">
+<script src="engage.js" defer></script>
+<script src="notify-boot.js" defer></script>
+<script src="calculations.js"></script>
+<script src="backup-core.js"></script>
+<script src="daily-content.js"></script>
+<script src="daily-companion.js"></script>
 <script>
 (function(){
   try{
@@ -34,12 +34,12 @@
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
 <meta name="apple-mobile-web-app-title" content="دليل المسلم">
-<link rel="manifest" href="../manifest.webmanifest">
-<link rel="icon" href="../icon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="../icons/apple-touch-icon.png">
-<link rel="stylesheet" href="../fonts.css">
-<link rel="stylesheet" href="../encyclopedia.css">
-<script src="../noor-companion.js" defer></script>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<link rel="stylesheet" href="fonts.css">
+<link rel="stylesheet" href="encyclopedia.css">
+<script src="noor-companion.js" defer></script>
 <style>
   :root{
     --paper:#F6EFDF; --paper-2:#EFE5CF; --ink:#13322C; --ink-soft:#3D5B53;
@@ -123,15 +123,15 @@
 
 <footer class="wrap">
   <p>المكتبة الإسلامية — بوابة النور | نور الهدى<br>موسوعة رقمية مجانية بلا إعلانات</p>
-  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="../index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="../src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
+  <p style="font-size:.8rem;margin-top:4px"><a href="index.html" style="color:var(--gold)">الموسوعة الإسلامية</a> · <a href="index.html" style="color:var(--gold)">الرفيق اليومي</a> · <a href="src/app/app.html" style="color:var(--gold)">بوابة النور</a></p>
 </footer>
 
 <script type="module">
-import { APP_DAILY_VERSES, APP_DAILY_HADITHS, APP_DAILY_WISDOM } from "../src/data/app-daily.js";
-import { HIJRI_EVENTS } from "../src/data/hijri-events.js";
-import { isHijriToday, hijriShort } from "../src/lib/dates.js";
-import { read, write, KEYS } from "../src/lib/storage.js";
-import { toArNum } from "../src/lib/text.js";
+import { APP_DAILY_VERSES, APP_DAILY_HADITHS, APP_DAILY_WISDOM } from "src/data/app-daily.js";
+import { HIJRI_EVENTS } from "src/data/hijri-events.js";
+import { isHijriToday, hijriShort } from "src/lib/dates.js";
+import { read, write, KEYS } from "src/lib/storage.js";
+import { toArNum } from "src/lib/text.js";
 
 const TASKS_KEY = "daily-guide-tasks";
 const PROGRESS_KEY = "daily-guide-progress";
@@ -199,7 +199,7 @@ function render() {
     <div class="time" id="nextPrayerTime">--</div>
     <div class="countdown" id="prayerCountdown">جارٍ الحساب...</div>
     <div style="margin-top:12px">
-      <a class="btn btn-ghost" href="../29-prayer-times.html" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)">📋 مواقيت الصلاة الكاملة</a>
+      <a class="btn btn-ghost" href="29-prayer-times.html" style="background:rgba(255,255,255,.15);color:#fff;border-color:rgba(255,255,255,.3)">📋 مواقيت الصلاة الكاملة</a>
     </div>
   </div>`;
 
@@ -220,7 +220,7 @@ function render() {
     <div class="value quran">${verse.text}</div>
     <div class="actions">
       <button class="btn btn-ghost" id="copyVerse">📋 نسخ</button>
-      <a class="btn btn-ghost" href="../30-quran-full.html">📖 قراءة القرآن</a>
+      <a class="btn btn-ghost" href="30-quran-full.html">📖 قراءة القرآن</a>
     </div>
   </div>`;
 
@@ -229,7 +229,7 @@ function render() {
     <div class="value">${hadith.text || hadith.title}</div>
     <div class="label">📎 ${hadith.ref || hadith.src || ""}</div>
     <div class="actions">
-      <a class="btn btn-ghost" href="../27-hadith.html">📚 المزيد من الأحاديث</a>
+      <a class="btn btn-ghost" href="27-hadith.html">📚 المزيد من الأحاديث</a>
     </div>
   </div>`;
 
@@ -238,7 +238,7 @@ function render() {
     <div class="value">${wisdom.text}</div>
     <div class="label">📎 ${wisdom.ref || ""}</div>
     <div class="actions">
-      <a class="btn btn-ghost" href="../25-azkar-shamila.html">🤲 الأذكار الشاملة</a>
+      <a class="btn btn-ghost" href="25-azkar-shamila.html">🤲 الأذكار الشاملة</a>
     </div>
   </div>`;
 
@@ -331,15 +331,15 @@ document.getElementById("resetDay")?.addEventListener("click", () => {
 render();
 </script>
 <script type="module">
-  import { createSearchModal, openSearchModal } from "../src/components/search-modal.js";
-  import { registerDataSources } from "../src/lib/search-content.js";
+  import { createSearchModal, openSearchModal } from "src/components/search-modal.js";
+  import { registerDataSources } from "src/lib/search-content.js";
   registerDataSources();
   createSearchModal();
   window.openSearchModal = openSearchModal;
 </script>
-<script src="../daily-home.js" defer></script>
+<script src="daily-home.js" defer></script>
 <script>
-if("serviceWorker" in navigator){navigator.serviceWorker.register("../sw.js").catch(function(){});}
+if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
 </body>
 </html>

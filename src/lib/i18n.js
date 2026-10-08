@@ -205,23 +205,12 @@ export function t(key, vars = {}) {
   return text;
 }
 
-// دوال مساعدة للوحدات المعيارية
-export function tNav(key, vars) { return t(`navigation.${key}`, vars); }
+// دوال مساعدة للوحدة المعيارية (تُستخدم ديناميكيًا أو عبر t() مباشرة)
 export function tHome(key, vars) { return t(`home.${key}`, vars); }
-export function tQuran(key, vars) { return t(`quran.${key}`, vars); }
-export function tHadith(key, vars) { return t(`hadith.${key}`, vars); }
-export function tPrayer(key, vars) { return t(`prayer.${key}`, vars); }
-export function tAdhkar(key, vars) { return t(`adhkar.${key}`, vars); }
-export function tLibrary(key, vars) { return t(`library.${key}`, vars); }
-export function tTools(key, vars) { return t(`tools.${key}`, vars); }
-export function tSettings(key, vars) { return t(`settings.${key}`, vars); }
 export function tAccessibility(key, vars) { return t(`accessibility.${key}`, vars); }
-export function tLearn(key, vars) { return t(`learn.${key}`, vars); }
-export function tStories(key, vars) { return t(`stories.${key}`, vars); }
 export function tSearch(key, vars) { return t(`search.${key}`, vars); }
-export function tErrors(key, vars) { return t(`errors.${key}`, vars); }
-export function tForms(key, vars) { return t(`forms.${key}`, vars); }
 export function tCommon(key, vars) { return t(`common.${key}`, vars); }
+
 
 export function dir() {
   return LANG_ROUTES[current]?.dir || "rtl";
@@ -260,11 +249,7 @@ export async function setLocale(lang) {
   window.dispatchEvent(new CustomEvent("locale-change", { detail: { lang } }));
 }
 
-export function getLocale() {
-  return current;
-}
-
-export function getDir() {
+function getDir() {
   return dir();
 }
 
@@ -286,13 +271,13 @@ export async function loadModule(moduleName) {
 }
 
 // دالة للتحقق من وجود ترجمة
-export function hasTranslation(key) {
+function hasTranslation(key) {
   const dict = messages[current] || {};
   return key.split(".").reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict) !== null;
 }
 
 // دالة للحصول على جميع مفاتيح وحدة معينة
-export function getModuleKeys(moduleName) {
+function getModuleKeys(moduleName) {
   const moduleData = messages[current]?.[moduleName];
   if (!moduleData) return [];
   return Object.keys(moduleData);
