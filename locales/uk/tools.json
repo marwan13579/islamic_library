@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Інструменти та калькулятори",
+    "subtitle": "Юридичні калькулятори, щоденні інструменти та навчальні ресурси",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "Калькулятори",
+      "learn": "Навчання",
+      "dhikr": "Дихер",
+      "quran": "Кран",
+      "stories": "Історія",
+      "utils": "Контакти"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "Відкрито",
+      "use": "Зареєструватися",
+      "calculate": "Розрахувати",
+      "start": "Почати",
+      "continue": "Продовжити",
+      "reset": "Зареєструватися",
+      "save": "Зберегти",
+      "export": "Експорт",
+      "import": "Імпорт",
+      "share": "Поділитися",
+      "download": "Завантажити",
+      "print": "Друк"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Вибрані",
+    "addToFavorites": "Додати у обране",
+    "removeFromFavorites": "Видалити з вподобань",
+    "notes": "Ноти",
+    "addNote": "Додати Примітка",
+    "recentlyUsed": "Нещодавно використовується",
+    "defaultSort": "Сортування за замовчуванням",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "name": "Калькулятор Zakat",
+      "desc": "Розрахувати Закат і Nisab Автоматично",
+      "goldPrice": "Золота ціна за траву (21K)",
+      "cash": "Готівка",
+      "gold": "Золота & Срібло",
+      "trade": "Товари для торгівлі",
+      "debtsOwed": "Debts Owed до тебе",
+      "debtsOwe": "Debts Ви Owe",
+      "nisab": "Нісаб",
+      "zakatDue": "Закат Ду",
+      "calculate": "Розрахувати",
+      "result": "Почати",
+      "fitr": "Закат аль-Фітр",
+      "persons": "Кількість осіб",
+      "amountPerPerson": "Кількість осіб",
+      "total": "Всього"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Калькулятор тиску",
+      "desc": "Дивитися акції в поширених випадках",
+      "estate": "Вартість нерухомості",
+      "wives": "Плеймейт",
+      "sons": "Соски",
+      "daughters": "Дочка",
+      "father": "Афіша",
+      "mother": "Матуся",
+      "grandfather": "Великий",
+      "grandmother": "Бабуся",
+      "brothers": "Брати",
+      "sisters": "Сестри",
+      "paternalUncles": "Патернальні дядечко",
+      "maternalUncles": "Матернальні дядьки",
+      "calculate": "Розрахувати",
+      "shares": "Акції",
+      "details": "Детальніше"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Qibla Напрямок",
+      "desc": "Qibla Angle від вашого місця розташування, живий компас корегування магнітного північного відхилення",
+      "angle": "Кута",
+      "direction": "Навігація",
+      "compass": "Компас",
+      "liveCompass": "Живий компас",
+      "calibrate": "Калібрування",
+      "accuracy": "Аспірантура"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Молитва",
+      "desc": "Fajr до Isha, Відлік, Кілька методів розрахунку і Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Календар Хірі",
+      "desc": "Хірі ↔ Грегорян Перетворення, Події та Рекомендоване Перевага"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Змішані застібки Tracker",
+      "desc": "Запис пропущених Днів і відстеження Виготовлення Them Вгору"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Hajj & Umrah Керівництво",
+      "desc": "Практичні поради"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Відповіли Молитви",
+      "desc": "Відповідав час, коли Dua, і Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Ім'я Аллаха",
+      "desc": "99 імен з Значеннями"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Окказія Dhikr",
+      "desc": "Подорож, Sickness, Distress, Головна, Їжа"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Рамадан календар",
+      "desc": "Щоденне Dua і завдання, останні десять ночей і Ейд"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Історії пророків",
+      "desc": "25 Пророки з Історії та уроки"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Профектна біографія",
+      "desc": "Часовий час життя Профета ⧼s⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼є⧽⧼я⧽"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Акти поклоніння",
+      "desc": "Вуд, молитви та Сонячні, Кріплення та Закат"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Молитви",
+      "desc": "Покроковий посібник для дітей та нових мусульман"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Дитячі манери",
+      "desc": "Сім коротких історії про красуні етики"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Запис голосу з Dhikr",
+      "desc": "Особистий реєстратор для вашого голосу"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Тадупурський журнал",
+      "desc": "Напишіть свої Відображення на бірані"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Щоденний Quran Читання Tracker",
+      "desc": "Відстежуйте ваші щоденні сторінки Quran"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Група Tasbih",
+      "desc": "Відокремлений лічильник для кожного особи у зв'язку"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "Ноор Компаніон",
+      "desc": "Gentle Faith Reminder Ви Налаштувати"
     },
     "cardMaker": {
       "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "desc": "Увімкніть будь-який Verse, Hadith, або Dhikr у спільну карту зображень"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Група Хатма",
+      "desc": "Поширені частини серед учасників та відстеження"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Каталог сайтів Іслам",
+      "desc": "18 Довідкові сайти з роз'ясненнями розділу"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Резиденти, Реанімація та радіо",
+      "desc": "158 Reciters з їх Surahs, жива радіо, повний Surah Завантаження офлайн"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Ісламська відео бібліотека",
+      "desc": "Перевірені YouTube-канали Категоризований вік, мова, поле"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "Закуски",
+      "desc": "5820 Питання в Tafsir, Fiqh, Aqidah, Hadith з миттєвим виправленням"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "Адхан Таймс",
+      "desc": "П'ять молитв у Вашому місті, вівчарстві та Анді"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Ноор аль-Худа — Навчальна програма",
+      "desc": "18 Секцій: Навчальні дисципліни та алафи, Уроки, Серея, Профети, Ім'я, Джикр, вікторини та сертифікати, Дитячий куточок"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Статус на сервери",
+      "desc": "Мушаф, Джикр, Молитва Times, Радіо, Закат, Карти — Твори офлайн"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Запити та сертифікати",
+      "desc": "Три типи Питання, Щотижневий виклик, Сертифікати"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway — додаток",
+      "desc": "Мушаф, адгкар, молитви, радіо, закват і картки — працює в автономному режимі"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Запити та сертифікати",
+      "desc": "Введіть номер мобільного, який Ви вказали при укладаннi договору з банком - для ідентифікації."
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Група Хатмах",
+      "desc": "Розподільчі частини учасників та відстеження прогресу та показання"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Dua Картон",
+      "desc": "Увімкніть будь-які вірші, мати або Dhikr у завантажувальну, доступну карту зображень"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Свята Коран",
+      "desc": "Повний Мушаф — суха, частини, пошук, реанімація, переклад та afsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Система мусульманського життя",
+      "desc": "Ваш день пов'язаний з молитвою - молитвою, дихимкратом і Кораном на кожному молитві"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Комплексний Adhkar",
+      "desc": "12 секцій: ранок, вечір, сон, після молитви, вуду, istighfar і багато іншого"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Ноор Дикр",
+      "desc": "Adhkar, du'as і hadiths в одному місці, з лічильником tasbeeh і доступним посиланням"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Моя Мушаф",
+      "desc": "Відстежуйте повну запам’ятовуваність"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Гадіт Noble",
+      "desc": "Підбір з шести книг, задокументованих на оповідачу та сорту"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "Аль-Арбайн аль-Нававі",
+      "desc": "42 роки зібрані з коротким поясненням"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Adab Історії для дітей",
+      "desc": "Сім оповідань про хороші моральні"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Група Tasbeeh",
+      "desc": "Окремий лічильник для кожної людини в зборі"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "Ноор Компаніон",
+      "desc": "Нагадка про те, що ви налаштуєте: інтервал, тип контенту та спокійний режим"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Відвідування та супровід",
+      "desc": "Відвідування хворих, злагоджених і вітання"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Записувати свій Adhkar",
+      "desc": "Особистий диктофон, коли ви пам'ятаєте Алла"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Молитва",
+      "desc": "Fajr до Isha, відлік, багато методів розрахунку та шкіл"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Каталог сайтів Іслам",
+      "desc": "18 сайтів з поясненням всіх розділів сайту"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "Жирухи",
+      "desc": "Документовані жирові відходи, що класифікуються в поклоніння, транзакції, клітку та етикетці"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "Тафсер аль-Муясар",
+      "desc": "Тафсір кожного вірша Корана з його значенням — 114 суха"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al-Siraj фі Bayan Ghareeb al-Quran",
+      "desc": "Значення рідкісних кількісних слів — 6111 умов у 114 сухах з віршем та пошуком слів"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Іль-Муслім",
+      "desc": "Ранок, вечір, сон і їжа adhkar — 132 глави з аудіо"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Хутба",
+      "desc": "Хутбаї та уроки в акеди, очищення та етики"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Ісламська історія",
+      "desc": "Події пророка до кінця Османської держави"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Ісламська відео бібліотека",
+      "desc": "Дізнайтеся, дивитися і вигода — задокументовані YouTube канали, класифіковані за віком, мовою і поле"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "Закуски",
+      "desc": "5820 питань в tafsir, fqh, aqeedah і haveith, з миттєвою корекцією"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "浜у 涓 蹇",
+      "desc": "Аудіореанімація — власний файл на диску"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "اللغة العربية",
+      "desc": "Ibn Kathir — власний файл на диску"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "اللغة العربية",
+      "desc": "Ваш власний файл на Диску"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "ا ر ر ر ر",
+      "desc": "Ваш власний файл на Диску"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "ا ر ر ر ر",
+      "desc": "Ваш власний файл на Диску"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "й",
+      "desc": "Ваш власний файл на Диску"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "ا ا ا ر ا",
+      "desc": "Ваш власний файл на Диску"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "ا ت ت ت ت",
+      "desc": "Ваш власний файл на Диску"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "اللغة العربية",
+      "desc": "Safi al-Rahman al-Mubarakpuri — власний файл на Drive"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "й",
+      "desc": "Ваш власний файл на Диску"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "ا ا ا ل ل ل ل ل",
+      "desc": "Ваш власний файл на Диску"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "浜у 涓 蹇",
+      "desc": "Ваш власний файл на Диску"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "اللغة العربية",
+      "desc": "Ваш власний файл на Диску"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "اللغة العربية",
+      "desc": "Ваш власний файл на Диску"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "й",
+      "desc": "Abd al-Karim Zaydan — власний файл на Drive"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "أو أتد ر ر ر",
+      "desc": "Ваш посібник з розуміння та відображення на Quran — власний файл"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "浜у 涓 蹇",
+      "desc": "Ваш власний файл на Диску"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "浜у 涓 蹇",
+      "desc": "Ваш власний файл на Диску"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "برسيسيسيسيسيسيتيتيسيتيسيسيسيتيسيسيسيسيتيتيتيتيتيتيتيتيتيتيتيتيتيتيتيتيتيسيتيتيتيتي  ال ال د د د د د ب د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د د",
+      "desc": "Ваш власний файл на Диску"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "الشكل القانوني والتنظيمي Товариство з обмеженою вiдповiдальнiстю",
+      "desc": "Доктор Мустафа Мачуд — власний файл на Диску"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "اسيسيساسين هاسيتين ا ا ااج ا ا ا ل ل ل ل ل ل ك ك ك ك ك ك ك ك ك ا ا ا ا ا ا ا ا ا ا ا ا ل ل ل ل ل ل ك ك ك ك ك ك ك ك ك ك ك ك ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ا ك ك ا ا ك ك ا ا ا ا ا ا ا ا ا ا ك ا ك ا ا ا ك ك ك ك ك ك ك ك ك ا ك ك ك ك ا ا ك ك ا ا ا ",
+      "desc": "Ваш власний файл на Диску"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "й ا",
+      "desc": "Вони змінили курс історії — власний файл на Диску"
     }
   }
 }

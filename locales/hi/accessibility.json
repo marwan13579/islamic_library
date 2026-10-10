@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "सुलभता",
+    "subtitle": "हर किसी के लिए साइट को आसान बनाने के विकल्प",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "The language of a language.",
+      "desc": "इंटरफ़ेस भाषा चुनें"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "To make a font-size.",
+      "desc": "फ़ॉन्ट आकार समायोजित करें",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "सामान्य",
+        "large": "बड़ा",
+        "extraLarge": "अतिरिक्त बड़ा",
+        "huge": "विशाल"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "The line of the top of the line.",
+      "desc": "रेखाओं के बीच",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "सामान्य",
+        "relaxed": "आराम",
+        "loose": "लूज"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "To make a letter Spacing.",
+      "desc": "अक्षरों के बीच अंतरिक्ष",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "सामान्य",
+        "wide": "चौड़ा",
+        "wider": "व्यापक"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "A contrast.",
+      "desc": "रंग विपरीत मोड",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "सामान्य",
+        "high": "उच्च",
+        "maximum": "अधिकतम",
+        "inverted": "उल्टे"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "A mode of Accessibility",
+      "desc": "सभी पहुंच सुविधाओं को सक्षम करें",
+      "enabled": "सक्षम",
+      "disabled": "विकलांग"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "The speed of the motion.",
+      "desc": "गैर आवश्यक एनिमेशन रोकें",
+      "respectSystem": "सिस्टम सेटिंग"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "To reading mode.",
+      "desc": "विस्तारित पढ़ने के लिए अनुकूलित फ़ॉन्ट और रंग",
+      "sepia": "सेप्टिया (पेपर)",
+      "dark": "अंधेरा",
+      "light": "प्रकाश"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "To make a simple mode.",
+      "desc": "कम विचलन के साथ सरलीकृत इंटरफ़ेस"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "कीबोर्ड शॉर्टकट",
+      "desc": "शॉर्टकट देखें और जानें",
+      "showHelp": "मदद दिखाएँ",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: सामग्री पर जाएं",
+        "skipToNav": "Alt + 2: नेविगेशन पर जाएं",
+        "skipToSearch": "Alt + 3: खोज पर जाएं",
+        "toggleMenu": "Alt + M: Toggle मेनू",
+        "toggleTheme": "Alt + T: Toggle थीम",
+        "openSettings": "Alt + S: Open सेटिंग्स",
+        "openLanguage": "Alt + L: Open Languages",
+        "increaseFont": "Ctrl +: फ़ॉन्ट बढ़ाएं",
+        "decreaseFont": "Ctrl + -: फ़ॉन्ट घटाना",
+        "resetFont": "Ctrl + 0: 0 रीसेट फ़ॉन्ट",
+        "toggleContrast": "Alt + C: Toggle विपरीत",
+        "toggleMotion": "Alt + R: Toggle गति को कम",
+        "toggleSimple": "Alt + P: टॉगल सरल मोड"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "A device for a computer program.",
+      "desc": "NVDA, JAWS, VoiceOver, Talkback के साथ संगतता में सुधार",
+      "announcements": "स्थिति घोषणा",
+      "liveRegions": "लाइव क्षेत्र",
+      "labels": "लेबल",
+      "descriptions": "विवरण"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "कीबोर्ड नेविगेशन",
+      "desc": "सभी तत्वों को सुलभ बनाना",
+      "focusVisible": "दृश्यमान फोकस",
+      "focusOrder": "लॉजिकल फोकस ऑर्डर",
+      "noKeyboardTraps": "कोई कुंजीपटल जाल",
+      "tabIndex": "टैब इंडेक्स"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "A scent of captions.",
+      "desc": "ऑडियो / वीडियो सामग्री के लिए समर्थन कैप्शन",
+      "enabled": "सक्षम",
+      "languages": "कैप्शन भाषा",
+      "transcripts": "पूर्ण ट्रांसक्रिप्ट"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
+      "title": "रंग ब्लाइंड समर्थन",
+      "desc": "रंग-ब्लाइंड सुरक्षित रंग योजनाएं",
       "protanopia": "Protanopia (Red)",
       "deuteranopia": "Deuteranopia (Green)",
       "tritanopia": "Tritanopia (Blue)",
       "achromatopsia": "Achromatopsia (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "The support of Dyslexia",
+      "desc": "डिस्लेक्सिया के लिए फ़ॉन्ट्स और उपकरण",
+      "font": "डिस्लेक्सिया फ़ॉन्ट",
+      "ruler": "पढ़ना शासक",
+      "spacing": "बढ़ी हुई रिक्ति",
+      "highlight": "लाइन हाइलाइट"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Preference",
+      "desc": "स्थानीय रूप से एक्सेसिबिलिटी सेटिंग सहेजें",
+      "autoSave": "ऑटो सेव",
+      "sync": "Across उपकरण सिंक"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "A set of a set of a set.",
+      "desc": "डिफ़ॉल्ट के लिए सभी एक्सेसिबिलिटी सेटिंग्स को रीसेट करें",
+      "confirm": "रीसेट की पुष्टि करें",
+      "button": "रीसेट करें"
     }
   },
   "_meta": {

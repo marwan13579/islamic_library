@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Kebolehcapaikan",
+    "subtitle": "Pilihan untuk membuat situs lebih mudah digunakan untuk semua orang",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "🌐 Bahasa",
+      "desc": "Pilih bahasa antarmuka"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "🔤 Ukuran Fon",
+      "desc": "Laras font size",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
+        "normal": "♪ Normal ♪",
+        "large": "Besar",
+        "extraLarge": "Greater",
         "huge": "Huge"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "↕️ Tinggi Garis",
+      "desc": "Ruang antara garis",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "♪ Normal ♪",
+        "relaxed": "Tenang",
+        "loose": "Amerika"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "🔠 Ruangjarak Surat",
+      "desc": "Ruang antara huruf",
       "levels": {
-        "normal": "Normal",
+        "normal": "♪ Normal ♪",
         "wide": "Wide",
         "wider": "Wider"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "🎨 Kontras",
+      "desc": "Mod kontras warna",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "♪ Normal ♪",
+        "high": "SMA",
+        "maximum": "Maksimum",
+        "inverted": "Songsangkan"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "♿ Mode Aksesibilitas",
+      "desc": "Hidupkan ciri-ciri kebolehcapaian",
+      "enabled": "Diaktifkan",
+      "disabled": "Dimatikan"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "🎞️ Kurangi Gerak",
+      "desc": "Hentikan animasi non-esensial",
+      "respectSystem": "Pengaturan Sistem Penghormatan Bernilai"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "👁️ Mode Pembacaan",
+      "desc": "Font dan warna teroptimum untuk pembacaan lanjutan",
+      "sepia": "Spanyol (Paper)",
+      "dark": "Kegelapan",
+      "light": "Terang"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "🧠 Sederhana",
+      "desc": "Antarmuka yang disederhanakan dengan sedikit gangguan"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "⌨️ Jalan Pintas Papan Kekunci",
+      "desc": "Lihat dan pelajari jalan pintas",
+      "showHelp": "Bantuan",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt - 1: Langkah ke isi",
+        "skipToNav": "Alt + 2: Langkah ke navigasi",
+        "skipToSearch": "Alt + 3: Langkah untuk mencari",
+        "toggleMenu": "Alt + M: Menu toggle",
+        "toggleTheme": "Alt + T: Jungkitkan tema",
+        "openSettings": "Alt Alt + S: Buka pengaturan",
+        "openLanguage": "Bahasa Buka",
+        "increaseFont": "Ctrl Ctrl + + +: Naikkan fon",
+        "decreaseFont": "Ctrl Ctrl + -: Kurangkan font",
+        "resetFont": "Ctrl Ctrl + 0: Reset font",
+        "toggleContrast": "Alt + C: Kontras Jungkit",
+        "toggleMotion": "Alt + R: Jungkitkan gerakan kurangi",
+        "toggleSimple": "Alt Alt + P: Togol mode sederhana"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "🔊 Dukungan Pembaca Layar",
+      "desc": "Keserasian keserasian keserasian keserasian keserasian keserasian keserasian keserasian dengan NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Pengumuman Status",
+      "liveRegions": "Wilayah Hidup",
+      "labels": "Label",
+      "descriptions": "Keterangan"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Navigasi Papan Ketik",
+      "desc": "Buat semua elemen aksesan papan ketik",
+      "focusVisible": "Fokus Dapat Dilihat pada Lilin",
+      "focusOrder": "Susunan Fokus Logika Logis",
+      "noKeyboardTraps": "Tiada Trap Papan Tik Papan Kekunci",
+      "tabIndex": "Indeks Tab"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "🎥 Kapsi & Transkripsi",
+      "desc": "Sokong aplikasi aplikasi untuk konten audio/video",
+      "enabled": "Diaktifkan",
+      "languages": "Bahasa Kapsi Bahasa",
+      "transcripts": "Transkripsi Penuh"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
+      "title": "🌈 Dukungan Buta Warna",
+      "desc": "Skema warna-warna buta warna yang aman",
+      "protanopia": "Protanopia (Merah)",
+      "deuteranopia": "(Hijau)",
+      "tritanopia": "(Biru)",
       "achromatopsia": "Achromatopsia (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "📖 Dukungan Dyslexia",
+      "desc": "Fonta dan alat untuk disleksia",
+      "font": "Fonta Dyslexia",
+      "ruler": "Penguasa Pembacaan Haus",
+      "spacing": "Penjarakan Ditingkatkan",
+      "highlight": "Sorotan Garis"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "💾 Simpan Keutamaan",
+      "desc": "Keboleh capaikan",
+      "autoSave": "Auto Simpan",
+      "sync": "[ Gambar di hlm."
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "🔄 Atur Ulang",
+      "desc": "Keboleh capaikan",
+      "confirm": "Konfirmasi Ulangtetap",
+      "button": "KAN"
     }
   },
   "_meta": {

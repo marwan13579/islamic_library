@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "সহায়ক প্রযুক্তি",
+    "subtitle": "এই সাইটকে সবার ব্যবহারের জন্য সহজে ব্যবহার করতে হবে",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "ফেলেছেName",
+      "desc": "ইন্টারফেস বেছে নিন"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "ফন্টের মাপ",
+      "desc": "ফন্টের মাপ পরিবর্তন করুন",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "স্বাভাবিক",
+        "large": "বড়",
+        "extraLarge": "অধিক বৃহৎ",
+        "huge": "বৃহৎ"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "লাইন নম্বরের উচ্চতা",
+      "desc": "লাইনের মাঝে স্পেসের সংখ্যা",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "স্বাভাবিক",
+        "relaxed": "শান্ত",
+        "loose": "শিথিল রাউটিং"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "পারছেন না",
+      "desc": "অক্ষরের মধ্যবর্তী স্পেস সংখ্যা",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "স্বাভাবিক",
+        "wide": "প্রশস্ত",
+        "wider": "প্রশস্ত"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "বৈপরিত্য",
+      "desc": "রংয়ের মোড",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "স্বাভাবিক",
+        "high": "উচ্চ",
+        "maximum": "সর্বোচ্চ",
+        "inverted": "বিপরীত"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "ইন-লাইন ম্যাথ মোড",
+      "desc": "সমস্ত বিশেষ ব্যবহারের বৈশিষ্ট্য সক্রিয় করুন",
+      "enabled": "সক্রিয়",
+      "disabled": "নিষ্ক্রিয়"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "ঘটে যাওয়া ক্রম কমায়",
+      "desc": "অ্যানিমেশনবিহীন অ্যানিমেশন বন্ধ করা হবে",
+      "respectSystem": "সিস্টেমের পরিচালনা"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "BSD রিডিং মোড",
+      "desc": "প্রসারিত পড়ার জন্য উন্নত ফন্ট এবং রং",
+      "sepia": "সেপ্টেম্বরিয়া (উলট)",
+      "dark": "কালো",
+      "light": "সাদা"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "ক্যারেট মোড ( C)",
+      "desc": "হ্রাস না করে সরল ইন্টারফেস"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "কি-বোর্ড শর্ট-কাট",
+      "desc": "প্রদর্শন ও শর্ট-কাট শিখতে ব্যবহৃত",
+      "showHelp": "সহায়তা বাটন প্রদর্শিত হবে",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "উন্নতি:",
+        "skipToNav": "Alt+Bannergert হতে প্রতিরোধ করা হবে",
+        "skipToSearch": "Alt + 3: অনুসন্ধান উপেক্ষা করা হবে",
+        "toggleMenu": "Alt+ এম:",
+        "toggleTheme": "Alt+T থিম: %s",
+        "openSettings": "Alt+ S: OpenType খুলুন",
+        "openLanguage": "Alt+ L: মুক্ত ভাষা",
+        "increaseFont": "Ctrl+Ix ফন্ট:% 1",
+        "decreaseFont": "Ctrl+S) - ফন্ট ছোট করো",
+        "resetFont": "Ctrl + 0: ফন্ট পুনরায় নির্ধারণ করুন (l)",
+        "toggleContrast": "Alt+ C: বৈপরিত্য টগল করা হবে",
+        "toggleMotion": "Alt+ R: সর্বোচ্চ মাপ হ্রাস করার মোড",
+        "toggleSimple": "Alt+ P: সাধারণ মোড"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Wacom স্ক্রীন রিডারের সমর্থন",
+      "desc": "এনভিডিএ, জেএডাব্লিউএস, ভয়েস হরড, টকব",
+      "announcements": "অবস্থা ঘোষণা করা হচ্ছে",
+      "liveRegions": "লাইভ অঞ্চল",
+      "labels": "লেবেল",
+      "descriptions": "বিবরণ"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "XKB কীবোর্ড সংক্রান্ত পাথ",
+      "desc": "সকল প্রধান কি-বোর্ড সক্রিয় করা হবে",
+      "focusVisible": "দৃশ্যমান",
+      "focusOrder": "লজিক্যাল ফোকাসের অনুক্রম",
+      "noKeyboardTraps": "কোনো কীবোর্ড ফাঁদ নেই",
+      "tabIndex": "ট্যাব ইন্ডেক্স"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "XKB শিরোনাম এবং ট্রান্সস্ক্রিপ্ট",
+      "desc": "অডিও/ভিডিও বিষয়বস্তুর জন্য ব্যবহৃত শিরোনাম",
+      "enabled": "সক্রিয়",
+      "languages": "শিরোনাম ভাষা",
+      "transcripts": "সম্পূর্ণ ট্রান্সস্ক্রিপ্ট"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "CreateDC-র সুনির্দিষ্ট প্রদর্শন সমর্থন",
+      "desc": "রং বিন্যাস বেছে নিন:",
+      "protanopia": "প্রোট্যাক্টেনিয়াম",
+      "deuteranopia": "আইসোগানিয়া (সবুজ)",
+      "tritanopia": "ট্রিটিনোপিয়া (মূল নীল)",
+      "achromatopsia": "অ্যাক্রোমাতিয়া (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "মন্‌সেক্সিয়া সাপোর্ট",
+      "desc": "অ্যানালগ এবং টুল",
+      "font": "ডাইন্যামিক ফন্ট",
+      "ruler": "শাসক পড়া",
+      "spacing": "উন্নত স্থান",
+      "highlight": "লাইন হাইলাইট করা হবে"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "পছন্দ ( P)",
+      "desc": "স্থানীয় অবস্থানে বিশেষ ব্যবহারের বৈশিষ্ট্য সংরক্ষণ করা হবে",
+      "autoSave": "স্বয়ংক্রিয় সংরক্ষণ ব্যবস্থা",
+      "sync": "অ্যাসিঙ্ক্রোনাস ডিভাইস সুসংগত করুন"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "রি-সেট",
+      "desc": "সমস্ত বিশেষ ব্যবহারের বৈশিষ্ট্য ডিফল্ট মান পুনরায় স্থাপন করা হবে",
+      "confirm": "পুনরায় নির্ধারণ",
+      "button": "পুনরায় নির্ধারণ"
     }
   },
   "_meta": {

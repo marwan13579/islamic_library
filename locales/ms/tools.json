@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Alatan & Kalkulator",
+    "subtitle": "Kalkulator Hukum, Alat Harian, dan Sumber Daya Pendidikan",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
+      "calc": "Kalkulator",
+      "learn": "Belajar",
       "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "quran": "Qur'an",
+      "stories": "Cerita",
+      "utils": "Utilitas"
     },
     "actions": {
       "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
+      "use": "Guna",
+      "calculate": "Akal",
+      "start": "Mula",
+      "continue": "Teruskan",
+      "reset": "KAN",
+      "save": "Simpan",
+      "export": "Ekspor",
       "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "share": "Kongsi",
+      "download": "Muaturun",
+      "print": "Cetakan"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Favorit",
+    "addToFavorites": "Tambah ke Kegemaran",
+    "removeFromFavorites": "Hapus dari Kegemaran",
+    "notes": "Nota Peribadi",
+    "addNote": "Tambahkan Nota",
+    "recentlyUsed": "Baru Digunakan",
+    "defaultSort": "Urutan Default",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "name": "Kalkulator Zakat Zakat",
+      "desc": "Menghitung Zakat dan Nisab Anda Secara Otomatis",
+      "goldPrice": "Harga Emas Per Gram (21K)",
+      "cash": "Tunai",
+      "gold": "Perak Gold &",
+      "trade": "Perdagangan Barang",
+      "debtsOwed": "Utang - Utang yang Disahkan",
+      "debtsOwe": "Utang Anda Owe",
       "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
+      "zakatDue": "Zakat Karena",
+      "calculate": "Akal",
+      "result": "Hasil",
       "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
+      "persons": "Sejumlah Orang",
+      "amountPerPerson": "Jumlah orang hilang per orang",
       "total": "Total"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
+      "name": "Kalkulator Warisan",
+      "desc": "Kegembalaan Berbagi dalam Kasus Umum",
+      "estate": "Nilai Estate",
+      "wives": "Istri",
       "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
+      "daughters": "Putri",
+      "father": "Bapa",
+      "mother": "Ibu",
+      "grandfather": "Kakek",
+      "grandmother": "Nenek",
+      "brothers": "Saudara",
       "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "paternalUncles": "Paman - Paman Paternal",
+      "maternalUncles": "Paman - Paman yang Kejam",
+      "calculate": "Akal",
+      "shares": "Kongsi",
+      "details": "Perincian"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Arah kiblat",
+      "desc": "Sudut Qibla dari Lokasi Anda, Kompas Langsung Membetulkan Deviasi Utara Magnetik",
+      "angle": "Sudut",
+      "direction": "Arah",
+      "compass": "Kompas",
+      "liveCompass": "Kompas Live",
+      "calibrate": "Kalibrasi",
+      "accuracy": "Ketepatan"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Masa Doa",
+      "desc": "(Inggris) Fajr to Isha, Countdown, Multiple Metode Penghitungan dan Madhab"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Kalendar Baru",
+      "desc": "Hari Hijri ↔ Gregorian Constitution, Events, and Rekomendasi Puasa"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Penjejak Puasa yang Hilang",
+      "desc": "Catatan yang Rindu Hari dan Trek Membuat Mereka Sampai"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Panduan Haji Haji & Umrah",
+      "desc": "Langkah Ritual dan Tip yang Praktis"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Masa Doa Dijawab",
+      "desc": "Masa - Masa Dua Dijawab, dan Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Nama-nama Allah",
+      "desc": "Nama 99 Nama yang Maknanya"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Kejadian Dhikr",
+      "desc": "Perjalanan, Penyakit, Kesusahan, Rumah, Makanan"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Kalender Ramadan",
+      "desc": "Hari Dua dan Tugas, Sepuluh Malam Terakhir dan Idul Fitri"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Cerita Nabi-nabi",
+      "desc": "Nabi 25 Nabi dengan Cerita dan Pelajarannya"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Biografi Nabi Muhammad",
+      "desc": "Garis waktu kehidupan Nabi"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Kisah Panduan Ibadat",
+      "desc": "Wudu, Doa Kewajiban & Sunnah, Puasa, dan Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Belajarlah Doa",
+      "desc": "Panduan Langkah-berdasarkan Langkah Anak-Anak & Muslim Baru"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Kisah - Kisah Anak - Anak Priangan",
+      "desc": "Tujuh Cerita Pendek tentang Etika yang Indah"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Rekam Rekaman Suara Anda dengan Dhikr",
+      "desc": "Perekam Pribadi untuk Suara Anda Mengingat Allah"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Jurnal Tadabbur",
+      "desc": "Tulislah Pandangan Saudara tentang Ayat - Ayat Quran"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Penjejak Pembaca Al Quran Harian",
+      "desc": "Jejaki Halaman Quran Harian Anda"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Tasbih Kumpulan",
+      "desc": "Penanggulangan yang Berpisah bagi Setiap Orang dalam Mengumpulkan"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "Andika",
+      "desc": "Pengingat Iman yang Lembut yang Saudara Atur"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Pembuat Kartu Dawah",
+      "desc": "Woady Mengubah Ayat - Ayat, Hadith, atau Dhikr menjadi Kartu Gambar yang Dapat Dibagikan"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Grup Group Khatma",
+      "desc": "Peserta dan Penyempurnaan Trek"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Direktori Situs Islam",
+      "desc": "18 Situs Rujukan dengan Penjelasan Bagian"
     },
     "reciters": {
       "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "desc": "158 Reciters with Their Surah, Live Radio, Full Surah Download Offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Perpustakaan Video Islam",
+      "desc": "Saluran YouTube Terverifikasi Dikategorikan oleh Usia, Bahasa, Medan"
     },
     "quiz": {
       "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "desc": "5820 Pertanyaan dalam Tafsir, Fiqh, Aqidah, Hadith dengan Pembetulan Instan"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "Australia",
+      "desc": "Doa Lima Doa di Kota Anda, Waspada dan Doa di Waktu Doa"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Luqman Noor al-Huda — Curriculum Pendidikan",
+      "desc": "18 Bagian: Curriculum & Figur Salaf, Pelajaran, Searah, Nabi, Nama, Dhikr, Sertifikat Quizzes &, Kids Corner"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Portal Noor — App",
+      "desc": "Mushaf, Dhikr, Masa Doa, Radio, Zakat, Kartu — Bekerja Luar Talian"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Sertifikat Quizzes &",
+      "desc": "Tiga Jenis Pertanyaan, Tantangan Mingguan, Sertifikat Penyempurnaan"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Gerbang Gerbang Kota Noor — Aplikasi",
+      "desc": "Mushaf, adhkar, waktu berdoa, radio, zakat dan kartu — bekerja luring"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Sertifikat Quizzes &",
+      "desc": "Bank pertanyaan di tiga jenis, tantangan mingguan, dan sertifikat penyelesaian yang digambar di kanvas"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Grup Group Khatmah",
+      "desc": "Peserta dan trek kemajuan dan dedikasi"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Pembuat Kartu Dua Yea",
+      "desc": "Alih bait, hadits atau dhikr menjadi kartu gambar yang dapat diunduh dan dapat dibagikan"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Al-Qur'an suci",
+      "desc": "Complete Mushaf — surah, bagian, pencarian, kutipan, terjemahan dan tashir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Sistem Kehidupan Muslim",
+      "desc": "Harimu terikat pada doa — doa, dhikr dan Al Quran setiap waktu"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Adhkar Komprehensif",
+      "desc": "12 bagian: pagi, malam, tidur, setelah doa, wudu, istighfar dan banyak lagi"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Nafifi Noor dari Dhikr",
+      "desc": "Adhkar, du'as dan hadiths dalam satu tempat, dengan counter tasbeeh dan link shareable"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Mushafku",
+      "desc": "Musnahkan hafalan Quran lengkap Anda"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Noble Hadith",
+      "desc": "Pemilihan dari Six Books, didokumentasikan dengan narator dan grade"
     },
     "arbaeen": {
       "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "desc": "Ke - 42 hadits dikumpulkan dengan penjelasan singkat"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Adab Cerita untuk Anak - Anak",
+      "desc": "Tujuh cerita pendek tentang moral yang baik"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Tasbeeh Grup",
+      "desc": "A counter terpisah untuk setiap orang dalam pengumpulan"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "Andika",
+      "desc": "Iman yang tenang mengingatkan Anda mengkonfigurasi: interval, jenis konten dan mode tenang"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Etiket Kepatuhan Kunjungan & Kepatuhan",
+      "desc": "Mengunjungi orang sakit, mengucapkan selamat dan selamat"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Catatan Adhkar Anda",
+      "desc": "(yaitu) suara yang lembut sedang kamu mengingat Allah,"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Masa Doa",
+      "desc": "Fajr ke lsha, hitung mundur, metode perhitungan ganda dan sekolah"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Direktori Situs Islam",
+      "desc": "18 situs referensi dengan penjelasan bagian masing-masing situs"
     },
     "libfatwa": {
       "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "desc": "Dokumen fatwa terdokumentasi diklasifikasikan dalam ibadah, transaksi, fiqh dan etiket"
     },
     "libtafsir": {
       "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "desc": "(Di antara tiap-tiap ayat Alquran) maksudnya ayat-ayat Alquran (yang mempunyai makna) maksudnya, maksudnya ayat-ayat Alquran ( 114 surah) yakni Alquran."
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Arab Saudi",
+      "desc": "Arti kata - kata dalam bahasa Arab yang langka — 6111 istilah dalam 114 surah dengan teks ayat dan pencarian kata"
     },
     "libhisn": {
       "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "desc": "Pagi, malam, tidur dan makan adhkar — 132 bab dengan audio"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Khutbah",
+      "desc": "Khutbah dan pelajaran dalam aqeedah, pemurnian dan etika"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Sejarah Islam",
+      "desc": "Peristiwa-peristiwa dari Hijrah Nabi sampai akhir negara Ottoman"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Perpustakaan Video Islam",
+      "desc": "Belajarlah, perhatikan dan manfaat — dokumentasi saluran YouTube yang diklasifikasikan oleh usia, bahasa dan bidang"
     },
     "libquiz": {
       "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "desc": "5820 pertanyaan dalam tafsir, fiqh, aqeedah dan hadits, dengan koreksi instan"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "{\\\\cH5bffff}Akan tetapi",
+      "desc": "Audio audio audio kutipan — file Anda sendiri di Drive"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "ونناية",
+      "desc": "Ibn Kathir — file Anda sendiri di Drive"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "Á القورة فورة",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "Á ر رئننن",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "Árائم ال ال",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "Aku akan pergi.",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "Á ر رم مح ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "ر ر ئ ل ل ع ع",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "الحريق",
+      "desc": "(Safi al-Rahman al-Mubarakpuri — file Anda sendiri di Drive"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "ككمة",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "مملا عع ال ال ال                                                       ال ال    ال  ال  ال     ال ال                                                                                                                                                                               ",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100 س و و و ب ب ب ف ف ف ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع ع  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال ة  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "الفيير",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "القيووم الروور 2 — الققيرة البرية",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "أصووة",
+      "desc": "Abd Abd al-Karim Zaydan — file Anda sendiri di Drive"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "{\\\\cH00FFFF\\\\i1\\\\cH00FFFF\\\\i1\\\\i1}Aku harus pergi.",
+      "desc": "Nasihatmu untuk memahami dan merenungkan al-Qur'ân — berkasmu sendiri"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "Á فق  ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "İ موينة المووية",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "BAHWA BAHWA KAN KANIN BAHWA",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "Ş فيو الحووة",
+      "desc": "Dr. Mustafa Mahmoud — file Anda sendiri di Drive"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "ال ال العععع لخكككككككككككككككككككككككككككككككككك كك كك  كككك كككًًًًًًًًًًًًًًًًًًًًًًً    ً       ًًًًًًًًً ًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًًً ال ال الًً ال ال ال ال ال ال.",
+      "desc": "Berkas Anda sendiri di Drive"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "م م ا ا ع ع ع ع أ أ أ أ أ أ أ أ  ال  ال  ال أ أ أ  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال م م م م م م م م م م م م م م م م م م م م م م  ال  ال م م  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال  ال",
+      "desc": "Mereka mengubah sejarah — file Anda sendiri di Drive"
     }
   }
 }

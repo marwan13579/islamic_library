@@ -1,18 +1,18 @@
 {
   "stories": {
-    "title": "Islamic Stories",
-    "subtitle": "Prophets' Stories, Prophetic Biography, and Children's Manners",
+    "title": "Islamitische verhalen",
+    "subtitle": "Profetenverhalen, profetische biografie en kindermanieren",
     "categories": {
-      "anbiya": "Prophets' Stories",
-      "seerah": "Prophetic Biography",
-      "kids": "Children's Stories",
-      "sahaba": "Companions' Stories",
-      "tabiin": "Tabi'in Stories",
-      "scholars": "Scholars' Stories"
+      "anbiya": "Verhalen van profeten",
+      "seerah": "Profetische biografie",
+      "kids": "Kinderverhalen",
+      "sahaba": "Verhalen van metgezellen",
+      "tabiin": "Verhalen",
+      "scholars": "Verhalen van onderzoekers"
     },
     "anbiya": {
-      "title": "Prophets' Stories",
-      "count": "25 Prophets",
+      "title": "Verhalen van profeten",
+      "count": "25 Profeten",
       "list": [
         "Adam",
         "Idris",
@@ -38,61 +38,61 @@
         "Zakariya",
         "Yahya",
         "Isa",
-        "Muhammad ﷺ"
+        "Muhammad"
       ],
-      "story": "Story",
-      "lesson": "Lesson",
-      "references": "References",
-      "quranRef": "Quran Reference",
-      "hadithRef": "Hadith Reference",
-      "read": "Read Story",
-      "audio": "Listen",
-      "illustration": "Illustrations",
-      "noImages": "No Depictions of Prophets Out of Respect"
+      "story": "Verhaal",
+      "lesson": "Les",
+      "references": "Referenties",
+      "quranRef": "Rubrieknummer",
+      "hadithRef": "Hadith-referentie",
+      "read": "Verhaal lezen",
+      "audio": "Luister.",
+      "illustration": "Illustraties",
+      "noImages": "Geen afdrukken van Profeten uit respect"
     },
     "seerah": {
-      "title": "Prophetic Biography",
-      "timeline": "Timeline",
+      "title": "Profetische biografie",
+      "timeline": "Tijdlijn",
       "periods": {
-        "beforeProphecy": "Before Prophecy",
-        "meccan": "Meccan",
+        "beforeProphecy": "Voor de profetie",
+        "meccan": "Mekka",
         "medinan": "Medinan",
-        "afterDeath": "After Death"
+        "afterDeath": "Na de dood"
       },
-      "events": "Events",
-      "year": "Year",
-      "age": "Age",
-      "location": "Location",
-      "significance": "Significance",
-      "relatedEvents": "Related Events",
-      "map": "Map",
-      "battles": "Battles",
-      "treaties": "Treaties",
-      "miracle": "Miracles",
-      "family": "Family",
-      "companions": "Companions"
+      "events": "Gebeurtenissen",
+      "year": "Jaar",
+      "age": "Leeftijd",
+      "location": "Locatie",
+      "significance": "Betekenis",
+      "relatedEvents": "Gerelateerde gebeurtenissen",
+      "map": "Kaart",
+      "battles": "Gevechten",
+      "treaties": "Verdragen",
+      "miracle": "Wonderen",
+      "family": "Gezin",
+      "companions": "Metgezellen"
     },
     "kids": {
-      "title": "Children's Manners Stories",
-      "age": "Appropriate Age",
-      "values": "Values Learned",
-      "questions": "Discussion Questions",
-      "activities": "Activities",
-      "moral": "Moral",
-      "readToChild": "Read to Your Child",
-      "audio": "Listen Together",
-      "print": "Print"
+      "title": "Verhalen over kindermanieren",
+      "age": "Geschikte leeftijd",
+      "values": "Leerde waarden",
+      "questions": "Discussievragen",
+      "activities": "Activiteiten",
+      "moral": "Moreel",
+      "readToChild": "Lees voor uw kind",
+      "audio": "Luister samen",
+      "print": "Afdrukken"
     },
     "reading": {
-      "title": "Reading",
-      "progress": "Progress",
-      "chapter": "Chapter",
-      "timeLeft": "Time Left",
-      "bookmark": "Bookmark",
-      "continue": "Continue",
-      "finish": "Finish",
-      "rate": "Rate Story",
-      "share": "Share"
+      "title": "Lezen",
+      "progress": "Voortgang",
+      "chapter": "Hoofdstuk",
+      "timeLeft": "Links",
+      "bookmark": "Bladwijzer",
+      "continue": "Doorgaan",
+      "finish": "Afmaken",
+      "rate": "Verhaal beoordelen",
+      "share": "Delen"
     }
   },
   "_meta": {

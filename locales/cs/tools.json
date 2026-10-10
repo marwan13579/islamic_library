@@ -1,150 +1,150 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Nástroje a kalkulačky",
+    "subtitle": "Právní kalkulačky, denní nástroje a vzdělávací zdroje",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
+      "calc": "Kalkulačky",
+      "learn": "Učení",
       "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "quran": "Korán",
+      "stories": "Příběhy",
+      "utils": "Nástroje"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
+      "open": "Otevřít",
+      "use": "Použití",
+      "calculate": "Vypočítejte",
       "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "continue": "Pokračovat",
+      "reset": "Obnovit",
+      "save": "Uložit",
+      "export": "Vývoz",
+      "import": "Importovat",
+      "share": "Sdílet",
+      "download": "Stáhnout",
+      "print": "Tisk"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Oblíbené",
+    "addToFavorites": "Přidat do oblíbených",
+    "removeFromFavorites": "Odstranit z oblíbených",
+    "notes": "Poznámky",
+    "addNote": "Přidat poznámku",
+    "recentlyUsed": "Nedávno použité",
+    "defaultSort": "Výchozí Třídit",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "name": "Kalkulačka Zakat",
+      "desc": "Vypočítejte svůj Zakat a Nisab automaticky",
+      "goldPrice": "Zlatá cena za Gram (21K)",
+      "cash": "Hotovost",
+      "gold": "Zlato a stříbro",
+      "trade": "Obchodní zboží",
+      "debtsOwed": "Dluhy, které ti byly vyplaceny",
+      "debtsOwe": "Dluhy You Owe",
       "nisab": "Nisab",
       "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "calculate": "Vypočítejte",
+      "result": "Výsledek",
+      "fitr": "Zakat al- Fitr",
+      "persons": "Počet osob",
+      "amountPerPerson": "Částka na osobu",
+      "total": "Celkem"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Výpočet dědičnosti",
+      "desc": "Dědictví ve společných případech",
+      "estate": "Hodnota nemovitosti",
+      "wives": "Manželky",
+      "sons": "Synové",
+      "daughters": "Dcery",
+      "father": "Otče.",
+      "mother": "Matko.",
+      "grandfather": "Dědečku.",
+      "grandmother": "Babičko.",
+      "brothers": "Bratři.",
+      "sisters": "Sestry",
+      "paternalUncles": "Otcovské strýce",
+      "maternalUncles": "Mateřské strýce",
+      "calculate": "Vypočítejte",
+      "shares": "Akcie",
+      "details": "Podrobnosti"
     },
     "qibla": {
       "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "desc": "Qibla Úhel z vašeho umístění, Live Compass Oprava magnetické Severní Deviation",
+      "angle": "Úhel",
+      "direction": "Směr",
+      "compass": "Kompas",
+      "liveCompass": "Živý kompas",
+      "calibrate": "Kalibrat",
+      "accuracy": "Přesnost"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Modlitební časy",
+      "desc": "Fajr to Isha, Countdown, Vícenásobné metody výpočtu a Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Kalendář Hijri",
+      "desc": "Hijri ↔ Gregorian Konverze, Události, a Doporučené půst"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Prošvihlý tracker",
+      "desc": "Nahrávání zmeškaných dnů a skladby je tvoří"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Příručka Hajj & Umrah",
+      "desc": "Rituální kroky a praktické tipy"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
+      "name": "Zodpovězené modlitební časy",
       "desc": "Times When Dua is Answered, and Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Jména Alláha",
+      "desc": "99 Jména s významy"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Příležitost Dhikr",
+      "desc": "Cestování, Nemoc, Narušení, Domů, Jídlo"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Ramadan Kalendář",
+      "desc": "Denní Dua a úkoly, posledních deset nocí a Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Příběhy proroků",
+      "desc": "25 Proroků s jejich příběhy a lekce"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Prorocká biografie",
+      "desc": "Časová osa Prorokova života"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Návod k uctění",
+      "desc": "Wudu, modlitba Povinnosti & Sunnahs, Stravování, a Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Naučte se modlitbu",
+      "desc": "Step-by-Step Guide pro děti a nové muslimy"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Dětské manýry",
+      "desc": "Sedm krátkých příběhů o krásné etiky"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Nahrát svůj hlas s Dhikr",
+      "desc": "Osobní záznamník pro váš hlas vzpomínající Alláha"
     },
     "tadabbur": {
       "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "desc": "Napište své připomínky na Quranic verše"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Denní čtení Koránu Tracker",
+      "desc": "Sledovat vaše denní Koránové stránky"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Skupina Tasbih",
+      "desc": "Oddělený počítadlo pro každou osobu při shromažďování"
     },
     "noorCompanion": {
       "name": "Noor Companion",
@@ -152,235 +152,235 @@
     },
     "cardMaker": {
       "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "desc": "Přeměnit jakýkoli verš, Hadith, nebo Dhikr na sdílenou kartu obrazu"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Skupina Khatma",
+      "desc": "Rozdělení částí mezi účastníky a dokončení trati"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Adresář islámských stránek",
+      "desc": "18 Referenční stránky s vysvětlením sekce"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Recitéři, recitace a rádio",
+      "desc": "158 Recitéři s jejich Surah, Live Radio, Full Surah Soubory Offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Islámská videoknihovna",
+      "desc": "Ověřené YouTube kanály katalogizované podle věku, jazyka, pole"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "Kvajávy",
+      "desc": "5820 Otázky v Tafsir, Fiqh, Aqidah, Hadith s okamžitou korekcí"
     },
     "athan": {
       "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "desc": "Pět modliteb ve vašem městě, poplach a Adhan zvuk v modlitbě čas"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al- Huda - Vzdělávací program",
+      "desc": "18 Sekce: Kurzium & Salaf Figures, Lekce, Seerah, Proroci, Jména, Dhikr, Quizzes & Certifikáty, Dětský koutek"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Portál Noor - App",
+      "desc": "Mushaf, Dhikr, Modlitební časy, Rádio, Zakat, Cards - Works Offline"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Kvízy a certifikáty",
+      "desc": "Tři typy otázek, týdenní výzva, dokončení certifikátů"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway - App",
+      "desc": "Mushaf, adhkar, modlitební časy, rádio, zakat a karty - funguje offline"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Kvízy a certifikáty",
+      "desc": "Vyptávací banka ve třech typech, týdenní výzva a osvědčení o dokončení vydaná na plátně"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Skupina Khatmah",
+      "desc": "Rozdělit části mezi účastníky a sledovat pokrok a obětavost"
     },
     "cardmaker": {
       "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "desc": "Přeměnit jakýkoli verš, hadith nebo dhikr na stažitelnou, sdílenou obrázkovou kartu"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Svatý Korán",
+      "desc": "Kompletní Mushaf - surah, díly, hledání, recitace, překlad a tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Muslimský systém života",
+      "desc": "Váš den vázaný k modlitbě - modlitba, dhikr a Korán při každé modlitbě"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Komplexní adhkar",
+      "desc": "12 sekcí: ráno, večer, spánek, po modlitbě, wudu, istighfar a více"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Číslo Dhikru",
+      "desc": "Adhkar, du 'as a hadiths na jednom místě, s pultem tasbeeh a sdílení"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Můj Mushafe.",
+      "desc": "Sledovat vaše kompletní paměti Koránu"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Vznešený Hadith",
+      "desc": "Výběry ze šesti knih, zdokumentované s vypravěčem a známkou"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "Al- Arba 'in al- Nawawi",
+      "desc": "42 haditů shromážděných s krátkým vysvětlením"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Příběhy Adab pro děti",
+      "desc": "Sedm krátkých příběhů o dobré morálce"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Skupina Tasbeeh",
+      "desc": "Samostatný pult pro každou osobu na shromáždění"
     },
     "noorcompanion": {
       "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "desc": "Klidná připomínka víry, kterou nastavíte: interval, typ obsahu a klidný režim"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Návštěva & Condolence Etiquette",
+      "desc": "Návštěva nemocných, soustrast a gratulace"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Nahrávat svůj Adhkar",
+      "desc": "Osobní hlasový záznamník, zatímco vy vzpomínáte na Alláha."
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Modlitební časy",
+      "desc": "Fajr to Isha, odpočítávání, více metod výpočtu a školy"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Adresář islámských stránek",
+      "desc": "18 referenčních míst s vysvětlením jednotlivých sekcí stránek"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "Fatal",
+      "desc": "Dokumentovaný fatwas klasifikován v uctívání, transakce, fiqh a etiketa"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "Tafsir al- Muyassar",
+      "desc": "Tafr každého verše Koránu se svým významem - 114 surah"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al- Siraj fi Bayan Ghareeb al- Colon",
+      "desc": "Význam vzácných Quranic slov - 6111 pojmů ve 114 surahs s verš textu a hledání slov"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Je al- muslim",
+      "desc": "Ráno, večer, spánek a jídlo adhkar - 132 kapitol s audio"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Khutbahsworld. kgm",
+      "desc": "Khutbahs a lekce v aqeadah, čištění a etika"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Islámská historie",
+      "desc": "Události z Prorokovy Hijry do konce Osmanského státu"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Islámská videoknihovna",
+      "desc": "Učit se, sledovat a těžit - dokumentované YouTube kanály klasifikované podle věku, jazyka a pole"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "Kvajávy",
+      "desc": "5820 otázek v tafsir, fiqh, aqedah a hadith, s okamžitou korekcí"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Audio recitace - Váš vlastní soubor na disku"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "A teď...",
+      "desc": "Ibn Kathir - váš vlastní soubor na Drive"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "Je to tady.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "Je to tady.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "Je to tak.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Safi al- Rahman al- Mubarakpuri - váš vlastní soubor na Drive"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "- Co?",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "Je to tady.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "A teď...",
+      "desc": "Abd al- Karim Zaydan - váš vlastní soubor na Drive"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "A teď...",
+      "desc": "Průvodce pochopením a odrazem Koránu - váš vlastní soubor"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "Tak to je.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "Je to tak.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "Je to tak.",
+      "desc": "Dr. Mustafa Mahmoud - Váš vlastní soubor na disku"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "Je to tady.",
+      "desc": "Váš vlastní soubor na disku"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "Je to tady.",
+      "desc": "Změnili průběh historie - váš vlastní soubor na disku"
     }
   }
 }

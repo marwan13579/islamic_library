@@ -1,140 +1,140 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Aksesibilitas",
+    "subtitle": "Pilihan untuk membuat situs lebih mudah digunakan untuk semua orang",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Bahasa:",
+      "desc": "Pilih bahasa antar muka"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Ukuran Fonta:",
+      "desc": "Sesuaikan ukuran fonta",
       "levels": {
         "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "large": "Besar",
+        "extraLarge": "Besar Ekstra",
+        "huge": "Besar"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Tinggi Baris Singapura",
+      "desc": "Jarak antar baris",
       "levels": {
         "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "relaxed": "Relax",
+        "loose": "Lepas"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Spasi Huruf",
+      "desc": "Ruang antar huruf",
       "levels": {
         "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "wide": "Lebar",
+        "wider": "Lebih lebar"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Kontras",
+      "desc": "Mode kontras warna",
       "modes": {
         "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "high": "Tinggi",
+        "maximum": "Maksimum",
+        "inverted": "Terbalik"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Mode Aksesibilitas Aksesibilitas",
+      "desc": "Aktifkan semua fitur aksesibilitas",
+      "enabled": "Diaktifkan",
+      "disabled": "Dinonaktifkan"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Educe Deduce Motion",
+      "desc": "Hentikan animasi tidak penting",
+      "respectSystem": "Menghormati Pengaturan Sistem"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Mode Pembacaan:",
+      "desc": "Fonta dan warna teroptimasi untuk pembacaan diperpanjang",
+      "sepia": "Sepia (Kertas)",
+      "dark": "Gelap",
+      "light": "Cahaya"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Mode Sederhana",
+      "desc": "Antarmuka sederhana dengan sedikit gangguan"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Jalan Pintas Papan Tik sewaktu",
+      "desc": "Lihat dan pelajari jalan pintas",
+      "showHelp": "Tampilkan Bantuan",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Lewati ke isi",
+        "skipToNav": "Alt + 2: Lewati ke navigasi",
+        "skipToSearch": "Alt + 3: Lewati untuk pencarian",
+        "toggleMenu": "Alt + M: Ubah menu",
+        "toggleTheme": "Alt + T: Ubah tema",
+        "openSettings": "Alt + S: Buka pengaturan",
+        "openLanguage": "Alt + L: Buka bahasa",
+        "increaseFont": "Ctrl + +: Tingkatkan fonta",
+        "decreaseFont": "Ctrl + -: Turunkan fonta",
+        "resetFont": "Ctrl + 0: Reset fonta",
+        "toggleContrast": "Alt + C: Jungkitkan kontras",
+        "toggleMotion": "Alt + R: Jungkitkan mengurangi gerak",
+        "toggleSimple": "Alt + P: Ubah mode sederhana"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Dukungan Pembaca Layar Tampilan",
+      "desc": "Atur kompatibilitas dengan NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Pengumuman Status",
+      "liveRegions": "Regions Live",
+      "labels": "Label",
+      "descriptions": "Deskripsinya"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Navigasi Papan Ketik Singapura",
+      "desc": "Buat semua elemen dapat diakses papan tik",
+      "focusVisible": "Fokus Terlihat",
+      "focusOrder": "Urutan Fokus Logis",
+      "noKeyboardTraps": "Tak ada Jebakan Papan Tik",
+      "tabIndex": "Indeks Tab"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "_ Transkrip",
+      "desc": "Mendukung keterangan untuk isi audio / video",
+      "enabled": "Diaktifkan",
+      "languages": "Bahasa Judul",
+      "transcripts": "Transkrip Penuh"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Support Blind Color",
+      "desc": "Warna-buta warna skema",
+      "protanopia": "Protanopia (Merah)",
+      "deuteranopia": "Deuteranopia (Hijau)",
+      "tritanopia": "Tritanopia (Biru)",
+      "achromatopsia": "Achromatopsia (B / W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Dukungan Dyslexia",
+      "desc": "Fonta dan alat untuk disleksia",
+      "font": "Fonta Dyslexia",
+      "ruler": "Membaca Penguasa",
+      "spacing": "Spasi Diaktifkan",
+      "highlight": "Sorot Baris"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Preferensi Simpan",
+      "desc": "Simpan pengaturan aksesibilitas secara lokal",
+      "autoSave": "Simpan Otomatis",
+      "sync": "Selaraskan Perangkat Seberang"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
+      "title": "Reset",
+      "desc": "Reset seluruh pengaturan aksesibilitas ke baku",
+      "confirm": "Konfirmasi Ulang",
       "button": "Reset"
     }
   },

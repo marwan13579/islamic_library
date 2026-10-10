@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Unelte și calcule",
+    "subtitle": "Calculatori juridici, unelte zilnice şi resurse educaţionale",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
+      "calc": "Calculatoare",
+      "learn": "Învăţare",
       "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "quran": "Coran",
+      "stories": "Poveşti",
+      "utils": "Utilități"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
+      "open": "Deschide",
+      "use": "Utilizare",
+      "calculate": "Calculează",
       "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "continue": "Continuă",
+      "reset": "Reinițializează",
+      "save": "Salvează",
+      "export": "Exportă",
+      "import": "Importă",
+      "share": "Partajare",
+      "download": "Descărcare",
+      "print": "Tipărește"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Favorite",
+    "addToFavorites": "Adaugă la favorite",
+    "removeFromFavorites": "Elimină din favorite",
+    "notes": "Note",
+    "addNote": "Adaugă notă",
+    "recentlyUsed": "Folosit recent",
+    "defaultSort": "Sortare implicită",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
+      "name": "Calculator Zakat",
+      "desc": "Calculează-ţi Zakat şi Nisab Automat",
+      "goldPrice": "Prețul aurului pe gram (21K)",
       "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "gold": "Aur și argint",
+      "trade": "Bunuri comerciale",
+      "debtsOwed": "Datorii datorate ţie",
+      "debtsOwe": "Îţi este dator",
       "nisab": "Nisab",
       "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
+      "calculate": "Calculează",
+      "result": "Rezultatul",
+      "fitr": "Zakat al- Fitr",
+      "persons": "Număr de persoane",
+      "amountPerPerson": "Suma per persoană",
       "total": "Total"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Calculator moștenire",
+      "desc": "Acţiunile moștenitorilor în cazurile comune",
+      "estate": "Valoare imobiliară",
+      "wives": "Soţii",
+      "sons": "Fii",
+      "daughters": "Fiice",
+      "father": "Tată.",
+      "mother": "Mamă.",
+      "grandfather": "Bunicule.",
+      "grandmother": "Bunico.",
+      "brothers": "Fraţi.",
+      "sisters": "Surori",
+      "paternalUncles": "Unchii paterni",
+      "maternalUncles": "Unchii materni",
+      "calculate": "Calculează",
+      "shares": "Părți",
+      "details": "Detalii"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Direcţia Qibla",
+      "desc": "Unghiul Qibla de la locație, Compass live corectarea Deviație Magnetică Nord",
+      "angle": "Unghi",
+      "direction": "Direcţie",
+      "compass": "Compas",
+      "liveCompass": "Compas viu",
+      "calibrate": "Calibrare",
+      "accuracy": "Precizie"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Timpurile rugăciunii",
+      "desc": "Fajr către Isha, Numărătoare inversă, Metode de calcul multiple şi Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Calendarul Hijri",
+      "desc": "Hijri ↔ Gregorian Conversie, Evenimente, și Postul Recomandat"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Tracker de Fasts ratat",
+      "desc": "Înregistrați zile pierdute și urmări care le face în sus"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Ghid Hajj & Umrah",
+      "desc": "Trepte rituale şi sfaturi practice"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Timpurile de rugăciune la care s - a răspuns",
+      "desc": "Ori când Dua este răspuns, și Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Numele lui Allah",
+      "desc": "Cele 99 de nume cu semnificaţii"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Ocazie Dhikr",
+      "desc": "Călătorie, boală, suferinţă, casă, mâncare"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Calendar RamadanName",
+      "desc": "Zilnic Dua și sarcini, Ultimele zece nopți și Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Poveştile profeţilor",
+      "desc": "25 Profeţi cu poveştile şi lecţiile lor"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Biografie profetică",
+      "desc": "Calendarul vieții Profetului "
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Actele de închinare Ghid",
+      "desc": "Wudu, obligațiile de rugăciune & Sunnahs, post și Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Să învăţăm rugăciunea",
+      "desc": "Ghid pas cu pas pentru copii și noi musulmani"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Poveşti despre maniere pentru copii",
+      "desc": "Șapte povestiri scurte despre o etică frumoasă"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Înregistrează-ţi vocea cu Dhikr",
+      "desc": "Recorder personal pentru vocea ta amintindu-şi de Allah"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Jurnalul Tadabbur",
+      "desc": "Scrie - ţi reflecţiile asupra versetelor coranice"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Zilnic Quran Reading tracker",
+      "desc": "Urmăriţi-vă zilnic paginile de Coran"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Grupul Tasbih",
+      "desc": "Counter separat pentru fiecare persoană în adunare"
     },
     "noorCompanion": {
       "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "desc": "Amintire de credință blândă pe care o configurați"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Creator de cărţi Dawah",
+      "desc": "Transformă orice vers, Hadith, sau Dhikr într-un card de imagine partajabil"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Grupul Khatma",
+      "desc": "Distribuie piese printre participanți și finalizarea liniilor"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Director Site-uri islamice",
+      "desc": "18 Site-uri de referință cu explicații ale secțiunii"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Reciteri, recitații și radiouri",
+      "desc": "158 Reciteri cu Surahs lor, Live Radio, Full Surah descarcă offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Biblioteca video islamică",
+      "desc": "Canale verificate YouTube clasificate după vârstă, limbă, câmp"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "Testicule",
+      "desc": "5820 Întrebări în Tafsir, Fiqh, Aqidah, Hadith cu corecție instantanee"
     },
     "athan": {
       "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "desc": "Cinci rugăciuni în oraşul vostru, alertă şi sunet de adhan în timpul rugăciunii"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda ",
+      "desc": "18 Secţiuni: Curriculum & Salaf Figures, Lecţii, Seerah, Profeţi, Nume, Dhikr, Quizzes & Certificate, Copii Corner"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Portalul Noor ",
+      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Carduri "
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Quizzes & Certificate",
+      "desc": "Trei tipuri de întrebări, provocări săptămânale, certificate de completare"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway ",
+      "desc": "Mushaf, adhkar, timpi de rugăciune, radio, zakat și cărți "
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Quizzes & Certificate",
+      "desc": "Banca de intrebari in trei tipuri, o provocare saptamanala, si certificate de finalizare trase pe panza"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Grupul Khatmah",
+      "desc": "Distribuiți părți între participanți și urmăriți progresul și dedicarea"
     },
     "cardmaker": {
       "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "desc": "Transformă orice verset, hadith sau dhikr într-un card de imagine downloadable, partajabil"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Sfântul Coran",
+      "desc": "Mushaf complet Surahs, piese, căutare, recitare, traducere și tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Sistemul de viaţă musulman",
+      "desc": "Ziua ta legata de rugaciune, rugaciune, dhikr si Coran la fiecare ora de rugaciune"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Adhkar cuprinzător",
+      "desc": "12 secţiuni: dimineaţa, seara, somn, după rugăciune, wudu, este de departe şi mai mult"
     },
     "dhikrkit": {
       "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "desc": "Adhkar, du'as și hadiths într-un singur loc, cu un contra tasbeeh și o legătură partajabilă"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Mushaf al meu",
+      "desc": "Urmăriţi memorarea completă a Coranului"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Nobilul Hadith",
+      "desc": "Selecţii din cele şase cărţi, documentate cu narator şi grad"
     },
     "arbaeen": {
       "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "desc": "42 hadith colectate cu o scurtă explicație"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Poveşti Adab pentru copii",
+      "desc": "Şapte povestiri despre bunele morale"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Grupul Tasbeeh",
+      "desc": "Un contor separat pentru fiecare persoană din adunare"
     },
     "noorcompanion": {
       "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "desc": "O credință calmă vă amintește configurați: interval, tip de conținut și modul calm"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Etichetă de vizită şi condoleanţe",
+      "desc": "Vizitarea bolnavilor, condoleanţe şi felicitări"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Înregistrează-ţi Adhkar",
+      "desc": "Un reportofon personal în timp ce vă amintiţi de Allah"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Timpurile rugăciunii",
+      "desc": "Fajr către Isha, numărătoare inversă, metode de calcul multiple și școli"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Director Site-uri islamice",
+      "desc": "18 site-uri de referință cu o explicație a secțiunilor fiecărui site"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "Fatwas.",
+      "desc": "Fat documentat a fost clasificat în cult, tranzacții, fiqh și eticheta"
     },
     "libtafsir": {
       "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "desc": "Tafsir din fiecare verset al Coranului cu înţelesul său 114 sura"
     },
     "libsiraj": {
       "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "desc": "Semnificaţii de cuvinte rare Quranic "
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Hist al- Musulman",
+      "desc": "Dimineaţa, seara, somn şi alimente adhkar "
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Khutbah",
+      "desc": "Khutbah și lecții în aqeedah, purificare și etică"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Istoria islamică",
+      "desc": "Evenimente de la Hijrah Profetului la sfârșitul statului otoman"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Biblioteca video islamică",
+      "desc": "Învățați, urmăriți și beneficiați de pe canalele YouTube documentate clasificate după vârstă, limbă și domeniu"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "Testicule",
+      "desc": "5820 întrebări în tafsir, fiqh, aqeeda și hadith, cu corecție instantanee"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "De ce?",
+      "desc": "Recitaţie audio "
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "* * * * * * * *",
+      "desc": "Ibn Kathir "
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "* * * * * * * *",
+      "desc": "Dosarul tău pe Drive"
     },
     "b4": {
       "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "desc": "Dosarul tău pe Drive"
     },
     "b5": {
       "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "desc": "Dosarul tău pe Drive"
     },
     "b6": {
       "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "desc": "Dosarul tău pe Drive"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "* * * * * * * * *",
+      "desc": "Dosarul tău pe Drive"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "De ce?",
+      "desc": "Safi al-Rahman al-Mubarakpuri"
     },
     "b9": {
       "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "desc": "Dosarul tău pe Drive"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "O sută de ani.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "* * * * * * * *",
+      "desc": "Dosarul tău pe Drive"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b14": {
       "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "desc": "Abd al-Karim Zaydan "
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "Nu.",
+      "desc": "Ghidul dvs. pentru înțelegerea și reflectarea asupra Quran "
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Dosarul tău pe Drive"
     },
     "b19": {
       "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "desc": "Dr. Mustafa Mahmoud"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "== Legături externe ==",
+      "desc": "Dosarul tău pe Drive"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "Nu-ţi face griji.",
+      "desc": "Au schimbat cursul de istorie."
     }
   }
 }

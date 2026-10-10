@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "acessibilidade",
+    "subtitle": "Opções para tornar o site mais fácil de usar para todos",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Linguagem",
+      "desc": "Escolher idioma de interface"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Tamanho da Fonte",
+      "desc": "Ajustar o tamanho da fonte",
       "levels": {
         "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "large": "Grande",
+        "extraLarge": "Extra Grande",
+        "huge": "Enorme"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Altura da Linha",
+      "desc": "Espaço entre linhas",
       "levels": {
         "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "relaxed": "Relaxado",
+        "loose": "Soltar"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "□ Espaçamento de Cartas",
+      "desc": "Espaço entre letras",
       "levels": {
         "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "wide": "Ampla",
+        "wider": "Maior"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Contraste",
+      "desc": "Modos de contraste de cores",
       "modes": {
         "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "high": "Alta",
+        "maximum": "Máximo",
+        "inverted": "Invertida"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Modo de Acessibilidade",
+      "desc": "Activar todos os recursos de acessibilidade",
+      "enabled": "Activado",
+      "disabled": "Desactivado"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Reduzir o movimento",
+      "desc": "Parar animações não essenciais",
+      "respectSystem": "Configuração do Sistema de Respeito"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Modo de leitura",
+      "desc": "Fontes e cores otimizadas para leitura estendida",
+      "sepia": "Sepia (Papel)",
+      "dark": "Escuro",
+      "light": "Luz"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Modo Simples",
+      "desc": "Interface simplificada com menos distracção"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Atalhos do Teclado",
+      "desc": "Ver e aprender atalhos",
+      "showHelp": "Mostrar a Ajuda",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Ir para o conteúdo",
+        "skipToNav": "Alt + 2: Ir para a navegação",
+        "skipToSearch": "Alt + 3: Ir para a pesquisa",
+        "toggleMenu": "Alt + M: Comutar o menu",
+        "toggleTheme": "Alt + T: Alternar o tema",
+        "openSettings": "Alt + S: Configurações de abertura",
+        "openLanguage": "Alt + L: Idiomas abertos",
+        "increaseFont": "Ctrl + +: Aumentar a fonte",
+        "decreaseFont": "Ctrl + -: Diminuir a fonte",
+        "resetFont": "Ctrl + 0: Reiniciar fonte",
+        "toggleContrast": "Alt + C: Alternar o contraste",
+        "toggleMotion": "Alt + R: Alternar para reduzir o movimento",
+        "toggleSimple": "Alt + P: Alternar o modo simples"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Suporte ao leitor de tela",
+      "desc": "Melhorar a compatibilidade com NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Anúncios de Estado",
+      "liveRegions": "Regiões Vivas",
+      "labels": "Rótulos",
+      "descriptions": "Descrições"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Navegação do Teclado",
+      "desc": "Tornar todos os elementos acessíveis ao teclado",
+      "focusVisible": "Foco Visível",
+      "focusOrder": "Ordem Lógica de Foco",
+      "noKeyboardTraps": "Sem armadilhas de teclado",
+      "tabIndex": "Índice da Página"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Legendas e Transcrições",
+      "desc": "Legendas de suporte para conteúdo de áudio/vídeo",
+      "enabled": "Activado",
+      "languages": "Linguagens de legendas",
+      "transcripts": "Transcrições Completas"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Suporte de Cor Cego",
+      "desc": "Esquemas de cor-cego seguro",
+      "protanopia": "Protanopia (Vermelho)",
+      "deuteranopia": "Deuteranopia (Verde)",
+      "tritanopia": "Tritanopia (azul)",
+      "achromatopsia": "Acromatopsia (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Suporte à Dislexia",
+      "desc": "Fontes e ferramentas para dislexia",
+      "font": "Fonte da Dislexia",
+      "ruler": "Regra de Leitura",
+      "spacing": "Espaço Melhorado",
+      "highlight": "Realce da Linha"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Gravar as Preferências",
+      "desc": "Salvar configurações de acessibilidade localmente",
+      "autoSave": "Gravar automaticamente",
+      "sync": "Sincronizar entre Dispositivos"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Reiniciar",
+      "desc": "Reiniciar todas as configurações de acessibilidade como padrão",
+      "confirm": "Confirmar Reiniciar",
+      "button": "Reiniciar"
     }
   },
   "_meta": {

@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "无障碍",
+    "subtitle": "使站台更方便地被大家使用",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "QQ 語言",
+      "desc": "選擇介面語言"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "QQ 字型大小",
+      "desc": "調整字型大小",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "一般",
+        "large": "大",
+        "extraLarge": "外加大",
+        "huge": "二相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "*     行高",
+      "desc": "在行間相距",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "一般",
+        "relaxed": "放松了",
+        "loose": "有放"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "字母相距",
+      "desc": "字母相隔的空格",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "一般",
+        "wide": "寬度",
+        "wider": "更大"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "相對",
+      "desc": "相對顏色模式",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "一般",
+        "high": "高",
+        "maximum": "最大",
+        "inverted": "倒轉"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "* 存取模式",
+      "desc": "開啟所有可存取功能",
+      "enabled": "已開啟",
+      "disabled": "已禁用"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "* * * 減少動態",
+      "desc": "停止非必要動畫",
+      "respectSystem": "尊重系統設定"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "* * * * 讀取模式",
+      "desc": "为延伸讀取而优化字体和顏色",
+      "sepia": "Sepia (相片)",
+      "dark": "黑暗",
+      "light": "有光"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "*%% 1",
+      "desc": "有少分心的簡化介面"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "* * * * 鍵盤快捷鍵",
+      "desc": "查看并學取捷徑",
+      "showHelp": "顯示說明",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1 : 跳到內容",
+        "skipToNav": "Alt + 2: 跳入通航",
+        "skipToSearch": "Alt + 3: 跳過以搜尋",
+        "toggleMenu": "Alt + M: 切換選單",
+        "toggleTheme": "Alt + T: 切換主題",
+        "openSettings": "Alt + S: 開啟設定值",
+        "openLanguage": "Alt + L: 已開啟的語言",
+        "increaseFont": "Ctrl + +: 增加字体",
+        "decreaseFont": "Ctrl + -: 降低字体",
+        "resetFont": "Ctrl + 0: 重置字型",
+        "toggleContrast": "變更 + C: 切換對比",
+        "toggleMotion": "Alt + R: 切換減少相關動作",
+        "toggleSimple": "Alt + P: 切換簡單模式"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "* * * * 屏幕讀取器支援",
+      "desc": "提高與 NVDA, JAWS, Voice Over, TalkBack相容性",
+      "announcements": "狀態通知",
+      "liveRegions": "有活地區",
+      "labels": "標籤",
+      "descriptions": "描述"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "* * * * 鍵盤通航",
+      "desc": "提供所有元素的鍵盤",
+      "focusVisible": "有目光",
+      "focusOrder": "逻辑焦點排序",
+      "noKeyboardTraps": "沒有鍵盤陷阱",
+      "tabIndex": "分頁索引"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "* ** 描述和翻譯",
+      "desc": "相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相",
+      "enabled": "已開啟",
+      "languages": "標注語言",
+      "transcripts": "全寫"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "*           彩色盲支持",
+      "desc": "有色盲安全取色方案",
+      "protanopia": "(紅色)",
+      "deuteranopia": "(綠地)",
+      "tritanopia": "三塔諾皮亞 (藍色)",
+      "achromatopsia": "有色人种( B/ W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "* * * * Dyslexia 支援",
+      "desc": "二. 需要的字型和工具",
+      "font": "有花相花字型",
+      "ruler": "讀取標尺",
+      "spacing": "增強相距",
+      "highlight": "行突顯"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "QQ 儲存首选项",
+      "desc": "在本地儲存存取設定",
+      "autoSave": "自動儲存",
+      "sync": "在裝置上同步"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "重置",
+      "desc": "將所有存取設定重置到預設值",
+      "confirm": "确认重置",
+      "button": "重置"
     }
   },
   "_meta": {

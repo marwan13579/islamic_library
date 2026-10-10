@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Khả năng truy cập",
+    "subtitle": "Tùy chọn làm cho trang web dễ sử dụng hơn cho tất cả mọi người",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "teppi82",
+      "desc": "Chọn ngôn ngữ giao diện"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Cỡ phông chữ  ngầm",
+      "desc": "Điều chỉnh cỡ phông chữ",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "Chuẩn",
+        "large": "Lớn",
+        "extraLarge": "Lớn thêm",
+        "huge": "Khổng lồ"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Tuỳ chọn",
+      "desc": "Khoảng trống giữa các đường",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "Chuẩn",
+        "relaxed": "Thư giãn",
+        "loose": "Rời"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Khoảng cách Chữ cái",
+      "desc": "Khoảng trống giữa các chữ cái",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "Chuẩn",
+        "wide": "Mở rộng",
+        "wider": "Mở rộng"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Độ tương phản",
+      "desc": "Chế độ tương phản màu",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "Chuẩn",
+        "high": "Cao",
+        "maximum": "Tối đa",
+        "inverted": "Đảo"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Chế độ hỗ trợ người tàn tật",
+      "desc": "Bật mọi tính năng khả năng truy cập",
+      "enabled": "Bật",
+      "disabled": "Tắt"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "▪ Giảm chuyển động",
+      "desc": "Dừng hoạt hình không cần thiết",
+      "respectSystem": "Thiết lập hệ thống tôn trọng"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
+      "title": "Chế độ đọc tập tin",
+      "desc": "Các phông chữ và màu sắc tô màu cho việc đọc lâu",
       "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "dark": "Tối",
+      "light": "Làm sáng"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Chế độ đơn giản",
+      "desc": "Name"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Gõ tắt trên Bàn phím",
+      "desc": "Xem và học đường tắt",
+      "showHelp": "Hiện trợ giúp",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Nhảy tới nội dung",
+        "skipToNav": "Alt + 2: Nhảy tới định vị",
+        "skipToSearch": "Alt + 3: Bỏ qua để tìm kiếm",
+        "toggleMenu": "Alt + M: Bật/ tắt trình đơn",
+        "toggleTheme": "Alt + T: Bật/tắt sắc thái",
+        "openSettings": "Alt + S: mở thiết lập",
+        "openLanguage": "Alt + L: Mở ngôn ngữ",
+        "increaseFont": "Ctrl + +: Tăng phông chữ",
+        "decreaseFont": "Ctrl +: giảm phông chữ",
+        "resetFont": "Ctrl + 0: đặt lại phông chữ",
+        "toggleContrast": "Alt + C: Bật/ tắt độ tương phản",
+        "toggleMotion": "Alt + R: Bật/ tắt chuyển động giảm",
+        "toggleSimple": "Alt + P: Bật/ tắt chế độ đơn giản"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Hỗ trợ đọc màn hình  vội",
+      "desc": "cải thiện sự tương thích với NVDA, JAWS, Voice over, talk back",
+      "announcements": "Thông báo Trạng thái",
+      "liveRegions": "Vùng sống",
+      "labels": "Nhãn",
+      "descriptions": "Mô tả"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Name",
+      "desc": "Làm cho mọi phần tử truy cập bàn phím",
+      "focusVisible": "Tiêu điểm hiển thị",
+      "focusOrder": "Thứ tự tiêu điểm luân lý",
+      "noKeyboardTraps": "Không bẫy bàn phím",
+      "tabIndex": "Chỉ mục Thẻ"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Tuỳ chọn",
+      "desc": "Name",
+      "enabled": "Bật",
+      "languages": "Ngôn ngữ cấu hình",
+      "transcripts": "Các bản chép tay đầy đủ"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
+      "title": "Hỗ trợ mù màu   nền",
+      "desc": "Bộ màu bảo vệ mù màu",
       "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "deuteranopia": "Phục - truyền Luật - lệ Ký (xanh lá cây)",
+      "tritanopia": "Tritanopia ( Xanh da trời)",
+      "achromatopsia": "Name"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Hỗ trợ chứng mất ngôn ngữ",
+      "desc": "Phông chữ và công cụ cho chứng khó đọc",
+      "font": "Phông chữ Dyslexia",
+      "ruler": "Thông thường",
+      "spacing": "Khoảng cách tăng dần",
+      "highlight": "Tô sáng dòng"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Tuỳ thích",
+      "desc": "Lưu thiết lập truy cập cục bộ",
+      "autoSave": "Tự động lưu",
+      "sync": "Đồng bộ hoá các thiết bị"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Đặt lại",
+      "desc": "Đặt lại mọi thiết lập khả năng truy cập thành mặc định",
+      "confirm": "Xác nhận đặt lại",
+      "button": "Đặt lại"
     }
   },
   "_meta": {

@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Доступность",
+    "subtitle": "Варианты, чтобы сделать сайт проще для всех",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Язык",
+      "desc": "Выберите язык интерфейса"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Размер шрифта",
+      "desc": "Адаптация размера шрифта",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "нормальный",
+        "large": "большой",
+        "extraLarge": "Очень большой",
+        "huge": "Огромный"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "️ Линия высота",
+      "desc": "Пространство между линиями",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "нормальный",
+        "relaxed": "Расслабленный",
+        "loose": "свободный"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Письмо Пространство",
+      "desc": "Пространство между буквами",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "нормальный",
+        "wide": "Широкий",
+        "wider": "мудрец"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Контраст",
+      "desc": "Режимы цветового контраста",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "нормальный",
+        "high": "высокий",
+        "maximum": "максимум",
+        "inverted": "перевернутый"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Режим доступности",
+      "desc": "Включить все функции доступности",
+      "enabled": "включенный",
+      "disabled": "инвалид"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "️ Уменьшить движение",
+      "desc": "Прекратить несущественную анимацию",
+      "respectSystem": "Настройка системы Respect"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "️ Режим чтения",
+      "desc": "Оптимизированные шрифты и цвета для расширенного чтения",
+      "sepia": "Сепия (Бумага)",
+      "dark": "темный",
+      "light": "Свет"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Простой режим",
+      "desc": "Упрощенный интерфейс с меньшим отвлечением"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "️ Keyboard Shortcuts",
+      "desc": "Просмотр и изучение ярлыков",
+      "showHelp": "Показать помощь",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Пропустите контент",
+        "skipToNav": "Alt + 2: Переход к навигации",
+        "skipToSearch": "Alt + 3: Пропустите поиск",
+        "toggleMenu": "Alt + M: меню Toggle",
+        "toggleTheme": "Alt + T: тема Toggle",
+        "openSettings": "Alt + S: открытые настройки",
+        "openLanguage": "Alt + L: открытые языки",
+        "increaseFont": "Ctrl + +: Увеличить шрифт",
+        "decreaseFont": "Ctrl + - Уменьшение шрифта",
+        "resetFont": "Ctrl + 0: Сброс шрифта",
+        "toggleContrast": "Alt + C: контрастность",
+        "toggleMotion": "Alt + R: Toggle уменьшает движение",
+        "toggleSimple": "Alt + P: простой режим Toggle"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Поддержка Screen Reader",
+      "desc": "Улучшение совместимости с NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Анонс статуса",
+      "liveRegions": "Живые регионы",
+      "labels": "этикетки",
+      "descriptions": "Описание"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "️ Навигация по клавиатуре",
+      "desc": "Сделайте все элементы клавиатуры доступными",
+      "focusVisible": "Видимый фокус",
+      "focusOrder": "Логический порядок фокусировки",
+      "noKeyboardTraps": "Никаких ловушек",
+      "tabIndex": "Индекс вкладок"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Подписи и транскрипты",
+      "desc": "Подписи поддержки для аудио / видео контента",
+      "enabled": "включенный",
+      "languages": "Языки подписей",
+      "transcripts": "Полные транскрипты"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Цветная слепая поддержка",
+      "desc": "Слепые безопасные цветовые схемы",
+      "protanopia": "Протанопия (красный)",
+      "deuteranopia": "Второзаконие (зеленый)",
+      "tritanopia": "Тританопия (синий)",
+      "achromatopsia": "Ахроматопсия (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Поддержка дислексии",
+      "desc": "Шрифты и инструменты для дислексии",
+      "font": "Фонт дислексии",
+      "ruler": "Правитель чтения",
+      "spacing": "Улучшенное пространство",
+      "highlight": "Высота линии"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Сохранить предпочтения",
+      "desc": "Сохранить настройки доступности локально",
+      "autoSave": "Автоматическая экономия",
+      "sync": "Синхронизация устройств"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Перезагрузка",
+      "desc": "Сброс всех настроек доступности по умолчанию",
+      "confirm": "Подтвердить сброс",
+      "button": "сброс"
     }
   },
   "_meta": {

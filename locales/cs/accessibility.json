@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Dostupnost",
+    "subtitle": "Možnosti pro snadnější využití stránek pro každého",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Name",
+      "desc": "Vybrat jazyk rozhraní"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Velikost písma",
+      "desc": "Nastavit velikost písma",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "Normální",
+        "large": "Velké",
+        "extraLarge": "Extra velké",
+        "huge": "Obrovský."
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Výška čáry",
+      "desc": "Prostor mezi řádky",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "Normální",
+        "relaxed": "Uvolněno",
+        "loose": "Uvolnit"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Psací prostor",
+      "desc": "Prostor mezi písmeny",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "Normální",
+        "wide": "Široký",
+        "wider": "Větší"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Contrast",
+      "desc": "Režim kontrastu barev",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "Normální",
+        "high": "Vysoká",
+        "maximum": "Maximální",
+        "inverted": "Převrácené"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Režim přístupnosti",
+      "desc": "Povolit všechny funkce přístupnosti",
+      "enabled": "Povoleno",
+      "disabled": "Zakázáno"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Snižte pohyb",
+      "desc": "Zastavit nepodstatné animace",
+      "respectSystem": "Nastavení systému respektu"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Name",
+      "desc": "Optimalizovaná písma a barvy pro rozšířené čtení",
+      "sepia": "Sepia (papír)",
+      "dark": "Tmavé",
+      "light": "Světlo"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Zjednodušený režim",
+      "desc": "Zjednodušené rozhraní s menším rozptýlením"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Name",
+      "desc": "Zobrazit a naučit se zkratky",
+      "showHelp": "Zobrazit nápovědu",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
+        "skipToContent": "Alt + 1: Přeskočit na obsah",
+        "skipToNav": "Alt + 2: Přeskočit na navigaci",
+        "skipToSearch": "Alt + 3: Přeskočit k vyhledávání",
+        "toggleMenu": "Alt + M: Přepnout menu",
+        "toggleTheme": "Alt + T: Přepnout téma",
+        "openSettings": "Alt + S: Otevřít nastavení",
+        "openLanguage": "Alt + L: Otevřené jazyky",
+        "increaseFont": "Ctrl + +: Zvyšte font",
+        "decreaseFont": "Ctrl + -: Snížit font",
         "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "toggleContrast": "Alt + C: Přepnout kontrast",
+        "toggleMotion": "Alt + R: Přepnout snížení pohybu",
+        "toggleSimple": "Alt + P: Přepnout jednoduchý režim"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Name",
+      "desc": "Zlepšit kompatibilitu s NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Oznámení o stavu",
+      "liveRegions": "Živé regiony",
+      "labels": "Štítky",
+      "descriptions": "Popis"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
+      "title": "Name",
+      "desc": "Zpřístupnit klávesnici všech prvků",
+      "focusVisible": "Viditelné zaměření",
+      "focusOrder": "Pořadí logického zaměření",
+      "noKeyboardTraps": "Žádné pasti na klávesy",
       "tabIndex": "Tab Index"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "& Přepisy",
+      "desc": "Podporovat titulky pro audio / video obsah",
+      "enabled": "Povoleno",
+      "languages": "Jazyky titulků",
+      "transcripts": "Úplné přepisy"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Barevná podpora pro nevidomé",
+      "desc": "Barevně-slepá bezpečná barevná schémata",
+      "protanopia": "Protanopia (červená)",
+      "deuteranopia": "Deuteranopia (zelená)",
+      "tritanopia": "Tritanopia (modrá)",
+      "achromatopsia": "Achromatopsie (B / W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
+      "title": "Podpora dyslexie",
+      "desc": "Písma a nástroje pro dyslexii",
+      "font": "Písmo Dyslexie",
       "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "spacing": "Vylepšený prostor",
+      "highlight": "Zvýraznění čáry"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Uložit hodnoty",
+      "desc": "Uložit lokální nastavení přístupnosti",
+      "autoSave": "Automaticky uložit",
+      "sync": "Name"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Name",
+      "desc": "Obnovit všechna nastavení přístupnosti pro závady",
+      "confirm": "Potvrdit obnovení",
+      "button": "Obnovit"
     }
   },
   "_meta": {

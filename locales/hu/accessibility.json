@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Hozzáférhetőség",
+    "subtitle": "Lehetőségek, hogy a honlap könnyebb használni mindenki számára",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "- Nyelv",
+      "desc": "Válassza ki az interfész nyelvét"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "A betűméret",
+      "desc": "A betűméret beállítása",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "Normál",
+        "large": "Nagy",
+        "extraLarge": "Extra nagy",
+        "huge": "Hatalmas"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "A vonal magassága",
+      "desc": "A vonalak közötti távolság",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "Normál",
+        "relaxed": "Relaxált",
+        "loose": "Laza"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "A levél küldése",
+      "desc": "A betűk közötti távolság",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "Normál",
+        "wide": "Széles",
+        "wider": "Szélesebb"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Az Európai Unió Hivatalos Lapja",
+      "desc": "Színkontrasztanyagok",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "Normál",
+        "high": "Magas",
+        "maximum": "Maximális",
+        "inverted": "Fordítva"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Az akadálymentesítés módja",
+      "desc": "Minden akadálymentesítés engedélyezése",
+      "enabled": "Engedélyezve",
+      "disabled": "Letiltva"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "A mozgástér csökkentése",
+      "desc": "Nem alapvető animációk leállítása",
+      "respectSystem": "A rendszer beállítása"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "- Reading mode",
+      "desc": "Optimalizált betűtípusok és színek a kiterjesztett olvasáshoz",
+      "sepia": "Sepia (papír)",
+      "dark": "Sötét",
+      "light": "Fény"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Egyszerű mód",
+      "desc": "Egyszerűsített interfész kevesebb figyelemeltereléssel"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Keyboard rövidítések",
+      "desc": "Rövidítések megtekintése és tanulása",
+      "showHelp": "A Súgó megjelenítése",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Ugrás a tartalomra",
+        "skipToNav": "Alt + 2: Ugrás a navigációra",
+        "skipToSearch": "Alt + 3: Ugrás a kereséshez",
+        "toggleMenu": "Alt + M: Menü bekapcsolása",
+        "toggleTheme": "Alt + T: Toggle téma",
+        "openSettings": "Alt + S: Beállítások megnyitása",
+        "openLanguage": "Alt + L: Nyitott nyelvek",
+        "increaseFont": "Ctrl + +: betűtípus növelése",
+        "decreaseFont": "Ctrl + -: A betűtípus csökkentése",
+        "resetFont": "Ctrl + 0: Betűtípus újraindítása",
+        "toggleContrast": "Alt + C: kontraszt bekapcsolása",
+        "toggleMotion": "Alt + R: A mozgás csökkentése",
+        "toggleSimple": "Alt + P: Egyszerű mód bekapcsolása"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "A képernyőolvasó támogatása",
+      "desc": "Az NVDA, JAWS, VoiceOver, TalkBack kompatibilitás javítása",
+      "announcements": "Állapotbejelentések",
+      "liveRegions": "Élő régiók",
+      "labels": "Címkék",
+      "descriptions": "Leírások"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Keyboard Navigáció",
+      "desc": "A billentyűzet minden elemének elérhetővé tétele",
+      "focusVisible": "Látható fókusz",
+      "focusOrder": "Logikai fókuszrend",
+      "noKeyboardTraps": "Nincs billentyűzet Csapdák",
+      "tabIndex": "táblázat"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "- Captions & Transcripts",
+      "desc": "Támogató feliratok audio / video tartalomhoz",
+      "enabled": "Engedélyezve",
+      "languages": "Címzett nyelvek",
+      "transcripts": "Teljes átiratok"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "A színezett vakok támogatása",
+      "desc": "Színvak biztonságos színrendszerek",
+      "protanopia": "Protanópia (piros)",
+      "deuteranopia": "Deuteranopia (zöld)",
+      "tritanopia": "Tritanopia (kék)",
+      "achromatopsia": "Akromatopszia (B / W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
+      "title": "Dyslexia támogatás",
+      "desc": "Betűtípusok és eszközök diszlexiához",
+      "font": "Dyslexia Betűtípus",
       "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "spacing": "Fokozott űrtartalom",
+      "highlight": "Vonalkiemelés"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "- Mentési preferenciák",
+      "desc": "A hozzáférés helyi beállításainak mentése",
+      "autoSave": "Automatikus mentés",
+      "sync": "Szinkronizálás"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Az újraindítás",
+      "desc": "Az összes akadálymentési beállítás alapértelmezésbe állítása",
+      "confirm": "A visszaállítás megerősítése",
+      "button": "Újra"
     }
   },
   "_meta": {

@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Esteettömyys",
+    "subtitle": "Mahdollisuudet tehdä sivustosta helpompi käyttää kaikille",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Kieli",
+      "desc": "Valitse käyttöliittymän kieli"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Kirjasinkoko",
+      "desc": "Säädä kirjasinkokoa",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "Normaali",
+        "large": "Suuri",
+        "extraLarge": "Erittäin suuri",
+        "huge": "Valtava"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Linjan korkeus",
+      "desc": "Viivojen välinen tila",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "Normaali",
+        "relaxed": "Rentoudu.",
+        "loose": "Irrota"
       }
     },
     "letterSpacing": {
       "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "desc": "Kirjainten väli",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "Normaali",
+        "wide": "Laaja",
+        "wider": "Laajempi"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Kontrasti",
+      "desc": "Värin kontrastitilat",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "Normaali",
+        "high": "Korkea",
+        "maximum": "Enintään",
+        "inverted": "Käännetty"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Esteettömyystila",
+      "desc": "Käytä kaikkia esteettömyysominaisuuksia",
+      "enabled": "Käytössä",
+      "disabled": "Ei käytössä"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "- Vähennä esitystä",
+      "desc": "Lopeta epäolennaiset animaatiot",
+      "respectSystem": "Kunnioittava järjestelmäasetus"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Lukutila",
+      "desc": "Optimoidut kirjasimet ja värit laajennettuun lukemiseen",
+      "sepia": "Sepia (Paperi)",
+      "dark": "Tumma",
+      "light": "Valo"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Yksinkertainen tila",
+      "desc": "Yksinkertaistettu käyttöliittymä, jossa on vähemmän häiriötekijöitä"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Näppäimistön pikanäppäimet",
+      "desc": "Näytä ja opi pikanäppäimiä",
+      "showHelp": "Näytä ohje",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
+        "skipToContent": "Alt + 1: Siirry sisältöön",
+        "skipToNav": "Alt + 2: Siirry navigointiin",
+        "skipToSearch": "Alt + 3: Ohita haku",
+        "toggleMenu": "Alt + M: Vaihda valikkoa",
+        "toggleTheme": "Alt + T: Vaihda teema",
+        "openSettings": "Alt + S: Avaa asetukset",
+        "openLanguage": "Alt + L: Avoimet kielet",
+        "increaseFont": "Ctrl + +: Lisää kirjasinta",
+        "decreaseFont": "Ctrl + -: Pienennä kirjasinta",
+        "resetFont": "Ctrl + 0: Nollaa kirjasin",
+        "toggleContrast": "Alt + C: Vaihda kontrastia",
         "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "toggleSimple": "Alt + P: Vaihda yksinkertainen tila"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Näytönlukijatuki",
+      "desc": "Yhteensopivuuden parantaminen NVDA:n, JAWS:n, VoiceOverin, TalkBackin kanssa",
+      "announcements": "Tilailmoitukset",
+      "liveRegions": "Elävät alueet",
+      "labels": "Merkit",
+      "descriptions": "Kuvaus"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Näppäimistön navigointi",
+      "desc": "Tehkää kaikista elementeistä helppokäyttöisiä",
+      "focusVisible": "Näkyvä painopiste",
+      "focusOrder": "Looginen tarkennusjärjestys",
+      "noKeyboardTraps": "Ei näppäimistöjä",
+      "tabIndex": "Välilehtihakemisto"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Tekstitekstit ja transkriptit",
+      "desc": "Tukitekstit ääni-/videosisällölle",
+      "enabled": "Käytössä",
+      "languages": "Kuvatekstikielet",
+      "transcripts": "Täydet transkriptit"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Värisokea tuki",
+      "desc": "Värisokea turvallinen väri kaaviot",
+      "protanopia": "Protanopia (punainen)",
+      "deuteranopia": "Deuteranopia (vihreä)",
+      "tritanopia": "Tritanopia (sininen)",
+      "achromatopsia": "Akromatopsia (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Dysleksia-tuki",
+      "desc": "Fontit ja työkalut lukihäiriöihin",
+      "font": "Dyslexia-kirjasin",
+      "ruler": "Lukeminen",
+      "spacing": "Parannettu välilyönti",
+      "highlight": "Linjan korostus"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Tallenna asetukset",
+      "desc": "Tallenna esteettömyysasetukset paikallisesti",
+      "autoSave": "Automaattinen tallennus",
+      "sync": "Synkronoi laitteet"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Nollaa",
+      "desc": "Nollaa kaikki esteettömyysasetukset oletusarvoihin",
+      "confirm": "Vahvista Palautus",
+      "button": "Nollaa"
     }
   },
   "_meta": {

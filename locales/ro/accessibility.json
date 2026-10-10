@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Accesibilitate",
+    "subtitle": "Opțiuni pentru a face site-ul mai ușor de utilizat pentru toată lumea",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Limbajul",
+      "desc": "Alegeți limbajul interfeței"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Font Dimensiune",
+      "desc": "Ajustează dimensiunea fontului",
       "levels": {
         "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "large": "Mare",
+        "extraLarge": "Foarte mare",
+        "huge": "Uriaşă"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Înălţimea liniei",
+      "desc": "Spațiu între linii",
       "levels": {
         "normal": "Normal",
-        "relaxed": "Relaxed",
+        "relaxed": "Relaxat",
         "loose": "Loose"
       }
     },
     "letterSpacing": {
       "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "desc": "Spațiu între litere",
       "levels": {
         "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "wide": "Late",
+        "wider": "Mai larg"
       }
     },
     "contrast": {
       "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "desc": "Moduri de contrast color",
       "modes": {
         "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "high": "Ridicat",
+        "maximum": "Maxim",
+        "inverted": "Inversat"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Modul de accesibilitate",
+      "desc": "Activează toate caracteristicile de accesibilitate",
+      "enabled": "Activat",
+      "disabled": "Dezactivat"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Reduceți mișcarea",
+      "desc": "Oprirea animațiilor neesențiale",
+      "respectSystem": "Setare sistem respect"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Mod de citire",
+      "desc": "Fonturi și culori optimizate pentru citire extinsă",
+      "sepia": "Sepia (paper)",
+      "dark": "Întuneric",
+      "light": "Lumină"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Mod simplu",
+      "desc": "Interfață simplificată cu mai puțină distragere a atenției"
     },
     "keyboardShortcuts": {
       "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "desc": "Vizualizați și învățați scurtături",
+      "showHelp": "Arată ajutor",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Sari la conținut",
+        "skipToNav": "Alt + 2: Treci la navigare",
+        "skipToSearch": "Alt + 3: Sari la căutare",
+        "toggleMenu": "Alt + M: Comută meniul",
+        "toggleTheme": "Alt + T: Comută tema",
+        "openSettings": "Alt + S: Setări deschise",
+        "openLanguage": "Alt + L: Limbi deschise",
+        "increaseFont": "Ctrl + +: Crește fontul",
+        "decreaseFont": "Ctrl + -: Reduce fontul",
+        "resetFont": "Ctrl + 0: Resetează fontul",
+        "toggleContrast": "Alt + C: Comută contrastul",
+        "toggleMotion": "Alt + R: Comută mișcarea",
+        "toggleSimple": "Alt + P: Comută modul simplu"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Screen reader Support",
+      "desc": "Îmbunătățește compatibilitatea cu NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Anunțuri de stare",
+      "liveRegions": "Regiuni vii",
+      "labels": "Etichete",
+      "descriptions": "Descriere"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Navigare tastatură",
+      "desc": "Face toate elementele accesibile tastatură",
+      "focusVisible": "Focalizare vizibilă",
+      "focusOrder": "Ordinea de focalizare logică",
+      "noKeyboardTraps": "Fără capcane de tastatură",
+      "tabIndex": "Index file"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Traducerea şi adaptarea:",
+      "desc": "Legende de suport pentru conținut audio/video",
+      "enabled": "Activat",
+      "languages": "Limbi de subtitrare",
+      "transcripts": "Transcripte complete"
     },
     "colorBlind": {
       "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "desc": "Scheme color-orb de culoare sigură",
+      "protanopia": "Protanopie (Red)",
+      "deuteranopia": "Deuteranopia (verde)",
+      "tritanopia": "Tritanopie (albastru)",
+      "achromatopsia": "Acromatopsia (B/W)"
     },
     "dyslexia": {
       "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
+      "desc": "Fonturi și instrumente pentru dislexie",
+      "font": "Font dislexie",
+      "ruler": "Conducător de citire",
+      "spacing": "Spații îmbunătățite",
       "highlight": "Line Highlight"
     },
     "persistence": {
       "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "desc": "Salvează setările de accesibilitate la nivel local",
+      "autoSave": "Salvează automat",
+      "sync": "Sincronizează peste dispozitive"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Resetează",
+      "desc": "Resetează toate setările de accesibilitate la implicite",
+      "confirm": "Confirmă resetarea",
+      "button": "Reinițializează"
     }
   },
   "_meta": {

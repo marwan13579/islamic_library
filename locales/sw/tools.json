@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Vyombo na Calculators",
+    "subtitle": "Calculators ya kisheria, Vyombo vya Kila siku, na Rasilimali za Elimu",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "Calculator ya",
+      "learn": "Kujifunza kujifunza kujifunza",
+      "dhikr": "Dhikr ya",
+      "quran": "Qur’an Tukufu",
+      "stories": "Hadithi za hadithi",
+      "utils": "Huduma za"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "Ufunguzi wa Open Open Open",
+      "use": "Matumizi ya matumizi",
+      "calculate": "Hesabu ya Hesabu",
+      "start": "Mwanzo wa kuanza",
+      "continue": "Endelea Endelea Endelea Endelea Endelea",
+      "reset": "Kuundwa upya",
+      "save": "Kuokoa kuokoa kuokoa",
+      "export": "Mauzo ya nje",
+      "import": "Uwekezaji wa",
+      "share": "Kushiriki",
+      "download": "Download mchezo Download",
+      "print": "Uchapishaji wa"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Kocha Bora",
+    "addToFavorites": "Ongeza kwa favorites",
+    "removeFromFavorites": "Kuondoa kutoka kwa favorites",
+    "notes": "Mapendekezo ya",
+    "addNote": "Ongeza ujumbe",
+    "recentlyUsed": "Hivi karibuni kutumika",
+    "defaultSort": "Aina ya uharibifu",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
+      "name": "Calculator ya Zaka",
+      "desc": "Kuhesabu Zakat yako na Nisab moja kwa moja",
+      "goldPrice": "Bei ya dhahabu kwa Gramu (21K)",
+      "cash": "Fedha taslimu",
+      "gold": "Dhahabu na Fedha",
+      "trade": "Bidhaa za Biashara",
+      "debtsOwed": "Malipo kwa ajili yako",
+      "debtsOwe": "Malipo yako",
+      "nisab": "Nisabu",
+      "zakatDue": "Zaka ya Kutokana",
+      "calculate": "Hesabu ya Hesabu",
+      "result": "Matokeo ya matokeo",
       "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "persons": "Idadi ya watu",
+      "amountPerPerson": "Idadi ya watu",
+      "total": "Jumla ya jumla"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Haki ya Calculator",
+      "desc": "Heir anashiriki katika kesi za kawaida",
+      "estate": "Thamani ya mali isiyohamishika",
+      "wives": "Wanawake",
+      "sons": "Watoto wa kiume",
+      "daughters": "Wasichana",
+      "father": "Baba mzazi",
+      "mother": "Mama Mama Mama Mama Mama",
+      "grandfather": "Baba mzazi",
+      "grandmother": "Bibi mkubwa",
+      "brothers": "Ndugu zangu",
+      "sisters": "Akina dada",
+      "paternalUncles": "Wazazi wa marehemu",
+      "maternalUncles": "Wazazi wa marehemu",
+      "calculate": "Hesabu ya Hesabu",
+      "shares": "Kushiriki",
+      "details": "Maelezo zaidi"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Mwongozo wa Qibla",
+      "desc": "Libla angle kutoka eneo lako, Kuishi Compass Kurekebisha Magnetic North Deviation",
+      "angle": "Angel ya Malaika",
+      "direction": "Mwelekeo wa mwelekeo",
+      "compass": "Kukubaliana",
+      "liveCompass": "Kuishi pamoja",
+      "calibrate": "Calibrate ya",
+      "accuracy": "Usahihi wa"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Sala ya Nyakati",
+      "desc": "Fajr kwa Isha, Countdown, Mbinu nyingi za kuhesabu na Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Kalenda ya Kiislamu",
+      "desc": "Hiari ya Mapinduzi ya Gregori, Matukio, na Kufunga Iliyopendekezwa"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Kupotea kwa haraka Tracker",
+      "desc": "Rekodi waliopotea siku na kufuatilia kufanya nao juu"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Mwongozo wa Hajj & Umrah",
+      "desc": "Hatua za haraka na vidokezo vya vitendo"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Wakati wa Maombi",
+      "desc": "Wakati wa kujibu maswali hayo, Bi."
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Majina ya Mwenyezi Mungu",
+      "desc": "Majina 99 ya majina"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Mkutano wa Dhikr",
+      "desc": "Kusafiri, Ugonjwa, Distress, Nyumbani, Chakula"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Kalenda ya Ramadhan",
+      "desc": "Dua ya kila siku na majukumu, usiku wa mwisho na Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Hadithi za Mitume",
+      "desc": "25 Manabii na hadithi zao"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Wasifu wa Unabii",
+      "desc": "Maisha ya Nabii Muhammad"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Kuongoza Ibada ya Swala",
+      "desc": "Hudu, Wajibu wa Sala na Sunnah, Kufunga, na Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Kujifunza sala",
+      "desc": "Mwongozo wa hatua kwa hatua kwa watoto na Waislamu wapya"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Hadithi za watoto",
+      "desc": "Hadithi saba fupi kuhusu maadili mazuri"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Sikiliza sauti yako kwa Dhikr",
+      "desc": "Wakumbushe watu sauti yako kwa kumkumbuka Mungu."
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Jarida la Tadabbur",
+      "desc": "Andika Maoni Yako Kuhusu Quran"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Daily Quran Kusoma Tracker",
+      "desc": "Fuatilia makala zako za kila siku"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Kikundi cha Tasbih",
+      "desc": "Kuingiliana kwa kila mtu katika mikutano"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "Noor ya Companion",
+      "desc": "Imani ya Kweli Inakumbusha Kuwa Wewe U Mwaminifu"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Dawa ya Card Maker",
+      "desc": "Kugeuza aya yoyote, Hadith, au Dhikr katika kadi ya picha ya pamoja"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Kikundi cha Khatma",
+      "desc": "Kugawanya sehemu kati ya washiriki na kufuatilia Completion"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Orodha ya tovuti za Kiislamu",
+      "desc": "Maeneo 18 ya kumbukumbu na maelezo ya sehemu"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Wapokeaji, Recitation & Radio",
+      "desc": "158 Wapokeaji na Sura zao, Redio ya Live, Full Surah downloads Offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Maktaba ya Video ya Kiislamu",
+      "desc": "Vituo vya YouTube vilivyothibitishwa na Umri, Lugha, Field"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "wa wa wa wa",
+      "desc": "5820 Maswali katika Tafsir, Fiqh, Aqidah, Hadithi na Marekebisho ya Papo hapo"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "Adhana Times",
+      "desc": "5 Sala katika mji wako, tahadhari na sauti ya Adhana wakati wa sala"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda – Mtaala wa Elimu",
+      "desc": "18 Sehemu: Mitaala & Salaf Takwimu, Masomo, Seerah, Manabii, Majina, Dhikr, Quizzes & Vyeti, Watoto Corner"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Tovuti ya Noor - App",
+      "desc": "Mushaf, Dhikr, Sala Times, Radio, Zakat, Kadi — Kazi Offline"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Mafunzo & Certificates",
+      "desc": "Aina tatu za Maswali, Changamoto ya Kila wiki, Vyeti vyas"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Njia ya Noor – App",
+      "desc": "Mushaf, adhkar, nyakati za maombi, redio, zakat na kadi - kazi nje ya mtandao"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Mafunzo & Certificates",
+      "desc": "Benki ya swali katika aina tatu, changamoto ya kila wiki, na vyeti vya kukamilika vilivyotolewa kwenye turubai"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Kikundi cha Khatmah",
+      "desc": "Kushiriki sehemu kati ya washiriki na kufuatilia maendeleo na kujitolea"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Kadi ya biashara",
+      "desc": "Badilisha aya yoyote, hadithi au dhikr katika kadi ya picha ya kupakuliwa, inayoweza kugawanywa"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Qur’ani Tukufu",
+      "desc": "Mushaf - Surah, sehemu, utafutaji, kusoma, tafsiri na tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Mfumo wa Maisha ya Kiislamu",
+      "desc": "“Na simamisheni Sala, na toeni Zaka, na toeni Zaka, na toeni Zaka."
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Maelezo ya jumla",
+      "desc": "Sehemu za 12: asubuhi, jioni, usingizi, baada ya sala, wudu, istighfar na zaidi"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Noor ya Dhikr",
+      "desc": "Al Azhar yasisitiza kuwa kuvaa Hijabu ni lazima kwa mujibu maamurisho ya Qur'ani Tukufu"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Mushaf wangu",
+      "desc": "Soma Qur’ani Tukufu kwa ukamilifu"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Hadithi nzuri ya Hadith",
+      "desc": "Uchaguzi kutoka kwa Vitabu Sita, vilivyoandikwa na msimuliaji na darasa"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "Al-Arba’in al-Nawawi",
+      "desc": "42 Hadithi zilizokusanywa kwa maelezo mafupi"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Hadithi za Adab kwa watoto",
+      "desc": "Hadithi saba fupi kuhusu maadili mema"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Kikundi cha Tasbeeh",
+      "desc": "tofauti kwa kila mtu katika mkutano"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "Noor ya Companion",
+      "desc": "Kumbuka imani ya utulivu unayosanidi: muda, aina ya maudhui na hali ya utulivu"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Kutembelea na Condolence Etiquette",
+      "desc": "Kuwatembelea wagonjwa, salamu na pongezi"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Kuthibitisha Adhkar yako",
+      "desc": "Sauti ya Mungu inarekodi wakati unamkumbuka Mungu"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Sala ya Nyakati",
+      "desc": "Fajr kwa Isha, hesabu, mbinu nyingi za hesabu na shule"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Orodha ya tovuti za Kiislamu",
+      "desc": "Maeneo ya kumbukumbu ya 18 na maelezo ya sehemu za kila tovuti"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "Fatwa ya",
+      "desc": "Fatwa zilizoainishwa katika ibada, shughuli, fiqh na etiquette"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "Tafsir al-Muyasar",
+      "desc": "Kila aya ya Qur’an ina maana yake."
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al-Imam Al-Imam Al-Imam Al-Imam Al-Imam Al-Imam Al-Imam Al-Mahdiynah",
+      "desc": "Maana ya maneno nadra ya Qur’an – maneno 6111 katika sura 114 na maandishi ya aya na utafutaji wa neno"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Al-Muslimuun",
+      "desc": "Asubuhi, jioni, kulala na adhkar ya chakula - sura za 132 na sauti"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Khutbah za",
+      "desc": "Khutbah na masomo katika aqeedah, utakaso na maadili"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Historia ya Kiislamu",
+      "desc": "Matukio kutoka Hijrah ya Mtume hadi mwisho wa Dola ya Ottoman"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Maktaba ya Video ya Kiislamu",
+      "desc": "Jifunze, angalia na kufaidika - vituo vya YouTube vilivyoorodheshwa na umri, lugha na uwanja"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "wa wa wa wa",
+      "desc": "5820 maswali katika tafsir, fiqh, aqeedah na hadithi, na marekebisho ya papo hapo"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Sauti ya sauti - faili yako mwenyewe kwenye gari"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Ibn Kathir - faili yako mwenyewe kwenye gari"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "Picha zote na Wizara ya Mambo ya Ndani ya Nchi.",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Safi al-Rahman al-Mubarakpuri - faili yako mwenyewe kwenye Hifadhi"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "Kwa hivyo",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100 kwa wakati mmoja.",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "Picha zote na Wizara ya Mambo ya Ndani ya Nchi. ....................................................................",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Abd al-Karim Zaydan - faili yako mwenyewe kwenye gari"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "Kwa mfano;",
+      "desc": "Kuongoza mji wako na kuingia mji wako."
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano,",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Dr. Mustafa Mahmoud – faili yako mwenyewe kwenye gari"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Faili yako mwenyewe kwenye gari"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "Kwa mfano;",
+      "desc": "Badilisha mwenendo wa historia - faili yako mwenyewe kwenye Hifadhi"
     }
   }
 }

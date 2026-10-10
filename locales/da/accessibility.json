@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Tilgængelighed",
+    "subtitle": "Indstillinger for at gøre webstedet lettere at bruge for alle",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Name",
+      "desc": "Vælg grænsefladesprog"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Comment",
+      "desc": "Justér skriftstørrelse",
       "levels": {
         "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "large": "Stor",
+        "extraLarge": "Ekstra stor",
+        "huge": "Kæmpe"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Linehøjde",
+      "desc": "Plads mellem linjerne",
       "levels": {
         "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "relaxed": "Afslappet",
+        "loose": "Løs"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Name",
+      "desc": "Plads mellem bogstaver",
       "levels": {
         "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "wide": "Bredde",
+        "wider": "Mere"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Comment",
+      "desc": "Farvekontrasttilstande",
       "modes": {
         "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "high": "Høj",
+        "maximum": "Maksimum",
+        "inverted": "Omvendt"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "Adgangstilstand",
+      "desc": "Aktivér alle tilgængelighedsfunktioner",
+      "enabled": "Aktiveret",
+      "disabled": "Deaktiveret"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Formindsk bevægelse",
+      "desc": "Stop ikke-essentielle animationer",
+      "respectSystem": "Respektsystemindstilling"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Name",
+      "desc": "Optimerede skrifttyper og farver til udvidet læsning",
+      "sepia": "Sepia (papir)",
+      "dark": "Mørk",
+      "light": "Lys"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Name",
+      "desc": "Forenklet grænseflade med mindre distraktion"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Name",
+      "desc": "Vis og lær genveje",
+      "showHelp": "Vis hjælp",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Spring til indhold",
+        "skipToNav": "Alt + 2: Spring til navigation",
+        "skipToSearch": "Alt + 3: Spring over for at søge",
+        "toggleMenu": "Alt + M: Slå menu til / fra",
+        "toggleTheme": "Alt + T: Slå tema til / fra",
+        "openSettings": "Alt + S: Åbn indstillinger",
+        "openLanguage": "Alt + L: Åbne sprog",
+        "increaseFont": "Ctrl + +: Forøg skrifttype",
+        "decreaseFont": "Ctrl + -: Reducér skrifttype",
+        "resetFont": "Ctrl + 0: Nulstil skrifttype",
+        "toggleContrast": "Alt + C: Slå kontrast til / fra",
+        "toggleMotion": "Alt + R: Slå til / fra for at reducere bevægelse",
+        "toggleSimple": "Alt + P: Slå simpel tilstand til / fra"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "Comment",
+      "desc": "Forbedre kompatibilitet med NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Statusmeddelelser",
+      "liveRegions": "Levende regioner",
+      "labels": "Etiketter",
+      "descriptions": "Beskrivelser"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "Name",
+      "desc": "Gør alle elementer tastatur tilgængelige",
+      "focusVisible": "Synlig fokus",
+      "focusOrder": "Logisk fokusrækkefølge",
+      "noKeyboardTraps": "Ingen tastaturspor",
+      "tabIndex": "Tab indeks"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "Name",
+      "desc": "Understøttelse af billedtekster til audio / videoindhold",
+      "enabled": "Aktiveret",
+      "languages": "Billedsprog",
+      "transcripts": "Fulde udskrifter"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "Comment",
+      "desc": "Farveblinde sikkerhedsfarvesammensætninger",
+      "protanopia": "Protanopia (rød)",
+      "deuteranopia": "Deuteranopi (grøn)",
+      "tritanopia": "Tritanopia (blå)",
+      "achromatopsia": "Akromatopsi (B / W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "Name",
+      "desc": "Skrifttyper og værktøjer til ordblindhed",
+      "font": "Dyslexi- skrifttype",
+      "ruler": "Læsning af linealer",
+      "spacing": "Forstærket mellemrum",
+      "highlight": "Linjefremhævning"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "& Gem indstillinger",
+      "desc": "Gem adgangsindstillinger lokalt",
+      "autoSave": "Gem automatisk",
+      "sync": "Synkronisér enheder"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Name",
+      "desc": "Nulstil alle adgangsindstillinger til standard",
+      "confirm": "Bekræft Nulstil",
+      "button": "Nulstil"
     }
   },
   "_meta": {

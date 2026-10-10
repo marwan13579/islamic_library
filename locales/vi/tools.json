@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Công cụ và Bàn tính",
+    "subtitle": "Máy tính pháp lý, công cụ hàng ngày và tài nguyên giáo dục",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
+      "calc": "Bàn tính",
+      "learn": "Học",
+      "dhikr": "Name",
       "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "stories": "Chuyện",
+      "utils": "Tiện ích"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "Mở",
+      "use": "Dùng",
+      "calculate": "Tính",
+      "start": "Chạy",
+      "continue": "Tiếp tục",
+      "reset": "Đặt lại",
+      "save": "Lưu",
+      "export": "Xuất",
+      "import": "Nhập",
+      "share": "Chia sẻ",
+      "download": "Tải về",
+      "print": "In ấn"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Yêu thích",
+    "addToFavorites": "Thêm vào yêu thích",
+    "removeFromFavorites": "Bỏ khỏi những yêu thích",
+    "notes": "Ghi chú",
+    "addNote": "Thêm chú thích",
+    "recentlyUsed": "Mới dùng",
+    "defaultSort": "Kiểu mặc định",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
+      "name": "Máy tính Zakat",
+      "desc": "Tính toán phương tiện và Nisab tự động",
+      "goldPrice": "Giá vàng trên mỗi gm (21K)",
       "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "gold": "Vàng và bạc",
+      "trade": "Hàng hóa thương mại",
+      "debtsOwed": "Nợ nần bạn",
+      "debtsOwe": "Bạn nợ",
       "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
+      "zakatDue": "Comment",
+      "calculate": "Tính",
+      "result": "Kết quả",
       "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "persons": "Số Nhân",
+      "amountPerPerson": "Tổng số người",
+      "total": "Tổng"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Máy tính thừa kế",
+      "desc": "Người kế vị trong những trường hợp thông thường",
+      "estate": "Giá trị bất động sản",
+      "wives": "Vợ",
+      "sons": "Con trai",
+      "daughters": "Con gái",
+      "father": "Phụ vương",
+      "mother": "Mẹ",
+      "grandfather": "Ông nội",
+      "grandmother": "Bà nội",
+      "brothers": "Anh em",
+      "sisters": "Chị",
+      "paternalUncles": "Chú Pateral",
+      "maternalUncles": "Name",
+      "calculate": "Tính",
+      "shares": "Chia sẻ",
+      "details": "Chi tiết"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Chỉ đạo Tềbla",
+      "desc": "Góc đảo Qbla từ vị trí của bạn, trực tiếp chỉnh sửa tính từ Bắc bay",
+      "angle": "Góc",
+      "direction": "Hướng",
+      "compass": "Com- pa",
+      "liveCompass": "Name",
+      "calibrate": "Cân chỉnh",
+      "accuracy": "Độ chính xác"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Thời kỳ cầu nguyện",
+      "desc": "Fajr đến Isha, Countdown, nhiều phương pháp tính toán và Madabis"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Lịch Hijri",
+      "desc": "Hijri  tôm hùm Gregorian, sự kiện và đề nghị kiêng ăn"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Lỗi theo dõi nhanh",
+      "desc": "Kỷ lục bị mất ngày tháng và theo dõi"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Hướng dẫn Hajjj & Urah",
+      "desc": "Những bước đi theo nghi thức và lời khuyên thực tế"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Thời kỳ cầu nguyện được nhậm",
+      "desc": "Thời kỳ Dua được giải đáp, và Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Tên thánh Allah",
+      "desc": "Nhóm 99 tên có ý nghĩa"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Name",
+      "desc": "Du lịch, bệnh tật, khốn khó, nhà cửa, thức ăn"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Lịch Rama",
+      "desc": "Nhật Báo và Nhiệm vụ, 10 đêm cuối cùng và Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Những câu chuyện của các nhà tiên tri",
+      "desc": "25 Các nhà tiên tri kể chuyện và bài học"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Địa lý tiên tri",
+      "desc": "Dòng thời gian trong cuộc đời Nhà tiên tri"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Công việc hướng dẫn sự thờ phượng",
+      "desc": "Wudu, Obligations & Sunnahs, Fast và Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Học cầu nguyện",
+      "desc": "Hướng dẫn bước chân cho trẻ em và người Hồi giáo mới"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Những câu chuyện lịch sự của trẻ em",
+      "desc": "Bảy câu chuyện ngắn về đạo đức đẹp"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Ghi âm giọng nói của bạn bằng ngôn ngữ Dhikr",
+      "desc": "Bộ thu âm cho giọng nói của bạn nhớ đến thánh Allah"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Nhật ký Tadabbur",
+      "desc": "Hãy ghi ra những câu Kinh Thánh chính xác"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Bộ theo dõi đọc kinh hàng ngày",
+      "desc": "Theo dõi trang Kinh Thánh mỗi ngày"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Nhóm Tasbih",
+      "desc": "Mỗi người phản đối nhau"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "Comment",
+      "desc": "Đức tin dịu dàng nhắc nhở bạn"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Name",
+      "desc": "Biến bất cứ câu nào, Hadith, hoặc Dihikr thành thẻ ảnh có thể chia sẻ"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Nhóm Khatma",
+      "desc": "Phân phối các phần giữa các bộ phận tham gia và theo dõi hoàn chỉnh"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Thư mục Nơi Mạng Hồi giáo",
+      "desc": "18 Những chỗ ngồi có tham khảo với các lời giải thích"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Người tuyển dụng, người tuyển dụng và radio",
+      "desc": "158 người dùng máy nhắn tin, phát thanh trực tiếp, tải về toàn bộ trang web của Surah"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Thư viện phim ảnh Hồi giáo",
+      "desc": "Kênh YouTube được xây dựng bởi tuổi tác, ngôn ngữ, Field"
     },
     "quiz": {
       "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "desc": "5820 câu hỏi tại Tafsir, Fiqh, Aqidah, Haith với sự sửa đổi tức thời"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "Thời Adhan",
+      "desc": "Năm lời cầu nguyện trong thành phố, cảnh giác và tiếng Adhan vào thời điểm cầu nguyện"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda — Giáo dục Curriclulum",
+      "desc": "18 Mục: Curriclum & Salaf figures, Bài học, Seerah, Tiên tri, Tên, Dhikr, Quizzes & chứng thực, góc phố Trẻ em"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Cổng Noor — Áp dụng",
+      "desc": "Mushaf, Dihikr, Times, Radio, Zakat, Cards — Làm việc ngoài đường"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Chứng nhận Quizzes",
+      "desc": "Ba loại câu hỏi, thử thách hàng tuần, chứng chỉ hoàn chỉnh"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Cổng Koor — Áp dụng",
+      "desc": "Mushaf, Adamkar, giờ cầu nguyện, radio, zakat và bài — hoạt động ngoại tuyến"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Chứng nhận Quizzes",
+      "desc": "Ngân hàng câu hỏi gồm ba loại, một thách thức hàng tuần, và hoàn thành bằng chứng vẽ trên vải"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Nhóm Khatmah",
+      "desc": "Phân phối các bộ phận trong số những người tham gia và theo dõi tiến bộ và sự dâng mình"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Trình tạo quân bài Dua",
+      "desc": "Biến bất cứ đoạn nào, cóith hoặc dhikr thành một thẻ ảnh có thể tải về được, có thể chia sẻ được"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Kinh Koran thánh",
+      "desc": "Cả bộ phận Mushaf — Surahs, bộ phận, tìm kiếm, đọc kinh, dịch thuật và tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Hệ thống sống Hồi giáo",
+      "desc": "Ngày của bạn gắn liền với lời cầu nguyện — cầu nguyện, dhikr và Quran vào mỗi lúc cầu nguyện"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Adhkar đầy đủ",
+      "desc": "12 phần: buổi sáng, buổi tối, ngủ, sau khi cầu nguyện, Wudu, tầm thường và nhiều hơn"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Name",
+      "desc": "Adhkar, du'as và hadiths ở một nơi, với một phản lực và một liên kết có thể chia sẻ"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Mushaf của tôi",
+      "desc": "Theo dõi toàn bộ kinh Koran của bạn"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Nguồn cao quý",
+      "desc": "Những sự lựa chọn từ 6 cuốn sách, được ghi nhận bởi người kể chuyện và cấp bậc"
     },
     "arbaeen": {
       "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "desc": "42 hath được thu thập với một lời giải thích ngắn gọn"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Những câu chuyện về Adab cho trẻ em",
+      "desc": "Bảy câu chuyện ngắn về đạo đức tốt"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Nhóm Tasbeeh",
+      "desc": "Mỗi người trong cuộc họp riêng"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "Comment",
+      "desc": "Một nhắc nhở đức tin yên tĩnh bạn cấu hình: khoảng, nội dung và chế độ bình tĩnh"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Name",
+      "desc": "Đi thăm người bệnh, chia buồn và chúc mừng"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Thu âm Adhkar",
+      "desc": "Một máy ghi âm giọng nói cá nhân trong khi bạn nhớ đến Allah"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Thời kỳ cầu nguyện",
+      "desc": "Fajr đến Isha, đếm ngược, nhiều phương pháp tính toán và trường học"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Thư mục Nơi Mạng Hồi giáo",
+      "desc": "18 trang web tham khảo với một lời giải thích của mỗi khu vực"
     },
     "libfatwa": {
       "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "desc": "Chất béo được phân loại trong sự thờ phượng, giao dịch, fiqh và nghi thức"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "Tafsir al-Muyasar",
+      "desc": "Tafsir của mỗi câu trong kinh Quran với ý nghĩa của nó — 114 surahs"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al- Siraj fi Bayan Ghareeb al-Quran",
+      "desc": "Ý nghĩa của những từ kinh Koran hiếm có — 6111 trong 114 chữ surah với việc tìm kiếm câu và từ"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Name",
+      "desc": "Buổi sáng, buổi tối, ngủ và thức ăn adhkar — 132 chương với âm thanh"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "Khotbaps",
+      "desc": "Khoubah và bài học ở Aqeedah, tẩy uế và đạo đức"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Lịch sử Hồi giáo",
+      "desc": "Những sự kiện từ Hijrah của Nhà tiên tri đến sự kết thúc của đế chế Ottoman"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Thư viện phim ảnh Hồi giáo",
+      "desc": "Học hỏi, xem và nhận lợi ích — các kênh YouTube được lưu trữ theo độ tuổi, ngôn ngữ và lĩnh vực"
     },
     "libquiz": {
       "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "desc": "5820 câu hỏi trong Tafsir, fiqh, aqeedah và hadith, với sửa chữa ngay lập tức"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "thể hiện lòng biết ơn qua lời cầu nguyện",
+      "desc": "Đọc Kinh Thánh — Tập tin của bạn trên đĩa"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "thể hiện lòng kính sợ Đức Giê - hô - va",
+      "desc": "Ibn Kathir — Hồ sơ của bạn trên đường"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng biết ơn qua lời cầu nguyện",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng thương xót.",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng thương xót.",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng thương xót",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng kính sợ Đức Chúa Trời",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng kính sợ Đức Chúa Trời",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "hạ cánh",
+      "desc": "Safi al-Rahman al-Mubaakpuri — tập tin của bạn trên Drive"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "teppi82",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "hạ cánh",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100  hạ cánh",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "hạ cánh",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng kính trọng đối với người khác, 1 / 2",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "thể hiện lòng biết ơn",
+      "desc": "Abd al-Kaim Zaydan — hồ sơ riêng của bạn trên Drive"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "thể hiện lòng kính sợ Đức Chúa Trời",
+      "desc": "Hướng dẫn của bạn về sự hiểu biết và suy ngẫm về kinh Koran — tập tin của chính bạn"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng thương xót",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "hạ cánh",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng kính sợ Đức Chúa Trời",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "Chúa Giê - su",
+      "desc": "Tiến sĩ Musfa xét nghiệm: Hồ sơ của bạn trên đường"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "thể hiện lòng biết ơn qua lời cầu nguyện",
+      "desc": "Hồ sơ của bạn trên Drive"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "thể hiện lòng kính sợ Đức Chúa Trời",
+      "desc": "Họ đã thay đổi lịch sử — tập tin của bạn về Drive"
     }
   }
 }

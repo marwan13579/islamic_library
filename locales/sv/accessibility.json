@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Tillgänglighet",
+    "subtitle": "Alternativ för att göra webbplatsen lättare att använda för alla",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "Språk",
+      "desc": "Välj gränssnittsspråk"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "Font Size",
+      "desc": "Justera teckenstorlek",
       "levels": {
         "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "large": "Stor",
+        "extraLarge": "Extra stor",
+        "huge": "Stor"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "Linjehöjd",
+      "desc": "Utrymme mellan linjer",
       "levels": {
         "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "relaxed": "Avslappnad",
+        "loose": "Lösa"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "Letter Spacing",
+      "desc": "Utrymme mellan brev",
       "levels": {
         "normal": "Normal",
-        "wide": "Wide",
+        "wide": "bred",
         "wider": "Wider"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "Kontrast",
+      "desc": "Färgkontrastlägen",
       "modes": {
         "normal": "Normal",
-        "high": "High",
+        "high": "Hög",
         "maximum": "Maximum",
-        "inverted": "Inverted"
+        "inverted": "Inverterad"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
+      "title": "Tillgänglighetsläge",
+      "desc": "Aktivera alla tillgänglighetsfunktioner",
       "enabled": "Enabled",
-      "disabled": "Disabled"
+      "disabled": "Inaktiverad"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "Reduce Motion",
+      "desc": "Sluta icke-väsentliga animationer",
+      "respectSystem": "Respektsysteminställning"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "Läsa läge",
+      "desc": "Optimerade teckensnitt och färger för utökad läsning",
+      "sepia": "Sepia (papper)",
+      "dark": "Mörk",
+      "light": "Ljus ljus"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "Enkelt läge",
+      "desc": "Förenklat gränssnitt med mindre distraktion"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "Keyboard Shortcuts",
+      "desc": "Visa och lära genvägar",
+      "showHelp": "Visa hjälp",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Hoppa till innehåll",
+        "skipToNav": "Alt + 2: Hoppa till navigering",
+        "skipToSearch": "Alt + 3: Hoppa för att söka",
+        "toggleMenu": "Alt + M: Toggle meny",
+        "toggleTheme": "Alt + T: Toggle tema",
+        "openSettings": "Alt + S: Öppna inställningar",
+        "openLanguage": "Alt + L: Öppna språk",
+        "increaseFont": "Ctrl + +: Öka teckensnittet",
+        "decreaseFont": "Ctrl + -: Minska teckensnittet",
+        "resetFont": "Ctrl + 0: Återställ typsnitt",
+        "toggleContrast": "Alt + C: Växla kontrast",
+        "toggleMotion": "Alt + R: Toggle reducerar rörelsen",
+        "toggleSimple": "Alt + P: Växla enkelt läge"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
+      "title": "Screen Reader Support",
+      "desc": "Förbättra kompatibiliteten med NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Statusmeddelanden",
       "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "labels": "Etiketter",
+      "descriptions": "Beskrivning"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
+      "title": "Keyboard Navigation",
+      "desc": "Gör alla element tangentbord tillgänglig",
+      "focusVisible": "Synlig fokus",
+      "focusOrder": "Logisk fokusorder",
+      "noKeyboardTraps": "Inga tangentbordsfällor",
       "tabIndex": "Tab Index"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
+      "title": "Captions & Transcripts",
+      "desc": "Stödtexter för ljud/videoinnehåll",
       "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "languages": "Fånga språk",
+      "transcripts": "Full transkript"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
+      "title": "Färgblindt stöd",
+      "desc": "Färgblind säkra färgscheman",
       "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
+      "deuteranopia": "Deuteranopia (gröna)",
+      "tritanopia": "Tritanopia (Blå)",
       "achromatopsia": "Achromatopsia (B/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
+      "title": "Dyslexi stöd",
+      "desc": "Fonts och verktyg för dyslexi",
+      "font": "Dyslexi Font",
+      "ruler": "Läsa Ruler",
+      "spacing": "Förbättrad spacing",
       "highlight": "Line Highlight"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "Spara preferenser",
+      "desc": "Spara tillgänglighetsinställningar lokalt",
+      "autoSave": "Auto Spara",
+      "sync": "Synkronisera över enheter"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "Återställ",
+      "desc": "Återställ alla tillgänglighetsinställningar till standarder",
+      "confirm": "Bekräfta återställning",
+      "button": "Återställ"
     }
   },
   "_meta": {

@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "টুল & গণনা করো",
+    "subtitle": "আইনি ক্যালকুলেটর, ডেইলি টুল এবং শিক্ষাগত সম্পদ",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "ক্যালকুলেটর",
+      "learn": "শিক্ষা গ্রহণ",
+      "dhikr": "ডিথির",
+      "quran": "প ্ রজ ্ ঞাময় কোরআনের কসম ,",
+      "stories": "গল্প",
+      "utils": "বিবিধ সামগ্রী"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "খুলুন",
+      "use": "ব্যবহার",
+      "calculate": "গণনা করো",
+      "start": "আরম্ভ",
+      "continue": "এগিয়ে চলুন",
+      "reset": "পুনরায় নির্ধারণ",
+      "save": "সংরক্ষণ",
+      "export": "এক্সপোর্ট করুন",
+      "import": "ইম্পোর্ট",
+      "share": "যৌথ ব্যবহার",
+      "download": "ডাউনলোড করা হয়েছে",
+      "print": "প্রিন্ট করুন"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "পছন্দনীয়",
+    "addToFavorites": "পছন্দের তালিকায় যোগ করুন",
+    "removeFromFavorites": "পছন্দের তালিকা থেকে সরিয়ে ফেলুন",
+    "notes": "নোট",
+    "addNote": "নোট যোগ করুন",
+    "recentlyUsed": "সম্প্রতি ব্যবহৃত",
+    "defaultSort": "ডিফল্ট ক্রমানুযায়ী বিন্যাস",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "name": "গ্রাহক",
+      "desc": "আপনার Tumbers এবং নিব্রন পরিচালনা করুন",
+      "goldPrice": "প্রত্যেক গ্রাম থেকে সোনা",
+      "cash": "ক্যাশ",
+      "gold": "সোনার বাছুর",
+      "trade": "বাণিজ্য উত্তম",
+      "debtsOwed": "[ অধ্যয়ন প্রশ্নাবলি]",
+      "debtsOwe": "[ অধ্যয়ন প্রশ্নাবলি]",
+      "nisab": "নিসাবা",
+      "zakatDue": "সময় প্রদান",
+      "calculate": "গণনা করো",
+      "result": "ফলাফল",
+      "fitr": "যাকাত দেওয়া",
+      "persons": "সংখ্যা",
+      "amountPerPerson": "প্রত্যেক ব্যক্তি যে পরিমাণ পরিমাণ বৃদ্ধি করা হবে",
+      "total": "সর্বমোট"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "ক্যালকুলেটর",
+      "desc": "সাধারণ ক্ষেত্রে হের শেয়ার",
+      "estate": "গামা মান",
+      "wives": "স্ত্রী",
+      "sons": "পুত্র",
+      "daughters": "কন্যারা",
+      "father": "বাবা",
+      "mother": "মা",
+      "grandfather": "দাদু",
+      "grandmother": "গ্র্যান্ড মা",
+      "brothers": "ভাইয়েরা",
+      "sisters": "বোন",
+      "paternalUncles": "মাতা চাচা",
+      "maternalUncles": "মাতা চাচা",
+      "calculate": "গণনা করো",
+      "shares": "শেয়ার",
+      "details": "বিবরণ"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "গতিপথ",
+      "desc": "আপনার অবস্থান থেকে প্রাপ্ত কোণ, লাইভ সিনেক্রেটিক নর্থ ডিসট্রিক্ট",
+      "angle": "কোণ",
+      "direction": "গতিপথ",
+      "compass": "কম্পাস",
+      "liveCompass": "লিভারকি",
+      "calibrate": "ক্যালিব্রেট করুন",
+      "accuracy": "নির্ভুলতার মাত্রা"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "প্রার্থনার সময়",
+      "desc": "ইশাতে ফাজর, গণনা, একাধিক ক্যালকাল্টি পদ্ধতি এবং মাধব"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "বর্ষপঞ্জি",
+      "desc": "ঝর্ঝরি গ্রেগরীয় রূপান্তর, ঘটনা এবং প্রস্তাবিত দ্রুত"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "দ্রুত সম্প্রচার",
+      "desc": "রেকর্ডকৃত দিন এবং ট্র্যাক আপ করুন"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "হাজ (Shat) ব্যবস্থাপনা",
+      "desc": "[ অধ্যয়ন প্রশ্নাবলি]"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "উত্তর দেওয়া হয়েছে প্রার্থনার সময়",
+      "desc": "যখন দুতা প্রশ্নের উত্তর দেওয়া হয়, এবং খাওম দুয়"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "ঈশ্বরের নাম",
+      "desc": "অর্থ দিয়ে ৯৯টা নাম"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "সেন্ট্রালিয়া",
+      "desc": "ভ্রমণ, অসুস্থতা, দুর্দশা, বাড়ি, খাবার"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "রমজান মাস",
+      "desc": "দৈনিক দুতা আর কাজ, শেষ দশ রাত আর ঈদ"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "গল্প",
+      "desc": "২৫ তাদের গল্প ও শিক্ষাগুলো"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "বিশ্ববিদ্যাName",
+      "desc": "নবীর জীবনের সময়কাল"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "কা. পূ.",
+      "desc": "উদু, প্রার্থনা ও পরিচর্যা"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "প্রার্থনা শিখুন",
+      "desc": "বাচ্চাদের এবং নতুন মুসলমানদের জন্য ধাপ- এর সহায়িকাName"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "বাচ্চাদের মানার্স গল্প",
+      "desc": "সুন্দর শিক্ষা সম্বন্ধে সাতটা ছোট গল্প"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "দিনারের মাধ্যমে আপনার ভয়েস রেকর্ড করুন",
+      "desc": "আপনার ভয়েসের ব্যক্তিগত রেকর্ডার ঈশ্বরের কথা স্মরণ করছে"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "তাদাবান জার্নাল",
+      "desc": "কোরআন নিয়ে আপনার চিন্তা প্রকাশ করুন"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "প্রতিদিন কোরান পড়া",
+      "desc": "আপনার ডেইলি কুরআন পেজ অনুসরণ করুন"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "নিশ্চলName",
+      "desc": "সকলকে একত্র করার সময় পৃথক করা"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "না সহকর্মী",
+      "desc": "[ অধ্যয়ন প্রশ্নাবলি]"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Daha কার্ড নির্মাতা",
+      "desc": "যে কোন প্রস্তাব চালু করুন, হাদিথ বা ধ্রুব একটি যৌথ ছবি কার্ডের মাধ্যমে"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "গ্রুপ খাদমা",
+      "desc": "স্কোর ও ট্র্যাকের মধ্যকার ভাগ"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "ইসলামী সাইট ডিরেক্টরি",
+      "desc": "১৮ রেফারেন্স সাইট"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "পড়া, পাঠ ও রেডিও",
+      "desc": "২৮ বিশ্ব নিরীক্ষা"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "ইসলামী ভিডিও লাইব্রেরি",
+      "desc": "অ্যাংলোডি ইউটিউব চ্যানেল গোরস্থানে, বয়স, ভাষা, ফিল্ড"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "কুইজ",
+      "desc": "৫৮২০ প্রশ্ন, ফাকিহ, আকিদাহ, হাদিথ সাথে সাথে সাথে সংশোধন"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "অ্যাডহান সময়",
+      "desc": "প্রার্থনার সময় সতর্কতা এবং আড্রন শব্দ"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "নুর আল-ধুদা — শিক্ষাগত যোগ্যতা",
+      "desc": "১৮ অনুচ্ছেদ: ক্যালকুলিয়াম ও সালাফির আকৃতি, শিক্ষা, সাহিত্য, নাম, Dhykr, Diks এবং সার্টিফিকেট"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "কোন পোর্ট ফল্ট - অ্যাপন",
+      "desc": "যিহোবার সাক্ষিদের দ্বারা প্রকাশিত ।"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "কুইজ এবং সার্টিফিকেট",
+      "desc": "তিনটি প্রশ্নের উত্তর, সাপ্তাহিক চ্যালেঞ্জ, সমাপ্তি সার্টিফিকেট"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "No NoN গেটওয়ে - অ্যাপ",
+      "desc": "Holf, Adhrk, প্রার্থনার সময়, রেডিও, নামায এবং কার্ড — কাজ করে"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "কুইজ এবং সার্টিফিকেট",
+      "desc": "তিনটে প্রকার ব্যাংক, সাপ্তাহিক একটা প্রতিদ্বন্দ্বিতা এবং ক্যানভাসে সার্টিফিকেট আঁকা"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "গ্রুপ খাদাহ",
+      "desc": "অংশগ্রহণকারী এবং ট্র্যাকের মধ্যে পার্শ্ববর্তী অংশ এক্সপোর্ট করুন"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "ডুমা কার্ড নির্মাতা",
+      "desc": "কোনো পদকে পরিবর্তন করুন, যা ডাউনলোড করা সম্ভব, শেয়ার করা ছবি কার্ডের মধ্যে দিয়ে"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "পবিত্র কোরআন",
+      "desc": "সম্পূর্ণ অবশ্‌ফ — ইব্রীয় শব্দচিত্র, খণ্ড, অনুসন্ধান, অনুবাদ এবং Tafs"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "মুসলিম জীবন পদ্ধতি",
+      "desc": "আপনার দিন প্রার্থনার সঙ্গে জড়িত — প্রার্থনা, প্রার্থনা এবং কোরান"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Colilker",
+      "desc": "১২ বিভাগ: সকাল, সন্ধ্যা, ঘুম, প্রার্থনা, wudu, Witgar এবং আরও"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "দের",
+      "desc": "আদহর, ডুস এবং মেন্টররা এক জায়গায়, পাল্টা বরাবেহ এবং একটি শেয়ার লিঙ্কসহ"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "মাইরাফ",
+      "desc": "আপনার সম্পূর্ণ কুরানাইজেশন ট্র্যাক করুন"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "যোগ্য হাদি",
+      "desc": "ছয় বই থেকে নির্বাচন করা হয়েছে।"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "আল আরাব আল-নাওয়াউই",
+      "desc": "৪২ রিসিপশন একটি সংক্ষিপ্ত ব্যাখ্যা দিয়ে সংগ্রহ করেছে"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "বাচ্চাদের জন্য অ্যাডব গল্প",
+      "desc": "ভাল নৈতিকতা সম্পর্কে সাত সংক্ষিপ্ত গল্প"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "নিশিয়েব",
+      "desc": "সমবেত সকলের জন্য আলাদা কাউন্টার"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "না সহকর্মী",
+      "desc": "একটি শান্ত বিশ্বাস আপনাকে মনে করিয়ে দেয়: বিরতি, বিষয়বস্তু এবং শান্ত মোড"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "কমপ্লিট এবং কমপ্লুটেনশিয়ান",
+      "desc": "অসুস্থ, সমবেদনা এবং অভিনন্দন"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "আপনার আডলকার রেকর্ড করুন",
+      "desc": "যখন তোমরা আল ্ লাহর নাম স্মরণ করবে একটি ব্যক্তিগত ভয়েস রেকর্ডার"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "প্রার্থনার সময়",
+      "desc": "আইশা, গণনা, একাধিক গণনা পদ্ধতি এবং স্কুল"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "ইসলামী সাইট ডিরেক্টরি",
+      "desc": "১৮টি সাইটের কথা উল্লেখ করে প্রতিটি সাইটের বিভাগের ব্যাখ্যা"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "মোটা",
+      "desc": "উপাসনা, ট্রানসাকশন, fikh এবং Etiquottyতে সাজানো ফতোয়াপত্র"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "মেসোপটে",
+      "desc": "কোরআনের প্রতিটা পদ এর অর্থসহ — ১১৪ গীত"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "আল-সিরাজ ফিতের ঘারেব আল-কোরান",
+      "desc": "বিরল কোরানিক শব্দের অর্থ — ১১৪ অক্ষরসহ শব্দ ও শব্দ অনুসন্ধান"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "আল অলিখ",
+      "desc": "সকাল, সন্ধ্যা, ঘুম ও খাবার — অডিওর মাধ্যমে ১৩২ অধ্যায়"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "খবুথাবা",
+      "desc": "কোকিদাহ, নিরামিষভোজী এবং নৈতিকতা বিষয়ে খুতবাহ"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "ইসলামী ইতিহাস",
+      "desc": "অটোমান রাজ্যের অবসানের জন্য ভাববাদীর হিজড়াদের কাছ থেকে ঘটনা"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "ইসলামী ভিডিও লাইব্রেরি",
+      "desc": "শিখুন, দেখুন এবং উপকার করুন — বয়স, ভাষা ও ক্ষেত্রের মাধ্যমে ইউটিউব চ্যানেলগুলো সংরক্ষণ করুন"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "কুইজ",
+      "desc": "৫৮২০টি প্রশ্ন, তাফিসির, ফাকিহ, আকিদাহ এবং তার সাথে সাথে সাথে সাথে সংশোধন করা হয়েছে।"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "ছবি তুলেছেন জেফ্রি।",
+      "desc": "অডিও পাঠ — আপনার ফাইলসিস্টেমে উপস্থিত রয়েছে"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "একটি অ্যানালগ এবং ডিজিটাল ঘড়িName",
+      "desc": "ইবনে কাথির — আপনার নিজের ফাইল ড্রাইভে"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "كران كرم - كلنور",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "رساكران",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "رساكلاه الناه بالا",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "علا كلاه سرد",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "رساكلاه الحبة",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "رساكل الاسابع",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "رحدوم",
+      "desc": "সাফি আল-সায়িদ আল মুবারকপুরি — আপনার নিজের ফাইল ড্রাইভে"
     },
     "b9": {
       "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "ان لا سسسللم للا لاه للا للا للا لا للا للا لا لا لا لاه لا للا للا سا لا سلا لا للا سلا سا سلا سا سا للللل سا سا سا سا سلل سا سا سا سا سا سا سا سا سا سا سا سل",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "১০০ سالالحب عنبة العرد",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "تسرسر",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": ". .",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "দায়বদ্ধতা",
+      "desc": "আব্দ আল-কারিম জামাদান — আপনার নিজের ফাইল ড্রাইভে"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "মিসৌরি",
+      "desc": "কোরআনকে বোঝার ও চিন্তা করার জন্য আপনার নির্দেশনা — আপনার নিজের ফাইল"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "فه الددوة للو للل",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "চিত্র",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "سفساه بالحداه بالا",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "মোনতাঙ্গী",
+      "desc": "ড: মুস্তাফা মাহমুদ-তোমার নিজের ফাইল ড্রাইভে"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "كلا للا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لا لاساسا لا لاسا لا لا لاساسا لا لا لا لا لا لا كلا لا لا لا لا لا لا كلا لا لا لا لا سا لا ت لا لا لا سا ت لا لا لا لا ا لا لا ا لا ت لا لا لا لا ت",
+      "desc": "ড্রাইভের মধ্যে আপনার ফাইল-সিস্টেম উপস্থিত"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "পারছে না:",
+      "desc": "তারা ইতিহাসের গতিপথ পরিবর্তন করেছে — আপনার নিজস্ব ফাইল ড্রাইভে"
     }
   }
 }

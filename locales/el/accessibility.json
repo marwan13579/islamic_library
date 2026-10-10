@@ -1,141 +1,141 @@
 {
   "accessibility": {
-    "title": "Accessibility",
-    "subtitle": "Options to make the site easier to use for everyone",
+    "title": "Προσβασιμότητα",
+    "subtitle": "Επιλογές για την ευκολότερη χρήση του site για όλους",
     "language": {
-      "title": "🌐 Language",
-      "desc": "Choose interface language"
+      "title": "🌐 Γλώσσα",
+      "desc": "Επιλογή γλώσσας διασύνδεσης"
     },
     "fontSize": {
-      "title": "🔤 Font Size",
-      "desc": "Adjust font size",
+      "title": "🔤 Μέγεθος γραμματοσειράς",
+      "desc": "Προσαρμογή μεγέθους γραμματοσειράς",
       "levels": {
-        "normal": "Normal",
-        "large": "Large",
-        "extraLarge": "Extra Large",
-        "huge": "Huge"
+        "normal": "Κανονικό",
+        "large": "Μεγάλο",
+        "extraLarge": "Επιπλέον μεγάλο",
+        "huge": "Τεράστια"
       }
     },
     "lineHeight": {
-      "title": "↕️ Line Height",
-      "desc": "Space between lines",
+      "title": "↕️ Ύψος γραμμής",
+      "desc": "Διάστημα μεταξύ γραμμών",
       "levels": {
-        "normal": "Normal",
-        "relaxed": "Relaxed",
-        "loose": "Loose"
+        "normal": "Κανονικό",
+        "relaxed": "Χαλαρώστε",
+        "loose": "Χαλαρά"
       }
     },
     "letterSpacing": {
-      "title": "🔠 Letter Spacing",
-      "desc": "Space between letters",
+      "title": "🔠 Διάστημα επιστολών",
+      "desc": "Διάστημα μεταξύ γραμμάτων",
       "levels": {
-        "normal": "Normal",
-        "wide": "Wide",
-        "wider": "Wider"
+        "normal": "Κανονικό",
+        "wide": "Ευρεία",
+        "wider": "Πιο πλατιά"
       }
     },
     "contrast": {
-      "title": "🎨 Contrast",
-      "desc": "Color contrast modes",
+      "title": "🎨 Αντίθεση",
+      "desc": "Λειτουργία αντίθεσης χρώματος",
       "modes": {
-        "normal": "Normal",
-        "high": "High",
-        "maximum": "Maximum",
-        "inverted": "Inverted"
+        "normal": "Κανονικό",
+        "high": "Υψηλό",
+        "maximum": "Μέγιστο",
+        "inverted": "Αντιστροφή"
       }
     },
     "accessibilityMode": {
-      "title": "♿ Accessibility Mode",
-      "desc": "Enable all accessibility features",
-      "enabled": "Enabled",
-      "disabled": "Disabled"
+      "title": "♿ Τρόπος προσβασιμότητας",
+      "desc": "Ενεργοποίηση όλων των χαρακτηριστικών προσβασιμότητας",
+      "enabled": "Ενεργοποίηση",
+      "disabled": "Απενεργοποίηση"
     },
     "reduceMotion": {
-      "title": "🎞️ Reduce Motion",
-      "desc": "Stop non-essential animations",
-      "respectSystem": "Respect System Setting"
+      "title": "🎞️ Μείωση της κίνησης",
+      "desc": "Σταμάτημα μη απαραίτητων κινουμένων σχεδίων",
+      "respectSystem": "Setting συστήματος σεβασμού"
     },
     "readingMode": {
-      "title": "👁️ Reading Mode",
-      "desc": "Optimized fonts and colors for extended reading",
-      "sepia": "Sepia (Paper)",
-      "dark": "Dark",
-      "light": "Light"
+      "title": "👁️ Λειτουργία ανάγνωσης",
+      "desc": "Βελτιστοποιημένες γραμματοσειρές και χρώματα για εκτεταμένη ανάγνωση",
+      "sepia": "Sepia (Χάρτια)",
+      "dark": "Σκούρο",
+      "light": "Φως"
     },
     "simpleMode": {
-      "title": "🧠 Simple Mode",
-      "desc": "Simplified interface with less distraction"
+      "title": "🧠 Απλή Λειτουργία",
+      "desc": "Απλουστευμένη διεπαφή με λιγότερη απόσπαση της προσοχής"
     },
     "keyboardShortcuts": {
-      "title": "⌨️ Keyboard Shortcuts",
-      "desc": "View and learn shortcuts",
-      "showHelp": "Show Help",
+      "title": "⌨️ Συντομεύσεις πληκτρολογίου",
+      "desc": "Προβολή και εκμάθηση συντομεύσεων",
+      "showHelp": "Εμφάνιση βοήθειας",
       "shortcuts": {
-        "skipToContent": "Alt + 1: Skip to content",
-        "skipToNav": "Alt + 2: Skip to navigation",
-        "skipToSearch": "Alt + 3: Skip to search",
-        "toggleMenu": "Alt + M: Toggle menu",
-        "toggleTheme": "Alt + T: Toggle theme",
-        "openSettings": "Alt + S: Open settings",
-        "openLanguage": "Alt + L: Open languages",
-        "increaseFont": "Ctrl + +: Increase font",
-        "decreaseFont": "Ctrl + -: Decrease font",
-        "resetFont": "Ctrl + 0: Reset font",
-        "toggleContrast": "Alt + C: Toggle contrast",
-        "toggleMotion": "Alt + R: Toggle reduce motion",
-        "toggleSimple": "Alt + P: Toggle simple mode"
+        "skipToContent": "Alt + 1: Μετάβαση στο περιεχόμενο",
+        "skipToNav": "Alt + 2: Μετάβαση στην πλοήγηση",
+        "skipToSearch": "Alt + 3: Μετάβαση στην αναζήτηση",
+        "toggleMenu": "Alt + M: Εναλλαγή μενού",
+        "toggleTheme": "Alt + T: Εναλλαγή θέματος",
+        "openSettings": "Alt + S: Άνοιγμα ρυθμίσεων",
+        "openLanguage": "Alt + L: Ανοικτές γλώσσες",
+        "increaseFont": "Ctrl +: Αύξηση γραμματοσειράς",
+        "decreaseFont": "Ctrl + -: Μείωση γραμματοσειράς",
+        "resetFont": "Ctrl + 0: Επαναφορά γραμματοσειράς",
+        "toggleContrast": "Alt + C: Εναλλαγή αντίθεσης",
+        "toggleMotion": "Alt + R: Εναλλαγή μείωσης κίνησης",
+        "toggleSimple": "Alt + P: Εναλλαγή απλής λειτουργίας"
       }
     },
     "screenReader": {
-      "title": "🔊 Screen Reader Support",
-      "desc": "Improve compatibility with NVDA, JAWS, VoiceOver, TalkBack",
-      "announcements": "Status Announcements",
-      "liveRegions": "Live Regions",
-      "labels": "Labels",
-      "descriptions": "Descriptions"
+      "title": "🔊 Υποστήριξη ανάγνωσης οθόνης",
+      "desc": "Βελτίωση της συμβατότητας με NVDA, JAWS, VoiceOver, TalkBack",
+      "announcements": "Ανακοινώσεις κατάστασης",
+      "liveRegions": "Ζωντανές περιφέρειες",
+      "labels": "Ετικέτες",
+      "descriptions": "Περιγραφή"
     },
     "keyboardNavigation": {
-      "title": "⌨️ Keyboard Navigation",
-      "desc": "Make all elements keyboard accessible",
-      "focusVisible": "Visible Focus",
-      "focusOrder": "Logical Focus Order",
-      "noKeyboardTraps": "No Keyboard Traps",
-      "tabIndex": "Tab Index"
+      "title": "⌨️ Πλοήγηση πληκτρολογίου",
+      "desc": "Κάντε προσβάσιμο το πληκτρολόγιο όλων των στοιχείων",
+      "focusVisible": "Ορατή εστίαση",
+      "focusOrder": "Λογική σειρά εστίασης",
+      "noKeyboardTraps": "Χωρίς παγίδες πληκτρολογίου",
+      "tabIndex": "Δείκτης καρτέλας"
     },
     "captions": {
-      "title": "🎥 Captions & Transcripts",
-      "desc": "Support captions for audio/video content",
-      "enabled": "Enabled",
-      "languages": "Caption Languages",
-      "transcripts": "Full Transcripts"
+      "title": "🎥 Λεζάντες & Μεταγραφές",
+      "desc": "Λεζάντες υποστήριξης για το περιεχόμενο ήχου / βίντεο",
+      "enabled": "Ενεργοποίηση",
+      "languages": "Γλώσσες λεζάντας",
+      "transcripts": "Πλήρη κείμενα"
     },
     "colorBlind": {
-      "title": "🌈 Color Blind Support",
-      "desc": "Color-blind safe color schemes",
-      "protanopia": "Protanopia (Red)",
-      "deuteranopia": "Deuteranopia (Green)",
-      "tritanopia": "Tritanopia (Blue)",
-      "achromatopsia": "Achromatopsia (B/W)"
+      "title": "🌈 Υποστήριξη για Τυφλούς Χρώματος",
+      "desc": "Χρώμα-τυφλή ασφαλή σχέδια χρωμάτων",
+      "protanopia": "Προτανοπία (κόκκινο)",
+      "deuteranopia": "Δευτερανοπία (Πράσινη)",
+      "tritanopia": "Τριτανοπία (μπλε)",
+      "achromatopsia": "Αχρωματοψία (Β/W)"
     },
     "dyslexia": {
-      "title": "📖 Dyslexia Support",
-      "desc": "Fonts and tools for dyslexia",
-      "font": "Dyslexia Font",
-      "ruler": "Reading Ruler",
-      "spacing": "Enhanced Spacing",
-      "highlight": "Line Highlight"
+      "title": "📖 Υποστήριξη για Δυσλεξία",
+      "desc": "Γραμματοσειρές και εργαλεία για δυσλεξία",
+      "font": "Γραμματοσειρά δυσλεξίας",
+      "ruler": "Ανάγνωση Κανόνα",
+      "spacing": "Βελτιωμένο διάστημα",
+      "highlight": "Τονισμός γραμμής"
     },
     "persistence": {
-      "title": "💾 Save Preferences",
-      "desc": "Save accessibility settings locally",
-      "autoSave": "Auto Save",
-      "sync": "Sync Across Devices"
+      "title": "💾 Αποθήκευση Προτιμήσεων",
+      "desc": "Αποθήκευση ρυθμίσεων προσβασιμότητας τοπικά",
+      "autoSave": "Αυτόματη αποθήκευση",
+      "sync": "Συγχρονισμός μέσω συσκευών"
     },
     "reset": {
-      "title": "🔄 Reset",
-      "desc": "Reset all accessibility settings to defaults",
-      "confirm": "Confirm Reset",
-      "button": "Reset"
+      "title": "🔄 Επαναφορά",
+      "desc": "Επαναφορά όλων των ρυθμίσεων προσβασιμότητας στις προεπιλεγμένες",
+      "confirm": "Επιβεβαίωση επαναφοράς",
+      "button": "Επαναφορά"
     }
   },
   "_meta": {

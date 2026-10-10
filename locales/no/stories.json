@@ -1,20 +1,20 @@
 {
   "stories": {
-    "title": "Islamic Stories",
-    "subtitle": "Prophets' Stories, Prophetic Biography, and Children's Manners",
+    "title": "Islamiske historier",
+    "subtitle": "Profeters historier, Profetisk Biografi og Barnemann",
     "categories": {
-      "anbiya": "Prophets' Stories",
-      "seerah": "Prophetic Biography",
-      "kids": "Children's Stories",
-      "sahaba": "Companions' Stories",
-      "tabiin": "Tabi'in Stories",
-      "scholars": "Scholars' Stories"
+      "anbiya": "Profetens historier",
+      "seerah": "Profetisk biografi",
+      "kids": "Barnehistorier",
+      "sahaba": "Companions historier",
+      "tabiin": "Tabi'in historier",
+      "scholars": "Forskerhistorier"
     },
     "anbiya": {
-      "title": "Prophets' Stories",
-      "count": "25 Prophets",
+      "title": "Profetens historier",
+      "count": "25 Profeter",
       "list": [
-        "Adam",
+        "Adams",
         "Idris",
         "Nuh",
         "Hud",
@@ -38,61 +38,61 @@
         "Zakariya",
         "Yahya",
         "Isa",
-        "Muhammad ﷺ"
+        "Muhammad"
       ],
       "story": "Story",
-      "lesson": "Lesson",
-      "references": "References",
-      "quranRef": "Quran Reference",
-      "hadithRef": "Hadith Reference",
-      "read": "Read Story",
-      "audio": "Listen",
-      "illustration": "Illustrations",
-      "noImages": "No Depictions of Prophets Out of Respect"
+      "lesson": "Leksjon",
+      "references": "Referanser",
+      "quranRef": "Koranens referanse",
+      "hadithRef": "Hadith referanse",
+      "read": "Les historie",
+      "audio": "Lytt",
+      "illustration": "Illustrasjoner",
+      "noImages": "Ingen avsky fra profetene av respekt"
     },
     "seerah": {
-      "title": "Prophetic Biography",
-      "timeline": "Timeline",
+      "title": "Profetisk biografi",
+      "timeline": "Tidslinje",
       "periods": {
-        "beforeProphecy": "Before Prophecy",
-        "meccan": "Meccan",
+        "beforeProphecy": "Før profeti",
+        "meccan": "Mekkan",
         "medinan": "Medinan",
-        "afterDeath": "After Death"
+        "afterDeath": "Etter døden"
       },
       "events": "Events",
-      "year": "Year",
-      "age": "Age",
-      "location": "Location",
+      "year": "År",
+      "age": "Alder",
+      "location": "Beliggenhet",
       "significance": "Significance",
-      "relatedEvents": "Related Events",
-      "map": "Map",
-      "battles": "Battles",
-      "treaties": "Treaties",
-      "miracle": "Miracles",
-      "family": "Family",
+      "relatedEvents": "Relaterte hendelser",
+      "map": "Kart",
+      "battles": "slag",
+      "treaties": "traktater",
+      "miracle": "Mirakler",
+      "family": "Familie",
       "companions": "Companions"
     },
     "kids": {
-      "title": "Children's Manners Stories",
-      "age": "Appropriate Age",
-      "values": "Values Learned",
-      "questions": "Discussion Questions",
-      "activities": "Activities",
+      "title": "Barnemannshistorier",
+      "age": "Passende alder",
+      "values": "Verdier Lært",
+      "questions": "Diskusjonsspørsmål",
+      "activities": "Aktiviteter",
       "moral": "Moral",
-      "readToChild": "Read to Your Child",
-      "audio": "Listen Together",
-      "print": "Print"
+      "readToChild": "Les for barnet ditt",
+      "audio": "Lyt sammen",
+      "print": "Skriv ut"
     },
     "reading": {
-      "title": "Reading",
-      "progress": "Progress",
-      "chapter": "Chapter",
-      "timeLeft": "Time Left",
-      "bookmark": "Bookmark",
-      "continue": "Continue",
-      "finish": "Finish",
+      "title": "Lese",
+      "progress": "Progresjon",
+      "chapter": "Kapittel",
+      "timeLeft": "Tid venstre",
+      "bookmark": "Bokmerke",
+      "continue": "Fortsett",
+      "finish": "Avslutt",
       "rate": "Rate Story",
-      "share": "Share"
+      "share": "Dele"
     }
   },
   "_meta": {
