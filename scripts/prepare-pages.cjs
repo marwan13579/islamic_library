@@ -5,7 +5,7 @@ const path = require("node:path");
 
 const ROOT = path.resolve(__dirname, "..");
 const OUTPUT = path.join(ROOT, "dist");
-const ROOT_ASSET = /\.(?:html|js|css|svg|ico|pdf)$/i;
+const ROOT_ASSET = /\.(?:html|js|css|svg|ico|pdf|apk)$/i;
 
 fs.rmSync(OUTPUT, { recursive: true, force: true });
 fs.mkdirSync(OUTPUT, { recursive: true });

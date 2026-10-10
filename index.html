@@ -331,7 +331,7 @@ html.rtl .accpanel{right:auto;left:14px}
   </svg>
   <h1 id="siteTitle">المكتبة الإسلامية</h1>
   <div class="install-top">
-    <button class="sortbtn" id="installBtn" type="button">📲 تثبيت التطبيق</button>
+    <a class="sortbtn" id="installBtn" type="button" download="sakina-launcher.apk" href="sakina-launcher.apk">📲 تثبيت التطبيق</a>
   </div>
   <p id="siteSubtitle">كل الأدوات في مكان واحد — أذكار، قرآن، تعليم، قصص، وحاسبات شرعية. صدقة جارية تنتشر.</p>
   <input class="search" id="search" type="search" placeholder="ماذا تبحث عنه أو ماذا تحتاج؟" aria-label="البحث الشامل في الموقع">
@@ -510,7 +510,7 @@ html.rtl .accpanel{right:auto;left:14px}
     set("siteTitle", tHome("siteTitle"));
     set("siteSubtitle", tHome("siteSubtitle"));
     set("askTitle", tHome("whatDoYouWant"));
-    set("installBtn", "📲 " + t("installApp"));
+    set("installBtn", "📲 " + tHome("installApp"));
     set("introBtn", "🧭 " + t("introBtn"));
     set("sortDefault", t("sortDefault"));
     set("sortRecent", t("sortRecent"));
