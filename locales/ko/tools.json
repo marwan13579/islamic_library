@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "도구 및 계산기",
+    "subtitle": "법률 계산기, 일일 도구 및 교육 자료",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "계산기",
+      "learn": "한국어",
+      "dhikr": "사이트맵",
+      "quran": "한국어",
+      "stories": "이름 *",
+      "utils": "(주)"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "기타",
+      "use": "제품 정보",
+      "calculate": "계산",
+      "start": "지원하다",
+      "continue": "계속하기",
+      "reset": "지원하다",
+      "save": "제품 정보",
+      "export": "수출입",
+      "import": "제품정보",
+      "share": "지원하다",
+      "download": "다운로드",
+      "print": "제품정보"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "이름 *",
+    "addToFavorites": "자주 묻는 질문",
+    "removeFromFavorites": "자주 묻는 질문",
+    "notes": "지원하다",
+    "addNote": "더 보기",
+    "recentlyUsed": "최근 사용",
+    "defaultSort": "기본 정렬",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "name": "Zakat 계산기",
+      "desc": "Zakat와 Nisab을 자동 계산",
+      "goldPrice": "그램 당 금 가격 (21K)",
+      "cash": "현금 인출",
+      "gold": "골드 & 실버",
+      "trade": "무역 상품",
+      "debtsOwed": "당신을 빚은",
+      "debtsOwe": "팟캐스트",
+      "nisab": "카테고리",
+      "zakatDue": "Zakat 때문에",
+      "calculate": "계산",
+      "result": "제품정보",
+      "fitr": "Zakat 알-피트",
+      "persons": "인원 수",
+      "amountPerPerson": "1인당 금액",
+      "total": "·"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Inheritance 계산기",
+      "desc": "Heir 공유 Common Cases",
+      "estate": "재산 객실 모두",
+      "wives": "사이트 맵",
+      "sons": "이름 *",
+      "daughters": "딸이",
+      "father": "아빠",
+      "mother": "엄마 엄마",
+      "grandfather": "인기 카테고리",
+      "grandmother": "큰 가슴",
+      "brothers": "오빠, 형",
+      "sisters": "여자들",
+      "paternalUncles": "Paternal 아저씨",
+      "maternalUncles": "엄마 삼촌",
+      "calculate": "계산",
+      "shares": "지원하다",
+      "details": "제품 정보"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Qibla 방향",
+      "desc": "당신의 위치, 살아있는 Compass Correcting 자석 북쪽 탈선에서 Qibla 각",
+      "angle": "주요 특징",
+      "direction": "오시는 길",
+      "compass": "뚱 베어",
+      "liveCompass": "라이브 Compass",
+      "calibrate": "연락처",
+      "accuracy": "제품정보"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "기도 시간",
+      "desc": "Isha, 카운트다운, 다중 계산 방법 및 Madhabs에 Fajr"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Hijri 캘린더",
+      "desc": "Hijri ↔ Gregorian 변환, 이벤트 및 권장 단축"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Missed Fasts 추적기",
+      "desc": "기록 Missed Days 및 트랙 만들기 Them Up"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Hajjj & Umrah 가이드",
+      "desc": "Ritual 단계 및 실제 팁"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "응답된 기도 시간",
+      "desc": "Dua가 대답 할 때, Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "하나님의 이름",
+      "desc": "의미 99 이름"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Occasion 드히",
+      "desc": "여행, Sickness, Distress, 가정, 음식"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Ramadan 캘린더",
+      "desc": "매일 두아와 작업, 마지막 10박과 Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Prophets의 이야기",
+      "desc": "25 그들의 이야기와 교훈"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Prophetic 전기",
+      "desc": "Prophet의 삶의 타임 라인 الى ال عليه وسلم"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Worship 가이드의 법",
+      "desc": "Wudu,기도 의무 및 Sunnahs, Fasting 및 Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "기도하기",
+      "desc": "어린이 및 새로운 무슬림을위한 단계별 가이드"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "어린이 이야기",
+      "desc": "Seven Short Stories 에 대한 아름다운 윤리"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Dhikr와 음성 녹음",
+      "desc": "하나님을 기억하는 목소리"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "Tadabbur 저널",
+      "desc": "Quranic Verses에 대한 귀하의 반사 쓰기"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "매일 Quran 독서 추적기",
+      "desc": "매일 Quran 페이지를 추적"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "그룹 Tasbih",
+      "desc": "각 사람을 위한 분리된 반대"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "노르 동반",
+      "desc": "Gentle Faith Reminder 당신은 구성"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Dawah 카드 메이커",
+      "desc": "모든 Verse, Hadith 또는 Dhikr를 공유 가능한 이미지 카드로 전환"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "그룹 Khatma",
+      "desc": "부품 및 트랙 완료 중 분산 부품"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "이슬람 사이트",
+      "desc": "18 참조 사이트 섹션 설명"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Reciters, 인용 및 라디오",
+      "desc": "158 그들의 Surahs, 라이브 라디오, 전체 Surah 다운로드 오프라인"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "이슬람 비디오 도서관",
+      "desc": "검증된 YouTube 채널은 나이, 언어, 필드에 의해 분류"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "한국어",
+      "desc": "5820 Tafsir, Fiqh, Aqidah, 즉시 보정에 대한 질문"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "Adhan 시간",
+      "desc": "당신의 도시, 경고 및 Adhan의 다섯 기도 시간"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "노르 알 호우 - 교육 커리큘럼",
+      "desc": "18 섹션: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, 키즈 코너"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Noor Portal - 앱",
+      "desc": "Mushaf, Dhikr, 기도 시간, 라디오, Zakat, 카드 - 작품 오프라인"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "퀴즈 및 인증서",
+      "desc": "세 가지 질문 유형, 주간 도전, 완료 인증서"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway - 앱",
+      "desc": "Mushaf, adhkar,기도 시간, 라디오, zakat 및 카드 - 오프라인 작업"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "퀴즈 및 인증서",
+      "desc": "세 가지 유형의 문제 은행, 주간 도전 및 캔버스에 그려진 완료 인증서"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "그룹 Khatmah",
+      "desc": "참가자 및 트랙 진행 및 헌신 중 분산 부품"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Dua 카드 메이커",
+      "desc": "어떤 구절, hadith 또는 dhikr를 다운로드 할 수 있습니다, 공유 가능한 이미지 카드"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "성 꾸란",
+      "desc": "완전한 Mushaf - surahs, 부품, 검색, 인용, 번역 및 tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "이슬람 생활 체계",
+      "desc": "기도에 묶인 날 - 기도, dhikr 및 Quran 각기도 시간에"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "종합 Adhkar",
+      "desc": "12 단면도: 아침, 저녁, 잠, 기도 후에, 우두, istighfar 및 더 많은 것"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Dhikr 소개",
+      "desc": "Adhkar, du'as and hadiths in one place, 카운터 시비와 공유 가능한 링크"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "나의 Mushaf",
+      "desc": "완전한 Quran memorization를 추적"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "노블 헤이그(Noble Hadith)",
+      "desc": "6개의 책에서 선택, 항해자와 급료로 문서화"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "Al-Arba'in 알-나와위",
+      "desc": "42 간략한 설명과 함께 수집 된 것"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "애들레이드 스토리",
+      "desc": "좋은 도덕에 대한 일곱 짧은 이야기"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "그룹 Tasbeeh",
+      "desc": "각 사람마다 별도의 카운터"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "노르 동반",
+      "desc": "구성 : 간격, 내용 유형 및 진정 모드"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "방문 및 콘도 Etiquette",
+      "desc": "병, 염좌 및 축축 방문"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Adhkar 기록",
+      "desc": "당신은 하나님을 기억하는 동안 개인 음성 녹음기"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "기도 시간",
+      "desc": "Isha, 카운트 다운, 여러 계산 방법 및 학교에 Fajr"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "이슬람 사이트",
+      "desc": "각 사이트의 설명이있는 18 참조 사이트"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "뚱 베어",
+      "desc": "숭배, 거래, fiqh 및 etiquette에 분류 된 문서화 된 fatwas"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "티퍼 알-Muyassar",
+      "desc": "Quran의 모든 구절의 Tafsir - 114 surahs"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al-Siraj fi Bayan Ghareeb 알-큐란",
+      "desc": "드문 Quranic 단어의 의미 — 6111 구문과 단어 검색 114 surahs의 용어"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "그의 al-muslim",
+      "desc": "아침, 저녁, 수면 및 음식 adhkar - 오디오 132 장"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "스낵 바",
+      "desc": "aqeedah, 정화 및 윤리의 Khutbahs 및 교훈"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "이슬람 역사",
+      "desc": "Prophet의 Hijrah의 이벤트는 Ottoman 국가의 끝에"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "이슬람 비디오 도서관",
+      "desc": "Learn, watch and Benefits - 나이, 언어 및 필드에 의해 분류 된 YouTube 채널"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "한국어",
+      "desc": "tafsir, fiqh, aqeedah 및 hadith에 5820 질문, 즉시 보정"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "اللانيي بوت فارس عباد",
+      "desc": "Audio recitation - 드라이브에 자신의 파일"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "البداية والنهاية البداية والنية النية البداية والنية النية البداية والنية النية النية النية الية البداية الية والنية النية النية",
+      "desc": "Ibn Kathir - 드라이브에 자신의 파일"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "القرن الكريم - لمة في ورة القريم - القريم - القريم - القريم - القريم - القريم - القريم - القريقريم - القريم - القريم - القريم - القريم - القريم - القريم - القريقريم - القريم - القريقريم - القريقريم - القريم - القريقريم - القريم - القريم - القريم - القريم - القريم - القريم - القريقر",
+      "desc": "드라이브의 파일"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "رسال من القرين القر من القرين القرين القرين القرين القر القرين القرين القرين القرين القر القرين القرين القرين القرين القرين القرين ال القرين ال ال القرين ال القرين القرين ال ال ال ال ال ال ال ال القرين القرين القرين القرين القرين ال ال ال القرين القرين ال",
+      "desc": "드라이브의 파일"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "رسال من النبين النين النين النين الن الن النين الن النين الن الن الن النين الن الن الن الن الن الن الن الن النين ال النين ال الين ال ال ال ال ال الن ال ال ال الن ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال ال الن ال ال ال ال ال ال ال ال ال ال ال ال",
+      "desc": "드라이브의 파일"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "ل الرسول",
+      "desc": "드라이브의 파일"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "카지노사이트",
+      "desc": "드라이브의 파일"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "رسال من التاعين التاعين",
+      "desc": "드라이브의 파일"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "الرحيق المتوم",
+      "desc": "Safi al-Rahman al-Mubarakpuri - 드라이브에 자신의 파일"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "카지노사이트",
+      "desc": "드라이브의 파일"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "مالا يسع المسلم حله",
+      "desc": "드라이브의 파일"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "عقيدة التوحيد",
+      "desc": "드라이브의 파일"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "아프리카",
+      "desc": "드라이브의 파일"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "اليوم الرر 2 — القيامة الكبرى",
+      "desc": "드라이브의 파일"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "أول الدعوية الدعوة الدعوة الدعوة الدعوة الدعوة الدعوة الدعوة الدعوة",
+      "desc": "Abd al-Karim Zaydan - 드라이브에 자신의 파일"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "أول مرة عتدبر القرين القرين القرين القر القر القر القر القر القر القر القر القر ال مرة القرة القر القر القر القر ال القر القر القر القر ال القر ال ال ال ال القر ال ال ال ال ال ال ال ال ال القر القر ال ال ال ال القر القر ال ال ال ال ال ال ال ال القرة ال ال",
+      "desc": "Quran에 대한 이해와 반영에 대한 가이드 - 당신의 자신의 파일"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "바카라사이트",
+      "desc": "드라이브의 파일"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "카지노사이트",
+      "desc": "드라이브의 파일"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "سيف اله الد بن الوليد بن الوليد اليد",
+      "desc": "드라이브의 파일"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "카지노사이트",
+      "desc": "박사. Mustafa Mahmoud - 드라이브에 자신의 파일"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "الجامع العحيح للباري كاملىامعا",
+      "desc": "드라이브의 파일"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "ماقاة من عمن عمالية الإسلام",
+      "desc": "그들은 역사의 과정을 변경 - 드라이브에 자신의 파일"
     }
   }
 }

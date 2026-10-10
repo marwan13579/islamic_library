@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Työkalut ja laskurit",
+    "subtitle": "Oikeudelliset laskurit, Daily Työkalut ja koulutusresurssit",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
+      "calc": "Laskimet",
+      "learn": "Oppiminen",
       "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "quran": "Koraani",
+      "stories": "Tarinoita",
+      "utils": "Hyödykkeet"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "Avaa",
+      "use": "Käyttö",
+      "calculate": "Laske",
+      "start": "Alku",
+      "continue": "Jatka",
+      "reset": "Nollaa",
+      "save": "Tallenna",
+      "export": "Vie",
+      "import": "Tuo",
+      "share": "Osuus",
+      "download": "Lataa",
+      "print": "Tulosta"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Suosikit",
+    "addToFavorites": "Lisää suosikkeihin",
+    "removeFromFavorites": "Poista suosikeista",
+    "notes": "Huomautukset",
+    "addNote": "Lisää huomautus",
+    "recentlyUsed": "Äskettäin käytetty",
+    "defaultSort": "Oletus",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "name": "Zakat Laskin",
+      "desc": "Laske Zakat ja Nisab automaattisesti",
+      "goldPrice": "Kultahinta Gram (21K)",
+      "cash": "Käteisraha",
+      "gold": "Kulta ja hopea",
+      "trade": "Kauppatavarat",
+      "debtsOwed": "Velka sinulle",
+      "debtsOwe": "Velat sinulle Owe",
       "nisab": "Nisab",
       "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
+      "calculate": "Laske",
+      "result": "Tulos",
       "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "persons": "Henkilömäärä",
+      "amountPerPerson": "Määrä henkilöä kohti",
+      "total": "Yhteensä"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "Perintölaskin",
+      "desc": "Perintäosuudet yhteisissä asioissa",
+      "estate": "Kiinteistöarvo",
+      "wives": "Vaimo",
+      "sons": "Pojat",
+      "daughters": "Tytär",
+      "father": "Isä",
+      "mother": "Äiti",
+      "grandfather": "Isoisä",
+      "grandmother": "Isoäiti",
+      "brothers": "Veljet",
+      "sisters": "Sisaret",
+      "paternalUncles": "Isäsetät",
+      "maternalUncles": "Äiti-enot",
+      "calculate": "Laske",
+      "shares": "Osakkeet",
+      "details": "Yksityiskohdat"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Qibla-suunta",
+      "desc": "Qibla Angle sijaintisi, Live Compass Korjaavat magneettinen pohjoinen poikkeama",
+      "angle": "Kulma",
+      "direction": "Suunta",
+      "compass": "Kompassi",
+      "liveCompass": "Livekompassi",
+      "calibrate": "Kalibroi",
+      "accuracy": "Tarkkuus"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Rukousajat",
+      "desc": "Fajr to Isha, Countdown, useita laskentamenetelmiä ja Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Hijri-kalenteri",
+      "desc": "Hijri ↔ Gregorian muuntaminen, Tapahtumat, ja Suositeltava paastoaminen"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "Fasts-seurantalaite puuttuu",
+      "desc": "Tallenna puuttuu päivät ja kappaleiden teko ne ylös"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Hajj & Umrahin opas",
+      "desc": "Rituaalivaiheet ja käytännön vinkit"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Vastaus Rukousajat",
+      "desc": "Ajat Kun Dua on vastannut, ja Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Allahin nimet",
+      "desc": "99 Nimiä merkitykset"
     },
     "munasabat": {
       "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "desc": "Matkailu, Sairaus, Hätä, Koti, Ruoka"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Ramadan-kalenteri",
+      "desc": "Päivittäinen Dua ja tehtävät, viimeiset kymmenen yötä ja Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Profeettojen tarinoita",
+      "desc": "25 Profeettaa ja heidän tarinoitaan ja kokemuksiaan"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Profeetallinen elämäkerta",
+      "desc": "Profeetan elämän aikataulu"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Palvontaopas",
+      "desc": "Wudu, Rukousvelvoitteet & Sunnahs, paastoaminen ja Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Opi rukous",
+      "desc": "Vaiheittainen opas lapsille ja uusille muslimeille"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Lasten käytöstavat Tarinat",
+      "desc": "Seitsemän lyhyttä tarinaa kauniista etiikasta"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Tallenna äänesi kanssa Dhikr",
+      "desc": "Henkilökohtainen äänimuisti Allahille"
     },
     "tadabbur": {
       "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "desc": "Kirjoita pohdinnot Koraanin Verses"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Päivittäinen Koraanin lukuseuraaja",
+      "desc": "Seuraa päivittäin Koraanin sivuja"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Ryhmä Tasbih",
+      "desc": "Erillinen Counter for each Person in Gathering"
     },
     "noorCompanion": {
       "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "desc": "Hellä uskomuistuttaja."
     },
     "cardMaker": {
       "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "desc": "Muuta Verse, Hadith, tai Dhikr osaksi jaettavissa kuvakortti"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Ryhmä Khatma",
+      "desc": "Jaa osat osallistujien kesken ja radan loppuun saattaminen"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "Islamilaisten sivustojen hakemisto",
+      "desc": "18 Vertailukohteet ja osion selitykset"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "Recitit, recitation & Radio",
+      "desc": "158 Reciters with their Surahs, Live Radio, Full Surah Downloads Offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "Islamilainen videokirjasto",
+      "desc": "Varmennetut YouTube-kanavat Luokiteltu ikä, kieli, kenttä"
     },
     "quiz": {
       "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "desc": "5820 Kysymyksiä Tafsirissa, Fiqhissä, Aqidahissa, Hadithissa ja pikainen oikaisu"
     },
     "athan": {
       "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "desc": "Viisi rukousta kaupungissasi, hälytys ja Adhan Sound rukousajalla"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda ",
+      "desc": "18 jaksot: Ansioluettelo & Salaf Kuviot, Oppitunnit, Seerah, Profeetat, Nimet, Dhikr, Quizzes & Sertifikaatit, Lasten kulma"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Noor Portal ",
+      "desc": "Mushaf, Dhikr, Rukous Ajat, Radio, Zakat, Kortit"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Quizzes & Sertifikaatit",
+      "desc": "Kolme kysymystyyppiä, viikon haaste, täydennystodistukset"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway App",
+      "desc": "Mushaf, adhkar, rukousajat, radio, zakat ja kortit toimii offline"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Quizzes & Sertifikaatit",
+      "desc": "Kysymyspankki kolmen tyyppisiä, viikoittain haaste, ja valmistumistodistukset tehty kankaalla"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Ryhmä Khatmah",
+      "desc": "Jakaa osia osallistujien kesken ja seurata edistymistä ja omistautumista"
     },
     "cardmaker": {
       "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "desc": "Muuta kaikki jae, hadith tai dhikr ladattavissa, jaettu kuvakortti"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Pyhä Koraani",
+      "desc": "Täydellinen Mushaf Surahs, osat, haku, lausunta, käännös ja tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Muslimien elämänjärjestelmä",
+      "desc": "Päiväsi sidottu rukous rukous, dhikr ja Koraani joka rukoushetkellä"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Kattava Adhkar",
+      "desc": "12 jaksoa: aamu, ilta, nukkua, rukouksen jälkeen, wudu, istighfar ja enemmän"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Dhikr",
+      "desc": "Adhkar, du'as ja hadithit yhdessä paikassa, jossa on laskuri tasbeeh ja jaettu linkki"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Mushafini",
+      "desc": "Seuraa Koraanin täydellistä muistiasi"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "Noble Hadith",
+      "desc": "Valintat Kuusi Kirjat, dokumentoitu kertoja ja luokka"
     },
     "arbaeen": {
       "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "desc": "42 hadiths kerätty lyhyt selitys"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Adab- tarinoita lapsille",
+      "desc": "Seitsemän novellia hyvästä moraalista"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Ryhmä Tasbeeh",
+      "desc": "Erillinen laskuri jokaiselle kokoontumisen henkilölle"
     },
     "noorcompanion": {
       "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "desc": "Rauhallinen uskomuisto, jonka määrität: väliaika, sisältötyyppi ja rauhallinen tila"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Etiketti",
+      "desc": "Sairaiden vierailu, surunvalittelut ja onnittelut"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Tallenna Adhkar",
+      "desc": "Henkilökohtainen ääninauhuri, kun muistat Allahin"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Rukousajat",
+      "desc": "Fajr to Isha, lähtölaskenta, useita laskentamenetelmiä ja koulut"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "Islamilaisten sivustojen hakemisto",
+      "desc": "18 vertailukohtaa ja selvitys kunkin sivuston osioista"
     },
     "libfatwa": {
       "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "desc": "Dokumentoitu rasva oli luokiteltu palvonta, liiketoimet, fiqh ja etiketti"
     },
     "libtafsir": {
       "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "desc": "Koraanin jokaisen säkeistön tafsir merkityksineen - 114 surahia"
     },
     "libsiraj": {
       "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "desc": "Harvinaisten Koraanisten sanojen merkitykset ..."
     },
     "libhisn": {
       "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "desc": "Aamu, ilta, uni ja ruoka adhkar 132 lukua audio"
     },
     "libkhutbah": {
       "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "desc": "Khutbahit ja opetusta aqeedah, puhdistus ja etiikka"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "Islamilainen historia",
+      "desc": "Tapahtumia Profeetan Hijrahista ottomaanien valtion loppuun"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "Islamilainen videokirjasto",
+      "desc": "Opi, katsella ja hyötyä "
     },
     "libquiz": {
       "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "desc": "5820 kysymystä tafsirissa, fiqh:ssa, aqeedassa ja hadithissa, ja välitön korjaus"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "-Ei se mitään.",
+      "desc": "Äänenreititys Oma tiedosto Drive"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "...",
+      "desc": "Ibn Kathir "
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "-Ei hätää.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "...",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "...",
+      "desc": "Safi al-Rahman al-Mubarakpuri "
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "...",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "-Ei se mitään.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "...",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "-Ei hätää.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "...",
+      "desc": "Abd al-Karim Zaydan "
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "-Ei.",
+      "desc": "Oppaasi ymmärrystä ja pohdintaa Koraanin Oma tiedosto"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "...",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "-Ei se mitään.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Tohtori Mustafa Mahmoud"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "-Ei.",
+      "desc": "Oma tiedostosi Drivella"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "-Ei se mitään.",
+      "desc": "He muuttivat historian kulkua Oma tiedosto Drive"
     }
   }
 }

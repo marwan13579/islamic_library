@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "工具计算器( C)",
+    "subtitle": "法律计算器、日常工具和教育资源",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "计算器",
+      "learn": "学习",
+      "dhikr": "达克",
+      "quran": "《古兰经》",
+      "stories": "故事",
+      "utils": "公用事业"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "打开",
+      "use": "使用",
+      "calculate": "计算",
+      "start": "开始",
+      "continue": "继续",
+      "reset": "重设",
+      "save": "保存",
+      "export": "导出",
+      "import": "导入",
+      "share": "份额",
+      "download": "下载",
+      "print": "打印"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "爱好",
+    "addToFavorites": "添加到爱好者",
+    "removeFromFavorites": "从喜欢中删除",
+    "notes": "页:1",
+    "addNote": "添加注释",
+    "recentlyUsed": "最近使用",
+    "defaultSort": "默认排序",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "name": "Zakat 计算器",
+      "desc": "自动计算您的 Zakat 和 Nisab",
+      "goldPrice": "每克(21K)黄金价格",
+      "cash": "现金",
+      "gold": "金银",
+      "trade": "贸易货物",
+      "debtsOwed": "欠你的债",
+      "debtsOwe": "欠你的债",
+      "nisab": "尼萨布",
+      "zakatDue": "Zakat 应付款",
+      "calculate": "计算",
+      "result": "结果",
+      "fitr": "扎卡特开斋节",
+      "persons": "人数",
+      "amountPerPerson": "人均金额",
+      "total": "共计"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "继承计算器",
+      "desc": "海尔在普通案件中的股份",
+      "estate": "财产价值",
+      "wives": "妻子",
+      "sons": "儿子们",
+      "daughters": "女儿们",
+      "father": "父亲",
+      "mother": "妈妈",
+      "grandfather": "爷爷",
+      "grandmother": "爷爷",
+      "brothers": "兄弟们",
+      "sisters": "姐妹们",
+      "paternalUncles": "伯父们",
+      "maternalUncles": "母亲叔叔",
+      "calculate": "计算",
+      "shares": "股份",
+      "details": "细节"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "齐布拉方向",
+      "desc": "Qibla 角度来自您的位置, Live Compass 校正北向磁性偏移",
+      "angle": "角度",
+      "direction": "方向",
+      "compass": "指南针",
+      "liveCompass": "生活指南针",
+      "calibrate": "校准",
+      "accuracy": "准确性"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "祈祷时间",
+      "desc": "Fajr to Isha、倒计时、多重计算方法和 Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "希格里日历",
+      "desc": "Hijri & Gregorian 转换、事件和推荐快活"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "丢失快取跟踪器",
+      "desc": "记录错过的日子和曲目"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "朝圣并 Umrah 指南",
+      "desc": "程序步骤和实用提示"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "答覆祈祷时间",
+      "desc": "当杜阿被回答时, 和克特姆杜阿"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "真主的名义",
+      "desc": "99 有含义的名称"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "偶有的Dhikr语",
+      "desc": "旅行、疾病、危难、家庭、食品"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "斋月日历",
+      "desc": "每日杜阿和任务,最后十夜和开斋节"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "先知的故事",
+      "desc": "25名先知及其故事和教训"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "先知传记",
+      "desc": "先知生平时刻表."
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "宗教行为指南",
+      "desc": "Wudu,《祈祷义务与阳光》,《斋戒》和《扎克特》"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "学习祈祷",
+      "desc": "儿童和新穆斯林逐步指南"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "儿童故事",
+      "desc": "七个关于美丽道德的短篇小说"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "用 Dhikr 记录您的语音",
+      "desc": "\"纪念真主\"个人录音机"
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "塔达布尔学报",
+      "desc": "在《古兰经》中写出你的反省"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "每日可兰经阅读跟踪器",
+      "desc": "跟踪您的每日可兰经页面"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "组 Tasbih",
+      "desc": "每个人聚集的单独计数器"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "诺尔伴奏",
+      "desc": "简洁的信仰提醒您配置"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "达瓦牌制造商",
+      "desc": "将任意凡尔斯、哈迪斯或 Dhikr 转换成可共享图像卡"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "卡特马集团",
+      "desc": "在参与者中分配部件并完成音轨"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "伊斯兰遗址目录",
+      "desc": "18个参考站点,附有部分说明"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "朗诵、朗诵和收音机",
+      "desc": "158 与他们的Surahs相伴,现场广播,全Surah下载离线"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "伊斯兰视频图书馆",
+      "desc": "按年龄、语言、领域分类"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "问讯",
+      "desc": "5820 在Tafsir、Fiqh、Aqidah、Hadith进行即时更正的问题"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "阿德汉时报",
+      "desc": "在你的城市里,五道祷告, 提醒和阿德汉在祷告时间的声音"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda——教育课程",
+      "desc": "18个科:课程和萨拉夫图、课程、见闻、先知、名称、Dhikr、Quizzes和证书、儿童角"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "诺尔门户网站——App",
+      "desc": "Mushaf, Dhikr, 祷告时报, 电台, Zakat, 卡片—— 工作离线"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Quizes 证书( C)",
+      "desc": "三个问题类型,每周挑战,完成证书"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "诺尔网关-App",
+      "desc": "Mushaf、adhkar、祈祷时间、无线电、扎卡特和卡片——离线工作"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Quizes 证书( C)",
+      "desc": "询问银行分为三种类型,每周质疑一次,并在帆布上提取完成证书"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "哈特马赫集团",
+      "desc": "在参与者中分配部分,跟踪进展和献身精神"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Dua 制取卡器",
+      "desc": "将任何诗句、 hadith 或 Dhikr 转换为可下载、 可共享的图像卡"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "《可兰经》",
+      "desc": "完整的Mushaf—— surahs, 部件, 搜索, 朗诵, 翻译和塔夫西尔语"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "穆斯林生活系统",
+      "desc": "你的日子,在每逢礼拜的时候,都要谨守拜功,完纳天课;"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "综合Adhkar",
+      "desc": "12节:早、晚、睡、祷告后、武都、伊斯特法尔等"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Dhikr的名声",
+      "desc": "Adhkar, du'as and hadiths in one place, 并有一个反塔斯比和共享链接"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "我的马沙夫",
+      "desc": "跟踪完整的可兰经记忆"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "尊贵的哈迪斯",
+      "desc": "与旁白和级别有关的六书选集"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "阿尔巴因·纳瓦维",
+      "desc": "收集了42个Hamiths,并作了简要说明"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "儿童故事",
+      "desc": "7个关于良好道德的短篇小说"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Tasbeeh 组",
+      "desc": "集会中每个人的单独柜台"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "诺尔伴奏",
+      "desc": "平静的信念提醒您配置: 间隔、 内容类型和平静模式"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "访问和慰问",
+      "desc": "探访病人、慰问和祝贺"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "记录您的 Adhkar",
+      "desc": "一个个人录音机,当你记得阿拉时"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "祈祷时间",
+      "desc": "Fajr to Isha,倒计时,多种计算方法和学校"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "伊斯兰遗址目录",
+      "desc": "18个参考站点,说明每个站点的路段"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "肥猪",
+      "desc": "宗教、交易、宗教礼仪和礼仪等有记录的法特瓦"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "塔夫西尔·穆亚萨尔",
+      "desc": "《古兰经》中每一节经文的塔弗西尔语——114 surahs"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "《古兰经》",
+      "desc": "稀有可兰经词的含义——114 surahs中6111个有诗文和文字搜索的词."
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "穆斯林教徒",
+      "desc": "上午、晚上、睡觉和食物广告——132个有音频的分会"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "库特巴赫",
+      "desc": "Khitbahs和aqeedah课程、净化和道德"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "伊斯兰历史",
+      "desc": "从先知的希吉拉到奥斯曼国灭亡的事件"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "伊斯兰视频图书馆",
+      "desc": "学习、观看和受益——按年龄、语言和领域分类的有记录的YouTube频道"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "问讯",
+      "desc": "Tafsir、fiqh、aqeedah和hadith中的5820个问题,并立即改正"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "نونية,بصوت也.",
+      "desc": "音频朗读——您自己在 Drive 上的文件"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "البداية",
+      "desc": "伊本·卡希尔——你自己在Drive上的档案"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "القرآن - في - في",
+      "desc": "您自己在驱动器上的文件"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "الرحيق",
+      "desc": "Safi al-Rahman al-Mubarakpuri——你自己在Drive上的档案"
     },
     "b9": {
       "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "desc": "您自己在驱动器上的文件"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs20\\shad2\\2aH82\\3aH20\\4aH33\\fscx95\\3cH592001\\be1}你还好吧",
+      "desc": "您自己在驱动器上的文件"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}100块",
+      "desc": "您自己在驱动器上的文件"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "التفسير",
+      "desc": "您自己在驱动器上的文件"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "اليوم 二. الكبرى.",
+      "desc": "您自己在驱动器上的文件"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "أصول",
+      "desc": "Abd al-Karim Zaydan——你自己在Drive上的档案"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "你对《古兰经》的理解和反思指南——你自己的档案。"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "مدينة",
+      "desc": "您自己在驱动器上的文件"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "سيف,خالد也.",
+      "desc": "您自己在驱动器上的文件"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "Mustafa Mahmoud博士——你自己在Drive上的档案"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "{\\fn黑体\\fs22\\bord1\\shad0\\3aHBE\\4aH00\\fscx67\\fscy66\\2cHFFFFFF\\3cH808080}你觉得呢?",
+      "desc": "您自己在驱动器上的文件"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "مائة,عظماء也.",
+      "desc": "他们改变了历史进程——你自己在Drive上的档案"
     }
   }
 }

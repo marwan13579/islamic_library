@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "Araçlar & Hesaplar",
+    "subtitle": "Yasal Hesaplar, Günlük Araçlar ve Eğitim Kaynakları",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
+      "calc": "Hesaplayıcılar",
+      "learn": "Öğrenme Öğrenme Öğrenme Öğrenme",
+      "dhikr": "Daffr",
+      "quran": "Kur'an-ı Kerim",
+      "stories": "Hikaye Hikayeleri",
       "utils": "Utilities"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "Açık Açık Açık Açık",
+      "use": "Use Use Use Use Use Use",
+      "calculate": "Hesaplama",
+      "start": "Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start Start",
+      "continue": "Devam etmeye devam et",
+      "reset": "reset",
+      "save": "Kaydet Kaydet Kaydet",
+      "export": "İhracat İhracatı",
+      "import": "İthalat",
+      "share": "Share Share Share",
+      "download": "Download Download Download Download Download Download",
+      "print": "Baskı"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "Favoriler Favoriler",
+    "addToFavorites": "Favorilere Ekle",
+    "removeFromFavorites": "Favorilerden Kaldırın",
+    "notes": "Notlar Notlar Notlar Notlar Not Notlar Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Not Notlar",
+    "addNote": "Add Not Add Note Add Add Add Not Add Not Add Not Add Note Add Add Add Not Add Not Add Note Add Add Add Not Add Note Add Add Note Add Add Add Add Note Add Add Add Note Add Add Add Add Add Not Add Note Add Add Add Add Not Add Note Add Add Add Note Add Add Add Add Add Note Note Add Add Add Add Add Note Not Add Not Add Add Add Add Note Note Note Not Add Add Add Add Add Not Add Not Add Not Add Not Add Not Add Add Add Add Add Note Note Add Add Add Add Add Not Add Add Add Add Add Not Add Not Add Not Add Not Add Not Add Note Note Note Note",
+    "recentlyUsed": "Son zamanlarda Kullanıldı",
+    "defaultSort": "Varsayılan liste",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
+      "name": "Zakat Hesap",
+      "desc": "Zakat ve Nisab'ı otomatik olarak hesaplayın",
+      "goldPrice": "Gram Için Altın Fiyatı (21K)",
+      "cash": "Nakit Nakit Nakit",
       "gold": "Gold & Silver",
       "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
+      "debtsOwed": "Borçlar sana",
+      "debtsOwe": "Borçlar Sizi Ey",
       "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
+      "zakatDue": "Zakat Çünkü",
+      "calculate": "Hesaplama",
+      "result": "Sonuç Sonuç",
       "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "persons": "Kişi sayısı",
+      "amountPerPerson": "Kişi başına gelir",
+      "total": "Toplam Toplam Toplam Toplam Toplam Toplam Toplam"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
+      "name": "Inheritance",
+      "desc": "Heir Ortak Vakalarda Hissediyor",
+      "estate": "Emlak Değeri",
       "wives": "Wives",
       "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
+      "daughters": "Kızım",
+      "father": "Baba Baba",
+      "mother": "Anne Anne",
+      "grandfather": "Büyükbaba Büyükbaba",
+      "grandmother": "Büyükannem",
+      "brothers": "Kardeş Kardeşler",
+      "sisters": "Kızkardeşler",
       "paternalUncles": "Paternal Uncles",
       "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
+      "calculate": "Hesaplama",
       "shares": "Shares",
-      "details": "Details"
+      "details": "Detaylar"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
+      "name": "Qibla Yön",
+      "desc": "Yerinizden Qibla Angle, Manyetik Kuzey Devitasyonunu Doğruladı",
+      "angle": "Yüz Yüz",
+      "direction": "Yönellem",
       "compass": "Compass",
-      "liveCompass": "Live Compass",
+      "liveCompass": "Canlı Compass",
       "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "accuracy": "doğruluk"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "Dua Times",
+      "desc": "Isha, Kontdown, Çoklu Hesaplama Yöntemleri ve Madhabs"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Hijri Takvim",
+      "desc": "Hijri  Gregor Gregorian Dönüşüm, Olaylar ve Daha Hızlı Teklifler"
     },
     "qada": {
       "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "desc": "Missed Days'i kayıt edin ve Them Up"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "Hajj & Umrah Rehberi",
+      "desc": "Ritual Steps ve Pratik İpuçları"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "Dualar Times",
+      "desc": "Dua yanıtlandığında ve Khatm Dua"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "Allah'ın isimleri",
+      "desc": "99 Anlamlarla İsimler"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "Occasion Daffr",
+      "desc": "Seyahat, Hastalık, Distress, Home, Food"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "Ramazan Takvimi",
+      "desc": "Günlük Dua ve Görevler, Son On Gece ve Eid"
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "Peygamberlerin Hikayeleri",
+      "desc": "25 Peygamberleri Hikayeleri ve Dersleriyle"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "Peygamber",
+      "desc": "Peygamberin Hayatının Zamanı"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "Kur'an Rehberleri",
+      "desc": "Wudu, Dualar ve Sunnahs, Hızlıca ve Zakat"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "Duayı öğrenin",
+      "desc": "Çocuklar ve Yeni Müslümanlar için Adım-Adım Rehberi"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "Çocuk Manners Hikayeleri",
+      "desc": "Güzel Etik Hakkında Yedi Kısa Öykü"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "Your Voice with D Painr",
+      "desc": "Sesiniz için Kişisel Rekor Allah'ı Hatırlatıyor"
     },
     "tadabbur": {
       "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "desc": "Kur'an'ın Kur'anları Üzerine Düşüncelerinizi yazın"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "Günlük Kur Okuma Kılavuzu",
+      "desc": "Günlük Kur Sayfalarını Takip Et"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "Grup Tasbih",
+      "desc": "Gathering Every Person için Ayrı Counter for each Person in Gathering"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "Hayır,",
+      "desc": "İLGİLİ BÜYÜ ÜNİVERSİTESİ"
     },
     "cardMaker": {
       "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "desc": "Herhangi bir Kur'an'ı veya Dografyayı Paylaşılabilir Bir Görüntü Kartına Dönüştür"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "Grup Khatma",
+      "desc": "Katılımcılar ve Track Complete arasındaki Dağ parçaları"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "İslam Siteleri Rehber",
+      "desc": "Bölüm Explanations ile 18 Referans Siteleri"
     },
     "reciters": {
       "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "desc": "158 Rerahs, Live Radio, Full Surah Downloads Offline"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "İslam Video Kütüphanesi",
+      "desc": "Gerçekleştirilmiş YouTube Channels Categorized by Age, Language, Field"
     },
     "quiz": {
       "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "desc": "5820 Tafsir, Fiqh, Aqidah, Anında Düzeltme ile Sorular"
     },
     "athan": {
       "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "desc": "Şehrinizde beş dua, Uyarı ve Adhan Ses Dua Zaman"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "Noor al-Huda - Eğitim Müfredat",
+      "desc": "18 Bölümler: Müfredat ve Salaf Şekilleri, Dersler, Seerah, Peygamberler, İsimler, Dografr, Quizzes & Sertifikalar, Çocuklar Corner"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "Noor Portal - App",
+      "desc": "Mushaf, Daughtr, Dua Times, Radio, Zakat, Kartlar - Offline"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "Quizzes & Sertifikalar",
+      "desc": "Üç Soru Türü, Haftalık Mücadele Sertifikaları, Tamamlama Sertifikaları"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "Noor Gateway - App",
+      "desc": "Mushaf, adhkar, dua süreleri, radyo, zakat ve kartlar - çevrimdışı çalışır"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "Quizzes & Sertifikalar",
+      "desc": "Soru bankası üç tür, haftalık bir meydan okuma ve tuval üzerine çizilen sertifikalar"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "Grup Khatmah",
+      "desc": "Katılımcılar arasındaki dağılma parçaları ve ilerleme ve özveriyi takip edin"
     },
     "cardmaker": {
       "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "desc": "Herhangi bir ayet, indirilebilir veya paylaşılabilir bir görüntü kartına sahipti"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "Kutsal Kur'an",
+      "desc": "Tamam Mushaf – surahs, parçalar, arama, alıntı, çeviri ve tafsir"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "Müslüman Yaşam Sistemi",
+      "desc": "Gününüz duaya bağlıdır - dua, dy ve Kur'an her dua zamanında"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "Kapsamlı Adhkar",
+      "desc": "12 bölüm: sabah, akşam, uyku, duadan sonra, wudu, istighfar ve daha fazlası"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "Noor of D Painr",
+      "desc": "Adhkar, du'as ve tek bir yerde, karşı bir tatbeeh ve paylaşılabilir bir bağlantı"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "Benim Mushaf",
+      "desc": "Bütün Kur'an'ı Takip Et"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "The Noble Let's",
+      "desc": "Altı Kitaptan Seçmeler, narrator ve sınıfta belgelenen"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "Al-Arba'nın al-Nawawi",
+      "desc": "42 kısa bir açıklama ile toplandı"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "Çocuklar için Adab Hikayeleri",
+      "desc": "İyi ahlakiler hakkında yedi kısa hikaye"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "Grup Tasbeeh",
+      "desc": "Toplantıda her kişi için ayrı bir karşı"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "Hayır,",
+      "desc": "Yapıladığınız sakin bir inanç hatırlatması: aralığı, içerik türü ve sakin mod"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "Ziyaret Et & Condolence Etiquette",
+      "desc": "Hastayı ziyaret etmek, tebrikler ve tebrikler"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "Your Adhkar",
+      "desc": "Allah'ı hatırladığınızda kişisel bir ses kaydı"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "Dua Times",
+      "desc": "Isha, countdown, çoklu hesaplama yöntemleri ve okullar"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "İslam Siteleri Rehber",
+      "desc": "Her sitenin bölümlerinin açıklaması ile 18 referans siteleri"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "Şükrü",
+      "desc": "Belgelenmiş yağ ibadet, işlemler, fiqh ve etquette olarak sınıflandırılmıştır."
     },
     "libtafsir": {
       "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "desc": "Kur'an'ın her yerine Kur'an'a andolsun."
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "Al-Siraj nişanlısı",
+      "desc": "Nadir Kuric kelimelerin anlamları - 114 surahs'ta ayet ve kelime arama"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "Onunla Müslüman",
+      "desc": "Sabah, akşam, uyku ve yemek adhkar - ses ile 132 bölüm"
     },
     "libkhutbah": {
       "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "desc": "Khutbahs ve aqeedah, saflaştırma ve etik dersler"
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "İslam Tarihi",
+      "desc": "Peygamberin Hijrah’dan Osmanlı devletinin sonuna kadar olaylar"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "İslam Video Kütüphanesi",
+      "desc": "Öğrenin, izlemek ve faydalanın - YouTube kanalları yaş, dil ve alan tarafından sınıflandırıldı"
     },
     "libquiz": {
       "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "desc": "5820 tafsir, fiqh, aqeedah ve hadith, anında düzeltme"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "عباد",
+      "desc": "Audio recitation - kendi dosyanız Drive"
     },
     "b1": {
       "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "desc": "İbn Kathir - kendi dosyanız Drive"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "صورة - في صورة",
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b3": {
       "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b4": {
       "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b5": {
       "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b6": {
       "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b7": {
       "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b8": {
       "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "desc": "Safi al-Rahman al-Mubarakpuri - Drive üzerinde kendi dosyanız"
     },
     "b9": {
       "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "جهله",
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "100 سؤال التوحيد التوحيد",
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b12": {
       "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "2 - الكبرى الكبرى",
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b14": {
       "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "desc": "Abd al-Karim Zaydan - Drive'daki kendi dosyanız"
     },
     "b15": {
       "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "desc": "Kur'an'ı anlamak ve yansıtmak için rehberiniz - kendi dosyanız"
     },
     "b16": {
       "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b17": {
       "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "الوليد",
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b19": {
       "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "desc": "Dr. Mustafa Mahmoud - Drive'da kendi dosyanız"
     },
     "b20": {
       "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "desc": "Drive üzerinde kendi dosyanız"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "الإسلام",
+      "desc": "Tarih dersini değiştirdiler - Drive'daki kendi dosyanız"
     }
   }
 }
