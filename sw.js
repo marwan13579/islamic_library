@@ -153,8 +153,7 @@ const SHELL = [
   "./locales/ro/common.json", "./locales/hu/common.json", "./locales/uk/common.json",
   "./locales/ru/common.json", "./locales/bn/common.json", "./locales/hi/common.json",
   "./locales/id/common.json", "./locales/ms/common.json", "./locales/th/common.json",
-  "./locales/vi/common.json", "./locales/sw/common.json", "./locales/ha/common.json",
-  "./locales/am/common.json",
+  "./locales/vi/common.json", "./locales/sw/common.json",
 ];
 
 const SCOPE = new URL(self.registration.scope);
