@@ -46,8 +46,6 @@ const LANG_ROUTES = {
   th: { dir: "ltr", label: "ไทย", name: "Thai" },
   vi: { dir: "ltr", label: "Tiếng Việt", name: "Vietnamese" },
   sw: { dir: "ltr", label: "Kiswahili", name: "Swahili" },
-  ha: { dir: "ltr", label: "Hausa", name: "Hausa" },
-  am: { dir: "ltr", label: "አማርኛ", name: "Amharic" },
 };
 
 // قائمة ملفات الترجمة المعيارية

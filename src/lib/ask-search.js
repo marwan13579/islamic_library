@@ -246,7 +246,7 @@ export async function getSearchDiagnostics() {
     totalSources: allSources.length,
     searchableSources: allSources.filter((s) => s.searchable).length,
     categories,
-    languages: ["ar", "en", "fr", "es", "de", "it", "pt", "nl", "pl", "sv", "no", "da", "fi", "el", "cs", "ro", "hu", "uk", "ru", "tr", "fa", "ur", "bn", "hi", "id", "ms", "zh-CN", "zh-TW", "ja", "ko", "th", "vi", "sw", "ha", "am"],
+    languages: ["ar", "en", "fr", "es", "de", "it", "pt", "nl", "pl", "sv", "no", "da", "fi", "el", "cs", "ro", "hu", "uk", "ru", "tr", "fa", "ur", "bn", "hi", "id", "ms", "zh-CN", "zh-TW", "ja", "ko", "th", "vi", "sw"],
     externalIndex: null,
     externalDiagnostics: null,
     externalIndexDetails: null,

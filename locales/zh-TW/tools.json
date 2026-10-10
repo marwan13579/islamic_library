@@ -1,386 +1,386 @@
 {
   "tools": {
-    "title": "Tools & Calculators",
-    "subtitle": "Legal Calculators, Daily Tools, and Educational Resources",
+    "title": "工具計算器( C)",
+    "subtitle": "法律計算器、每日工具及教育資源",
     "categories": {
-      "calc": "Calculators",
-      "learn": "Learning",
-      "dhikr": "Dhikr",
-      "quran": "Quran",
-      "stories": "Stories",
-      "utils": "Utilities"
+      "calc": "計算器",
+      "learn": "學取",
+      "dhikr": "二相",
+      "quran": "《可蘭經》",
+      "stories": "故事",
+      "utils": "有水电"
     },
     "actions": {
-      "open": "Open",
-      "use": "Use",
-      "calculate": "Calculate",
-      "start": "Start",
-      "continue": "Continue",
-      "reset": "Reset",
-      "save": "Save",
-      "export": "Export",
-      "import": "Import",
-      "share": "Share",
-      "download": "Download",
-      "print": "Print"
+      "open": "開啟",
+      "use": "使用",
+      "calculate": "計算",
+      "start": "起步",
+      "continue": "繼續",
+      "reset": "重置",
+      "save": "保存",
+      "export": "匯出",
+      "import": "匯入",
+      "share": "分享",
+      "download": "下載",
+      "print": "打印"
     },
-    "favorites": "Favorites",
-    "addToFavorites": "Add to Favorites",
-    "removeFromFavorites": "Remove from Favorites",
-    "notes": "Notes",
-    "addNote": "Add Note",
-    "recentlyUsed": "Recently Used",
-    "defaultSort": "Default Sort",
+    "favorites": "有喜好者",
+    "addToFavorites": "添加到最愛",
+    "removeFromFavorites": "从喜好取出",
+    "notes": "注",
+    "addNote": "新增備註",
+    "recentlyUsed": "最近使用",
+    "defaultSort": "預設排序",
     "zakat": {
-      "name": "Zakat Calculator",
-      "desc": "Calculate Your Zakat and Nisab Automatically",
-      "goldPrice": "Gold Price per Gram (21K)",
-      "cash": "Cash",
-      "gold": "Gold & Silver",
-      "trade": "Trade Goods",
-      "debtsOwed": "Debts Owed to You",
-      "debtsOwe": "Debts You Owe",
-      "nisab": "Nisab",
-      "zakatDue": "Zakat Due",
-      "calculate": "Calculate",
-      "result": "Result",
-      "fitr": "Zakat al-Fitr",
-      "persons": "Number of Persons",
-      "amountPerPerson": "Amount per Person",
-      "total": "Total"
+      "name": "Zakat 計算器",
+      "desc": "自動計算您的 Zakat 與 Nisab",
+      "goldPrice": "每克(21K)金价",
+      "cash": "現金",
+      "gold": "金色和銀色",
+      "trade": "商品",
+      "debtsOwed": "有欠你的",
+      "debtsOwe": "欠你的債",
+      "nisab": "二相",
+      "zakatDue": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "calculate": "計算",
+      "result": "成果",
+      "fitr": "扎克特快餐公司",
+      "persons": "人數",
+      "amountPerPerson": "每人",
+      "total": "第 二 章"
     },
     "mawarith": {
-      "name": "Inheritance Calculator",
-      "desc": "Heir Shares in Common Cases",
-      "estate": "Estate Value",
-      "wives": "Wives",
-      "sons": "Sons",
-      "daughters": "Daughters",
-      "father": "Father",
-      "mother": "Mother",
-      "grandfather": "Grandfather",
-      "grandmother": "Grandmother",
-      "brothers": "Brothers",
-      "sisters": "Sisters",
-      "paternalUncles": "Paternal Uncles",
-      "maternalUncles": "Maternal Uncles",
-      "calculate": "Calculate",
-      "shares": "Shares",
-      "details": "Details"
+      "name": "繼承計算器",
+      "desc": "在普通案件中的平分",
+      "estate": "地產值",
+      "wives": "妻子",
+      "sons": "子",
+      "daughters": "女儿",
+      "father": "爸爸",
+      "mother": "媽媽",
+      "grandfather": "外公",
+      "grandmother": "外婆",
+      "brothers": "二弟",
+      "sisters": "姐妹",
+      "paternalUncles": "二叔",
+      "maternalUncles": "二叔",
+      "calculate": "計算",
+      "shares": "分享",
+      "details": "細節"
     },
     "qibla": {
-      "name": "Qibla Direction",
-      "desc": "Qibla Angle from Your Location, Live Compass Correcting Magnetic North Deviation",
-      "angle": "Angle",
-      "direction": "Direction",
-      "compass": "Compass",
-      "liveCompass": "Live Compass",
-      "calibrate": "Calibrate",
-      "accuracy": "Accuracy"
+      "name": "Qibla 方向",
+      "desc": "Qibla Angle出自您所處地點, Live Capass 修正地磁北偏移",
+      "angle": "角度",
+      "direction": "方向",
+      "compass": "有指南",
+      "liveCompass": "活生生地作曲",
+      "calibrate": "校正",
+      "accuracy": "精确度"
     },
     "prayerTimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, Countdown, Multiple Calculation Methods and Madhabs"
+      "name": "祈禱時代",
+      "desc": "倒數倒數、多數計算法和相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相等相當相當相當相當相等相當相當相當相當相當相當相當相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "hijri": {
-      "name": "Hijri Calendar",
-      "desc": "Hijri ↔ Gregorian Conversion, Events, and Recommended Fasting"
+      "name": "Hijri 行事曆",
+      "desc": "Hijri Egregorian 轉換、事件和建議快取"
     },
     "qada": {
-      "name": "Missed Fasts Tracker",
-      "desc": "Record Missed Days and Track Making Them Up"
+      "name": "錯過快取追蹤器",
+      "desc": "收錄被錯過的日子和曲目"
     },
     "hajj": {
-      "name": "Hajj & Umrah Guide",
-      "desc": "Ritual Steps and Practical Tips"
+      "name": "朝圣指南( U)",
+      "desc": "二. 程序步骤和实用提示"
     },
     "mustajab": {
-      "name": "Answered Prayer Times",
-      "desc": "Times When Dua is Answered, and Khatm Dua"
+      "name": "有回應的祈禱時代",
+      "desc": "Dua被接通和Khatm Dua被接通了"
     },
     "asma": {
-      "name": "Names of Allah",
-      "desc": "The 99 Names with Meanings"
+      "name": "阿拉的名字",
+      "desc": "有意義的 99. 名"
     },
     "munasabat": {
-      "name": "Occasion Dhikr",
-      "desc": "Travel, Sickness, Distress, Home, Food"
+      "name": "有時出事",
+      "desc": "二. 旅行、疾病、危難、家庭、食物"
     },
     "ramadan": {
-      "name": "Ramadan Calendar",
-      "desc": "Daily Dua and Tasks, Last Ten Nights and Eid"
+      "name": "斋月曆",
+      "desc": "\" Dua\" 和 \" 工作\" 、 \"最后十夜\" 和 \" Eid\""
     },
     "anbiya": {
-      "name": "Prophets' Stories",
-      "desc": "25 Prophets with Their Stories and Lessons"
+      "name": "先知的故事",
+      "desc": "有25名先知及其故事和教訓;"
     },
     "seerah": {
-      "name": "Prophetic Biography",
-      "desc": "Timeline of the Prophet's Life ﷺ"
+      "name": "先知傳記",
+      "desc": "先知生平的時間線"
     },
     "ibadat": {
-      "name": "Acts of Worship Guide",
-      "desc": "Wudu, Prayer Obligations & Sunnahs, Fasting, and Zakat"
+      "name": "《宗教法指南》",
+      "desc": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活"
     },
     "salah": {
-      "name": "Learn Prayer",
-      "desc": "Step-by-Step Guide for Children & New Muslims"
+      "name": "學會禱告",
+      "desc": "《儿童和新穆斯林分步指南》"
     },
     "kidsAdab": {
-      "name": "Children's Manners Stories",
-      "desc": "Seven Short Stories About Beautiful Ethics"
+      "name": "儿童故事",
+      "desc": "有七個關於美麗道德的短篇小說"
     },
     "voiceAzkar": {
-      "name": "Record Your Voice with Dhikr",
-      "desc": "Personal Recorder for Your Voice Remembering Allah"
+      "name": "用 Dhikr 收音",
+      "desc": "\"回想起真主\""
     },
     "tadabbur": {
-      "name": "Tadabbur Journal",
-      "desc": "Write Your Reflections on Quranic Verses"
+      "name": "塔德布爾期刊",
+      "desc": "在《古蘭經》上寫出你的反省"
     },
     "wird": {
-      "name": "Daily Quran Reading Tracker",
-      "desc": "Track Your Daily Quran Pages"
+      "name": "《可蘭經》每日讀取追蹤器",
+      "desc": "追蹤您的每日可蘭經頁面"
     },
     "tasbeeh": {
-      "name": "Group Tasbih",
-      "desc": "Separate Counter for Each Person in Gathering"
+      "name": "群組 Tasbih",
+      "desc": "在相聚中為每個人分取分取的分取器"
     },
     "noorCompanion": {
-      "name": "Noor Companion",
-      "desc": "Gentle Faith Reminder You Configure"
+      "name": "相伴相伴",
+      "desc": "溫柔的信仰提醒您設定"
     },
     "cardMaker": {
-      "name": "Dawah Card Maker",
-      "desc": "Turn Any Verse, Hadith, or Dhikr into a Shareable Image Card"
+      "name": "Dawah 出牌器",
+      "desc": "把相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相"
     },
     "groupKhatma": {
-      "name": "Group Khatma",
-      "desc": "Distribute Parts Among Participants and Track Completion"
+      "name": "第 二 章",
+      "desc": "在參與者中分配部件并完成曲目"
     },
     "sitesDir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 Reference Sites with Section Explanations"
+      "name": "伊斯蘭地點目錄",
+      "desc": "有18个參考站口"
     },
     "reciters": {
-      "name": "Reciters, Recitation & Radio",
-      "desc": "158 Reciters with Their Surahs, Live Radio, Full Surah Downloads Offline"
+      "name": "朗讀和收音機",
+      "desc": "有158名回放相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相相關相相關相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "islamicVideos": {
-      "name": "Islamic Video Library",
-      "desc": "Verified YouTube Channels Categorized by Age, Language, Field"
+      "name": "伊斯蘭影像圖書館",
+      "desc": "已驗證的YouTube頻道被分類分類為: 年齡、語言、地區等"
     },
     "quiz": {
-      "name": "Quizzes",
-      "desc": "5820 Questions in Tafsir, Fiqh, Aqidah, Hadith with Instant Correction"
+      "name": "克日茲",
+      "desc": "第5820回想道:"
     },
     "athan": {
-      "name": "Adhan Times",
-      "desc": "Five Prayers in Your City, Alert and Adhan Sound at Prayer Time"
+      "name": "阿德漢時代",
+      "desc": "在你所住的城市 有五起祈禱 有警報 有阿德漢出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出聲 有出出聲 有出聲 有出聲 有出聲出 有出聲出 有出 有出聲出 有出 有出出聲出 有出聲出 有出聲出 有出有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有出 有"
     },
     "noor": {
-      "name": "Noor al-Huda — Educational Curriculum",
-      "desc": "18 Sections: Curriculum & Salaf Figures, Lessons, Seerah, Prophets, Names, Dhikr, Quizzes & Certificates, Kids Corner"
+      "name": "努克·胡达-教育教程",
+      "desc": "有相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相"
     },
     "noorApp": {
-      "name": "Noor Portal — App",
-      "desc": "Mushaf, Dhikr, Prayer Times, Radio, Zakat, Cards — Works Offline"
+      "name": "諾爾出入口- App",
+      "desc": "三相相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相相接相接相相相接相相接相相接相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "quizBank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Three Question Types, Weekly Challenge, Completion Certificates"
+      "name": "查詢憑證( C)",
+      "desc": "三個問題類型, 每周挑戰, 完成憑證"
     },
     "noorapp": {
-      "name": "Noor Gateway — App",
-      "desc": "Mushaf, adhkar, prayer times, radio, zakat and cards — works offline"
+      "name": "諾爾出入口- App",
+      "desc": "有相關相關相關事務:"
     },
     "quizbank": {
-      "name": "Quizzes & Certificates",
-      "desc": "Question bank in three types, a weekly challenge, and completion certificates drawn on canvas"
+      "name": "查詢憑證( C)",
+      "desc": "在畫布上被取出完成憑證等相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相"
     },
     "groupkhatma": {
-      "name": "Group Khatmah",
-      "desc": "Distribute parts among participants and track progress and dedication"
+      "name": "群組 Khatmah",
+      "desc": "在入會者中分出部分并追蹤進展和奉献"
     },
     "cardmaker": {
-      "name": "Dua Card Maker",
-      "desc": "Turn any verse, hadith or dhikr into a downloadable, shareable image card"
+      "name": "Dua 出牌器",
+      "desc": "把任何一首詩、一首詩或一首德克曲變成可下載、可分享的相片卡"
     },
     "quranfull": {
-      "name": "The Holy Quran",
-      "desc": "Complete Mushaf — surahs, parts, search, recitation, translation and tafsir"
+      "name": "《可蘭經》",
+      "desc": "第 二 章"
     },
     "dailysystem": {
-      "name": "Muslim Life System",
-      "desc": "Your day tied to prayer — prayer, dhikr and Quran at each prayer time"
+      "name": "穆斯林生活制度",
+      "desc": "你所應當崇拜的,是每逢禮拜的時候所崇拜的;"
     },
     "adhkar": {
-      "name": "Comprehensive Adhkar",
-      "desc": "12 sections: morning, evening, sleep, after prayer, wudu, istighfar and more"
+      "name": "全面 Adhkar",
+      "desc": "有12分:早、晚、入睡、祈禱后、武都、相去甚遠等;"
     },
     "dhikrkit": {
-      "name": "Noor of Dhikr",
-      "desc": "Adhkar, du'as and hadiths in one place, with a counter tasbeeh and a shareable link"
+      "name": "(德克爾之名)",
+      "desc": "Adhkar 有相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相關相相關相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "mushaf": {
-      "name": "My Mushaf",
-      "desc": "Track your complete Quran memorization"
+      "name": "我的穆沙夫",
+      "desc": "追蹤您完整的可蘭經記憶"
     },
     "hadithcol": {
-      "name": "The Noble Hadith",
-      "desc": "Selections from the Six Books, documented with narrator and grade"
+      "name": "高貴的哈地斯",
+      "desc": "有旁白和分級相關文件的\"六本書\"選出"
     },
     "arbaeen": {
-      "name": "Al-Arba'in al-Nawawi",
-      "desc": "42 hadiths collected with a brief explanation"
+      "name": "阿巴因·納瓦維",
+      "desc": "收集了42相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相相接相接相接相接相接相相接相接相相接相相接相相接相接相相相接相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "kidsadab": {
-      "name": "Adab Stories for Kids",
-      "desc": "Seven short stories about good morals"
+      "name": "儿童故事",
+      "desc": "有七個關於好道德的短短故事"
     },
     "gtasbeeh": {
-      "name": "Group Tasbeeh",
-      "desc": "A separate counter for each person in the gathering"
+      "name": "二相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相",
+      "desc": "在集會上由每個人分取一分"
     },
     "noorcompanion": {
-      "name": "Noor Companion",
-      "desc": "A calm faith reminder you configure: interval, content type and calm mode"
+      "name": "相伴相伴",
+      "desc": "平靜的信念提醒您所設定的:相隔、 內容類型和平靜模式"
     },
     "visiting": {
-      "name": "Visiting & Condolence Etiquette",
-      "desc": "Visiting the sick, condolences and congratulations"
+      "name": "訪問相關相關事件( C)",
+      "desc": "有病去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就去就"
     },
     "voiceazkar": {
-      "name": "Record Your Adhkar",
-      "desc": "A personal voice recorder while you remember Allah"
+      "name": "錄取您的 Adhkar",
+      "desc": "在你回想起安拉的時候 有收音機"
     },
     "prayertimes": {
-      "name": "Prayer Times",
-      "desc": "Fajr to Isha, countdown, multiple calculation methods and schools"
+      "name": "祈禱時代",
+      "desc": "倒數取出多種計算法相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相接相相接相接相接相接相接相相接相接相接相接相接相接相接相接相接相接相相接相相相接相相相接相相接相相接相相相相接相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "sitesdir": {
-      "name": "Islamic Sites Directory",
-      "desc": "18 reference sites with an explanation of each site's sections"
+      "name": "伊斯蘭地點目錄",
+      "desc": "有18个參考站點 有對各站點的解釋"
     },
     "libfatwa": {
-      "name": "Fatwas",
-      "desc": "Documented fatwas classified in worship, transactions, fiqh and etiquette"
+      "name": "胖子",
+      "desc": "有文件可查的教令被分入了崇拜地、交易地、花花公子地等地;"
     },
     "libtafsir": {
-      "name": "Tafsir al-Muyassar",
-      "desc": "Tafsir of every verse of the Quran with its meaning — 114 surahs"
+      "name": "塔夫西爾·穆亞相薩",
+      "desc": "《古蘭經》中每一部有其意義的經典的《塔弗斯經》,共114章;"
     },
     "libsiraj": {
-      "name": "Al-Siraj fi Bayan Ghareeb al-Quran",
-      "desc": "Meanings of rare Quranic words — 6111 terms in 114 surahs with verse text and word search"
+      "name": "《可蘭經》",
+      "desc": "有詩文和文字搜尋的114 surah 有6111個詞"
     },
     "libhisn": {
-      "name": "Hisn al-Muslim",
-      "desc": "Morning, evening, sleep and food adhkar — 132 chapters with audio"
+      "name": "穆斯林教徒",
+      "desc": "有收音機的132分節"
     },
     "libkhutbah": {
-      "name": "Khutbahs",
-      "desc": "Khutbahs and lessons in aqeedah, purification and ethics"
+      "name": "克特巴赫",
+      "desc": "在克吉達所學到的克克巴克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克克."
     },
     "libtarikh": {
-      "name": "Islamic History",
-      "desc": "Events from the Prophet's Hijrah to the end of the Ottoman state"
+      "name": "伊斯蘭歷史",
+      "desc": "从先知的希吉拉到奧斯曼之地"
     },
     "islamicvideos": {
-      "name": "Islamic Video Library",
-      "desc": "Learn, watch and benefit — documented YouTube channels classified by age, language and field"
+      "name": "伊斯蘭影像圖書館",
+      "desc": "有紀錄的YouTube頻道被分類到相關年齡、語言和地區;"
     },
     "libquiz": {
-      "name": "Quizzes",
-      "desc": "5820 questions in tafsir, fiqh, aqeedah and hadith, with instant correction"
+      "name": "克日茲",
+      "desc": "在取出取出取出相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相當相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相相"
     },
     "b0": {
-      "name": "نونية القحطاني بصوت فارس عباد",
-      "desc": "Audio recitation — your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "音效朗讀- 在 Drive 有您自己的檔案"
     },
     "b1": {
-      "name": "البداية والنهاية",
-      "desc": "Ibn Kathir — your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "Ibn Kathir-您自己在 Drive 上的檔案"
     },
     "b2": {
-      "name": "القرآن الكريم - كلمة في صورة",
-      "desc": "Your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b3": {
-      "name": "رسائل من القرآن",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b4": {
-      "name": "رسائل من النبي",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b5": {
-      "name": "على خطى الرسول",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b6": {
-      "name": "رسائل من الصحابة",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b7": {
-      "name": "رسائل من التابعين",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b8": {
-      "name": "الرحيق المختوم",
-      "desc": "Safi al-Rahman al-Mubarakpuri — your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "相當相當相當相當相當相當相當相關,"
     },
     "b9": {
-      "name": "كلمة",
-      "desc": "Your own file on Drive"
+      "name": "第 二 部 分",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b10": {
-      "name": "ما لا يسع المسلم جهله",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b11": {
-      "name": "100 سؤال وجواب في عقيدة التوحيد",
-      "desc": "Your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b12": {
-      "name": "التفسير الميسر",
-      "desc": "Your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b13": {
-      "name": "اليوم الآخر 2 — القيامة الكبرى",
-      "desc": "Your own file on Drive"
+      "name": "二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 三 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 三 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二 二",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b14": {
-      "name": "أصول الدعوة",
-      "desc": "Abd al-Karim Zaydan — your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "在克羅地亞,"
     },
     "b15": {
-      "name": "أول مرة أتدبر القرآن",
-      "desc": "Your guide to understanding and reflecting on the Quran — your own file"
+      "name": "? 有? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "你們能了解和反省《古蘭經》的向導,你們自有的檔案;"
     },
     "b16": {
-      "name": "فقه الدعوة إلى الله",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b17": {
-      "name": "مدينة الأقوياء",
-      "desc": "Your own file on Drive"
+      "name": "有活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活活",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b18": {
-      "name": "سيف الله خالد بن الوليد",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b19": {
-      "name": "في الحب والحياة",
-      "desc": "Dr. Mustafa Mahmoud — your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有?",
+      "desc": "穆斯塔法·馬哈茂德博士-您自己在Drive上的檔案"
     },
     "b20": {
-      "name": "الجامع الصحيح للبخاري كاملًا",
-      "desc": "Your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "在 Drive 有您自己的檔案"
     },
     "b21": {
-      "name": "مائة من عظماء أمة الإسلام",
-      "desc": "They changed the course of history — your own file on Drive"
+      "name": "? 有? 有? 有? 有? 有? 有? 有?",
+      "desc": "他們改變了歷史-您自己在Drive上的檔案"
     }
   }
 }
