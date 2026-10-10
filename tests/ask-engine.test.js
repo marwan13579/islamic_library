@@ -16,6 +16,10 @@ import {
 } from "../src/lib/answer-engine.js";
 import { getRelatedTopics, expandTopicKeywords } from "../src/lib/knowledge-graph.js";
 import { loadExternalConfig, getActiveSources, isDomainAllowed, isPathAllowed, isSourceAllowed, getRateLimit, clearExternalIndexCache } from "../src/lib/external-sources.js";
+import { dialectToFusha } from "../src/lib/search-aliases.js";
+import { getExternalSourceDiagnostics, getExternalCrawlerHealth, getExternalIndexDetails } from "../src/lib/external-sources.js";
+import { discoverContent, registerDiscoveredContent } from "../src/lib/search-content.js";
+import { getSearchDiagnostics } from "../src/lib/ask-search.js";
 
 describe("Answer Engine", () => {
   test("textSimilarity identical strings", () => {
@@ -175,5 +179,86 @@ describe("External Sources", () => {
     assert.strictEqual(getRateLimit(source), 500);
     const source2 = { rateLimitMs: 2000 };
     assert.strictEqual(getRateLimit(source2), 2000);
+  });
+});
+
+describe("Dialect to Fusha Mapping", () => {
+  test("dialectToFusha converts Egyptian words", () => {
+    const result = dialectToFusha("ازاى اعمل صلاة");
+    assert.ok(result.includes("كيف"), "Should convert ازاي → كيف");
+  });
+
+  test("dialectToFusha handles empty/null input", () => {
+    assert.strictEqual(dialectToFusha(""), "");
+    assert.strictEqual(dialectToFusha(null), null);
+  });
+
+  test("dialectToFusha preserves Fusha text", () => {
+    const result = dialectToFusha("الصلاة وجبت على كل مسلم");
+    assert.ok(result.includes("الصلاة"));
+  });
+
+  test("dialectToFusha handles multiple dialect words", () => {
+    const result = dialectToFusha("إيه المعلش مفيش جوا بره");
+    assert.ok(result.length > 0);
+  });
+});
+
+describe("External Source Diagnostics", () => {
+  test("getExternalSourceDiagnostics returns structure", () => {
+    const diag = getExternalSourceDiagnostics();
+    assert.ok(Array.isArray(diag.sources));
+    assert.ok(Array.isArray(diag.errors));
+    assert.ok(typeof diag.activeSources === "number");
+    assert.ok(typeof diag.blockedSources === "number");
+  });
+
+  test("getExternalCrawlerHealth returns status", () => {
+    const health = getExternalCrawlerHealth();
+    assert.ok(typeof health.status === "string");
+    assert.ok(Array.isArray(health.issues));
+    assert.ok(health.summary && typeof health.summary.total === "number");
+  });
+
+  test("getExternalIndexDetails returns bySource breakdown", () => {
+    const details = getExternalIndexDetails();
+    if (details) {
+      assert.ok(typeof details.totalDocs === "number");
+      assert.ok(typeof details.totalSources === "number");
+      assert.ok(typeof details.bySource === "object");
+    }
+  });
+});
+
+describe("Content Auto-Discovery", () => {
+  test("discoverContent is a function", () => {
+    assert.strictEqual(typeof discoverContent, "function");
+  });
+
+  test("registerDiscoveredContent is a function", () => {
+    assert.strictEqual(typeof registerDiscoveredContent, "function");
+  });
+});
+
+describe("Search Quality Dashboard", () => {
+  test("getSearchDiagnostics returns enhanced stats", async () => {
+    const stats = await getSearchDiagnostics();
+    assert.ok(typeof stats.totalSources === "number");
+    assert.ok(typeof stats.searchableSources === "number");
+    assert.ok(Array.isArray(stats.categories));
+    assert.ok(Array.isArray(stats.languages));
+    assert.ok(stats.externalIndex !== null);
+  });
+
+  test("getSearchDiagnostics includes external diagnostics", async () => {
+    const stats = await getSearchDiagnostics();
+    assert.ok(stats.externalDiagnostics !== null);
+    assert.ok(stats.crawlerHealth !== null);
+  });
+
+  test("getSearchDiagnostics includes source breakdown", async () => {
+    const stats = await getSearchDiagnostics();
+    // externalConfig may be null in test environment without config file
+    assert.ok(stats.externalConfig === null || typeof stats.externalConfig.totalSources === "number");
   });
 });

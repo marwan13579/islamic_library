@@ -959,3 +959,100 @@ try {
 } catch (e) {
   // Library search not available
 }
+
+// ===================== CONTENT AUTO-DISCOVERY =====================
+
+/**
+ * Auto-discover all HTML pages/tools in the project by scanning
+ * the DOM for known page patterns. This ensures the search index
+ * stays in sync with actual pages without manual updates.
+ */
+export function discoverContent() {
+  const discovered = [];
+
+  // Scan all links in the document for internal pages
+  const links = document.querySelectorAll('a[href]');
+  const seen = new Set();
+
+  for (const link of links) {
+    const href = link.getAttribute('href');
+    if (!href) continue;
+
+    // Only internal HTML pages
+    if (!href.endsWith('.html') && !href.endsWith('/')) continue;
+    if (href.startsWith('http')) continue;
+    if (href.startsWith('#')) continue;
+
+    const clean = href.split('#')[0].replace(/^\.\//, '');
+    if (seen.has(clean)) continue;
+    seen.add(clean);
+
+    // Try to extract title from link text or nearby heading
+    const linkText = link.textContent?.trim();
+    const heading = link.querySelector('h1, h2, h3, h4');
+    const title = heading?.textContent?.trim() || linkText || clean.replace('.html', '');
+
+    if (title && title.length > 2) {
+      discovered.push({
+        id: clean.replace(/[^a-zA-Z0-9_-]/g, '_'),
+        title: title,
+        route: href,
+        type: 'page',
+        category: 'صفحات',
+        icon: '📄',
+        description: link.textContent?.trim().slice(0, 120) || '',
+      });
+    }
+  }
+
+  return discovered;
+}
+
+/**
+ * Register auto-discovered content as a search source.
+ * Runs after manual registrations to catch any missed pages.
+ */
+export function registerDiscoveredContent() {
+  try {
+    const discovered = discoverContent();
+    if (discovered.length === 0) return;
+
+    registry.register({
+      id: 'discovered-pages',
+      type: 'page',
+      category: 'صفحات',
+      icon: '🔍',
+      title: 'المحتوى المكتشاف تلقائيًا',
+      description: 'صفحات ومحتوى تم اكتشافه تلقائيًا من الروابط الداخلية',
+      keywords: ['صفحة', 'محتوى', 'Calculator', 'أداة'],
+      priority: 3,
+      searchable: true,
+      async search(query, normalizedQuery, options = {}) {
+        const q = normalizedQuery || '';
+        if (!q) return discovered.slice(0, 20).map(item => ({
+          ...item,
+          sourceId: 'discovered-pages',
+          score: 0,
+          matchType: 'content',
+        }));
+
+        const results = [];
+        for (const item of discovered) {
+          const title = item.title || '';
+          const desc = item.description || '';
+          if (title.includes(q) || desc.includes(q)) {
+            results.push({
+              ...item,
+              sourceId: 'discovered-pages',
+              score: title.includes(q) ? 60 : 30,
+              matchType: title.includes(q) ? 'title' : 'content',
+            });
+          }
+        }
+        return results.sort((a, b) => b.score - a.score).slice(0, options.limit || 15);
+      }
+    });
+  } catch (e) {
+    // Auto-discovery failed, continue without it
+  }
+}

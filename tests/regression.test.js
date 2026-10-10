@@ -30,7 +30,7 @@ function allHtml() {
   const out = [];
   const walk = (dir) => {
     for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
-      if (/node_modules|^\.git$|^tests$|^scripts$|^dist$|^\.kilo/.test(entry.name)) continue;
+      if (/node_modules|^\.git$|^tests$|^scripts$|^dist$|^\.kilo|^\.vercel/.test(entry.name)) continue;
       const abs = path.join(dir, entry.name);
       if (entry.isDirectory()) walk(abs);
       else if (entry.name.endsWith(".html")) {

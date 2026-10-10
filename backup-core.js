@@ -37,6 +37,8 @@
     "engage-v1",
     // بلاغات الأخطاء: مصفوفة من التقارير المُرسَّلة من 48-report-error.html
     "error-reports",
+    // اسأل الموقع: المفضلة وسجل البحث
+    "ask-favorites","ask-history",
   ]);
 
   function createBackup(storage,createdAt=new Date()){

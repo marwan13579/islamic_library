@@ -3,64 +3,364 @@
   "description": "External sources configuration for 'اسأل الموقع' search engine",
   "sources": [
     {
-      "id": "sunnah-com",
-      "name": "Sunnah.com",
-      "url": "https://sunnah.com",
-      "enabled": false,
-      "category": "hadith",
-      "language": "ar",
-      "allowedDomains": ["sunnah.com"],
-      "allowedPaths": ["/", "/ibn", "/bukhari", "/muslim", "/abudawud", "/tirmidhi", "/nasai", "/ibnmajah", "/malik"],
-      "crawl": false,
-      "maxPages": 500,
-      "respectRobots": true,
-      "rateLimitMs": 2000,
-      "description": "مكتبة الأحاديث النبوية من الكتب الستة"
-    },
-    {
-      "id": "islamqa",
-      "name": "IslamQA",
-      "url": "https://islamqa.info",
-      "enabled": false,
-      "category": "fatwa",
-      "language": "ar",
-      "allowedDomains": ["islamqa.info"],
-      "allowedPaths": ["/", "/ar", "/ar/answers"],
-      "crawl": false,
-      "maxPages": 200,
-      "respectRobots": true,
-      "rateLimitMs": 3000,
-      "description": "فتاوى إسلامية موثوقة"
-    },
-    {
-      "id": "shamela",
-      "name": "الشاملة",
-      "url": "https://shamela.ws",
-      "enabled": false,
-      "category": "books",
-      "language": "ar",
-      "allowedDomains": ["shamela.ws"],
-      "allowedPaths": ["/", "/book"],
-      "crawl": false,
-      "maxPages": 100,
-      "respectRobots": true,
-      "rateLimitMs": 2000,
-      "description": "المكتبة الإسلامية الشاملة"
-    },
-    {
       "id": "quran-com",
       "name": "Quran.com",
       "url": "https://quran.com",
-      "enabled": false,
+      "enabled": true,
       "category": "quran",
       "language": "ar",
       "allowedDomains": ["quran.com"],
       "allowedPaths": ["/", "/quran"],
-      "crawl": false,
+      "crawl": true,
       "maxPages": 100,
       "respectRobots": true,
       "rateLimitMs": 2000,
-      "description": "القرآن الكريم مع الترجمة والتفسير"
+      "description": "القرآن الكريم مع التلاوة والتفسير والترجمة بعدة لغات",
+      "sections": [
+        "المصحف كاملاً مع التلاوة والتفسير",
+        "ترجمات متعددة لمعاني القرآن الكريم",
+        "تفسير الآيات والبحث المتقدم"
+      ]
+    },
+    {
+      "id": "sunnah-com",
+      "name": "Sunnah.com",
+      "url": "https://sunnah.com",
+      "enabled": true,
+      "category": "hadith",
+      "language": "ar",
+      "allowedDomains": ["sunnah.com"],
+      "allowedPaths": ["/", "/ibn", "/bukhari", "/muslim", "/abudawud", "/tirmidhi", "/nasai", "/ibnmajah", "/malik"],
+      "crawl": true,
+      "maxPages": 500,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "مكتبة الأحاديث النبوية الشريفة من الكتب الستة وموطأ مالك",
+      "sections": [
+        "صحيح البخاري وصحيح مسلم",
+        "سنن أبي داود وجامع الترمذي وسنن النسائي وسنن ابن ماجه",
+        "تخريج وترقيم الأحاديث والترجمة الإنجليزية"
+      ]
+    },
+    {
+      "id": "dorar-net",
+      "name": "الدرر السنية",
+      "url": "https://dorar.net",
+      "enabled": true,
+      "category": "hadith",
+      "language": "ar",
+      "allowedDomains": ["dorar.net"],
+      "allowedPaths": ["/", "/hadith", "/feqh", "/aqeedah", "/history", "/tafseer"],
+      "crawl": true,
+      "maxPages": 300,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "الموسوعة الحديثية والفقهية والعقدية والتاريخية الشاملة برئاسة الشيخ علوي السقاف",
+      "sections": [
+        "الموسوعة الحديثية لتخريج الأحاديث وبيان درجتها",
+        "موسوعة الفقه الإسلامي المقارن على المذاهب الأربعة",
+        "الموسوعة العقدية وموسوعة التفسير والتاريخ الإسلامي"
+      ]
+    },
+    {
+      "id": "binbaz-org",
+      "name": "الموقع الرسمي لسماحة الشيخ عبد العزيز بن باز",
+      "url": "https://binbaz.org.sa",
+      "enabled": true,
+      "category": "fatwa",
+      "language": "ar",
+      "allowedDomains": ["binbaz.org.sa"],
+      "allowedPaths": ["/", "/fatwas", "/books", "/audios"],
+      "crawl": true,
+      "maxPages": 200,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "فتاوى وكتب ورسائل ومحاضرات سماحة الإمام عبد العزيز بن باز رحمه الله",
+      "sections": [
+        "آلاف الفتاوى مصنفة حسب الأبواب الفقهية والمسائل العقدية",
+        "مؤلفاته ورسائله كاملة للقراءة والتحميل",
+        "المحاضرات والشروح الصوتية والمرئية"
+      ]
+    },
+    {
+      "id": "islamqa-info",
+      "name": "الإسلام سؤال وجواب",
+      "url": "https://islamqa.info/ar",
+      "enabled": true,
+      "category": "fatwa",
+      "language": "ar",
+      "allowedDomains": ["islamqa.info"],
+      "allowedPaths": ["/", "/ar", "/ar/answers"],
+      "crawl": true,
+      "maxPages": 200,
+      "respectRobots": true,
+      "rateLimitMs": 3000,
+      "description": "فتاوى الشيخ محمد صالح المنجد بإشراف علمي موثق بالأدلة من القرآن والسنة",
+      "sections": [
+        "الفتاوى الشرعية المفصلة بالأدلة من الكتاب والسنة",
+        "مقالات منهجية ودعوية في العقيدة والفقه والآداب",
+        "أجوبة متخصصة لمسلمي العالم بعدة لغات"
+      ]
+    },
+    {
+      "id": "shamela-ws",
+      "name": "المكتبة الشاملة",
+      "url": "https://shamela.ws",
+      "enabled": true,
+      "category": "books",
+      "language": "ar",
+      "allowedDomains": ["shamela.ws"],
+      "allowedPaths": ["/", "/book"],
+      "crawl": true,
+      "maxPages": 100,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "أكبر مكتبة رقمية إسلامية تضم آلاف المراجع التراثية والفقهية والحديثية",
+      "sections": [
+        "كتب التفسير وعلوم القرآن والحديث ومتونه وشروحه",
+        "أمهات كتب الفقه وأصوله والعقيدة والتاريخ والتراجم",
+        "محرك بحث متقدم في نصوص الكتب والمجلدات"
+      ]
+    },
+    {
+      "id": "islamweb-net",
+      "name": "الشبكة الإسلامية (إسلام ويب)",
+      "url": "https://www.islamweb.net/ar/",
+      "enabled": true,
+      "category": "fatwa",
+      "language": "ar",
+      "allowedDomains": ["islamweb.net", "www.islamweb.net"],
+      "allowedPaths": ["/", "/ar", "/ar/fatwa"],
+      "crawl": true,
+      "maxPages": 200,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "من أقدم وأوسع البوابات الإسلامية الشاملة للفتوى والقرآن والاستشارات",
+      "sections": [
+        "مركز الفتوى الشرعية بإشراف لجنة علمية متخصصة",
+        "تلاوات القرآن الكريم والتفاسير والشروح الحديثية",
+        "المقالات والاستشارات التربوية والأسرية والطبية"
+      ]
+    },
+    {
+      "id": "alukah-net",
+      "name": "شبكة الألوكة",
+      "url": "https://www.alukah.net",
+      "enabled": true,
+      "category": "articles",
+      "language": "ar",
+      "allowedDomains": ["alukah.net", "www.alukah.net"],
+      "allowedPaths": ["/", "/sharia", "/library"],
+      "crawl": true,
+      "maxPages": 100,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "شبكة إسلامية علمية وفكرية وثقافية تحت إشراف نخبة من العلماء والباحثين",
+      "sections": [
+        "الألوكة الشرعية: بحوث ودراسات في الفقه والعقيدة والسنة",
+        "المكتبة ورسائل الماجستير والدكتوراه والمقالات المحكمة",
+        "قسم الخطب المنبرية والتزكية والأخلاق"
+      ]
+    },
+    {
+      "id": "misrquran-gov",
+      "name": "إذاعة القرآن الكريم من القاهرة",
+      "url": "https://misrquran.gov.eg/home",
+      "enabled": true,
+      "category": "radio",
+      "language": "ar",
+      "allowedDomains": ["misrquran.gov.eg"],
+      "allowedPaths": ["/", "/home"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "الإذاعة الرسمية المصرية المتخصصة في تلاوة القرآن الكريم والبرامج الدعوية التراثية",
+      "sections": [
+        "البث المباشر لإذاعة القرآن الكريم على مدار ٢٤ ساعة",
+        "أرشيف كبار قراء مصر (الحصري، المنشاوي، عبد الباسط، البهتيمي)",
+        "البرامج الإذاعية والفتاوى وبرامج الأسرة المسلمة"
+      ]
+    },
+    {
+      "id": "qurancomplex-gov",
+      "name": "مجمع الملك فهد لطباعة المصحف الشريف",
+      "url": "https://qurancomplex.gov.sa",
+      "enabled": true,
+      "category": "quran",
+      "language": "ar",
+      "allowedDomains": ["qurancomplex.gov.sa"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "الموقع الرسمي لمجمع الملك فهد بالمدينة المنورة لطباعة المصحف والتفسير الميسر",
+      "sections": [
+        "مصحف المدينة النبوية برواية حفص وقالون وورش والدوري",
+        "التفسير الميسر وترجمات معاني القرآن بعدة لغات",
+        "إصدارات المجمع العلمية والخطوط الحاسوبية للمصحف"
+      ]
+    },
+    {
+      "id": "alfawzan-live",
+      "name": "الموقع الرسمي لمعالي الشيخ صالح الفوزان",
+      "url": "https://alfawzan.live",
+      "enabled": true,
+      "category": "fatwa",
+      "language": "ar",
+      "allowedDomains": ["alfawzan.live"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 100,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "فتاوى ودروس وشروح الشيخ صالح بن فوزان الفوزان عضو هيئة كبار العلماء",
+      "sections": [
+        "الفتاوى الشرعية في العقيدة والعبادات والمعاملات",
+        "شروح المتون الفقهية والعقدية والحديثية",
+        "المكتبة الصوتية والمرئية للدروس والمحاضرات"
+      ]
+    },
+    {
+      "id": "ibntaymiyyah-org",
+      "name": "مكتبة فتاوى ومؤلفات ابن تيمية",
+      "url": "https://ibntaymiyyah.org",
+      "enabled": true,
+      "category": "books",
+      "language": "ar",
+      "allowedDomains": ["ibntaymiyyah.org"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "مكتبة متخصصة لتراث شيخ الإسلام ابن تيمية ومصنفاته وفتاواه",
+      "sections": [
+        "مجموع الفتاوى لشيخ الإسلام ابن تيمية",
+        "منهاج السنة والفرقان والواسطية والحموية والتدمرية",
+        "تصنيف موضوعي للمسائل والردود العقدية والفقهية"
+      ]
+    },
+    {
+      "id": "al-eman-com",
+      "name": "موقع نداء الإيمان",
+      "url": "https://www.al-eman.com",
+      "enabled": true,
+      "category": "books",
+      "language": "ar",
+      "allowedDomains": ["al-eman.com", "www.al-eman.com"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "مكتبة إلكترونية إسلامية كبرى تضم أمهات كتب التفسير والحديث والفقه والتاريخ",
+      "sections": [
+        "تفاسير القرآن (ابن كثير، القرطبي، الطبري، البغوي، السعدي)",
+        "كتب الحديث الشريف وشروحها",
+        "كتب الفقه والسيرة والتاريخ الإسلامي"
+      ]
+    },
+    {
+      "id": "islamway-net",
+      "name": "طريق الإسلام (Islamway)",
+      "url": "https://ar.islamway.net",
+      "enabled": true,
+      "category": "lessons",
+      "language": "ar",
+      "allowedDomains": ["islamway.net", "ar.islamway.net"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 100,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "من أقدم البوابات الصوتية والدعوية الإسلامية؛ دروس وتلاوات وفتاوى ومقالات",
+      "sections": [
+        "دروس ومحاضرات كبار العلماء والدعاة",
+        "تلاوات القرآن الكريم لمئات القراء",
+        "فتاوى ومقالات وأناشيد إسلامية"
+      ]
+    },
+    {
+      "id": "binothaimeen-net",
+      "name": "موقع الشيخ محمد بن صالح العثيمين",
+      "url": "https://binothaimeen.net",
+      "enabled": true,
+      "category": "fatwa",
+      "language": "ar",
+      "allowedDomains": ["binothaimeen.net"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 100,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "الموقع الرسمي لمؤسسة الشيخ محمد بن صالح العثيمين الخيرية لفتاواه وشروحه",
+      "sections": [
+        "فتاوى نور على الدرب وفتاوى أركان الإسلام",
+        "الشرح الممتع على زاد المستقنع وشرح رياض الصالحين",
+        "الدروس الصوتية والرسائل الفقهية"
+      ]
+    },
+    {
+      "id": "alalbany-net",
+      "name": "موقع الإمام الألباني",
+      "url": "https://alalbany.net",
+      "enabled": true,
+      "category": "hadith",
+      "language": "ar",
+      "allowedDomains": ["alalbany.net"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "موقع متكامل لتراث العلامة المحدث محمد ناصر الدين الألباني وأشرطة الهدى والنور",
+      "sections": [
+        "سلسلة الأحاديث الصحيحة وسلسلة الأحاديث الضعيفة",
+        "فهرس أشرطة فتاوى الهدى والنور",
+        "كتب الشيخ وتخريجاته الحديثية"
+      ]
+    },
+    {
+      "id": "saaid-net",
+      "name": "شبكة صيد الفوائد",
+      "url": "http://www.saaid.net",
+      "enabled": true,
+      "category": "articles",
+      "language": "ar",
+      "allowedDomains": ["saaid.net", "www.saaid.net"],
+      "allowedPaths": ["/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "موقع دعوي وثقافي إسلامي يجمع مقالات وبحوث ومطويات وفوائد علمية",
+      "sections": [
+        "فوائد ومقالات في العقيدة والفقه والرقائق",
+        "مطويات وبطاقات دعوية جاهزة للنشر",
+        "قصص وعبر وأسرة وتربية إسلامية"
+      ]
+    },
+    {
+      "id": "sultan-org",
+      "name": "دليل سلطان للمواقع الإسلامية",
+      "url": "https://sultan.org/a/",
+      "enabled": true,
+      "category": "directory",
+      "language": "ar",
+      "allowedDomains": ["sultan.org"],
+      "allowedPaths": ["/a/"],
+      "crawl": true,
+      "maxPages": 50,
+      "respectRobots": true,
+      "rateLimitMs": 2000,
+      "description": "دليل إسلامي شامل يجمع مئات الروابط الموثوقة للمواقع والعلماء والجهات الدعوية",
+      "sections": [
+        "دليل مواقع القرآن والتلاوة والتفسير والحديث",
+        "دليل المواقع الرسمية للعلماء والدعاة",
+        "المؤسسات والهيئات الخيرية والإسلامية"
+      ]
     }
   ]
 }

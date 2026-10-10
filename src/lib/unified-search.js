@@ -6,7 +6,7 @@
 
 import { normalizeAr } from "./text.js";
 import { registry, createSource } from "./search-registry.js";
-import { expandAlias, correctSpelling, getIntent, getCategoryKeywords, ALIASES } from "./search-aliases.js";
+import { expandAlias, correctSpelling, getIntent, getCategoryKeywords, ALIASES, dialectToFusha } from "./search-aliases.js";
 import { wantsCorpora } from "./search-corpora.js";
 
 /**
@@ -37,8 +37,16 @@ const MAX_PER_DEEP_SOURCE = 8;
 export function processQuery(query) {
   const raw = String(query || "").trim();
   if (!raw) return { raw: "", normalized: "", aliases: [], intent: "general" };
-  
-  let normalized = normalizeAr(raw);
+
+  // 1. Convert Arabic dialect (Egyptian/Gulf/Levantine) to Fusha BEFORE normalization
+  let dialectFixed = dialectToFusha(raw);
+  // Also try normalizing first then dialect-mapping for partial matches
+  if (dialectFixed === raw) {
+    const preNorm = normalizeAr(raw);
+    dialectFixed = normalizeAr(dialectToFusha(preNorm));
+  }
+
+  let normalized = normalizeAr(dialectFixed);
   const aliases = [];
   
   // Correct spelling

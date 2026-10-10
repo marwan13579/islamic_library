@@ -13,6 +13,8 @@
  * @module lib/external-sources
  */
 
+import { normalizeAr } from "./text.js";
+
 /* =========================================================
  * CONFIG LOADING
  * ========================================================= */
@@ -189,7 +191,7 @@ function scoreText(text, query) {
 }
 
 /**
- * يعيد إحصائيات الفهرس الخارجي.
+ * يعيد إضافيًا إضافيًا Diagnostics.
  */
 export function getExternalIndexStats() {
   if (!externalIndexCache) return null;
@@ -199,4 +201,96 @@ export function getExternalIndexStats() {
     builtAt: externalIndexCache.builtAt || null,
     lastIndexed: externalIndexCache.lastIndexed || null,
   };
+}
+
+/* =========================================================
+ * EXTERNAL SOURCE DIAGNOSTICS
+ * ========================================================= */
+
+/**
+ * يعيد تفاصيل كل مصدر خارجي: عدد Pages، آخر crawl، أخطاء.
+ */
+export function getExternalSourceDiagnostics() {
+  if (!externalIndexCache || !externalIndexCache.sources) {
+    return { sources: [], totalDocs: 0, errors: [], activeSources: 0, blockedSources: 0 };
+  }
+
+  const diagnostics = externalIndexCache.sources.map((src) => ({
+    id: src.id,
+    name: src.name,
+    url: src.url,
+    indexedPages: src.indexedPages || 0,
+    lastCrawl: src.lastCrawl || null,
+    status: src.status || 'unknown',
+    errors: src.errors || [],
+  }));
+
+  const errors = diagnostics
+    .filter((d) => d.status === 'error' || d.errors.length > 0)
+    .flatMap((d) => d.errors.map((e) => ({ source: d.name, error: e })));
+
+  return {
+    sources: diagnostics,
+    totalDocs: externalIndexCache.docs?.length || 0,
+    errors,
+    activeSources: diagnostics.filter((d) => d.status === 'ok').length,
+    blockedSources: diagnostics.filter((d) => d.status === 'blocked' || d.status === 'error').length,
+  };
+}
+
+/**
+ * يعيد تفاصيل الفهرس External Index.
+ */
+export function getExternalIndexDetails() {
+  if (!externalIndexCache) return null;
+
+  const bySource = {};
+  for (const doc of externalIndexCache.docs || []) {
+    const sid = doc.sourceId || 'unknown';
+    if (!bySource[sid]) bySource[sid] = { count: 0, samples: [] };
+    bySource[sid].count++;
+    if (bySource[sid].samples.length < 3) {
+      bySource[sid].samples.push({
+        title: doc.title,
+        url: doc.url,
+        category: doc.category,
+      });
+    }
+  }
+
+  return {
+    totalDocs: externalIndexCache.docs?.length || 0,
+    totalSources: externalIndexCache.sources?.length || 0,
+    builtAt: externalIndexCache.builtAt,
+    bySource,
+  };
+}
+
+/**
+ * ي_horizontal External Source Crawler Health.
+ */
+export function getExternalCrawlerHealth() {
+  const diag = getExternalSourceDiagnostics();
+  const health = {
+    status: 'healthy',
+    issues: [],
+    summary: {
+      total: diag.sources.length,
+      active: diag.activeSources,
+      blocked: diag.blockedSources,
+      totalDocs: diag.totalDocs,
+    },
+  };
+
+  if (diag.blockedSources > 0) {
+    health.status = 'degraded';
+    health.issues.push(`${diag.blockedSources} sources blocked or errored`);
+  }
+
+  if (diag.totalDocs < 10) {
+    health.status = 'degraded';
+    health.issues.push('External index has very few documents');
+  }
+
+  return health;
 }

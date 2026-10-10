@@ -231,6 +231,9 @@ export const KEYS = {
   engage: "engage-v1",
   /* بلاغات الأخطاء: مصفوفة من التقارير المُرسَّلة من 48-report-error.html */
   errorReports: "error-reports",
+  /* اسأل الموقع: المفضلة وسجل البحث */
+  askFavorites: "ask-favorites",
+  askHistory: "ask-history",
 };
 
 /**
@@ -302,6 +305,9 @@ export const IMPORT_TYPES = {
   "lib-quiz-history": "array",
   /* بلاغات الأخطاء: مصفوفة من التقارير المُرسَّلة من 48-report-error.html */
   "error-reports": "array",
+  /* اسأل الموقع: المفضلة وسجل البحث */
+  "ask-favorites": "array",
+  "ask-history": "array",
   /* صفحات قديمة: الأنواع مستنبطة من قراءتها في الصفحة نفسها */
   "tadabbur-entries": "array",
   "wird-goal": "number",

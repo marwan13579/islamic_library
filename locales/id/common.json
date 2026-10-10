@@ -1338,6 +1338,22 @@
       "b21": [
         "مائة من عظماء أمة الإسلام",
         "غيّروا مجرى التاريخ — ملفك الخاص على درايف"
+      ],
+      "dailyguide": [
+        "Daily Guide",
+        "Personal dashboard: Hijri date, next prayer, prayer times, Quran recitation, morning/evening adhkar, verse of the day, hadith of the day, dhikr of the day, faith task"
+      ],
+      "discover": [
+        "Discover Something New",
+        "A verse, hadith, dhikr, dua, story, scholar, term, benefit, topic, book, or new lesson every day"
+      ],
+      "reporterror": [
+        "Report an Error",
+        "Report a textual error, incorrect source, broken link, technical issue, or content needing review"
+      ],
+      "sources": [
+        "Encyclopedia Sources",
+        "Quran, Hadith, Tafsir, Fiqh, Seerah, History, Books, Scholars"
       ]
     },
     "installApp": "Install App",

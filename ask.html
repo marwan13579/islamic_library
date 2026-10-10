@@ -3,15 +3,15 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>اسأل الموقع — موسوعة إسلامية قابلة للبحث</title>
-<meta name="description" content="اسأل الموقع عن أي موضوع إسلامي. بحث ذكي في القرآن والأحاديث والتفسير والفتاوى والأذكار والكتب الإسلامية.">
+<title>اسأل الموقع — محرك البحث والمعرفة الإسلامية</title>
+<meta name="description" content="محرك بحث معرفي إسلامي ذكي يبحث في جميع محتويات الموقع والمصادر الإسلامية الموثقة محلياً، مع الأدلة والتفاسير والمصادر دون ذكاء اصطناعي خارجي.">
 <meta name="theme-color" content="#0b3d2c">
 <link rel="canonical" href="./ask.html">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="ar_AR">
 <meta property="og:site_name" content="المكتبة الإسلامية">
-<meta property="og:title" content="اسأل الموقع — موسوعة إسلامية قابلة للبحث">
-<meta property="og:description" content="اسأل الموقع عن أي موضوع إسلامي. بحث ذكي في القرآن والأحاديث والتفسير والفتاوى والأذكار والكتب الإسلامية.">
+<meta property="og:title" content="اسأل الموقع — محرك البحث والمعرفة الإسلامية">
+<meta property="og:description" content="محرك بحث معرفي إسلامي ذكي يبحث في القرآن والحديث والتفسير والفتاوى والأذكار محلياً.">
 <meta property="og:url" content="./ask.html">
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
@@ -33,12 +33,14 @@
     --card:#122E28; --green:#5FA787; --green-soft:#173A30;
     --accent:#5FA787; --accent-soft:#1a3a2f;
   }
-  :root:not([data-theme="dark"]){ @media (prefers-color-scheme: dark){
-    --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
-    --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16);
-    --card:#122E28; --green:#5FA787; --green-soft:#173A30;
-    --accent:#5FA787; --accent-soft:#1a3a2f;
-  }}
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --paper:#0C201C; --paper-2:#102A25; --ink:#EFE3C9; --ink-soft:#A9BDB4;
+      --gold:#D3AE62; --gold-soft:#8C6F2E; --line:rgba(239,227,201,.16);
+      --card:#122E28; --green:#5FA787; --green-soft:#173A30;
+      --accent:#5FA787; --accent-soft:#1a3a2f;
+    }
+  }
   *, *::before, *::after{ box-sizing:inherit; }
   html{ scroll-behavior:smooth; }
   body{
@@ -57,79 +59,168 @@
   /* Header */
   .site-header{
     background:var(--paper-2); border-bottom:1px solid var(--line);
-    padding:12px 16px; position:sticky; top:0; z-index:50;
+    padding:10px 16px; position:sticky; top:0; z-index:50;
     backdrop-filter:blur(12px);
   }
   .header-inner{
-    max-width:900px; margin:0 auto;
+    max-width:960px; margin:0 auto;
+    display:flex; align-items:center; justify-content:space-between; gap:12px;
+  }
+  .logo-box{
     display:flex; align-items:center; gap:12px;
   }
   .logo{
     font-size:1.25rem; font-weight:700; color:var(--ink);
     white-space:nowrap; display:flex; align-items:center; gap:6px;
   }
+  .header-actions{
+    display:flex; align-items:center; gap:8px;
+  }
+  .h-btn{
+    background:var(--card); border:1px solid var(--line); color:var(--ink);
+    border-radius:999px; padding:6px 12px; font-size:.85rem; font-weight:600;
+    cursor:pointer; font-family:inherit; display:inline-flex; align-items:center; gap:4px;
+    transition:all .15s;
+  }
+  .h-btn:hover{ border-color:var(--green); color:var(--green); }
 
   /* Main */
   .main{
-    max-width:800px; margin:0 auto; padding:16px;
+    max-width:840px; margin:0 auto; padding:16px 16px 80px;
   }
 
-  /* Hero / Search Box */
+  /* Hero */
   .hero{
-    text-align:center; padding:32px 0 24px;
+    text-align:center; padding:24px 0 16px;
   }
   .hero h1{
-    font-size:2rem; margin:0 0 4px; font-weight:700;
+    font-size:2.1rem; margin:0 0 6px; font-weight:700; color:var(--ink);
+    font-family:"Amiri",serif;
   }
   .hero p{
-    color:var(--ink-soft); margin:0 0 20px; font-size:1rem;
+    color:var(--ink-soft); margin:0 0 18px; font-size:1rem; max-width:65ch; margin-inline:auto;
+  }
+
+  /* Search Container */
+  .search-container{
+    position:relative; max-width:720px; margin:0 auto 12px;
   }
   .search-box{
-    display:flex; gap:8px; max-width:700px; margin:0 auto;
+    display:flex; gap:8px;
+  }
+  .search-input-wrap{
+    position:relative; flex:1;
   }
   .search-input{
-    flex:1; padding:14px 18px; font-size:1.05rem;
-    border:2px solid var(--line); border-radius:12px;
+    width:100%; padding:14px 44px 14px 18px; font-size:1.05rem;
+    border:2px solid var(--line); border-radius:14px;
     background:var(--card); color:var(--ink);
     font-family:inherit; outline:none;
-    transition:border-color .2s;
+    box-shadow:0 4px 16px rgba(19,50,44,.05);
+    transition:border-color .2s, box-shadow .2s;
   }
-  .search-input:focus{ border-color:var(--green); }
+  .search-input:focus{
+    border-color:var(--green);
+    box-shadow:0 6px 20px rgba(47,107,79,.15);
+  }
   .search-input::placeholder{ color:var(--ink-soft); opacity:.7; }
-  .search-btn{
-    padding:14px 24px; background:var(--green); color:#fff;
-    border:none; border-radius:12px; font-size:1rem; font-weight:600;
-    cursor:pointer; font-family:inherit;
-    transition:background .2s;
+  .clear-input-btn{
+    position:absolute; left:14px; top:50%; transform:translateY(-50%);
+    background:transparent; border:none; color:var(--ink-soft);
+    font-size:1.2rem; cursor:pointer; padding:4px 8px; border-radius:50%;
+    display:none; line-height:1;
   }
-  .search-btn:hover{ filter:brightness(1.1); }
-  .search-btn:disabled{ opacity:.5; cursor:not-allowed; }
+  .clear-input-btn:hover{ color:var(--ink); }
 
-  /* Suggestions */
+  .search-btn{
+    padding:14px 26px; background:var(--green); color:#fff;
+    border:none; border-radius:14px; font-size:1.02rem; font-weight:600;
+    cursor:pointer; font-family:inherit; white-space:nowrap;
+    box-shadow:0 4px 12px rgba(47,107,79,.25);
+    transition:transform .15s, filter .15s;
+  }
+  .search-btn:hover{ filter:brightness(1.08); transform:translateY(-1px); }
+  .search-btn:disabled{ opacity:.6; cursor:not-allowed; transform:none; }
+
+  /* Mode selector pills */
+  .mode-row{
+    display:flex; justify-content:center; gap:6px; margin:10px 0 16px;
+    flex-wrap:wrap;
+  }
+  .mode-btn{
+    padding:5px 14px; border-radius:999px; font-size:.82rem; font-weight:600;
+    border:1px solid var(--line); background:var(--card); color:var(--ink-soft);
+    cursor:pointer; font-family:inherit; transition:all .15s;
+  }
+  .mode-btn:hover{ border-color:var(--green); color:var(--green); }
+  .mode-btn.active{
+    background:var(--accent); color:#fff; border-color:var(--accent);
+  }
+
+  /* Live suggestions dropdown */
+  .autocomplete-dropdown{
+    position:absolute; top:calc(100% + 4px); right:0; left:0;
+    background:var(--card); border:1px solid var(--line);
+    border-radius:12px; box-shadow:0 10px 30px rgba(0,0,0,.15);
+    z-index:90; max-height:280px; overflow-y:auto; display:none;
+  }
+  .autocomplete-item{
+    padding:10px 16px; display:flex; align-items:center; gap:10px;
+    cursor:pointer; border-bottom:1px solid var(--line);
+    transition:background .15s;
+  }
+  .autocomplete-item:last-child{ border-bottom:none; }
+  .autocomplete-item:hover, .autocomplete-item.selected{
+    background:var(--accent-soft);
+  }
+  .autocomplete-item .ac-icon{ font-size:1.1rem; flex-shrink:0; }
+  .autocomplete-item .ac-title{ font-weight:600; font-size:.9rem; color:var(--ink); flex:1; }
+  .autocomplete-item .ac-cat{ font-size:.75rem; color:var(--ink-soft); }
+
+  /* Quick Suggestion Chips */
   .suggestions{
     display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
-    margin-top:16px;
+    margin:12px 0;
   }
   .suggestion-chip{
     padding:6px 14px; border-radius:20px; font-size:.85rem;
     border:1px solid var(--line); background:var(--card);
     color:var(--ink-soft); cursor:pointer; font-family:inherit;
-    transition:all .2s;
+    transition:all .15s;
   }
   .suggestion-chip:hover{
     border-color:var(--green); color:var(--green); background:var(--accent-soft);
   }
 
+  /* History Bar */
+  .history-box{
+    margin:8px auto 16px; padding:10px 14px; background:var(--paper-2);
+    border-radius:12px; border:1px solid var(--line); font-size:.82rem;
+    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
+  }
+  .history-box .hist-label{ color:var(--ink-soft); font-weight:600; flex-shrink:0; }
+  .history-chip{
+    padding:3px 10px; border-radius:8px; background:var(--card);
+    border:1px solid var(--line); color:var(--ink); cursor:pointer;
+    font-size:.8rem; font-family:inherit;
+  }
+  .history-chip:hover{ border-color:var(--gold-soft); }
+  .hist-clear{
+    margin-inline-start:auto; background:transparent; border:none;
+    color:var(--ink-soft); cursor:pointer; font-size:.78rem; font-family:inherit;
+    text-decoration:underline;
+  }
+
   /* Filters */
   .filters{
-    display:flex; flex-wrap:wrap; gap:8px; justify-content:center;
-    margin:20px 0;
+    display:flex; flex-wrap:wrap; gap:6px; justify-content:center;
+    margin:16px 0 24px;
   }
   .filter-btn{
-    padding:6px 14px; border-radius:20px; font-size:.85rem;
+    padding:6px 13px; border-radius:20px; font-size:.82rem; font-weight:600;
     border:1px solid var(--line); background:transparent;
     color:var(--ink-soft); cursor:pointer; font-family:inherit;
-    transition:all .2s;
+    transition:all .15s;
   }
   .filter-btn:hover, .filter-btn.active{
     background:var(--green); color:#fff; border-color:var(--green);
@@ -137,276 +228,524 @@
 
   /* Loading */
   .loading{
-    text-align:center; padding:32px; color:var(--ink-soft);
+    text-align:center; padding:48px 16px; color:var(--ink-soft);
   }
   .spinner{
-    width:32px; height:32px; border:3px solid var(--line);
+    width:38px; height:38px; border:3px solid var(--line);
     border-top-color:var(--green); border-radius:50%;
-    animation:spin .8s linear infinite; margin:0 auto 12px;
+    animation:spin .8s linear infinite; margin:0 auto 14px;
   }
   @keyframes spin{ to{ transform:rotate(360deg); } }
 
-  /* Answer */
+  /* Banners */
+  .notice-banner{
+    padding:12px 16px; border-radius:10px; margin-bottom:16px;
+    font-size:.9rem; display:flex; align-items:center; gap:10px;
+  }
+  .notice-banner.ruling{
+    background:#e8f4fd; border:1px solid #b6e0fe; color:#0c5460;
+  }
+  :root[data-theme="dark"] .notice-banner.ruling{
+    background:#103848; border-color:#1e5b74; color:#a3e0f7;
+  }
+  .notice-banner.did-you-mean{
+    background:#fff8e6; border:1px solid #ffd166; color:#7d5a00;
+  }
+  :root[data-theme="dark"] .notice-banner.did-you-mean{
+    background:#3d2f0a; border-color:#856404; color:#ffe8a1;
+  }
+  .did-you-mean button{
+    margin-inline-start:8px; padding:3px 12px; border-radius:6px;
+    background:var(--gold-soft); color:#000; font-weight:700; border:none;
+    cursor:pointer; font-family:inherit;
+  }
+
+  /* Answer Container */
   .answer-container{ animation:fadeIn .3s ease; }
   @keyframes fadeIn{ from{ opacity:0; transform:translateY(8px); } to{ opacity:1; transform:none; } }
 
-  .answer-section{
-    background:var(--card); border-radius:12px; padding:20px;
-    margin-bottom:16px; border:1px solid var(--line);
+  .answer-card{
+    background:var(--card); border-radius:16px; padding:24px;
+    margin-bottom:20px; border:1px solid var(--line);
+    box-shadow:0 4px 16px rgba(19,50,44,.04);
   }
-  .answer-section h2{
-    font-size:1.15rem; margin:0 0 12px; display:flex;
-    align-items:center; gap:8px;
+  .answer-card.main-summary{
+    border-color:var(--gold-soft);
+    background:linear-gradient(to bottom, var(--card), var(--paper-2));
   }
-  .answer-section h3{
-    font-size:1rem; margin:16px 0 8px; color:var(--green);
+  .card-header{
+    display:flex; align-items:center; justify-content:space-between;
+    margin-bottom:12px; border-bottom:1px solid var(--line); padding-bottom:8px;
   }
-  .answer-section p, .answer-section li{
-    color:var(--ink-soft); font-size:.95rem; line-height:2;
+  .card-title{
+    font-size:1.25rem; font-weight:700; color:var(--ink); margin:0;
+    display:flex; align-items:center; gap:8px; font-family:"Amiri",serif;
   }
-  .answer-section ul, .answer-section ol{
-    padding-right:20px; margin:8px 0;
+  .card-actions{
+    display:flex; gap:6px;
+  }
+  .action-btn{
+    padding:4px 10px; border-radius:8px; border:1px solid var(--line);
+    background:var(--card); color:var(--ink-soft); font-size:.78rem;
+    cursor:pointer; font-family:inherit; display:inline-flex; align-items:center; gap:4px;
+  }
+  .action-btn:hover{ border-color:var(--green); color:var(--green); }
+
+  .summary-text{
+    font-size:1.05rem; line-height:2; color:var(--ink); margin:0;
   }
 
-  /* Source badge */
+  /* Primary Evidence Cards (Quran & Hadith) */
+  .evidence-grid{
+    display:grid; grid-template-columns:1fr; gap:12px; margin-top:12px;
+  }
+  .evidence-card{
+    background:var(--paper-2); border-radius:12px; padding:16px;
+    border:1px solid var(--line); border-right:4px solid var(--gold);
+  }
+  .evidence-card.hadith{
+    border-right-color:var(--green);
+  }
+  .evidence-top{
+    display:flex; justify-content:space-between; align-items:center; margin-bottom:8px;
+  }
+  .evidence-badge{
+    display:inline-flex; align-items:center; gap:4px; font-size:.78rem; font-weight:700;
+    padding:3px 10px; border-radius:999px; background:var(--card); border:1px solid var(--line);
+  }
+  .evidence-card.quran .evidence-badge{ color:#856404; background:#fff8e6; }
+  .evidence-card.hadith .evidence-badge{ color:#155724; background:#e2f0d9; }
+  :root[data-theme="dark"] .evidence-card.quran .evidence-badge{ color:#ffd966; background:#4a3b10; }
+  :root[data-theme="dark"] .evidence-card.hadith .evidence-badge{ color:#74d99f; background:#164228; }
+
+  .evidence-text{
+    font-family:"Amiri","Scheherazade New",serif; font-size:1.2rem;
+    line-height:2.1; margin:6px 0 10px; color:var(--ink);
+  }
+  .evidence-footer{
+    display:flex; justify-content:space-between; align-items:center; font-size:.82rem;
+    color:var(--ink-soft);
+  }
+
+  /* Section Items */
+  .result-item{
+    padding:14px; border-radius:10px; background:var(--paper-2);
+    margin-bottom:10px; border:1px solid var(--line);
+    transition:border-color .15s, transform .15s;
+  }
+  .result-item:hover{
+    border-color:var(--gold-soft); transform:translateY(-1px);
+  }
+  .result-title{
+    font-weight:700; font-size:1rem; color:var(--ink);
+    display:block; margin-bottom:4px;
+  }
+  .result-desc{
+    font-size:.88rem; color:var(--ink-soft); line-height:1.8; margin:0 0 8px;
+  }
+  .result-meta{
+    display:flex; gap:8px; flex-wrap:wrap; align-items:center;
+  }
   .source-badge{
     display:inline-flex; align-items:center; gap:4px;
-    padding:3px 10px; border-radius:12px; font-size:.75rem;
-    font-weight:600;
+    padding:2px 9px; border-radius:10px; font-size:.72rem; font-weight:600;
   }
   .source-badge.tier-1{ background:#fff3cd; color:#856404; }
   .source-badge.tier-2{ background:#d4edda; color:#155724; }
   .source-badge.tier-3{ background:#cce5ff; color:#004085; }
   .source-badge.tier-4{ background:#e2e3e5; color:#383d41; }
-  :root[data-theme="dark"] .source-badge.tier-1{ background:#5a4a1a; color:#ffd966; }
-  :root[data-theme="dark"] .source-badge.tier-2{ background:#1a5c30; color:#5cdb8a; }
-  :root[data-theme="dark"] .source-badge.tier-3{ background:#1a3a5c; color:#5cb8ff; }
-  :root[data-theme="dark"] .source-badge.tier-4{ background:#2a2d30; color:#b0b3b8; }
+  :root[data-theme="dark"] .source-badge.tier-1{ background:#4a3b10; color:#ffd966; }
+  :root[data-theme="dark"] .source-badge.tier-2{ background:#164228; color:#74d99f; }
+  :root[data-theme="dark"] .source-badge.tier-3{ background:#10385c; color:#7ec0ee; }
+  :root[data-theme="dark"] .source-badge.tier-4{ background:#2b2f33; color:#b0b4b8; }
 
-  /* Source item */
-  .source-item{
-    display:flex; align-items:flex-start; gap:10px;
-    padding:10px; border-radius:8px; background:var(--paper-2);
-    margin-bottom:8px; border:1px solid var(--line);
+  .external-tag{
+    background:#fff3cd; color:#856404; border:1px solid #ffeeba;
+    padding:2px 8px; border-radius:6px; font-size:.72rem; font-weight:700;
   }
-  .source-item .src-icon{ font-size:1.2rem; flex-shrink:0; }
-  .source-item .src-info{ flex:1; }
-  .source-item .src-title{
-    font-weight:600; font-size:.9rem; color:var(--ink);
-    display:block;
-  }
-  .source-item .src-meta{
-    font-size:.78rem; color:var(--ink-soft);
-  }
-  .source-item a{
-    font-size:.8rem; padding:4px 10px; border-radius:6px;
-    background:var(--accent-soft); color:var(--green);
-    white-space:nowrap; align-self:center;
-  }
+  :root[data-theme="dark"] .external-tag{ background:#4a3b10; color:#ffd966; border-color:#856404; }
 
-  /* Result item */
-  .result-item{
-    padding:12px; border-radius:8px; background:var(--paper-2);
-    margin-bottom:10px; border:1px solid var(--line);
-    transition:border-color .2s;
+  /* Source Item */
+  .sources-grid{
+    display:grid; grid-template-columns:repeat(auto-fill, minmax(240px, 1fr)); gap:10px;
   }
-  .result-item:hover{ border-color:var(--gold-soft); }
-  .result-item .result-title{
-    font-weight:600; font-size:.95rem; color:var(--ink);
-    display:block; margin-bottom:4px;
+  .source-pill{
+    padding:10px; border-radius:10px; background:var(--paper-2);
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:space-between;
+    gap:8px; font-size:.85rem;
   }
-  .result-item .result-desc{
-    font-size:.85rem; color:var(--ink-soft); line-height:1.7;
-  }
-  .result-item .result-meta{
-    display:flex; gap:8px; flex-wrap:wrap; margin-top:6px;
-  }
+  .source-pill .sp-info{ min-width:0; }
+  .source-pill .sp-title{ font-weight:600; color:var(--ink); display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+  .source-pill .sp-type{ font-size:.75rem; color:var(--ink-soft); }
 
-  /* Related questions */
-  .related-q{
-    display:inline-block; padding:8px 14px; margin:4px;
-    border-radius:8px; background:var(--paper-2);
-    border:1px solid var(--line); color:var(--ink-soft);
-    cursor:pointer; font-family:inherit; font-size:.85rem;
-    transition:all .2s;
+  /* Zero state */
+  .zero-state{ text-align:center; padding:54px 16px; }
+  .zero-state h2{ font-size:1.4rem; margin:0 0 10px; font-family:"Amiri",serif; }
+  .zero-state p{ color:var(--ink-soft); margin:0 0 20px; font-size:1rem; }
+
+  /* Diagnostics Modal */
+  .modal-backdrop{
+    position:fixed; inset:0; background:rgba(0,0,0,.5); backdrop-filter:blur(4px);
+    z-index:200; display:flex; align-items:center; justify-content:center; padding:16px;
   }
-  .related-q:hover{
-    border-color:var(--green); color:var(--green); background:var(--accent-soft);
+  .diag-modal{
+    background:var(--card); border:1px solid var(--line); border-radius:20px;
+    max-width:540px; width:100%; max-height:85vh; overflow-y:auto; padding:24px;
+    box-shadow:0 20px 50px rgba(0,0,0,.3);
+  }
+  .diag-stat-row{
+    display:flex; justify-content:space-between; padding:8px 0; border-bottom:1px solid var(--line);
+    font-size:.9rem;
   }
 
-  /* Zero results */
-  .zero-state{ text-align:center; padding:48px 16px; }
-  .zero-state h2{ font-size:1.3rem; margin:0 0 8px; }
-  .zero-state p{ color:var(--ink-soft); margin:0 0 16px; }
-
-  /* External label */
-  .external-label{
-    display:inline-flex; align-items:center; gap:4px;
-    padding:4px 10px; border-radius:8px; font-size:.75rem;
-    background:#fff3cd; color:#856404; font-weight:600;
+  /* Toast Notification */
+  .toast-notice{
+    position:fixed; bottom:24px; left:50%; transform:translateX(-50%);
+    background:var(--ink); color:var(--paper); padding:10px 22px;
+    border-radius:999px; font-size:.88rem; font-weight:600; z-index:300;
+    box-shadow:0 6px 20px rgba(0,0,0,.25); animation:toastIn .2s ease;
   }
-  :root[data-theme="dark"] .external-label{
-    background:#5a4a1a; color:#ffd966;
-  }
-
-  /* Corrections */
-  .correction-box{
-    padding:12px; border-radius:8px; background:#fff3cd;
-    border:1px solid #ffc107; color:#856404; margin-bottom:16px;
-    display:flex; align-items:center; gap:8px; flex-wrap:wrap;
-  }
-  .correction-box button{
-    padding:4px 12px; border-radius:6px; border:1px solid #ffc107;
-    background:#ffc107; color:#856404; cursor:pointer; font-weight:600;
-    font-family:inherit;
-  }
-
-  /* Error boundary */
-  .error-boundary{
-    padding:20px; border-radius:12px; background:#f8d7da;
-    border:1px solid #f5c6cb; color:#721c24; text-align:center;
-  }
-
-  /* Keyboard hint */
-  .kbd-hint{
-    font-size:.75rem; color:var(--ink-soft); text-align:center;
-    margin-top:8px;
-  }
+  @keyframes toastIn{ from{ opacity:0; transform:translate(-50%, 10px); } to{ opacity:1; transform:translate(-50%, 0); } }
 
   /* Responsive */
-  @media(max-width:600px){
-    .hero h1{ font-size:1.5rem; }
+  @media(max-width:640px){
+    .hero h1{ font-size:1.6rem; }
     .search-box{ flex-direction:column; }
     .search-btn{ width:100%; }
-  }
-
-  /* Reduced motion */
-  @media(prefers-reduced-motion:reduce){
-    *{ animation-duration:.01ms!important; transition-duration:.01ms!important; }
+    .header-inner{ flex-wrap:wrap; }
+    .card-title{ font-size:1.1rem; }
   }
 </style>
 </head>
 <body>
 
 <a href="#main" class="skip-link">انتقل إلى المحتوى الرئيسي</a>
+<a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 
 <header class="site-header" role="banner">
   <div class="header-inner">
-    <a href="index.html" class="back-link" aria-label="العودة للصفحة الرئيسية">← الرئيسية</a>
-    <div class="logo">🕌 اسأل الموقع</div>
+    <div class="logo-box">
+      <div class="logo">🕌 اسأل الموقع</div>
+    </div>
+    <div class="header-actions">
+      <button class="h-btn" id="themeBtn" aria-label="تبديل الوضع الليلي">🌓</button>
+      <button class="h-btn" id="diagBtn" aria-label="لوحة تشخيص محرك البحث">📊 تشخيص</button>
+    </div>
   </div>
 </header>
 
 <main id="main" class="main" role="main">
   <section class="hero" aria-labelledby="ask-heading">
-    <h1 id="ask-heading">اسأل الموقع</h1>
-    <p>موسوعة إسلامية ذكية — اكتب سؤالك وسأبحث في كل محتوى الموقع</p>
+    <h1 id="ask-heading">اسأل الموقع — Islamic Knowledge Search & Answer Engine</h1>
+    <p>محرك بحث معرفي إسلامي ذكي يبحث في جميع محتويات الموقع والمصادر الإسلامية الموثقة محلياً، مع الأدلة والتفاسير والمصادر دون ذكاء اصطناعي خارجي.</p>
 
-    <div class="search-box" role="search">
-      <label for="ask-input" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">سؤالك</label>
-      <input
-        id="ask-input"
-        type="text"
-        class="search-input"
-        placeholder="اسأل عن أي شيء داخل الموقع..."
-        autocomplete="off"
-        aria-describedby="ask-hint"
-        lang="ar"
-        dir="auto"
-      >
-      <button id="ask-btn" class="search-btn" aria-label="بحث">🔍 بحث</button>
+    <!-- Search container -->
+    <div class="search-container" role="search">
+      <div class="search-box">
+        <label for="ask-input" class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);">سؤالك</label>
+        <div class="search-input-wrap">
+          <input
+            id="ask-input"
+            type="search"
+            class="search-input"
+            placeholder="اسأل عن أي شيء داخل الموقع..."
+            autocomplete="off"
+            aria-autocomplete="list"
+            aria-controls="autocomplete-dropdown"
+            aria-describedby="ask-hint"
+            lang="ar"
+            dir="auto"
+          >
+          <button id="clearInputBtn" class="clear-input-btn" type="button" aria-label="مسح النص">×</button>
+        </div>
+        <button id="ask-btn" class="search-btn" type="button" aria-label="بحث">🔍 بحث</button>
+      </div>
+
+      <!-- Live suggestions dropdown -->
+      <div id="autocomplete-dropdown" class="autocomplete-dropdown" role="listbox"></div>
     </div>
-    <p id="ask-hint" class="kbd-hint">اضغط Enter للبحث</p>
 
-    <div id="suggestions-container" class="suggestions" role="list" aria-label="اقتراحات"></div>
+    <!-- Search Mode Pills -->
+    <div class="mode-row" role="radiogroup" aria-label="نطاق البحث">
+      <button class="mode-btn active" data-mode="all" type="button" role="radio" aria-checked="true">🔎 بحث شامل</button>
+      <button class="mode-btn" data-mode="internal" type="button" role="radio" aria-checked="false">🏠 محتوى الموقع فقط</button>
+      <button class="mode-btn" data-mode="external" type="button" role="radio" aria-checked="false">🌐 المصادر الخارجية فقط</button>
+    </div>
+
+    <p id="ask-hint" style="font-size:.78rem;color:var(--ink-soft);margin-top:4px;">اضغط Enter للبحث · اختصار لوحة المفاتيح: Ctrl+K للتركيز</p>
+
+    <!-- Search history chips -->
+    <div id="history-box" class="history-box" style="display:none;" aria-label="سجل البحث السابق">
+      <span class="hist-label">🕒 آخر عمليات البحث:</span>
+      <div id="history-chips" style="display:inline-flex;gap:6px;flex-wrap:wrap;"></div>
+      <button id="clearHistoryBtn" class="hist-clear" type="button">مسح السجل</button>
+    </div>
+
+    <!-- Starter suggestion chips -->
+    <div id="suggestions-container" class="suggestions" role="list" aria-label="اقتراحات أسئلة شائعة"></div>
   </section>
 
-  <div id="filters" class="filters" role="group" aria-label="تصفية النتائج">
+  <!-- Filters row -->
+  <div id="filters" class="filters" role="group" aria-label="تصفية نتائج البحث">
     <button class="filter-btn active" data-filter="all">الكل</button>
     <button class="filter-btn" data-filter="quran">📖 القرآن</button>
     <button class="filter-btn" data-filter="hadith">📕 الحديث</button>
     <button class="filter-btn" data-filter="tafsir">📚 التفسير</button>
+    <button class="filter-btn" data-filter="fatwa">⚖️ الفقه والفتاوى</button>
     <button class="filter-btn" data-filter="dhikr">🤲 الأذكار</button>
-    <button class="filter-btn" data-filter="dua">🤲 الأدعية</button>
-    <button class="filter-btn" data-filter="fiqh">⚖️ الفقه</button>
-    <button class="filter-btn" data-filter="aqeedah">☝️ العقيدة</button>
     <button class="filter-btn" data-filter="seerah">🕌 السيرة</button>
-    <button class="filter-btn" data-filter="library">📚 الكتب</button>
+    <button class="filter-btn" data-filter="history">🏛️ التاريخ</button>
+    <button class="filter-btn" data-filter="quiz">🧠 الاختبارات</button>
+    <button class="filter-btn" data-filter="tools">🛠️ الأدوات</button>
     <button class="filter-btn" data-filter="external">🌐 خارجي</button>
   </div>
 
+  <!-- Answer Output Region -->
   <div id="answer-output" role="region" aria-live="polite" aria-atomic="false">
     <div class="zero-state">
-      <h2>ابدأ بكتابة سؤالك</h2>
-      <p>ابحث في القرآن والأحاديث والتفسير والفتاوى والأذكار والكتب الإسلامية</p>
+      <h2>ابدأ بكتابة أي سؤال أو استفسار</h2>
+      <p>ابحث في أكثر من ٤٢,٠٠٠ مسألة، وتفسير القرآن، وأحاديث الكتب الستة، والأذكار المأثورة، والمصادر الإسلامية المعتمدة.</p>
     </div>
   </div>
 </main>
 
+<!-- Diagnostics Modal -->
+<div id="diagModal" class="modal-backdrop" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="diagModalTitle">
+  <div class="diag-modal">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:16px;">
+      <h3 id="diagModalTitle" style="margin:0;font-size:1.2rem;">📊 لوحة تشخيص محرك البحث والمعرفة</h3>
+      <button id="closeDiagBtn" class="h-btn" type="button" aria-label="إغلاق">✕</button>
+    </div>
+    <div id="diagContent">
+      <div class="loading"><div class="spinner"></div><p>جارٍ جمع إحصائيات المحرك...</p></div>
+    </div>
+  </div>
+</div>
+
 <script type="module">
   import { ask, askSuggestions, getSearchDiagnostics, resetAskSearch } from "./src/lib/ask-search.js";
-  import { processQuery, getSmartSuggestions } from "./src/lib/unified-search.js";
+  import { getSmartSuggestions } from "./src/lib/unified-search.js";
+  import { initTheme, toggleTheme } from "./src/components/theme.js";
 
+  // Elements
   const input = document.getElementById("ask-input");
+  const clearInputBtn = document.getElementById("clearInputBtn");
   const btn = document.getElementById("ask-btn");
   const output = document.getElementById("answer-output");
   const suggestionsEl = document.getElementById("suggestions-container");
+  const acDropdown = document.getElementById("autocomplete-dropdown");
   const filters = document.querySelectorAll(".filter-btn");
-  let currentFilter = "all";
-  let lastQuery = "";
+  const modeBtns = document.querySelectorAll(".mode-btn");
+  const themeBtn = document.getElementById("themeBtn");
+  const diagBtn = document.getElementById("diagBtn");
+  const diagModal = document.getElementById("diagModal");
+  const closeDiagBtn = document.getElementById("closeDiagBtn");
+  const diagContent = document.getElementById("diagContent");
+  const historyBox = document.getElementById("history-box");
+  const historyChips = document.getElementById("history-chips");
+  const clearHistoryBtn = document.getElementById("clearHistoryBtn");
 
-  function setTheme() {
+  let currentFilter = "all";
+  let currentMode = "all";
+  let lastQuery = "";
+  let acTimer = null;
+  let currentAnswerData = null;
+
+  // Initialize theme
+  try { initTheme(); } catch {}
+
+  themeBtn?.addEventListener("click", () => {
+    try { toggleTheme(); } catch {}
+  });
+
+  // Search History Management
+  const HIST_KEY = "ask-search-history";
+  function loadHistory() {
     try {
-      const saved = localStorage.getItem("lib-theme-pref");
-      if (saved === "dark" || saved === "light") {
-        document.documentElement.setAttribute("data-theme", saved);
+      const items = JSON.parse(localStorage.getItem(HIST_KEY) || "[]");
+      if (items.length > 0) {
+        historyChips.innerHTML = items.slice(0, 6).map(q => 
+          `<button class="history-chip" type="button" data-query="${escapeAttr(q)}">${escapeHtml(q)}</button>`
+        ).join("");
+        historyBox.style.display = "flex";
+        historyChips.querySelectorAll(".history-chip").forEach(chip => {
+          chip.addEventListener("click", () => {
+            input.value = chip.dataset.query;
+            doSearch();
+          });
+        });
+      } else {
+        historyBox.style.display = "none";
       }
+    } catch {
+      historyBox.style.display = "none";
+    }
+  }
+
+  function saveHistory(q) {
+    try {
+      let items = JSON.parse(localStorage.getItem(HIST_KEY) || "[]");
+      items = [q, ...items.filter(x => x !== q)].slice(0, 10);
+      localStorage.setItem(HIST_KEY, JSON.stringify(items));
+      loadHistory();
     } catch {}
   }
-  setTheme();
 
+  clearHistoryBtn?.addEventListener("click", () => {
+    try {
+      localStorage.removeItem(HIST_KEY);
+      loadHistory();
+    } catch {}
+  });
+
+  // Autocomplete suggestions
+  input.addEventListener("input", () => {
+    const val = input.value.trim();
+    clearInputBtn.style.display = val ? "block" : "none";
+
+    clearTimeout(acTimer);
+    if (!val || val.length < 2) {
+      acDropdown.style.display = "none";
+      return;
+    }
+
+    acTimer = setTimeout(async () => {
+      try {
+        const hits = await askSuggestions(val, 6);
+        if (!hits || !hits.length) {
+          acDropdown.style.display = "none";
+          return;
+        }
+        acDropdown.innerHTML = hits.map(h => `
+          <div class="autocomplete-item" data-query="${escapeAttr(h.title)}">
+            <span class="ac-icon">${escapeHtml(h.icon || "🔍")}</span>
+            <span class="ac-title">${escapeHtml(h.title)}</span>
+            <span class="ac-cat">${escapeHtml(h.category || "")}</span>
+          </div>
+        `).join("");
+        acDropdown.style.display = "block";
+
+        acDropdown.querySelectorAll(".autocomplete-item").forEach(item => {
+          item.addEventListener("click", () => {
+            input.value = item.dataset.query;
+            acDropdown.style.display = "none";
+            doSearch();
+          });
+        });
+      } catch {
+        acDropdown.style.display = "none";
+      }
+    }, 220);
+  });
+
+  clearInputBtn.addEventListener("click", () => {
+    input.value = "";
+    clearInputBtn.style.display = "none";
+    acDropdown.style.display = "none";
+    input.focus();
+  });
+
+  document.addEventListener("click", (e) => {
+    if (!acDropdown.contains(e.target) && e.target !== input) {
+      acDropdown.style.display = "none";
+    }
+  });
+
+  // Search execution
   async function doSearch() {
+    acDropdown.style.display = "none";
     const query = input.value.trim();
     if (!query) return;
 
     lastQuery = query;
-    output.innerHTML = `<div class="loading"><div class="spinner" role="status"></div><p>جاري البحث...</p></div>`;
+    saveHistory(query);
     btn.disabled = true;
+    output.innerHTML = `
+      <div class="loading">
+        <div class="spinner" role="status"></div>
+        <p>جارٍ فحص وتحليل السؤال وتجميع الإجابة من مصادر الموقع...</p>
+      </div>`;
 
     try {
-      const result = await ask(query, {
-        limit: 30,
+      const res = await ask(query, {
+        limit: 35,
         category: currentFilter === "all" ? null : currentFilter,
-        includeExternal: true,
+        includeExternal: currentMode !== "internal",
+        searchMode: currentMode,
       });
 
       if (lastQuery !== query) return;
-
-      renderAnswer(result.answer);
-    } catch (e) {
-      console.error("ask error:", e);
-      output.innerHTML = `<div class="error-boundary">حدث خطأ أثناء البحث. يرجى المحاولة مرة أخرى.</div>`;
+      currentAnswerData = res.answer;
+      renderAnswer(res.answer, res.didYouMean);
+    } catch (err) {
+      console.error("Ask error:", err);
+      output.innerHTML = `<div class="notice-banner did-you-mean">حدث خطأ أثناء معالجة السؤال. يرجى المحاولة مرة أخرى.</div>`;
     } finally {
       btn.disabled = false;
     }
   }
 
-  function renderAnswer(answer) {
+  function renderAnswer(answer, didYouMean) {
     if (answer.zeroResult) {
-      const suggestions = [
-        "حاول بكلمات أقصر",
-        "استخدم مرادفات مختلفة",
-        "تصفح الأقسام الرئيسية",
-        "جرّب: ما هي أركان الإسلام؟",
-        "جرّب: ما فضل الصلاة؟",
-      ];
+      // Build enhanced zero-result suggestions
+      let suggestionsHtml = '';
+      
+      if (answer.zeroResultAlternatives && answer.zeroResultAlternatives.length > 0) {
+        suggestionsHtml += `
+          <div style="margin-bottom: 16px;">
+            <h3 style="font-size: 0.95rem; margin: 0 0 8px; color: var(--ink);">💡 اقتراحات بديلة:</h3>
+            <div class="suggestions" style="display: flex; flex-wrap: wrap; gap: 8px;">
+              ${answer.zeroResultAlternatives.map(alt => 
+                `<button class="suggestion-chip" data-query="${escapeAttr(alt.text)}" type="button" title="${escapeHtml(alt.label)}">${escapeHtml(alt.text)}</button>`
+              ).join('')}
+            </div>
+          </div>`;
+      }
+      
+      if (answer.zeroResultRelatedTopics && answer.zeroResultRelatedTopics.length > 0) {
+        suggestionsHtml += `
+          <div style="margin-bottom: 16px;">
+            <h3 style="font-size: 0.95rem; margin: 0 0 8px; color: var(--ink);">🔗 مواضيع مرتبطة في الموقع:</h3>
+            <div class="suggestions" style="display: flex; flex-wrap: wrap; gap: 8px;">
+              ${answer.zeroResultRelatedTopics.slice(0, 4).map(topic => 
+                `<button class="suggestion-chip" data-query="${escapeAttr(topic)}" type="button">${escapeHtml(topic)}</button>`
+              ).join('')}
+            </div>
+          </div>`;
+      }
+      
+      if (answer.zeroResultExpandedKeywords && answer.zeroResultExpandedKeywords.length > 0) {
+        suggestionsHtml += `
+          <div style="margin-bottom: 16px;">
+            <h3 style="font-size: 0.95rem; margin: 0 0 8px; color: var(--ink);">🔍 كلمات مفتاحية مقترحة:</h3>
+            <div class="suggestions" style="display: flex; flex-wrap: wrap; gap: 8px;">
+              ${answer.zeroResultExpandedKeywords.slice(0, 4).map(kw => 
+                `<button class="suggestion-chip" data-query="${escapeAttr(kw)}" type="button">${escapeHtml(kw)}</button>`
+              ).join('')}
+            </div>
+          </div>`;
+      }
+      
+      // Fallback default suggestions
+      if (!suggestionsHtml) {
+        suggestionsHtml = `
+          <div style="margin-bottom: 16px;">
+            <p style="font-size:.9rem;color:var(--ink-soft);margin-bottom:14px;">جرّب تعديل صياغة السؤال أو استخدام كلمات بديلة مثل:</p>
+            <div class="suggestions">
+              <button class="suggestion-chip" data-query="ما فضل الصلاة؟">ما فضل الصلاة؟</button>
+              <button class="suggestion-chip" data-query="كيف أصلي؟">كيف أصلي؟</button>
+              <button class="suggestion-chip" data-query="ما هي أركان الإسلام؟">أركان الإسلام</button>
+              <button class="suggestion-chip" data-query="أذكار الصباح">أذكار الصباح</button>
+              <button class="suggestion-chip" data-query="أحكام الزكاة">أحكام الزكاة</button>
+            </div>
+          </div>`;
+      }
+      
       output.innerHTML = `
         <div class="zero-state">
           <h2>لم نجد نتيجة مطابقة</h2>
-          <p>لم يتم العثور على معلومات كافية في محتوى الموقع الحالي. جرب تعديل السؤال أو تصفح المواضيع التالية:</p>
-          <div class="suggestions">
-            ${suggestions.map(s => `<button class="suggestion-chip" data-query="${s}">${s}</button>`).join("")}
-          </div>
+          <p>${escapeHtml(answer.noResultNotice || "لم أجد في محتوى الموقع الحالي معلومات كافية للإجابة عن هذا السؤال.")}</p>
+          ${suggestionsHtml}
         </div>`;
       bindSuggestionChips();
       return;
@@ -414,128 +753,216 @@
 
     let html = '<div class="answer-container">';
 
-    // Internal answer
-    if (answer.internal && answer.internal.sections && answer.internal.sections.length > 0) {
-      html += '<div class="answer-section">';
-      html += '<h2>🏠 من محتوى الموقع</h2>';
+    // Did-you-mean suggestion
+    if (didYouMean && didYouMean !== answer.query) {
+      html += `
+        <div class="notice-banner did-you-mean">
+          <span>💡 هل تقصد: <strong>${escapeHtml(didYouMean)}</strong>؟</span>
+          <button type="button" class="dym-btn" data-query="${escapeAttr(didYouMean)}">بحث</button>
+        </div>`;
+    }
 
-      if (answer.internal.summary) {
-        html += `<p>${escapeHtml(answer.internal.summary)}</p>`;
+    // Fiqh / Ruling Disclaimer
+    if (answer.disclaimer) {
+      html += `
+        <div class="notice-banner ruling">
+          <span>⚖️ ${escapeHtml(answer.disclaimer)}</span>
+        </div>`;
+    }
+
+    // 1. # الإجابة (Summary Card)
+    if (answer.internal?.summary || answer.external?.summary) {
+      const summaryText = answer.internal?.summary || answer.external?.summary;
+      html += `
+        <div class="answer-card main-summary">
+          <div class="card-header">
+            <h2 class="card-title">📖 خلاصة الإجابة</h2>
+            <div class="card-actions">
+              <button class="action-btn" id="copyAnswerBtn" type="button" title="نسخ الإجابة">📋 نسخ</button>
+              <button class="action-btn" id="favAnswerBtn" type="button" title="حفظ في المفضلة">⭐ حفظ</button>
+            </div>
+          </div>
+          <p class="summary-text">${escapeHtml(summaryText)}</p>
+        </div>`;
+    }
+
+    // 2. ## الأدلة الشرعية المباشرة (Primary Evidence: Quran & Hadith)
+    if (answer.internal?.evidence && answer.internal.evidence.length > 0) {
+      html += `
+        <div class="answer-card">
+          <div class="card-header">
+            <h2 class="card-title">📜 الأدلة الشرعية المباشرة</h2>
+          </div>
+          <div class="evidence-grid">`;
+      for (const ev of answer.internal.evidence) {
+        const isQuran = ev.type === "quran" || ev.type === "ayah" || ev.type === "surah" || ev.type === "verse";
+        html += `
+          <div class="evidence-card ${isQuran ? 'quran' : 'hadith'}">
+            <div class="evidence-top">
+              <span class="evidence-badge">${isQuran ? '📖 آية قرآنية' : '📕 حديث نبوي'}</span>
+              <a href="${escapeHtml(ev.route)}" target="_blank" rel="noopener" style="font-size:.8rem;font-weight:600;">فتح الموضع ↗</a>
+            </div>
+            <div class="evidence-text">«${escapeHtml(ev.text || ev.title)}»</div>
+            <div class="evidence-footer">
+              <span>${escapeHtml(ev.title)}</span>
+            </div>
+          </div>`;
       }
+      html += `</div></div>`;
+    }
 
-      for (const section of answer.internal.sections) {
-        html += `<h3>${escapeHtml(section.title)}</h3>`;
-        for (const item of section.items.slice(0, 4)) {
+    // 3. ## التفاصيل والأقسام (Detailed Sections)
+    if (answer.internal?.sections && answer.internal.sections.length > 0) {
+      for (const sec of answer.internal.sections) {
+        html += `
+          <div class="answer-card">
+            <div class="card-header">
+              <h2 class="card-title">${escapeHtml(sec.icon || "📚")} ${escapeHtml(sec.title)}</h2>
+              <span class="source-badge tier-${sec.tier}">${escapeHtml(sec.tierLabel || "قسم")}</span>
+            </div>
+            <div>`;
+        for (const item of sec.items) {
           html += `
             <div class="result-item">
               <a href="${escapeHtml(item.route || "#")}" class="result-title" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
-              <p class="result-desc">${escapeHtml((item.summary || item.description || "").slice(0, 200))}</p>
+              <p class="result-desc">${escapeHtml((item.summary || item.description || "").slice(0, 240))}</p>
               <div class="result-meta">
-                <span class="source-badge tier-${section.tier}">${getTierLabel(section.tier)}</span>
-                <span style="font-size:.75rem;color:var(--ink-soft);">${escapeHtml(item.category || "")}</span>
+                <span class="source-badge tier-${item.tier}">${escapeHtml(item.typeLabel || "محتوى")}</span>
+                <span style="font-size:.78rem;color:var(--ink-soft);">${escapeHtml(item.category || "")}</span>
+                ${item.relatedSources?.length ? `<span style="font-size:.75rem;color:var(--gold-soft);">+ ${item.relatedSources.length} مصادر مرتبطة</span>` : ''}
               </div>
             </div>`;
         }
-      }
-      html += "</div>";
-
-      if (answer.internal.sources && answer.internal.sources.length > 0) {
-        html += '<div class="answer-section">';
-        html += '<h2>📚 المصادر</h2>';
-        for (const src of answer.internal.sources.slice(0, 10)) {
-          html += `
-            <div class="source-item">
-              <span class="src-icon">${TYPE_ICONS[src.type] || "📋"}</span>
-              <div class="src-info">
-                <span class="src-title">${escapeHtml(src.title)}</span>
-                <div class="src-meta">${escapeHtml(src.typeLabel || src.type)} · ${escapeHtml(src.category || "")}</div>
-              </div>
-              ${src.route ? `<a href="${escapeHtml(src.route)}" target="_blank" rel="noopener">فتح المصدر</a>` : ""}
-            </div>`;
-        }
-        html += "</div>";
+        html += `</div></div>`;
       }
     }
 
-    // External answer
-    if (answer.external && answer.external.sections && answer.external.sections.length > 0) {
-      html += '<div class="answer-section" style="border-color:var(--gold-soft);">';
-      html += '<h2>🌐 من مصادر خارجية</h2>';
-      html += '<p style="font-size:.85rem;color:var(--ink-soft);">المعلومات التالية من مصادر خارجية موثوقة أضيفت للمشروع.</p>';
-
-      if (answer.external.summary) {
-        html += `<p>${escapeHtml(answer.external.summary)}</p>`;
-      }
-
-      for (const section of answer.external.sections) {
-        for (const item of section.items.slice(0, 4)) {
+    // 4. ## 🌐 من المصادر الخارجية (Separated Clearly)
+    if (answer.external?.sections && answer.external.sections.length > 0) {
+      html += `
+        <div class="answer-card" style="border-color:var(--gold-soft);">
+          <div class="card-header">
+            <h2 class="card-title">🌐 من المصادر الخارجية الموثقة</h2>
+            <span class="external-tag">مصادر خارجية</span>
+          </div>
+          <p style="font-size:.82rem;color:var(--ink-soft);margin-top:0;">المعلومات التالية من مصادر إسلامية خارجية مضافة للمشروع ويتم فتحها بروابط مباشرة لمواقعها الأصلية.</p>
+          <div>`;
+      for (const sec of answer.external.sections) {
+        for (const item of sec.items) {
           html += `
             <div class="result-item" style="border-right:3px solid var(--gold-soft);">
-              <span class="external-label" style="margin-bottom:4px;">🌐 ${escapeHtml(item.sourceName || "مصدر خارجي")}</span>
-              <a href="${escapeHtml(item.route || "#")}" class="result-title" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
-              <p class="result-desc">${escapeHtml((item.summary || item.description || "").slice(0, 200))}</p>
-              <div class="result-meta">
-                <span class="source-badge tier-4">مصدر خارجي</span>
+              <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px;">
+                <span class="external-tag">🌐 ${escapeHtml(item.sourceName || "مصدر خارجي")}</span>
+                <a href="${escapeHtml(item.route || "#")}" target="_blank" rel="noopener" style="font-size:.8rem;font-weight:600;">زيارة المصدر ↗</a>
               </div>
+              <a href="${escapeHtml(item.route || "#")}" class="result-title" target="_blank" rel="noopener">${escapeHtml(item.title)}</a>
+              <p class="result-desc">${escapeHtml((item.summary || item.description || "").slice(0, 220))}</p>
             </div>`;
         }
       }
-      html += "</div>";
+      html += `</div></div>`;
     }
 
-    // Related questions
-    if (answer.relatedQuestions && answer.relatedQuestions.length > 0) {
-      html += '<div class="answer-section">';
-      html += '<h2>💡 أسئلة مشابهة</h2>';
-      html += '<div class="suggestions">';
-      for (const q of answer.relatedQuestions) {
-        html += `<button class="related-q" data-query="${escapeAttr(q)}">${escapeHtml(q)}</button>`;
+    // 5. ## المصادر والتوثيق (Sources Grid)
+    if (answer.internal?.sources && answer.internal.sources.length > 0) {
+      html += `
+        <div class="answer-card">
+          <div class="card-header">
+            <h2 class="card-title">📚 المصادر والمراجع</h2>
+            <span style="font-size:.8rem;color:var(--ink-soft);">${answer.internal.sources.length} مصادر</span>
+          </div>
+          <div class="sources-grid">`;
+      for (const src of answer.internal.sources.slice(0, 12)) {
+        html += `
+          <div class="source-pill">
+            <div class="sp-info">
+              <span class="sp-title">${escapeHtml(src.icon || "📄")} ${escapeHtml(src.title)}</span>
+              <span class="sp-type">${escapeHtml(src.typeLabel || "مرجع")} · ${escapeHtml(src.category || "")}</span>
+            </div>
+            ${src.route ? `<a href="${escapeHtml(src.route)}" target="_blank" rel="noopener" style="font-size:.78rem;font-weight:600;white-space:nowrap;">فتح ↗</a>` : ''}
+          </div>`;
       }
-      html += "</div></div>";
+      html += `</div></div>`;
     }
 
-    // Related topics from knowledge graph
+    // 6. ## مواضيع ومفاهيم مرتبطة (Knowledge Graph)
     if (answer.relatedTopics && answer.relatedTopics.length > 0) {
-      html += '<div class="answer-section">';
-      html += '<h2>🔗 مواضيع مرتبطة</h2>';
-      html += '<div class="suggestions">';
-      for (const t of answer.relatedTopics.slice(0, 8)) {
-        html += `<button class="related-q" data-query="${escapeAttr(t)}">${escapeHtml(t)}</button>`;
+      html += `
+        <div class="answer-card">
+          <div class="card-header">
+            <h2 class="card-title">🔗 مواضيع مرتبطة بخريطة المعرفة</h2>
+          </div>
+          <div class="suggestions">`;
+      for (const t of answer.relatedTopics.slice(0, 10)) {
+        html += `<button class="suggestion-chip" data-query="${escapeAttr(t)}" type="button">${escapeHtml(t)}</button>`;
       }
-      html += "</div></div>";
+      html += `</div></div>`;
     }
 
-    html += "</div>";
+    // 7. ## أسئلة مقترحة (Related Questions)
+    if (answer.relatedQuestions && answer.relatedQuestions.length > 0) {
+      html += `
+        <div class="answer-card">
+          <div class="card-header">
+            <h2 class="card-title">💡 أسئلة مقترحة ذات صلة</h2>
+          </div>
+          <div class="suggestions">`;
+      for (const q of answer.relatedQuestions) {
+        html += `<button class="suggestion-chip" data-query="${escapeAttr(q)}" type="button">${escapeHtml(q)}</button>`;
+      }
+      html += `</div></div>`;
+    }
+
+    html += '</div>';
     output.innerHTML = html;
 
-    // Bind related question clicks
-    output.querySelectorAll(".related-q").forEach((btn) => {
+    // Bind Action Handlers
+    bindAnswerActions();
+  }
+
+  function bindAnswerActions() {
+    // Did You Mean clicks
+    output.querySelectorAll(".dym-btn").forEach(btn => {
       btn.addEventListener("click", () => {
         input.value = btn.dataset.query;
         doSearch();
       });
     });
 
-    // Bind external links
-    output.querySelectorAll('a[target="_blank"]').forEach((a) => {
-      a.addEventListener("click", (e) => {
-        if (a.href && a.href.includes("external-sources")) {
-          e.preventDefault();
-          const notice = document.createElement("div");
-          notice.className = "correction-box";
-          notice.innerHTML = `هذا الرابط يوجهك إلى موقع خارجي. نحن لا نتحكم في محتواه. <button>متابعة</button>`;
-          notice.querySelector("button").addEventListener("click", () => {
-            window.open(a.href, "_blank", "noopener");
-            notice.remove();
-          });
-          output.insertBefore(notice, output.firstChild);
-        }
-      });
+    // Suggestion chips clicks
+    bindSuggestionChips();
+
+    // Copy answer
+    const copyBtn = document.getElementById("copyAnswerBtn");
+    copyBtn?.addEventListener("click", () => {
+      if (!currentAnswerData) return;
+      const text = [
+        `سؤال: ${currentAnswerData.query}`,
+        `---`,
+        currentAnswerData.internal?.summary || currentAnswerData.external?.summary || "",
+        `---`,
+        `المصدر: اسأل الموقع — المكتبة الإسلامية`
+      ].join("\n\n");
+      navigator.clipboard.writeText(text).then(() => {
+        showToast("تم نسخ الإجابة بنجاح 📋");
+      }).catch(() => {});
+    });
+
+    // Favorite answer
+    const favBtn = document.getElementById("favAnswerBtn");
+    favBtn?.addEventListener("click", () => {
+      if (!currentAnswerData) return;
+      try {
+        let favs = JSON.parse(localStorage.getItem("ask-favorites") || "[]");
+        favs = [{ query: currentAnswerData.query, date: new Date().toLocaleDateString("ar-EG") }, ...favs.filter(f => f.query !== currentAnswerData.query)];
+        localStorage.setItem("ask-favorites", JSON.stringify(favs));
+        showToast("تم الحفظ في المفضلة ⭐");
+      } catch {}
     });
   }
 
   function bindSuggestionChips() {
-    output.querySelectorAll(".suggestion-chip").forEach((chip) => {
+    output.querySelectorAll(".suggestion-chip").forEach(chip => {
       chip.addEventListener("click", () => {
         input.value = chip.dataset.query;
         doSearch();
@@ -543,97 +970,322 @@
     });
   }
 
-  function escapeHtml(str) {
-    if (!str) return "";
-    const div = document.createElement("div");
-    div.textContent = str;
-    return div.innerHTML;
+  function showToast(msg) {
+    const t = document.createElement("div");
+    t.className = "toast-notice";
+    t.textContent = msg;
+    document.body.appendChild(t);
+    setTimeout(() => t.remove(), 2500);
   }
 
-  function escapeAttr(str) {
-    return String(str || "").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
-  }
+// Diagnostics Modal Handler - Search Quality Dashboard
+  diagBtn?.addEventListener("click", async () => {
+    diagModal.style.display = "flex";
+    try {
+      const stats = await getSearchDiagnostics();
+      
+      // Internal sources coverage table
+      const internalCoverage = stats.categories && stats.categories.length > 0 ? stats.categories.map(c => `
+        <tr>
+          <td>${escapeHtml(c.category)}</td>
+          <td>${c.totalSources}</td>
+          <td>${c.searchableSources}</td>
+          <td>${c.totalItems.toLocaleString('ar-EG')}</td>
+          <td><span class="coverage-badge ${c.coveragePercent >= 50 ? 'high' : c.coveragePercent >= 20 ? 'medium' : 'low'}">${c.coveragePercent}%</span></td>
+        </tr>
+      `).join('') : '';
 
-  function getTierLabel(tier) {
-    const labels = { 1: "مصدر شرعي أساسي", 2: "مصدر شرعي معتمد", 3: "مصدر تعليمي", 4: "مصدر عام" };
-    return labels[tier] || "مصدر";
-  }
+      // External sources diagnostics table
+      const extSources = stats.externalDiagnostics?.sources || [];
+      const extRows = extSources.length > 0 ? extSources.map(s => `
+        <tr>
+          <td>${escapeHtml(s.name)}</td>
+          <td>${escapeHtml(s.category || '—')}</td>
+          <td>${s.indexedPages || 0}</td>
+          <td>${s.lastCrawl ? new Date(s.lastCrawl).toLocaleDateString('ar-EG') : '—'}</td>
+          <td><span class="status-badge ${s.status === 'ok' ? 'ok' : s.status === 'blocked' ? 'blocked' : s.status === 'error' ? 'error' : 'unknown'}">${s.status || 'unknown'}</span></td>
+          <td>${s.errors && s.errors.length > 0 ? s.errors[0] : '—'}</td>
+        </tr>
+      `).join('') : '<tr><td colspan="6" style="text-align:center;color:var(--ink-soft);">لا توجد بيانات خارجية مفهرسة</td></tr>';
 
-  const TYPE_ICONS = {
-    quran: "📖", hadith: "📕", tafsir: "📚", siraj: "🪔", fatwa: "⚖️",
-    khutbah: "🗣️", seerah: "🕌", history: "🏛️", lesson: "📚", book: "📖",
-    article: "📝", tool: "🛠️", page: "📄", general: "📋", adhkar: "🤲", dua: "🤲",
-  };
+      // Crawler health summary
+      const health = stats.crawlerHealth || {};
+      const healthStatus = health.status || 'unknown';
+      const healthIssues = health.issues && health.issues.length > 0 ? health.issues.join('; ') : 'لا توجد مشاكل';
 
-  // Event listeners
-  btn.addEventListener("click", doSearch);
-  input.addEventListener("keydown", (e) => {
-    if (e.key === "Enter") { e.preventDefault(); doSearch(); }
+      // External index details - sample documents per source
+      const extDetails = stats.externalIndexDetails?.bySource || {};
+      const extDetailRows = Object.entries(extDetails).map(([sourceId, data]) => `
+        <tr>
+          <td>${escapeHtml(sourceId)}</td>
+          <td>${data.count.toLocaleString('ar-EG')}</td>
+          <td>${data.samples.map(s => `<a href="${escapeAttr(s.url)}" target="_blank" rel="noopener">${escapeHtml(s.title)}</a>`).join(', ')}</td>
+        </tr>
+      `).join('');
+
+      const extConfig = stats.externalConfig || {};
+      const extConfigRows = extConfig.sources ? extConfig.sources.map(s => `
+        <tr>
+          <td>${escapeHtml(s.name)}</td>
+          <td>${escapeHtml(s.category)}</td>
+          <td><span class="status-badge ${s.enabled ? 'ok' : 'blocked'}">${s.enabled ? '✓ مفعّل' : '✗ معطّل'}</span></td>
+          <td><span class="status-badge ${s.crawl ? 'ok' : 'blocked'}">${s.crawl ? '✓ زحف' : '✗ لا زحف'}</span></td>
+          <td>${s.maxPages || '—'}</td>
+          <td>${s.rateLimitMs ? s.rateLimitMs + 'ms' : '—'}</td>
+        </tr>
+      `).join('') : '';
+
+      diagContent.innerHTML = `
+        <style>
+          .diag-tab { display: none; }
+          .diag-tab.active { display: block; }
+          .diag-tabs { display: flex; gap: 4px; margin-bottom: 12px; flex-wrap: wrap; }
+          .diag-tab-btn { padding: 6px 12px; border: 1px solid var(--line); background: var(--card); border-radius: 6px; cursor: pointer; font-size: 0.85rem; }
+          .diag-tab-btn.active { background: var(--green); color: white; border-color: var(--green); }
+          .diag-table { width: 100%; border-collapse: collapse; font-size: 0.8rem; }
+          .diag-table th, .diag-table td { padding: 6px 8px; border-bottom: 1px solid var(--line); text-align: right; }
+          .diag-table th { background: var(--paper-2); font-weight: 600; }
+          .coverage-badge { padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+          .coverage-badge.high { background: var(--green-soft); color: var(--green); }
+          .coverage-badge.medium { background: #fff3cd; color: #856404; }
+          .coverage-badge.low { background: #f8d7da; color: #721c24; }
+          .status-badge { padding: 2px 8px; border-radius: 999px; font-size: 0.75rem; font-weight: 600; }
+          .status-badge.ok { background: var(--green-soft); color: var(--green); }
+          .status-badge.blocked { background: #fff3cd; color: #856404; }
+          .status-badge.error { background: #f8d7da; color: #721c24; }
+          .status-badge.unknown { background: var(--line); color: var(--ink-soft); }
+          .health-summary { padding: 12px; background: var(--paper-2); border-radius: 8px; margin-bottom: 12px; }
+          .health-summary .status { font-weight: 700; padding: 4px 12px; border-radius: 999px; display: inline-block; font-size: 0.85rem; }
+          .health-summary .status.healthy { background: var(--green-soft); color: var(--green); }
+          .health-summary .status.degraded { background: #fff3cd; color: #856404; }
+          .health-summary .status.unhealthy { background: #f8d7da; color: #721c24; }
+          .diag-section { margin-bottom: 20px; }
+          .diag-section h4 { margin: 0 0 8px; font-size: 0.95rem; color: var(--ink); border-bottom: 1px solid var(--line); padding-bottom: 4px; }
+        </style>
+        
+        <div class="diag-tabs">
+          <button class="diag-tab-btn active" data-tab="overview">📊 نظرة عامة</button>
+          <button class="diag-tab-btn" data-tab="internal">📚 المصادر الداخلية</button>
+          <button class="diag-tab-btn" data-tab="external">🌐 المصادر الخارجية</button>
+          <button class="diag-tab-btn" data-tab="crawler">🤖 حالة الزاحف</button>
+          <button class="diag-tab-btn" data-tab="config">⚙️ إعدادات المصادر</button>
+        </div>
+
+        <!-- Overview Tab -->
+        <div class="diag-tab active" id="tab-overview">
+          <div class="diag-section">
+            <h4>محرك البحث الداخلي</h4>
+            <div class="diag-stat-row"><span>المصادر المسجلة:</span><strong>${stats.totalSources} مصدر</strong></div>
+            <div class="diag-stat-row"><span>المصادر القابلة للبحث:</span><strong>${stats.searchableSources} مصدر</strong></div>
+            <div class="diag-stat-row"><span>إجمالي العناصر المفهرسة:</span><strong>${stats.categories.reduce((sum, c) => sum + c.totalItems, 0).toLocaleString('ar-EG')}</strong></div>
+            <div class="diag-stat-row"><span>الفئات:</span><strong>${stats.categories.length}</strong></div>
+            <div class="diag-stat-row"><span>اللغات المدعومة:</span><strong>${stats.languages.length}</strong></div>
+            <div class="diag-stat-row"><span>التقنية:</span><strong>BM25/NLP محلي (بدون AI خارجي)</strong></div>
+            <div class="diag-stat-row"><span>دعم اللهجات:</span><strong>مصرى · خليج · شام · غرب</strong></div>
+          </div>
+          
+          <div class="diag-section">
+            <h4>الفهرس الخارجي</h4>
+            <div class="diag-stat-row"><span>الحالة:</span><strong>${stats.externalIndex?.status || 'غير متاح'}</strong></div>
+            <div class="diag-stat-row"><span>إجمالي Documents:</span><strong>${(stats.externalIndex?.totalDocs || 0).toLocaleString('ar-EG')}</strong></div>
+            <div class="diag-stat-row"><span>المصادر المفهرسة:</span><strong>${stats.externalIndex?.sources || 0}</strong></div>
+            <div class="diag-stat-row"><span>آخر فهرسة:</span><strong>${stats.externalIndex?.builtAt ? new Date(stats.externalIndex.builtAt).toLocaleDateString('ar-EG') : 'غير معروف'}</strong></div>
+            <div class="diag-stat-row"><span>آخر تحديث:</span><strong>${stats.externalIndex?.lastIndexed ? new Date(stats.externalIndex.lastIndexed).toLocaleDateString('ar-EG') : '—'}</strong></div>
+          </div>
+
+          <div class="diag-section">
+            <h4>صحة الزاحف</h4>
+            <div class="health-summary">
+              <span class="status ${healthStatus}">${healthStatus === 'healthy' ? '✅ سليم' : healthStatus === 'degraded' ? '⚠️ متدهور' : healthStatus === 'unhealthy' ? '❌ غير سليم' : '❓ غير معروف'}</span>
+              <p style="margin: 8px 0 0;">${escapeHtml(healthIssues)}</p>
+              <div class="diag-stat-row"><span>إجمالي المصادر:</span><strong>${health.summary?.total || 0}</strong></div>
+              <div class="diag-stat-row"><span>نشطة:</span><strong>${health.summary?.active || 0}</strong></div>
+              <div class="diag-stat-row"><span>محظورة/خطأ:</span><strong>${health.summary?.blocked || 0}</strong></div>
+              <div class="diag-stat-row"><span>إجمالي Documents:</span><strong>${(health.summary?.totalDocs || 0).toLocaleString('ar-EG')}</strong></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Internal Sources Tab -->
+        <div class="diag-tab" id="tab-internal">
+          <div class="diag-section">
+            <h4>تغطية الفئات (Internal Coverage)</h4>
+            <table class="diag-table">
+              <thead>
+                <tr>
+                  <th>الفئة</th>
+                  <th>إجمالي المصادر</th>
+                  <th>قابلة للبحث</th>
+                  <th>العناصر</th>
+                  <th>التغطية %</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${internalCoverage}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- External Sources Tab -->
+        <div class="diag-tab" id="tab-external">
+          <div class="diag-section">
+            <h4>تفاصيل المصادر الخارجية (External Sources Diagnostics)</h4>
+            <table class="diag-table">
+              <thead>
+                <tr>
+                  <th>المصدر</th>
+                  <th>الفئة</th>
+                  <th>Pages مفهرسة</th>
+                  <th>آخر زحف</th>
+                  <th>الحالة</th>
+                  <th>أول خطأ</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${extRows}
+              </tbody>
+            </table>
+          </div>
+          
+          <div class="diag-section">
+            <h4>عينة Documents لكل مصدر (Index Samples)</h4>
+            <table class="diag-table">
+              <thead>
+                <tr>
+                  <th>المصدر</th>
+                  <th>عدد Docs</th>
+                  <th>عينات (قابلة للاختبار)</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${extDetailRows || '<tr><td colspan="3" style="text-align:center;color:var(--ink-soft);">لا توجد بيانات</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Crawler Health Tab -->
+        <div class="diag-tab" id="tab-crawler">
+          <div class="diag-section">
+            <h4>صحة الزاحف (Crawler Health)</h4>
+            <div class="health-summary">
+              <span class="status ${healthStatus}">${healthStatus === 'healthy' ? '✅ سليم' : healthStatus === 'degraded' ? '⚠️ متدهور' : healthStatus === 'unhealthy' ? '❌ غير سليم' : '❓ غير معروف'}</span>
+              <p style="margin: 8px 0 0;">${escapeHtml(healthIssues)}</p>
+            </div>
+            <table class="diag-table">
+              <thead>
+                <tr>
+                  <th>المصدر</th>
+                  <th>Pages</th>
+                  <th>آخر زحف</th>
+                  <th>الحالة</th>
+                  <th>الأخطاء</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${extRows}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Config Tab -->
+        <div class="diag-tab" id="tab-config">
+          <div class="diag-section">
+            <h4>إعدادات المصادر الخارجية (External Sources Config)</h4>
+            <div class="diag-stat-row"><span>إجمالي المصادر:</span><strong>${extConfig.totalSources || 0}</strong></div>
+            <div class="diag-stat-row"><span>مفعّلة:</span><strong>${extConfig.enabledSources || 0}</strong></div>
+            <div class="diag-stat-row"><span>مفعّلة للزحف:</span><strong>${extConfig.crawlEnabledSources || 0}</strong></div>
+            <table class="diag-table">
+              <thead>
+                <tr>
+                  <th>المصدر</th>
+                  <th>الفئة</th>
+                  <th>الحالة</th>
+                  <th>الزحف</th>
+                  <th>Max Pages</th>
+                  <th>Rate Limit</th>
+                </tr>
+              </thead>
+              <tbody>
+                ${extConfigRows || '<tr><td colspan="6" style="text-align:center;color:var(--ink-soft);">لا توجد إعدادات</td></tr>'}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div style="margin-top:16px;text-align:center;">
+          <button id="resetCacheBtn" class="h-btn" type="button">🔄 تفريغ الذاكرة المؤقتة</button>
+        </div>
+      `;
+
+      // Tab switching
+      diagContent.querySelectorAll('.diag-tab-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+          diagContent.querySelectorAll('.diag-tab-btn').forEach(b => b.classList.remove('active'));
+          diagContent.querySelectorAll('.diag-tab').forEach(t => t.classList.remove('active'));
+          btn.classList.add('active');
+          document.getElementById('tab-' + btn.dataset.tab).classList.add('active');
+        });
+      });
+
+      document.getElementById("resetCacheBtn")?.addEventListener("click", () => {
+        resetAskSearch();
+        showToast("تم تفريغ الذاكرة المؤقتة");
+      });
+    } catch (err) {
+      console.error('Diagnostics error:', err);
+      diagContent.innerHTML = `<p style="color:red">تعذر تحميل بيانات التشخيص: ${escapeHtml(err.message)}</p>`;
+    }
+  });
+    } catch (err) {
+      diagContent.innerHTML = `<p style="color:red">تعذر تحميل بيانات التشخيص.</p>`;
+    }
   });
 
-  // Filters
-  filters.forEach((f) => {
+  closeDiagBtn?.addEventListener("click", () => {
+    diagModal.style.display = "none";
+  });
+  diagModal?.addEventListener("click", (e) => {
+    if (e.target === diagModal) diagModal.style.display = "none";
+  });
+
+  // Filter Buttons
+  filters.forEach(f => {
     f.addEventListener("click", () => {
-      filters.forEach((x) => x.classList.remove("active"));
+      filters.forEach(x => x.classList.remove("active"));
       f.classList.add("active");
       currentFilter = f.dataset.filter;
       if (lastQuery) doSearch();
     });
   });
 
-  // Smart suggestions on load
-  async function loadSuggestions() {
-    try {
-      const smart = await getSmartSuggestions();
-      if (smart.length) {
-        suggestionsEl.innerHTML = smart.slice(0, 6).map((s) =>
-          `<button class="suggestion-chip" data-query="${escapeAttr(s.title)}">${escapeHtml(s.title)}</button>`
-        ).join("");
-        suggestionsEl.querySelectorAll(".suggestion-chip").forEach((chip) => {
-          chip.addEventListener("click", () => {
-            input.value = chip.dataset.query;
-            doSearch();
-          });
-        });
-      }
-    } catch {}
-  }
-  loadSuggestions();
+  // Mode Buttons
+  modeBtns.forEach(mb => {
+    mb.addEventListener("click", () => {
+      modeBtns.forEach(x => {
+        x.classList.remove("active");
+        x.setAttribute("aria-checked", "false");
+      });
+      mb.classList.add("active");
+      mb.setAttribute("aria-checked", "true");
+      currentMode = mb.dataset.mode;
+      if (lastQuery) doSearch();
+    });
+  });
 
-  // Load external index hint
-  try {
-    const stats = await getSearchDiagnostics();
-    if (stats.externalIndex && stats.externalIndex.totalDocs > 0) {
-      const badge = document.createElement("span");
-      badge.className = "external-label";
-      badge.textContent = `🌐 ${stats.externalIndex.totalDocs} صفحة خارجية`;
-      badge.style.marginTop = "8px";
-      badge.style.display = "inline-flex";
-      suggestionsEl.after(badge);
+  // Keyboard Navigation
+  btn.addEventListener("click", doSearch);
+  input.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault();
+      doSearch();
+    } else if (e.key === "Escape") {
+      acDropdown.style.display = "none";
     }
-  } catch {}
+  });
 
-  // Search history (localStorage)
-  const HISTORY_KEY = "ask-search-history";
-  const MAX_HISTORY = 10;
-
-  function saveToHistory(query) {
-    try {
-      let history = JSON.parse(localStorage.getItem(HISTORY_KEY) || "[]");
-      history = history.filter((h) => h !== query);
-      history.unshift(query);
-      localStorage.setItem(HISTORY_KEY, JSON.stringify(history.slice(0, MAX_HISTORY)));
-    } catch {}
-  }
-
-  const origDoSearch = doSearch;
-  doSearch = async function() {
-    const query = input.value.trim();
-    if (query) saveToHistory(query);
-    await origDoSearch();
-  };
-
-  // Keyboard: Ctrl+K / Cmd+K to focus search
   document.addEventListener("keydown", (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === "k") {
       e.preventDefault();
@@ -642,9 +1294,51 @@
     }
   });
 
-  window.addEventListener("beforeunload", () => {
-    try { resetAskSearch(); } catch {}
-  });
+  // Helpers
+  function escapeHtml(str) {
+    if (!str) return "";
+    const div = document.createElement("div");
+    div.textContent = String(str);
+    return div.innerHTML;
+  }
+  function escapeAttr(str) {
+    return String(str || "").replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+
+  // Load Initial State
+  loadHistory();
+  async function loadInitialSuggestions() {
+    try {
+      const smart = await getSmartSuggestions();
+      const defaults = [
+        "ما فضل الصلاة وما أهميتها؟",
+        "ما هي أركان الإسلام؟",
+        "كيف أصلي صلاة صحيحة؟",
+        "ما أذكار الصباح والمساء؟",
+        "أحاديث نبوية عن بر الوالدين",
+        "ما هي أحكام زكاة المال؟",
+        "سورة الكهف وفضلها"
+      ];
+      suggestionsEl.innerHTML = defaults.map(s => 
+        `<button class="suggestion-chip" data-query="${escapeAttr(s)}" type="button">${escapeHtml(s)}</button>`
+      ).join("");
+      suggestionsEl.querySelectorAll(".suggestion-chip").forEach(chip => {
+        chip.addEventListener("click", () => {
+          input.value = chip.dataset.query;
+          doSearch();
+        });
+      });
+    } catch {}
+  }
+  loadInitialSuggestions();
+
+  // Check URL param ?q=
+  const urlParams = new URLSearchParams(window.location.search);
+  const qParam = urlParams.get("q");
+  if (qParam) {
+    input.value = qParam;
+    doSearch();
+  }
 </script>
 </body>
 </html>

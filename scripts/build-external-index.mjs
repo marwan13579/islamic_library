@@ -3,29 +3,32 @@
  * Build script: External Sources Index Builder
  *
  * يقرأ `external-sources.json` ويبني `external-index.json`.
- * يعمل فقط في CI/build environments — لا يعمل في المتصفح.
+ * يعمل فقط في بيئة Node.js (build time) — لا يعمل في المتصفح.
  *
- * لا يتجاوز:
- * - robots.txt (عبر `fetch` مع تحقق يدوي)
+ * يحترم:
+ * - robots.txt
  * - rate limits
  * - allowedDomains
  * - allowedPaths
+ * - لا يفهرس الإنترنت بالكامل، يقتصر على المصادر المحددة فقط.
  *
  * Usage:
- *   node scripts/build-external-index.cjs
+ *   node scripts/build-external-index.mjs
  *
  * @module scripts/build-external-index
  */
 
 import fs from "node:fs";
 import path from "node:path";
+import { fileURLToPath } from "node:url";
 
-const ROOT = new URL(".", import.meta.url).pathname.replace(/\/$/, "");
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const ROOT = path.resolve(__dirname, "..");
 const CONFIG_PATH = path.join(ROOT, "external-sources.json");
 const OUTPUT_PATH = path.join(ROOT, "external-index.json");
 
-const DEFAULT_TIMEOUT = 15000;
-const DEFAULT_RATE_LIMIT = 1000;
+const DEFAULT_TIMEOUT = 12000;
+const DEFAULT_RATE_LIMIT = 1500;
 
 async function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
@@ -40,7 +43,7 @@ async function fetchWithTimeout(url, options = {}) {
       ...options,
       signal: controller.signal,
       headers: {
-        "User-Agent": "IslamicLibrary-SearchEngine/1.0 (Islamic content indexer; +https://islamic-library.org)",
+        "User-Agent": "IslamicLibrary-SearchEngine/1.0 (Islamic reference indexer; +https://islamic-library.org)",
         Accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         ...options.headers,
       },
@@ -51,40 +54,20 @@ async function fetchWithTimeout(url, options = {}) {
   }
 }
 
-function checkRobotsTxt(baseUrl) {
-  try {
-    const robotsUrl = new URL("/robots.txt", baseUrl).href;
-    return robotsUrl;
-  } catch {
-    return null;
-  }
-}
-
 /**
- * يستخرج المحتوى من HTML باستخدام تعبيرات منظمية بدل DOMParser.
- *
- * لا يعتمد على DOMParser (غير متوفر في Node.js)، ويعمل في بيئة البناء
- * والبيئة المتصفحية على حدٍّ متساوٍ.
- *
- * @param {string} html
- * @param {string} url
- * @returns {{title: string, content: string, description: string, keywords: string[]}}
- */
-/**
- * ي_fold robots.txt ويعيد null إذا لم يكن هناك robots.txt.
+ * جلب وفحص قواعد robots.txt
  * @param {string} baseUrl
- * @returns {Promise<string[] | null>} null = لا robots.txt (كل شيء مسموح)
+ * @returns {Promise<string[] | null>} null = لا قيود معلنة
  */
 async function fetchRobotsRules(baseUrl) {
   try {
     const robotsUrl = new URL("/robots.txt", baseUrl).href;
-    const resp = await fetchWithTimeout(robotsUrl, { timeout: 8000 });
-    if (!resp.ok) return null; // لا robots.txt = لا قيود
+    const resp = await fetchWithTimeout(robotsUrl, { timeout: 6000 });
+    if (!resp.ok) return null;
 
     const text = await resp.text();
     const lines = text.split("\n");
     const disallowed = new Set();
-    let currentUserAgent = "*";
     let inOurSection = false;
 
     for (const rawLine of lines) {
@@ -96,7 +79,6 @@ async function fetchRobotsRules(baseUrl) {
       const v = rest.join(":").trim();
 
       if (k === "user-agent") {
-        currentUserAgent = v;
         inOurSection = v === "*" || v.toLowerCase().includes("islamiclibrary");
       } else if (inOurSection && k === "disallow" && v) {
         disallowed.add(v);
@@ -107,170 +89,59 @@ async function fetchRobotsRules(baseUrl) {
 
     return [...disallowed];
   } catch {
-    return null; // فشل جلب robots.txt = لا قيود
+    return null;
   }
 }
 
-/**
- * يоторي إذا كان المسار ممنوعًا بناءً على قواعد robots.txt.
- * @param {string[]} rules
- * @param {string} pathname
- * @returns {boolean}
- */
 function isRobotsDisallowed(rules, pathname) {
   if (!rules || !rules.length) return false;
   for (const rule of rules) {
-    if (rule === "/") return true; // حظر كلي
+    if (rule === "/") return true;
     if (pathname.startsWith(rule)) return true;
   }
   return false;
 }
 
-/**
- * ي_fold sitemap.xml إن وجد لاكتشاف URLs.
- * @param {string} baseUrl
- * @returns {Promise<string[]>}
- */
-async function discoverSitemapUrls(baseUrl) {
-  const candidates = [
-    new URL("/sitemap.xml", baseUrl).href,
-    new URL("/sitemap_index.xml", baseUrl).href,
-    new URL("/sitemap.php", baseUrl).href,
-  ];
-  const urls = new Set();
+function extractContent(html, url) {
+  const titleMatch = html.match(/<title[^>]*>([^<]+)<\/title>/i);
+  let title = titleMatch ? titleMatch[1].trim() : "";
 
-  for (const sitemapUrl of candidates) {
-    try {
-      const resp = await fetchWithTimeout(sitemapUrl, { timeout: 10000 });
-      if (!resp.ok) continue;
-      const text = await resp.text();
+  const descMatch =
+    html.match(/<meta[^>]+(?:name|property)=["'](?:description|og:description)["'][^>]+content=["']([^"']*)["']/i) ||
+    html.match(/<meta[^>]+content=["']([^"']*)["'][^>]+(?:name|property)=["'](?:description|og:description)["']/i);
+  let description = descMatch ? descMatch[1].trim() : "";
 
-      // Extract <loc> tags
-      const locs = text.match(/<loc[^>]*>([^<]+)<\/loc>/gi) || [];
-      for (const loc of locs) {
-        const u = loc.replace(/<\/?loc[^>]*>/gi, "").trim();
-        if (u) urls.add(u);
-      }
+  const kwMatch = html.match(/<meta[^>]+name=["']keywords["'][^>]+content=["']([^"']*)["']/i);
+  let keywords = kwMatch ? kwMatch[1].split(",").map((k) => k.trim()).filter(Boolean) : [];
 
-      // If this was an index sitemap, fetch child sitemaps
-      if (text.includes("<sitemapindex")) {
-        for (const child of locs) {
-          const childUrl = child.replace(/<\/?loc[^>]*>/gi, "").trim();
-          if (childUrl && childUrl !== sitemapUrl) {
-            try {
-              const childResp = await fetchWithTimeout(childUrl, { timeout: 10000 });
-              if (childResp.ok) {
-                const childText = await childResp.text();
-                const childLocs = childText.match(/<loc[^>]*>([^<]+)<\/loc>/gi) || [];
-                for (const cl of childLocs) {
-                  const u = cl.replace(/<\/?loc[^>]*>/gi, "").trim();
-                  if (u) urls.add(u);
-                }
-              }
-            } catch {}
-          }
-        }
-      }
-      break; // وجدنا sitemap — توقف عن محاولة المرشلات الأخرى
-    } catch {}
+  let clean = html
+    .replace(/<script\b[^<]*(?:(?!<\/script>)<[^<]*)*<\/script>/gi, " ")
+    .replace(/<style\b[^<]*(?:(?!<\/style>)<[^<]*)*<\/style>/gi, " ")
+    .replace(/<nav\b[^<]*(?:(?!<\/nav>)<[^<]*)*<\/nav>/gi, " ")
+    .replace(/<header\b[^<]*(?:(?!<\/header>)<[^<]*)*<\/header>/gi, " ")
+    .replace(/<footer\b[^<]*(?:(?!<\/footer>)<[^<]*)*<\/footer>/gi, " ")
+    .replace(/<svg\b[^<]*(?:(?!<\/svg>)<[^<]*)*<\/svg>/gi, " ")
+    .replace(/<[^>]+>/g, " ")
+    .replace(/&nbsp;/g, " ")
+    .replace(/&amp;/g, "&")
+    .replace(/&quot;/g, '"')
+    .replace(/&#39;/g, "'")
+    .replace(/&lt;/g, "<")
+    .replace(/&gt;/g, ">")
+    .replace(/\s+/g, " ")
+    .trim();
+
+  if (!title) {
+    const h1Match = html.match(/<h1[^>]*>([^<]+)<\/h1>/i);
+    title = h1Match ? h1Match[1].trim() : url;
   }
 
-  return [...urls];
-}
-
-/**
- * ي_fold روابط من HTML.
- * @param {string} html
- * @param {string} baseUrl
- * @returns {string[]}
- */
-function extractLinks(html, baseUrl) {
-  const links = new Set();
-  const hrefs = html.match(/href=["']([^"']+)["']/gi) || [];
-  for (const href of hrefs) {
-    const url = href.replace(/^href=["']/i, "").replace(/["']$/, "").trim();
-    if (!url) continue;
-    // تخطي الروابط غير النسبية والروابط غير المهمة
-    if (url.startsWith("#") || url.startsWith("javascript:") || url.startsWith("mailto:") || url.startsWith("tel:")) continue;
-    try {
-      const absolute = new URL(url, baseUrl).href;
-      // Normalize: remove fragment, strip trailing slash for consistency
-      const normalized = absolute.split("#")[0];
-      if (normalized) links.add(normalized);
-    } catch {}
-  }
-  return [...links];
-}
-
-async function crawlSource(source, maxPages) {
-  const docs = [];
-  const visited = new Set();
-  const queue = [source.url];
-  const startHost = new URL(source.url).hostname;
-  let fetched = 0;
-  const rateLimit = source.rateLimitMs || DEFAULT_RATE_LIMIT;
-
-  while (queue.length > 0 && docs.length < (maxPages || source.maxPages || 100)) {
-    const current = queue.shift();
-    if (visited.has(current)) continue;
-    visited.add(current);
-
-    if (!isSourceAllowed(source, current)) continue;
-
-    try {
-      const resp = await fetchWithTimeout(current);
-      if (!resp.ok) {
-        console.error(`  [skip] ${current} → ${resp.status}`);
-        continue;
-      }
-
-      const contentType = resp.headers.get("content-type") || "";
-      if (!contentType.includes("text/html")) {
-        console.log(`  [skip] ${current} → not HTML`);
-        continue;
-      }
-
-      const html = await resp.text();
-      const content = extractContent(html, current);
-
-      if (content.content.length < 50) {
-        console.log(`  [skip] ${current} → too short`);
-        continue;
-      }
-
-      const doc = {
-        id: `${source.id}/${docs.length + 1}`,
-        title: content.title,
-        content: content.content,
-        description: content.description,
-        keywords: content.keywords,
-        url: current,
-        canonicalUrl: current,
-        sourceId: source.id,
-        sourceName: source.name,
-        sourceDomain: startHost,
-        type: source.category || "article",
-        category: source.category || "مصادر خارجية",
-        language: source.language || "ar",
-        fetchedAt: new Date().toISOString(),
-        contentHash: hashString(content.content.slice(0, 500)),
-      };
-
-      docs.push(doc);
-      fetched += 1;
-
-      if (docs.length % 10 === 0) {
-        console.log(`  [progress] ${source.id}: ${docs.length} pages indexed`);
-      }
-
-      await sleep(rateLimit);
-    } catch (e) {
-      console.error(`  [error] ${current}: ${e.message}`);
-    }
-  }
-
-  console.log(`  [done] ${source.id}: ${docs.length} pages indexed`);
-  return docs;
+  return {
+    title,
+    content: clean,
+    description: description || clean.slice(0, 200),
+    keywords,
+  };
 }
 
 function isSourceAllowed(source, url) {
@@ -300,6 +171,124 @@ function hashString(str) {
   return String(h);
 }
 
+/**
+ * بناء الوثائق المرجعية الأساسية للمصدر من أقسامه ووصفه
+ */
+function createCuratedDocs(source) {
+  const docs = [];
+  const host = new URL(source.url).hostname;
+
+  // 1. Main source entry
+  docs.push({
+    id: `${source.id}-main`,
+    title: source.name,
+    content: `${source.name}. ${source.description}. الرابط: ${source.url}`,
+    description: source.description,
+    keywords: [source.category, source.name, ...(source.sections || [])],
+    url: source.url,
+    canonicalUrl: source.url,
+    sourceId: source.id,
+    sourceName: source.name,
+    sourceDomain: host,
+    type: source.category || "reference",
+    category: source.category || "مصادر خارجية",
+    language: source.language || "ar",
+    fetchedAt: new Date().toISOString(),
+    contentHash: hashString(source.description),
+  });
+
+  // 2. Sections entries
+  if (Array.isArray(source.sections)) {
+    source.sections.forEach((sec, idx) => {
+      docs.push({
+        id: `${source.id}-sec-${idx + 1}`,
+        title: `${source.name} — ${sec}`,
+        content: `${sec}. من أقسام موقع ${source.name}: ${source.description}`,
+        description: sec,
+        keywords: [source.name, sec, source.category],
+        url: source.url,
+        canonicalUrl: source.url,
+        sourceId: source.id,
+        sourceName: source.name,
+        sourceDomain: host,
+        type: source.category || "reference",
+        category: source.category || "مصادر خارجية",
+        language: source.language || "ar",
+        fetchedAt: new Date().toISOString(),
+        contentHash: hashString(sec),
+      });
+    });
+  }
+
+  return docs;
+}
+
+async function crawlSource(source, maxPages) {
+  const docs = [...createCuratedDocs(source)];
+  if (!source.crawl) return docs;
+
+  const visited = new Set();
+  const queue = [source.url];
+  const startHost = new URL(source.url).hostname;
+  const rateLimit = source.rateLimitMs || DEFAULT_RATE_LIMIT;
+
+  let robotsRules = null;
+  if (source.respectRobots !== false) {
+    robotsRules = await fetchRobotsRules(source.url);
+  }
+
+  while (queue.length > 0 && docs.length < (maxPages || source.maxPages || 100)) {
+    const current = queue.shift();
+    if (visited.has(current)) continue;
+    visited.add(current);
+
+    if (!isSourceAllowed(source, current)) continue;
+
+    try {
+      const parsed = new URL(current);
+      if (robotsRules && isRobotsDisallowed(robotsRules, parsed.pathname)) {
+        console.log(`  [skip robots] ${current}`);
+        continue;
+      }
+
+      const resp = await fetchWithTimeout(current);
+      if (!resp.ok) continue;
+
+      const contentType = resp.headers.get("content-type") || "";
+      if (!contentType.includes("text/html")) continue;
+
+      const html = await resp.text();
+      const content = extractContent(html, current);
+
+      if (content.content.length < 50) continue;
+
+      docs.push({
+        id: `${source.id}-${docs.length + 1}`,
+        title: content.title,
+        content: content.content.slice(0, 4000),
+        description: content.description,
+        keywords: content.keywords,
+        url: current,
+        canonicalUrl: current,
+        sourceId: source.id,
+        sourceName: source.name,
+        sourceDomain: startHost,
+        type: source.category || "article",
+        category: source.category || "مصادر خارجية",
+        language: source.language || "ar",
+        fetchedAt: new Date().toISOString(),
+        contentHash: hashString(content.content.slice(0, 500)),
+      });
+
+      await sleep(rateLimit);
+    } catch (e) {
+      console.error(`  [error] ${current}: ${e.message}`);
+    }
+  }
+
+  return docs;
+}
+
 async function main() {
   console.log("=== External Sources Index Builder ===\n");
 
@@ -309,24 +298,15 @@ async function main() {
   }
 
   const config = JSON.parse(fs.readFileSync(CONFIG_PATH, "utf8"));
-  const enabledSources = config.sources.filter((s) => s.enabled && s.crawl);
+  const enabledSources = (config.sources || []).filter((s) => s.enabled);
 
-  if (!enabledSources.length) {
-    console.log("No sources enabled for crawling.");
-    process.exit(0);
-  }
-
-  console.log(`Sources to index: ${enabledSources.length}`);
-  for (const s of enabledSources) {
-    console.log(`  - ${s.id}: ${s.url}`);
-  }
-  console.log("");
+  console.log(`Total active external sources: ${enabledSources.length}\n`);
 
   const allDocs = [];
   const sourcesInfo = [];
 
   for (const source of enabledSources) {
-    console.log(`Crawling ${source.name}...`);
+    console.log(`Processing: ${source.name} (${source.url})`);
     const docs = await crawlSource(source, source.maxPages);
     allDocs.push(...docs);
     sourcesInfo.push({
@@ -337,7 +317,6 @@ async function main() {
       lastCrawl: new Date().toISOString(),
       status: "ok",
     });
-    await sleep(1000);
   }
 
   const output = {
@@ -347,10 +326,9 @@ async function main() {
     docs: allDocs,
   };
 
-  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2));
-  console.log(`\n[done] Wrote ${allDocs.length} docs to ${OUTPUT_PATH}`);
-  console.log(`Sources: ${sourcesInfo.length}`);
-  console.log(`Total size: ${(JSON.stringify(output).length / 1024 / 1024).toFixed(2)} MB`);
+  fs.writeFileSync(OUTPUT_PATH, JSON.stringify(output, null, 2), "utf8");
+  console.log(`\n[Success] Generated ${allDocs.length} external documents in ${OUTPUT_PATH}`);
+  console.log(`Sources configured: ${sourcesInfo.length}`);
 }
 
 main().catch((e) => {
