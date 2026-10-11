@@ -258,6 +258,7 @@ class LanguageSelector {
   open() {
     this.isOpen = true;
     this.menu.hidden = false;
+    this.menu.style.display = 'block';
     this.button.setAttribute('aria-expanded', 'true');
     this.menu.classList.add('open');
     
@@ -273,6 +274,7 @@ class LanguageSelector {
   close() {
     this.isOpen = false;
     this.menu.hidden = true;
+    this.menu.style.display = '';
     this.button.setAttribute('aria-expanded', 'false');
     this.menu.classList.remove('open');
     this.searchInput.value = '';
@@ -453,13 +455,36 @@ class LanguageSelector {
 }
 
 // Auto-initialize if elements exist
-document.addEventListener('DOMContentLoaded', () => {
-  if (document.getElementById('langBtn') && document.getElementById('langMenu')) {
-    window.languageSelector = new LanguageSelector({
-      i18n: window.__i18n
-    });
+function tryInitLanguageSelector() {
+  const langBtn = document.getElementById('langBtn');
+  const langMenu = document.getElementById('langMenu');
+  
+  if (!langBtn || !langMenu) return false;
+  
+  // Wait for i18n to be ready
+  if (!window.__i18n || !window.__i18n.localeList) {
+    // Retry after a short delay
+    setTimeout(tryInitLanguageSelector, 150);
+    return false;
   }
-});
+  
+  // Prevent double initialization
+  if (window.languageSelector) return true;
+  
+  window.languageSelector = new LanguageSelector({
+    i18n: window.__i18n
+  });
+  return true;
+}
+
+// Start trying after DOM is ready
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(tryInitLanguageSelector, 500);
+  });
+} else {
+  setTimeout(tryInitLanguageSelector, 500);
+}
 
 export { LanguageSelector };
 export default LanguageSelector;

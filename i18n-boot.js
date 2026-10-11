@@ -1,6 +1,6 @@
 /**
  * Lightweight i18n bootstrap for tool pages
- * Loads locale data and applies translations to data-i18n elements
+ * Loads locale data and exposes window.__i18n for the language selector
  */
 (function() {
   const STORAGE_KEY = "site-locale";
@@ -24,6 +24,9 @@
     sw: { dir: "ltr", label: "Kiswahili" }
   };
 
+  let currentLang = "ar";
+  let messages = {};
+
   function detectLocale() {
     try {
       const saved = localStorage.getItem(STORAGE_KEY);
@@ -46,24 +49,37 @@
         if (res.ok) {
           results[mod] = await res.json();
         }
-      } catch(e) {}
+      } catch(e) {
+        // Fallback to Arabic
+        try {
+          const url = `locales/ar/${mod}.json`;
+          const res = await fetch(url);
+          if (res.ok) results[mod] = await res.json();
+        } catch(e2) {}
+      }
     }
     return results;
   }
 
-  function t(dict, key) {
+  function t(key, vars = {}) {
+    const dict = messages;
     const path = key.split('.');
-    let val = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict);
-    if (val === null && dict.common) {
-      val = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict.common);
+    let text = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict);
+    if (text === null && dict.common) {
+      text = path.reduce((obj, k) => (obj && obj[k] !== undefined ? obj[k] : null), dict.common);
     }
-    return val || key;
+    if (text === null) text = key;
+
+    Object.entries(vars).forEach(([k, v]) => {
+      text = String(text).replaceAll(`{${k}}`, String(v));
+    });
+    return text;
   }
 
-  function applyTranslations(dict) {
+  function applyTranslations() {
     document.querySelectorAll('[data-i18n]').forEach(el => {
       const key = el.getAttribute('data-i18n');
-      const text = t(dict, key);
+      const text = t(key);
       if (text && text !== key) {
         if (el.tagName === 'INPUT' && el.placeholder !== undefined) {
           el.placeholder = text;
@@ -74,13 +90,8 @@
     });
     document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
       const key = el.getAttribute('data-i18n-placeholder');
-      const text = t(dict, key);
+      const text = t(key);
       if (text && text !== key) el.placeholder = text;
-    });
-    document.querySelectorAll('[data-i18n-title]').forEach(el => {
-      const key = el.getAttribute('data-i18n-title');
-      const text = t(dict, key);
-      if (text && text !== key) el.title = text;
     });
   }
 
@@ -92,24 +103,56 @@
     html.classList.toggle('ltr', LANG_ROUTES[lang]?.dir !== 'rtl');
   }
 
-  async function initI18n() {
-    const lang = detectLocale();
+  async function setLocale(lang) {
+    if (!LANG_ROUTES[lang]) return;
+    currentLang = lang;
     applyDir(lang);
-    const dict = await loadLocale(lang);
-    applyTranslations(dict);
-    window.__i18n = { lang: () => lang, t: (k) => t(dict, k), setLocale: async (l) => {
-      applyDir(l);
-      const d = await loadLocale(l);
-      applyTranslations(d);
-      try { localStorage.setItem(STORAGE_KEY, l); } catch(e) {}
-    }};
+    messages = await loadLocale(lang);
+    applyTranslations();
+    try { localStorage.setItem(STORAGE_KEY, lang); } catch(e) {}
+    window.dispatchEvent(new CustomEvent('locale-change', { detail: { lang } }));
   }
 
-  window.__i18nBoot = initI18n;
+  async function init() {
+    currentLang = detectLocale();
+    applyDir(currentLang);
+    messages = await loadLocale(currentLang);
+    applyTranslations();
+    
+    // Expose i18n interface for language-selector.js
+    window.__i18n = {
+      lang: () => currentLang,
+      dir: () => LANG_ROUTES[currentLang]?.dir || 'ltr',
+      t: (key) => t(key),
+      tCommon: (key) => t('common.' + key),
+      tHome: (key) => t('home.' + key),
+      setLocale: setLocale,
+      localeList: () => Object.entries(LANG_ROUTES).map(([code, meta]) => ({ code, ...meta })),
+      localeLabel: () => LANG_ROUTES[currentLang]?.label || currentLang,
+      onLocaleChange: (cb) => window.addEventListener('locale-change', cb)
+    };
+    
+    // Update language button label
+    const label = document.getElementById('langBtnLabel');
+    if (label) label.textContent = LANG_ROUTES[currentLang]?.label || currentLang;
+  }
+
+  // Expose init for module scripts
+  window.__i18nBoot = init;
+  
   // Auto-init when DOM is ready
+  function tryInit() {
+    if (document.getElementById('langBtn') && document.getElementById('langMenu')) {
+      init();
+    } else {
+      // Retry after a short delay
+      setTimeout(tryInit, 50);
+    }
+  }
+  
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initI18n);
+    document.addEventListener('DOMContentLoaded', tryInit);
   } else {
-    initI18n();
+    tryInit();
   }
 })();
