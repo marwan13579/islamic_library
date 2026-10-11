@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>اسأل الموقع — محرك البحث والمعرفة الإسلامية</title>
+<title data-i18n="tools.اسأل الموقع — محرك البحث والمعرفة الإسلامية">اسأل الموقع — محرك البحث والمعرفة الإسلامية</title>
 <meta name="description" content="محرك بحث معرفي إسلامي ذكي يبحث في جميع محتويات الموقع والمصادر الإسلامية الموثقة محلياً، مع الأدلة والتفاسير والمصادر دون ذكاء اصطناعي خارجي.">
 <meta name="theme-color" content="#0b3d2c">
 <link rel="canonical" href="./ask.html">
@@ -436,7 +436,13 @@
 
 <main id="main" class="main" role="main">
   <section class="hero" aria-labelledby="ask-heading">
-    <h1 id="ask-heading">اسأل الموقع — Islamic Knowledge Search & Answer Engine</h1>
+    
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 id="ask-heading">اسأل الموقع — Islamic Knowledge Search & Answer Engine</h1>
     <p>محرك بحث معرفي إسلامي ذكي يبحث في جميع محتويات الموقع والمصادر الإسلامية الموثقة محلياً، مع الأدلة والتفاسير والمصادر دون ذكاء اصطناعي خارجي.</p>
 
     <!-- Search container -->
@@ -503,7 +509,7 @@
   <!-- Answer Output Region -->
   <div id="answer-output" role="region" aria-live="polite" aria-atomic="false">
     <div class="zero-state">
-      <h2>ابدأ بكتابة أي سؤال أو استفسار</h2>
+      <h2 data-i18n="tools.ابدأ بكتابة أي سؤال أو استفسار">ابدأ بكتابة أي سؤال أو استفسار</h2>
       <p>ابحث في أكثر من ٤٢,٠٠٠ مسألة، وتفسير القرآن، وأحاديث الكتب الستة، والأذكار المأثورة، والمصادر الإسلامية المعتمدة.</p>
     </div>
   </div>
@@ -743,7 +749,7 @@
       
       output.innerHTML = `
         <div class="zero-state">
-          <h2>لم نجد نتيجة مطابقة</h2>
+          <h2 data-i18n="tools.لم نجد نتيجة مطابقة">لم نجد نتيجة مطابقة</h2>
           <p>${escapeHtml(answer.noResultNotice || "لم أجد في محتوى الموقع الحالي معلومات كافية للإجابة عن هذا السؤال.")}</p>
           ${suggestionsHtml}
         </div>`;

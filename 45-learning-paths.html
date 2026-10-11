@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
@@ -19,7 +20,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مسارات التعلم الإسلامي — بوابة النور</title>
+<title data-i18n="tools.مسارات التعلم الإسلامي — بوابة النور">مسارات التعلم الإسلامي — بوابة النور</title>
 <meta name="description" content="مسارات تعلم منظمة للمبتدئين: الصلاة، القرآن، العقيدة، الفقه، السيرة، الأذكار — مع حفظ التقدم محليًا.">
 <link rel="canonical" href="./">
 <meta property="og:type" content="website">
@@ -116,7 +117,13 @@
 </head>
 <body>
 <header>
-  <h1>🧭 مسارات التعلم الإسلامي</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.🧭 مسارات التعلم الإسلامي">🧭 مسارات التعلم الإسلامي</h1>
   <p>بوابة النور — نور الهدى<br>مسارات منظمة من المبتدئ إلى المتقدم مع حفظ التقدم محليًا على جهازك</p>
   <div class="hero-actions" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
     <a class="btn btn-primary" href="index.html">📖 الموسوعة الإسلامية</a>
@@ -264,5 +271,9 @@ if (typeof openSearchModal === "function") {
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

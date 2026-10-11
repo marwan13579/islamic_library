@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مواقيت الأذان · المكتبة الإسلامية</title>
+<title data-i18n="tools.مواقيت الأذان · المكتبة الإسلامية">مواقيت الأذان · المكتبة الإسلامية</title>
 <meta name="description" content="مواقيت الصلوات الخمس بمدينتك، مع تنبيه عند الأذان وصوت أذان يُسمع في وقته.">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="fonts.css">
@@ -45,7 +46,13 @@
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 
 <header class="lib-head">
-  <h1>مواقيت الأذان</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.مواقيت الأذان">مواقيت الأذان</h1>
   <p>الصلوات الخمس بمدينتك، وتنبيه يصلك عند دخول الوقت.</p>
 </header>
 
@@ -408,5 +415,9 @@
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

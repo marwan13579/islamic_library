@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>نور الذكر — أذكار وأدعية</title>
+<title data-i18n="tools.نور الذكر — أذكار وأدعية">نور الذكر — أذكار وأدعية</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -255,7 +256,13 @@ header{
     </defs>
     <rect width="100%" height="100%" fill="url(#star)" style="color:var(--gold)"/>
   </svg>
-  <h1>نُورُ الذِّكر</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.نُورُ الذِّكر">نُورُ الذِّكر</h1>
   <p>أذكار الصباح والمساء والنوم، وأدعية من الكتاب والسنة — صدقة جارية لمن نشرها.</p>
   <svg class="rule" viewBox="0 0 120 14" aria-hidden="true">
     <path d="M0 7h44M76 7h44" stroke="currentColor" stroke-width="1"/>
@@ -510,13 +517,13 @@ function buildSadaqa(){
   el.className="prose";
   el.innerHTML =
     '<article class="hadith"><p class="text">«إِذَا مَاتَ الْإِنْسَانُ انْقَطَعَ عَنْهُ عَمَلُهُ إِلَّا مِنْ ثَلَاثَةٍ: إِلَّا مِنْ صَدَقَةٍ جَارِيَةٍ، أَوْ عِلْمٍ يُنْتَفَعُ بِهِ، أَوْ وَلَدٍ صَالِحٍ يَدْعُو لَهُ»</p><p class="src">رواه مسلم</p></article>'+
-    '<h2>ما هي الصدقة الجارية</h2>'+
+    '<h2 data-i18n="tools.ما هي الصدقة الجارية">ما هي الصدقة الجارية</h2>'+
     '<p>هي كل عمل يبقى نفعه للناس بعد انقطاع عملك، فيجري أجره عليك ما دام الناس ينتفعون به. وأوسع أبوابها العلم النافع: كلمة تُعلِّمها، أو ذِكر تدلّ عليه، أو صفحة كهذه يقرؤها غيرك فيذكر الله بسببك.</p>'+
-    '<h2>أبواب تصلح لك اليوم</h2>'+
+    '<h2 data-i18n="tools.أبواب تصلح لك اليوم">أبواب تصلح لك اليوم</h2>'+
     '<p>سقيا الماء وحفر بئر، والمساهمة في بناء مسجد أو ترميمه، وطباعة المصاحف وكتب العلم وتوزيعها، وكفالة يتيم أو طالب علم، وغرس شجرة يأكل منها إنسان أو طائر، والتبرع لعلاج مريض، وتعليم إنسان سورة أو دعاءً يردده كل يوم.</p>'+
-    '<h2>كيف تجعل هذه الصفحة صدقة جارية</h2>'+
+    '<h2 data-i18n="tools.كيف تجعل هذه الصفحة صدقة جارية">كيف تجعل هذه الصفحة صدقة جارية</h2>'+
     '<p>انشر رابطها لأهلك وأصحابك ومجموعاتك. كل من قرأ منها ذكرًا أو دعاءً فلك مثل أجره بإذن الله، لأن الدالّ على الخير كفاعله. واحرص أن تنوي بها وجه الله وحده، فإنما الأعمال بالنيات.</p>'+
-    '<h2>دعاء</h2>'+
+    '<h2 data-i18n="tools.دعاء">دعاء</h2>'+
     '<p>اللهم اجعل هذا العمل خالصًا لوجهك، وتقبّله، واجعله في ميزان حسنات كل من كتبه ونشره وقرأه، واغفر لنا ولوالدينا وللمسلمين أجمعين.</p>'+
     '<footer><p>ذكِّر بها غيرك — الدالّ على الخير كفاعله.</p>'+
     '<button class="share" id="share" type="button">انسخ الرابط وشاركه</button></footer>';
@@ -593,5 +600,9 @@ function toast(msg){
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

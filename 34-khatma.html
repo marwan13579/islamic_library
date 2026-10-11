@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="khatma-core.js"></script>
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#13322c">
-<title>الختمة الجماعية | المكتبة الإسلامية</title>
+<title data-i18n="tools.الختمة الجماعية | المكتبة الإسلامية">الختمة الجماعية | المكتبة الإسلامية</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -59,7 +60,13 @@ button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid 
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 <div class="wrap">
 <header>
-  <h1>الختمة الجماعية</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.الختمة الجماعية">الختمة الجماعية</h1>
   <p>قسّم أجزاء القرآن بين المشاركين، وتابع الإنجاز والإهداء من مكان واحد.</p>
 </header>
 <section class="panel" aria-labelledby="progressTitle">
@@ -197,5 +204,9 @@ render();
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

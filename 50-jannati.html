@@ -1,5 +1,5 @@
 <!doctype html><html lang="ar" dir="rtl"><head><meta charset=utf8><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
-<title>جنّتي</title>
+<title data-i18n="tools.جنّتي">جنّتي</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="fonts.css">
@@ -234,7 +234,13 @@ button{font:inherit;color:inherit;cursor:pointer}
 
 <div class="app" id="app" dir="rtl" lang="ar">
   <header class="top">
-    <div class="brand"><h1>جنّتي</h1><p id="hijri">حديقة ذكرك</p></div>
+    <div class="brand">
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.جنّتي">جنّتي</h1><p id="hijri">حديقة ذكرك</p></div>
     <div class="chips">
       <span class="chip gold" id="chipNoor"></span>
       <span class="chip" id="chipStreak"></span>

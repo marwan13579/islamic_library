@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>حاسبة المواريث المبسّطة</title>
+<title data-i18n="tools.حاسبة المواريث المبسّطة">حاسبة المواريث المبسّطة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -130,7 +131,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>حاسبة المواريث المبسّطة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.حاسبة المواريث المبسّطة">حاسبة المواريث المبسّطة</h1>
   <p>تحسب أنصبة أقرب الورثة (الزوج/الزوجة، الأبناء، الوالدين) في الحالات الشائعة وفق الفرائض المتفق عليها.</p>
 </header>
 
@@ -139,7 +146,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>بيانات المتوفى والورثة</h2>
+  <h2 data-i18n="tools.بيانات المتوفى والورثة">بيانات المتوفى والورثة</h2>
   <div class="field">
     <label for="gender">جنس المتوفى</label>
     <select id="gender">
@@ -267,5 +274,9 @@ renderSpouseField();
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

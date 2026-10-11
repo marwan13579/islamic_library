@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>إعدادات رفيق النور — المكتبة الإسلامية</title>
+<title data-i18n="tools.إعدادات رفيق النور — المكتبة الإسلامية">إعدادات رفيق النور — المكتبة الإسلامية</title>
 <meta name="description" content="إعدادات التذكيرات الإيمانية: الفاصل الزمني، وأنواع المحتوى، والوضع الهادئ، وإشعارات المتصفح، ورحلة قراءتك. كل شيء محفوظ على جهازك وحده.">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="fonts.css">
@@ -126,7 +127,13 @@
 
 <div class="wrap">
 <header>
-  <h1>🌿 رفيق النور</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.🌿 رفيق النور">🌿 رفيق النور</h1>
   <p>التذكير الإيماني، والتدبر بعد القراءة، وعمل اليوم.</p>
 </header>
 
@@ -382,5 +389,9 @@ document.addEventListener("DOMContentLoaded", function () {
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

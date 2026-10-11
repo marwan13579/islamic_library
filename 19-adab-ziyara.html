@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>آداب الزيارة والعيادة</title>
+<title data-i18n="tools.آداب الزيارة والعيادة">آداب الزيارة والعيادة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -125,7 +126,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>آداب الزيارة والعيادة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.آداب الزيارة والعيادة">آداب الزيارة والعيادة</h1>
   <p>كيف تزور مريضًا، تُعزّي حزينًا، أو تهنّئ فرحًا — بالأدب والدعاء المناسب.</p>
 </header>
 <nav class="tabs" id="tabs"></nav>
@@ -287,4 +294,8 @@ function select(id){
   else init();
 })();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>

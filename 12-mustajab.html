@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>أوقات الإجابة ودعاء ختم القرآن</title>
+<title data-i18n="tools.أوقات الإجابة ودعاء ختم القرآن">أوقات الإجابة ودعاء ختم القرآن</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -114,7 +115,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>أوقات الإجابة ودعاء الختمة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.أوقات الإجابة ودعاء الختمة">أوقات الإجابة ودعاء الختمة</h1>
   <p>اغتنم أوقات إجابة الدعاء الثابتة عن النبي ﷺ، ودعاء ختم القرآن الكريم.</p>
 </header>
 
@@ -190,4 +197,8 @@ TIMES.forEach(([t,d])=>{
   else init();
 })();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>

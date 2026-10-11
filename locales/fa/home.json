@@ -52,7 +52,8 @@
       "tasbeeh": "I want the digital tasbeeh",
       "kids": "I want the kids section",
       "path": "I want a learning path"
-    }
+    },
+    "installApp": "Install Sakina App"
   },
   "_meta": {
     "language": "fa",

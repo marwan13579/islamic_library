@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="calculations.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>حاسبة الزكاة</title>
+<title data-i18n="tools.حاسبة الزكاة">حاسبة الزكاة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -125,12 +126,18 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>حاسبة الزكاة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.حاسبة الزكاة">حاسبة الزكاة</h1>
   <p>احسب زكاة مالك بسهولة — أدخل أرقامك وسعر جرام الذهب اليوم، والباقي عليها.</p>
 </header>
 
 <div class="card">
-  <h2>سعر الذهب اليوم</h2>
+  <h2 data-i18n="tools.سعر الذهب اليوم">سعر الذهب اليوم</h2>
   <div class="field">
     <label for="goldPrice">سعر جرام الذهب عيار ٢١ (بعملتك)</label>
     <input id="goldPrice" type="number" min="0" placeholder="مثال: 3500" inputmode="decimal">
@@ -139,7 +146,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>أموالك الزكوية</h2>
+  <h2 data-i18n="tools.أموالك الزكوية">أموالك الزكوية</h2>
   <div class="field">
     <label for="cash">النقود والأرصدة البنكية</label>
     <input id="cash" type="number" min="0" placeholder="0" inputmode="decimal">
@@ -165,7 +172,7 @@ header{
 <div id="result"></div>
 
 <div class="card">
-  <h2>🥇 حاسب الذهب بالجرامات (أعيرة ٢٤/٢١/١٨)</h2>
+  <h2 data-i18n="tools.🥇 حاسب الذهب بالجرامات (أعيرة ٢٤/٢١/١٨)">🥇 حاسب الذهب بالجرامات (أعيرة ٢٤/٢١/١٨)</h2>
   <div class="row2">
     <div class="field"><label for="karat">العيار</label>
       <select id="karat"><option value="24">٢٤</option><option value="21" selected>٢١</option><option value="18">١٨</option></select></div>
@@ -177,7 +184,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>🌾 زكاة الفطر</h2>
+  <h2 data-i18n="tools.🌾 زكاة الفطر">🌾 زكاة الفطر</h2>
   <div class="row2">
     <div class="field"><label for="fitrPersons">عدد الأشخاص (أنت ومن تعول)</label>
       <input id="fitrPersons" type="number" min="1" value="1" inputmode="numeric"></div>
@@ -251,5 +258,9 @@ function calcFitr(){
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

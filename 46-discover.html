@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
@@ -19,7 +20,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>اكتشف شيئًا جديدًا — بوابة النور</title>
+<title data-i18n="tools.اكتشف شيئًا جديدًا — بوابة النور">اكتشف شيئًا جديدًا — بوابة النور</title>
 <meta name="description" content="اكتشف آية، حديث، ذكر، دعاء، قصة، عالم، مصطلح، فائدة، موضوع، كتاب، أو درسًا جديدًا كل يوم.">
 <link rel="canonical" href="./">
 <meta property="og:type" content="website">
@@ -104,7 +105,13 @@
 </head>
 <body>
 <header>
-  <h1>✨ اكتشف شيئًا جديدًا</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.✨ اكتشف شيئًا جديدًا">✨ اكتشف شيئًا جديدًا</h1>
   <p>بوابة النور — نور الهدى<br>اكتشف آية، حديث، ذكر، دعاء، قصة، عالم، مصطلح، فائدة، موضوع، كتاب، أو درسًا جديدًا</p>
   <div class="hero-actions" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
     <button class="btn btn-primary" id="discoverBtn">🎲 اكتشف الآن</button>
@@ -116,7 +123,7 @@
   <div id="discoverArea"></div>
 
   <div class="history" id="historySection" hidden>
-    <h2>🕐 اكتشفاتك السابقة</h2>
+    <h2 data-i18n="tools.🕐 اكتشفاتك السابقة">🕐 اكتشفاتك السابقة</h2>
     <div id="historyList"></div>
   </div>
 </main>
@@ -324,5 +331,9 @@ if (typeof openSearchModal === "function") {
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

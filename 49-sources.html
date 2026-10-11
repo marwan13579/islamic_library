@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
@@ -19,7 +20,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مصادر الموسوعة الإسلامية — بوابة النور</title>
+<title data-i18n="tools.مصادر الموسوعة الإسلامية — بوابة النور">مصادر الموسوعة الإسلامية — بوابة النور</title>
 <meta name="description" content="مصادر الموسوعة الإسلامية: القرآن الكريم، الحديث الشريف، التفسير، الفقه، السيرة، التاريخ، الكتب، العلماء.">
 <link rel="canonical" href="./">
 <meta property="og:type" content="website">
@@ -84,7 +85,13 @@
 </head>
 <body>
 <header>
-  <h1>📚 مصادر الموسوعة الإسلامية</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.📚 مصادر الموسوعة الإسلامية">📚 مصادر الموسوعة الإسلامية</h1>
   <p>بوابة النور — نور الهدى<br>كل محتوى ديني في هذه الموسوعة منسوب إلى مصدر موثوق</p>
   <div class="hero-actions" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
     <a class="btn btn-primary" href="index.html">📖 الموسوعة الإسلامية</a>
@@ -98,7 +105,7 @@
   </div>
 
   <div class="source-section">
-    <h2>📖 القرآن الكريم</h2>
+    <h2 data-i18n="tools.📖 القرآن الكريم">📖 القرآن الكريم</h2>
     <ul>
       <li>نص القرآن الكريم من <strong>مصحف المدينة النبوية</strong> بالرسم العثماني</li>
       <li>مصدر إضافي: <a href="https://quran.com" target="_blank" rel="noopener">Quran.com</a> و <a href="https://api.alquran.cloud" target="_blank" rel="noopener">AlQuran Cloud</a></li>
@@ -107,7 +114,7 @@
   </div>
 
   <div class="source-section">
-    <h2>📕 الحديث الشريف</h2>
+    <h2 data-i18n="tools.📕 الحديث الشريف">📕 الحديث الشريف</h2>
     <ul>
       <li><strong>صحيح البخاري</strong> — تخريج: <a href="https://sunnah.com/bukhari" target="_blank" rel="noopener">sunnah.com</a></li>
       <li><strong>صحيح مسلم</strong> — تخريج: <a href="https://sunnah.com/muslim" target="_blank" rel="noopener">sunnah.com</a></li>
@@ -119,7 +126,7 @@
   </div>
 
   <div class="source-section">
-    <h2>📚 التفسير وعلوم القرآن</h2>
+    <h2 data-i18n="tools.📚 التفسير وعلوم القرآن">📚 التفسير وعلوم القرآن</h2>
     <ul>
       <li>التفسير الميسر — دار التأليف</li>
       <li>تفسير الجلالين — جلال الدين المحلي وسيالدين السيوطي</li>
@@ -130,7 +137,7 @@
   </div>
 
   <div class="source-section">
-    <h2>⚖️ الفقه الإسلامي</h2>
+    <h2 data-i18n="tools.⚖️ الفقه الإسلامي">⚖️ الفقه الإسلامي</h2>
     <ul>
       <li>المغني — ابن قدامة المقدسي</li>
       <li>الموطأ — مالك بن أنس</li>
@@ -142,7 +149,7 @@
   </div>
 
   <div class="source-section">
-    <h2>🕌 السيرة النبوية</h2>
+    <h2 data-i18n="tools.🕌 السيرة النبوية">🕌 السيرة النبوية</h2>
     <ul>
       <li>الرحيق المختوم — صفي الرحمن المباركفوري</li>
       <li>السيرة النبوية — ابن هشام</li>
@@ -152,7 +159,7 @@
   </div>
 
   <div class="source-section">
-    <h2>👳 العلماء والمؤلفات</h2>
+    <h2 data-i18n="tools.👳 العلماء والمؤلفات">👳 العلماء والمؤلفات</h2>
     <ul>
       <li>أبو بكر الصديق — البخاري، مسلم</li>
       <li>عمر بن الخطاب — البخاري، مسلم</li>
@@ -172,7 +179,7 @@
   </div>
 
   <div class="source-section">
-    <h2>📜 المصادر الرقمية</h2>
+    <h2 data-i18n="tools.📜 المصادر الرقمية">📜 المصادر الرقمية</h2>
     <ul>
       <li><a href="https://sunnah.com" target="_blank" rel="noopener">sunnah.com</a> — قاعدة بيانات الأحاديث النبوية</li>
       <li><a href="https://quran.com" target="_blank" rel="noopener">quran.com</a> — القرآن الكريم بالترجمة</li>
@@ -184,7 +191,7 @@
   </div>
 
   <div class="source-section">
-    <h2>📖 كتب ومراجع</h2>
+    <h2 data-i18n="tools.📖 كتب ومراجع">📖 كتب ومراجع</h2>
     <ul>
       <li>البداية والنهاية — ابن كثير</li>
       <li>الرحيق المختوم — المباركفوري</li>
@@ -231,5 +238,9 @@ if (typeof openSearchModal === "function") {
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

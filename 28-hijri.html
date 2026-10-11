@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>التقويم الهجري</title>
+<title data-i18n="tools.التقويم الهجري">التقويم الهجري</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -139,7 +140,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>التقويم الهجري</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.التقويم الهجري">التقويم الهجري</h1>
   <p>التاريخ الهجري اليوم، تحويل هجري ↔ ميلادي، المناسبات الإسلامية، والصيام المستحب.</p>
 </header>
 <nav class="tabs" id="tabs"></nav>
@@ -207,7 +214,7 @@ function buildConverter(){
   const g2h=document.createElement("div");
   g2h.className="convcard";
   g2h.innerHTML =
-    '<h2>ميلادي ← هجري</h2>'+
+    '<h2 data-i18n="tools.ميلادي ← هجري">ميلادي ← هجري</h2>'+
     '<div class="row3">'+
     '<input id="gDay" type="number" min="1" max="31" placeholder="يوم" aria-label="اليوم الميلادي">'+
     '<select id="gMonth" aria-label="الشهر الميلادي">'+GREG_MONTHS.map((m,i)=>'<option value="'+(i+1)+'">'+m+'</option>').join('')+'</select>'+
@@ -220,7 +227,7 @@ function buildConverter(){
   const h2g=document.createElement("div");
   h2g.className="convcard";
   h2g.innerHTML =
-    '<h2>هجري ← ميلادي</h2>'+
+    '<h2 data-i18n="tools.هجري ← ميلادي">هجري ← ميلادي</h2>'+
     '<div class="row3">'+
     '<input id="hDay" type="number" min="1" max="30" placeholder="يوم" aria-label="اليوم الهجري">'+
     '<select id="hMonth" aria-label="الشهر الهجري">'+HIJRI_MONTHS.map((m,i)=>'<option value="'+(i+1)+'">'+m+'</option>').join('')+'</select>'+
@@ -414,5 +421,9 @@ function select(id){
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

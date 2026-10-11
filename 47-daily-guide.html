@@ -3,6 +3,7 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
@@ -19,7 +20,7 @@
 })();
 </script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>دليل المسلم اليومي — بوابة النور</title>
+<title data-i18n="tools.دليل المسلم اليومي — بوابة النور">دليل المسلم اليومي — بوابة النور</title>
 <meta name="description" content="لوحة تحكم شخصية للمسلم: التاريخ الهجري، الصلاة القادمة، مواقيت الصلاة، ورد القرآن، أذكار الصباح والمساء، آية اليوم، حديث اليوم، ذكر اليوم، مهمة إيمانية، وتقدم اليوم.">
 <link rel="canonical" href="./">
 <meta property="og:type" content="website">
@@ -109,7 +110,13 @@
 </head>
 <body>
 <header>
-  <h1>🌅 دليل المسلم اليومي</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.🌅 دليل المسلم اليومي">🌅 دليل المسلم اليومي</h1>
   <p>بوابة النور — نور الهدى<br>لوحة تحكم شخصية لك بدون تسجيل — بياناتك محفوظة على جهازك فقط</p>
   <div class="hero-actions" style="display:flex;gap:10px;flex-wrap:wrap;justify-content:center;margin-top:16px">
     <a class="btn btn-primary" href="index.html">📖 الموسوعة الإسلامية</a>
@@ -341,5 +348,9 @@ render();
 <script>
 if("serviceWorker" in navigator){navigator.serviceWorker.register("sw.js").catch(function(){});}
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

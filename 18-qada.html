@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>متابعة صيام القضاء</title>
+<title data-i18n="tools.متابعة صيام القضاء">متابعة صيام القضاء</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -138,7 +139,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>متابعة صيام القضاء</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.متابعة صيام القضاء">متابعة صيام القضاء</h1>
   <p>سجّل أيام الصيام الفائتة وتابع قضاءها يومًا بيوم.</p>
 </header>
 
@@ -147,7 +154,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>إضافة أيام فائتة</h2>
+  <h2 data-i18n="tools.إضافة أيام فائتة">إضافة أيام فائتة</h2>
   <div class="field">
     <label for="reason">السبب</label>
     <select id="reason">
@@ -339,5 +346,9 @@ renderAll();
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

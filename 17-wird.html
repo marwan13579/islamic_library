@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>ورد القراءة اليومي</title>
+<title data-i18n="tools.ورد القراءة اليومي">ورد القراءة اليومي</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -134,12 +135,18 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>ورد القراءة اليومي</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.ورد القراءة اليومي">ورد القراءة اليومي</h1>
   <p>حدّد وِردك اليومي من القرآن وتابع قراءتك — منفصل عن متابعة الحفظ.</p>
 </header>
 
 <div class="goalcard">
-  <h2>هدفك اليومي (بالصفحات)</h2>
+  <h2 data-i18n="tools.هدفك اليومي (بالصفحات)">هدفك اليومي (بالصفحات)</h2>
   <div class="goalrow" id="goalRow"></div>
   <div class="customgoal">
     <label for="customInput">أو حدد رقمًا مخصصًا:</label>
@@ -355,5 +362,9 @@ renderAll();
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

@@ -3,12 +3,13 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="src/lib/serve-hint.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>السراج في بيان غريب القرآن · المكتبة الإسلامية</title>
+<title data-i18n="tools.السراج في بيان غريب القرآن · المكتبة الإسلامية">السراج في بيان غريب القرآن · المكتبة الإسلامية</title>
 <meta name="description" content="معاني غريب ألفاظ القرآن الكريم سورة سورة — ٦١١١ لغوًا في ١١٤ سورة، مع نصّ الآية وموضع اللفظ فيها، وبحث في كلمات الغريب كلها.">
 <link rel="icon" href="icons/icon-192.png">
 <link rel="stylesheet" href="fonts.css">
@@ -62,7 +63,13 @@
 <a class="back-link" href="index.html" aria-label="الرجوع إلى المكتبة">‹ المكتبة</a>
 
 <div class="lib-head">
-  <h1>السراج في بيان غريب القرآن</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.السراج في بيان غريب القرآن">السراج في بيان غريب القرآن</h1>
   <p>معاني غريب ألفاظ القرآن الكريم سورةً سورة، مع نصّ الآية وموضع اللفظ فيها.</p>
   <p class="intro-note" id="byline"></p>
   <div class="lib-tools center">
@@ -208,7 +215,7 @@
     const head = document.createElement("div");
     head.className = "rhead";
     head.innerHTML =
-      `<h1>سورة ${escapeHtml(sura.name)}</h1>` +
+      `<h1 data-i18n="tools.سورة ${escapeHtml(sura.name)}">سورة ${escapeHtml(sura.name)}</h1>` +
       `<p class="sub">سورة ${toArNum(sura.no)} · ${toArNum(sura.verses)} آية · ` +
       `${escapeHtml(sura.place || "")} · ${toArNum(sura.count)} لغوًا</p>`;
     reader.appendChild(head);
@@ -428,5 +435,9 @@
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>

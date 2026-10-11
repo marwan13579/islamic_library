@@ -3,11 +3,12 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>تعلّم الصلاة خطوة بخطوة</title>
+<title data-i18n="tools.تعلّم الصلاة خطوة بخطوة">تعلّم الصلاة خطوة بخطوة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -142,7 +143,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>تعلّم الصلاة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.تعلّم الصلاة">تعلّم الصلاة</h1>
   <p>دليل مبسّط خطوة بخطوة للأطفال وحديثي الإسلام — بالصوت والحركة والكلمة.</p>
 </header>
 
@@ -224,7 +231,7 @@ function stepsList(arr){
 function tipsBox(title,arr){
   const box=document.createElement("div");
   box.className="kidbox";
-  let html='<h2>'+title+'</h2>';
+  let html='<h2 data-i18n="tools.'+title+'">'+title+'</h2>';
   arr.forEach(([t,d])=>{ html += '<p><b>'+t+':</b> '+d+'</p>'; });
   box.innerHTML=html;
   return box;
@@ -340,4 +347,8 @@ function select(id){
   else init();
 })();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>

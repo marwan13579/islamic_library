@@ -3,13 +3,14 @@
 <head>
 <meta charset="utf-8">
 <script src="storage-fallback.js"></script>
+<script src="i18n-boot.js" defer></script>
 <link rel="stylesheet" href="engage.css">
 <script src="engage.js" defer></script>
 <script src="notify-boot.js" defer></script>
 <script src="service-messages.js"></script>
 <script src="calculations.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>مواقيت الصلاة</title>
+<title data-i18n="tools.مواقيت الصلاة">مواقيت الصلاة</title>
 <link rel="stylesheet" href="fonts.css">
 <link rel="stylesheet" href="tools.css">
 <script src="noor-companion.js" defer></script>
@@ -143,7 +144,13 @@ header{
 
 <div class="wrap">
 <header>
-  <h1>مواقيت الصلاة</h1>
+  
+  <div class="langbar" style="margin:10px 0">
+    <button class="langbtn" id="langBtn" type="button">🌐 <span id="langBtnLabel">العربية</span> ▾</button>
+    <div class="langmenu" id="langMenu"></div>
+  </div>
+
+  <h1 data-i18n="tools.مواقيت الصلاة">مواقيت الصلاة</h1>
   <p>محسوبة فلكيًا محليًا في متصفحك، بدون إرسال بياناتك لأي خادم — تدعم عدة طرق حساب ومذاهب.</p>
 </header>
 
@@ -151,7 +158,7 @@ header{
 <div class="timesgrid" id="timesGrid"></div>
 
 <div class="card">
-  <h2>📍 الموقع</h2>
+  <h2 data-i18n="tools.📍 الموقع">📍 الموقع</h2>
   <div class="field">
     <label for="citySelect">اختر مدينة</label>
     <select id="citySelect"></select>
@@ -171,7 +178,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>⚙️ طريقة الحساب والمذهب</h2>
+  <h2 data-i18n="tools.⚙️ طريقة الحساب والمذهب">⚙️ طريقة الحساب والمذهب</h2>
   <div class="field">
     <label for="methodSelect">طريقة الحساب</label>
     <select id="methodSelect"></select>
@@ -187,7 +194,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>🔔 تنبيه الصلاة</h2>
+  <h2 data-i18n="tools.🔔 تنبيه الصلاة">🔔 تنبيه الصلاة</h2>
   <div class="btnrow">
     <button class="btn primary" id="notifyBtn" type="button">تفعيل تنبيه الصلاة القادمة</button>
   </div>
@@ -195,7 +202,7 @@ header{
 </div>
 
 <div class="card">
-  <h2>✏️ تعديل يدوي للدقائق</h2>
+  <h2 data-i18n="tools.✏️ تعديل يدوي للدقائق">✏️ تعديل يدوي للدقائق</h2>
   <p class="msg" style="margin-top:0">لمطابقة توقيت مسجد حيك أو هيئة محلية معينة.</p>
   <div id="offsetsList"></div>
 </div>
@@ -485,5 +492,9 @@ renderNextAndGrid();
   import { createSearchModal } from "./src/components/search-modal.js";
   createSearchModal();
 </script>
+  <script type="module">
+    import './src/components/language-selector.js';
+    import './src/lib/i18n.js';
+  </script>
 </body>
 </html>
